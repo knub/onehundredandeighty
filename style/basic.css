@@ -12,7 +12,9 @@ header {
 	border-bottom: 1px dashed black;
 }
 div#message {
-	background: #7BB567;
+	background: #B56767; /* red */
+	background: #B2B567; /* yellow - to be improved! */
+	background: #7BB567; /* green */
 	color: white;
 	text-align: center;
 	font-variant: small-caps;
@@ -59,7 +61,7 @@ h1 img {
 	text-align: center;
 	margin: 15px 0px;
 	border-radius: 5px;
-	width: 222px;
+	/*width: 222px;*/
 
 
 	background: #ffffff; /* Old browsers */
@@ -102,6 +104,7 @@ h1 img {
 #extra-courses ul {
 	float: left;
 	padding: 0;
+	width: 11.68%; /* 80% (chosen list box-width) * 14.6% (width of one list) */
 }
 #extra-courses ul:first-child {
 	margin-left: 15%;
