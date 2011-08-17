@@ -1,3 +1,4 @@
+/* Font taken from: --> http://www.theleagueofmoveabletype.com/fonts/13-prociono <--. Thanks! */
 @font-face { font-family: Prociono; src: url('Prociono.otf'); }
 
 body {
@@ -35,11 +36,11 @@ section#semester-view {
 }
 section#courses-pool {
 	padding: 1px 0%;
-	background-image: url(../images/shadow.png), url(../images/shadow_reverse.png), url(../images/bg_pattern.png);
-	background-repeat: repeat-x, repeat-x, repeat;
-	background-position: top left, bottom left, top left;
+	/* multiple backgrounds - css3, yeah! */
+	background-image: url(../images/placeholder.png), url(../images/shadow.png), url(../images/shadow_reverse.png), url(../images/bg_pattern.png);
+	background-repeat: no-repeat, repeat-x, repeat-x, repeat;
+	background-position: center left, top left, bottom left, center left;
 	border: 1px dotted black;
-	margin-bottom: 10px;
 }
 footer {
 	background: #EEE;
@@ -48,6 +49,7 @@ footer {
 	width: 100%;
 	font-size: 1.2em;
 	text-align: center;
+	height: 328px;
 }
 h1 {
 	margin: 0;
@@ -81,9 +83,8 @@ h2 {
 	margin: 15px 0px;
 	border-radius: 5px;
 	position: relative;
-	/*width: 222px;*/
 
-
+	/* gradients in whole document created by: --> http://www.colorzilla.com/gradient-editor/ <--. Thanks! */
 	background: #ffffff; /* Old browsers */
 	background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */

@@ -40,4 +40,10 @@ $(function() {
 	$(".courses li a").click(function () {
 		$(this).parent().toggleClass("disabled"); 
 	});
+
+	$('.courses li').qtip({
+   content: 'This is an active list element',
+   show: 'mouseover',
+   hide: 'mouseout'
+})
 });
