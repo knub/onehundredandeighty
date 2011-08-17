@@ -24,11 +24,14 @@ div#message {
 section {
 	font-size: 1.2em;
 }
+section#head {
+	width: 80%;
+	margin: 0 auto;
+	border-bottom: 1px dotted gray;
+}
 section#semester {
 	margin: 0 auto;
 	width: 80%;
-}
-section#extra-courses {
 }
 footer {
 	background: #EEE;
@@ -48,6 +51,12 @@ h1 img {
 	margin-left: 20px;
 	position: relative;
 	top: 15px;
+}
+h2 {
+	float: left;
+	width: 14.6%;
+	margin: 15px 0px;
+	padding: 0px 1%;
 }
 .courses {
 	list-style-type: none;
