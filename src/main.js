@@ -3,29 +3,36 @@
 
 var settings = {
 	// number of list items in one list in unchosen lists
-	"unchosen-list-height": 8
+	coursesPoolHeight: 8
 };
 
+var frontend = {
+	poolSorting : function (event, ui) {
+			"use strict";
+			var pool = $("#courses-pool");
+			var course = pool.children().first();
+			// while (course.hasNext()) - loop as long as there is another sibling
+			while (course.get(0).tagName !== "BR") {
+				if (course.children().size() > settings["coursesPoolHeight"]) {
+					var last = course.children().last();
+					last.detach();
+					course.next().prepend(last);
+				}
+				else if (course.children().size() < settings["coursesPoolHeight"] && course.next().get(0).tagName !== "BR") {
+					var nextFirst = course.next().children().first();
+					nextFirst.detach();
+					course.append(nextFirst);
+				}
+				course = course.next();
+			}
+		},
+
+};
 $(function() {
 	$(".courses").sortable({
 		connectWith: ".courses",		// specifies lists where li's can be dropped
 		placeholder: "placeholder-highlight",	// css class for placeholder when drag'n dropping
-		stop: function (event, ui) {
-			"use strict";
-			var e, courses;
-			e = ui.item;
-			// check if list under mouse is list in #courses-pool
-			if (e.parent().parent().attr("id") === "extra-courses") {
-				courses = e.parent();
-				if (courses.children().size() > settings["unchosen-list-height"]) {
-					var last = courses.children().last();
-					alert(last.html());
-					// TODO: move list items, so that there are no more than settings["unchosen-list-height"] items in one list
-				}
-			}
-		},
-		over: function(event, ui) {
-			;
-		}
+		change: frontend.poolSorting,
+		stop: frontend.poolSorting
 	}).disableSelection();				// disableSelection makes text selection impossible
 });
