@@ -29,7 +29,7 @@ section#head {
 	margin: 0 auto;
 	border-bottom: 1px dotted gray;
 }
-section#semester {
+section#semester-view {
 	margin: 0 auto;
 	width: 80%;
 }
@@ -94,7 +94,7 @@ h2 {
 	background: linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* W3C */
 }
 
-.semester-view {
+.chosen {
 	margin: 0;
 	padding: 15px 1%;
 	float: left;
@@ -102,23 +102,23 @@ h2 {
 	border-right: 1px dotted gray;
 }
 
-.semester-view:first-child {
+.chosen:first-child {
 	border-left: 1px dotted gray;
 }
-#extra-courses {
+#courses-pool {
 	padding: 1px 0%;
 	background: gray;
 	border: 6px inset black;
 }
-#extra-courses ul {
+#courses-pool ul {
 	float: left;
 	padding: 0;
 	width: 11.68%; /* 80% (chosen list box-width) * 14.6% (width of one list) */
 }
-#extra-courses ul:first-child {
+#courses-pool ul:first-child {
 	margin-left: 15%;
 }
-#extra-courses ul li {
+#courses-pool ul li {
 	margin: 0px;
 }
 
