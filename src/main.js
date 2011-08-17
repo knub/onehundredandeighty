@@ -32,7 +32,12 @@ $(function() {
 	$(".courses").sortable({
 		connectWith: ".courses",		// specifies lists where li's can be dropped
 		placeholder: "placeholder-highlight",	// css class for placeholder when drag'n dropping
+		cancel: ".disabled",
 		change: frontend.poolSorting,
 		stop: frontend.poolSorting
 	}).disableSelection();				// disableSelection makes text selection impossible
+
+	$(".courses li a").click(function () {
+		$(this).parent().toggleClass("disabled"); 
+	});
 });

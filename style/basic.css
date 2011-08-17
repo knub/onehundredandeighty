@@ -48,7 +48,6 @@ footer {
 	width: 100%;
 	font-size: 1.2em;
 	text-align: center;
-	height: 100px;
 }
 h1 {
 	margin: 0;
@@ -77,10 +76,11 @@ h2 {
 	font-size: 1.2em;
 	height: 1.5em;
 	cursor: move;
-	border: 1px solid black;
+	border: 1px solid black; /* maybe border: 1px solid gray; looks better? */
 	text-align: center;
 	margin: 15px 0px;
 	border-radius: 5px;
+	position: relative;
 	/*width: 222px;*/
 
 
@@ -103,6 +103,31 @@ h2 {
 	background: -ms-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* IE10+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 	background: linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* W3C */
+}
+
+.courses li.disabled {
+	background: #DDD;
+	border: 1px solid gray;
+}
+.courses li.disabled:hover {
+	cursor: auto;
+}
+
+.courses li a {
+	color: black;
+	text-decoration: none;
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	width: 15px;
+	height: 15px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 0.5em;
+}
+.courses li a:hover {
+	background: black;
+	color: white;
 }
 
 .chosen {
