@@ -66,13 +66,13 @@ h1 img {
 }
 h2 {
 	float: left;
-	width: 14.6%;
+	width: 14.5%;
 	margin: 15px 0px;
 	padding: 0px 1%;
 }
 .courses {
 	list-style-type: none;
-	width: 14.6%;
+	width: 14.5%;
 }
 .courses li {
 	font-size: 1.2em;
@@ -134,15 +134,16 @@ h2 {
 /* Post-it effect taken from --> http://nicolasgallagher.com/pure-css-folded-corner-effect/ <---. Thanks! */
 .info {
 	display: none;
-	width: 222px;
+	width: 250px;
 	height: 300px;
 	z-index: 999;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	padding: 1em 1.5em;
-	background: yellow;
 	background: #DDCA21;
+	overflow:hidden;
+	border-radius:5px 0 5px 5px;
 }
 .info:before {
 	content: "";
@@ -156,7 +157,10 @@ h2 {
 	width: 0;
 	-webkit-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
 	-moz-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
-	box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+	box-shadow: 0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+	border-width: 15px;
+	border-color: #FFF #FFF transparent transparent;
+	border-radius: 0 0 0 2px;
 }
 
 .chosen {
@@ -173,7 +177,7 @@ h2 {
 #courses-pool ul {
 	float: left;
 	padding: 0;
-	width: 11.68%; /* 80% (chosen list box-width) * 14.6% (width of one list) */
+	width: 11.6%; /* 80% (chosen list box-width) * 14.5% (width of one list) */
 }
 #courses-pool ul:first-child {
 	margin-left: 15%;
