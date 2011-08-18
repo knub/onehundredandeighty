@@ -130,6 +130,16 @@ h2 {
 	background: black;
 	color: white;
 }
+.info {
+	display: none;
+	background: yellow;
+	width: 400px;
+	height: 300px;
+	z-index: 999;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
 
 .chosen {
 	margin: 0;
