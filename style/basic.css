@@ -130,15 +130,33 @@ h2 {
 	background: black;
 	color: white;
 }
+
+/* Post-it effect taken from --> http://nicolasgallagher.com/pure-css-folded-corner-effect/ <---. Thanks! */
 .info {
 	display: none;
-	background: yellow;
-	width: 400px;
+	width: 222px;
 	height: 300px;
 	z-index: 999;
 	position: absolute;
 	top: 0px;
 	left: 0px;
+	padding: 1em 1.5em;
+	background: yellow;
+	background: #DDCA21;
+}
+.info:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-width: 0 30px 30px 0;
+	border-style: solid;
+	border-color: #DDCA21 white;
+	display: block;
+	width: 0;
+	-webkit-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+	-moz-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+	box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
 }
 
 .chosen {
