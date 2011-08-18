@@ -41,9 +41,5 @@ $(function() {
 		$(this).parent().toggleClass("disabled"); 
 	});
 
-	$('.courses li').qtip({
-   content: 'This is an active list element',
-   show: 'mouseover',
-   hide: 'mouseout'
-})
+	$("#semester1 li").knubtip();
 });
