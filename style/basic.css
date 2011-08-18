@@ -28,7 +28,7 @@ section {
 section#head {
 	width: 80%;
 	margin: 0 auto;
-	border-bottom: 1px dotted gray;
+	/*border-bottom: 1px dotted gray;*/
 }
 section#semester-view {
 	margin: 0 auto;
@@ -73,6 +73,7 @@ h2 {
 .courses {
 	list-style-type: none;
 	width: 14.5%;
+	border-top: 1px dotted gray;
 }
 .courses li {
 	font-size: 1.2em;
@@ -132,6 +133,7 @@ h2 {
 }
 
 /* Post-it effect taken from --> http://nicolasgallagher.com/pure-css-folded-corner-effect/ <---. Thanks! */
+/* TODO: I think a complete redesign of tooltip is neccessary - does not like quite good right now. */
 .info {
 	display: none;
 	width: 250px;
@@ -141,10 +143,20 @@ h2 {
 	top: 0px;
 	left: 0px;
 	padding: 1em 1.5em;
-	background: #DDCA21;
+
+	/*background: #DDCA21;
 	overflow:hidden;
-	border-radius:5px 0 5px 5px;
+	border-radius:5px 0 5px 5px;*/
+
+	background: rgba(0, 0, 0, 0.92);
+	border: 6px solid #AAA;
+	color: white;
+	border-radius: 10px;
+	/*box-shadow: 0px 0px 0px black, 0px 0px 0px black;*/
+
+
 }
+/*
 .info:before {
 	content: "";
 	position: absolute;
@@ -161,7 +173,7 @@ h2 {
 	border-width: 15px;
 	border-color: #FFF #FFF transparent transparent;
 	border-radius: 0 0 0 2px;
-}
+}*/
 
 .chosen {
 	margin: 0;
