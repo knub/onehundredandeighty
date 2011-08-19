@@ -1,5 +1,22 @@
 import urllib2
 import sys
+import json
+
+class lv:
+	def __init__(self, name="", kennung="", dozent="", cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
+		self.name = name
+		self.kennung = kennung
+		self.dozent = dozent
+		self.cp = cp
+		self.benotet = benotet
+		self.modul = modul
+		self.lehrform = lehrform
+		self.themenkomplex = themenkomplex
+		self.vertiefung = vertiefung
+		self.semester = semester
+	
+	def toJSON(self):
+		return json.dump(self)
 
 semester = raw_input("Please input the wanted semester: now OR [SS|WS][0-9]{2}  ")
 
