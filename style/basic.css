@@ -69,6 +69,11 @@ h2 {
 	width: 14.5%;
 	margin: 15px 0px;
 	padding: 0px 1%;
+	text-align: center;
+}
+
+#head select {
+	display: none;
 }
 .courses {
 	list-style-type: none;

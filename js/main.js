@@ -2,12 +2,6 @@
 // The term "#courses-pool" refers to the lists of courses, that are currently not chosen, so the lower list
 
 
-/*
- * BUG:
- * Watch Chrome console and pin one item.
- * see: "Uncaught Syntax Error: unexpected end of input"
- */
-
 var settings = {
 	// number of list items in one list in unchosen lists
 	coursesPoolHeight: 8
@@ -32,8 +26,7 @@ var frontend = {
 				}
 				course = course.next();
 			}
-		},
-
+		}
 };
 $(function() {
 	$(".courses").sortable({
@@ -49,4 +42,9 @@ $(function() {
 	});
 
 	$("#semester1 li").knubtip();
+
+	$("#head a").click(function () {
+		$(this).hide();
+		$(this).parent().find("select").show();
+	});
 });

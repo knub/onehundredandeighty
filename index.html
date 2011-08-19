@@ -13,19 +13,97 @@
 		Error messages, hints, general information ... <!-- im Fehlerfall muss hier auch ein link auf eine genauere Erläuterung, a la "was bedeutet das?" stehen -->
 	</div>
 	<section id="head">
-		<h2 style="text-align: center;">1st Semester<br><a href="javascript:void">WS 10/11</a></h2>
-		<h2 style="text-align: center;">2nd Semester<br><a href="javascript:void">SS 11</a></h2>
-		<h2 style="text-align: center;">3rd Semester<br><a href="javascript:void">WS 11/12</a></h2>
-		<h2 style="text-align: center;">4th Semester<br><a href="javascript:void">SS 12</a></h2>
-		<h2 style="text-align: center;">5th Semester<br><a href="javascript:void">WS 12/13</a></h2>
-		<h2 style="text-align: center;">6th Semester<br><a href="javascript:void">SS 13</a></h2>
+		<h2>
+			1st Semester<br>
+			<a href="javascript:;">WS 10/11</a>
+			<form action="javascript:;">
+				<select name="selectSemester1" size="1">
+					<option>WS 10/11</option>
+					<option>SS 11</option>
+					<option>WS 11/12</option>
+					<option>SS 12</option>
+					<option>WS 12/13</option>
+					<option>SS 13</option>
+				</select>
+			</form>
+		</h2>
+		<h2>
+			2nd Semester<br>
+			<a href="javascript:;">SS 11</a>
+			<form action="javascript:;">
+				<select name="selectSemester2" size="1">
+					<option>WS 10/11</option>
+					<option selected>SS 11</option>
+					<option>WS 11/12</option>
+					<option>SS 12</option>
+					<option>WS 12/13</option>
+					<option>SS 13</option>
+				</select>
+			</form>
+		</h2>
+		<h2>
+			3rd Semester<br>
+			<a href="javascript:;">WS 11/12</a>
+			<form action="javascript:;">
+				<select name="selectSemester3" size="1">
+					<option>WS 10/11</option>
+					<option>SS 11</option>
+					<option selected>WS 11/12</option>
+					<option>SS 12</option>
+					<option>WS 12/13</option>
+					<option>SS 13</option>
+				</select>
+			</form>
+		</h2>
+		<h2>
+			4th Semester<br>
+			<a href="javascript:;">SS 12</a>
+			<form action="javascript:;">
+				<select name="selectSemester4" size="1">
+					<option>WS 10/11</option>
+					<option>SS 11</option>
+					<option>WS 11/12</option>
+					<option selected>SS 12</option>
+					<option>WS 12/13</option>
+					<option>SS 13</option>
+				</select>
+			</form>
+		</h2>
+		<h2>
+			5th Semester<br>
+			<a href="javascript:;">WS 12/13</a>
+			<form action="javascript:;">
+				<select name="selectSemester5" size="1">
+					<option>WS 10/11</option>
+					<option>SS 11</option>
+					<option>WS 11/12</option>
+					<option>SS 12</option>
+					<option selected>WS 12/13</option>
+					<option>SS 13</option>
+				</select>
+			</form>
+		</h2>
+		<h2>
+			6th Semester<br>
+			<a href="javascript:;">SS 13</a>
+			<form action="javascript:;">
+				<select name="selectSemester6" size="1">
+					<option>WS 10/11</option>
+					<option>SS 11</option>
+					<option>WS 11/12</option>
+					<option>SS 12</option>
+					<option>WS 12/13</option>
+					<option selected>SS 13</option>
+				</select>
+			</form>
+		</h2>
 		<br style="clear: both;" />
 	</section>
 	<section id="semester-view">
 		<!-- TODO: Angeben, wann das jeweilige Semester war!!!! (wichtig z.B. bei Auslandsaufenthalten etc.)  -->
 		<ul id="semester1" class="chosen courses">
 			<li>
-				PT I<a href="javascript:void">ⴲ</a>
+				PT I<a href="javascript:;">ⴲ</a>
 				<div class="info">
 					<h3>Programmiertechnik 1</h3>
 					Dr. Martin von Löwis <br />
