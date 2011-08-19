@@ -4,8 +4,8 @@ import json
 import re
 
 class lv:
-	def __init__(self, name="", kennung="", dozent="", cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
-		self.name = name
+	def __init__(self, nameLV="", kennung="", dozent="", cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
+		self.nameLV = nameLV
 		self.kennung = kennung
 		self.dozent = dozent
 		self.cp = cp
@@ -36,6 +36,7 @@ def URLForSemester(semester):
 					url = "http://www.hpi.uni-potsdam.de/studium/lehrangebot/lehrangebotsarchiv/lehrangebotsarchiv_ws_0" + str(year) + str(year+1) + ".html"
 				else:
 					url = "http://www.hpi.uni-potsdam.de/studium/lehrangebot/lehrangebotsarchiv/lehrangebotsarchiv_ws_" + str(year) + str(year+1) + ".html"
+	print url
 	return url
 
 
@@ -60,6 +61,7 @@ def URLsPerSemester(url):
 	
 	urls = re.findall(pattern, line)
 	
+	
 	return urls
 	
 def listOfLVs(urls):
@@ -71,16 +73,45 @@ def listOfLVs(urls):
 def parseLVPage(url):
 	page = urllib2.urlopen(url)
 	
-	for line in site:
+	for line in page:
 		if (line.strip().startswith('<div class="tx-jshuniversity-pi1-singleVi')):
 			break
 			
-	line = str(site.next())
+	line = str(page.next())
 	
 	headerpattern = re.compile(r"(?<=\<h1\>).*?(?=\</h1\>)")
-	headerfind = re.search(pat, line)
+	headerfind = re.search(headerpattern, line)
 	header = headerfind.group()
+	namepattern = re.compile(r".*(?=\(((WS\d{4}/\d{4})|(SS\d{4}))\))")
+	namefind = re.search(namepattern, header)
+	nameofLV = namefind.group()
+	nameofLV = nameofLV.strip()
+	print nameofLV + ": ",
+	datepattern = re.compile(r"(?<=\()((WS\d{4}/\d{4})|(SS\d{4}))(?=\))")
+	semesterfind = re.search(datepattern, header)
+	semester = semesterfind.group()
+	print semester,
+	dozents = dozenten(line)
+	
+	return lv(nameLV=nameofLV, semester=semester)
+	
+def dozenten(line):
+	dozentenpattern = re.compile(r'(?<=Dozent: <i>).*(?=\(.*\))')
+	dozentenfind = re.search(dozentenpattern, line)
+	dozents = dozentenfind.group()
+	dozents = dozents.split(", ")
+	dozentpattern = re.compile(r"(?<=>).*?(?=<)")
+	
+	result = []
+	for dozent in dozents:
+		if dozent.startswith("<"):
+			dozentfind = re.search(dozentpattern, dozent)
+			result.append((dozentfind.group()).strip())
+		else:
+			result.append(dozent.strip())
+	
+	return result
 
 semester = raw_input("Please input the wanted semester: now OR [SS|WS][0-9]{2}  ")
 
-print URLsPerSemester(URLForSemester(semester))
+print listOfLVs(URLsPerSemester(URLForSemester(semester)))
