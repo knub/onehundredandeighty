@@ -79,17 +79,12 @@ def parseLVPage(url):
 			
 	line = str(page.next())
 	
-	headerpattern = re.compile(r"(?<=\<h1\>).*?(?=\</h1\>)")
+	headerpattern = re.compile(r"(?<=\<h1\>)(.*?)(\(((WS\d{4}/\d{4})|(SS\d{4}))\))(?=\</h1\>)")
 	headerfind = re.search(headerpattern, line)
-	header = headerfind.group()
-	namepattern = re.compile(r".*(?=\(((WS\d{4}/\d{4})|(SS\d{4}))\))")
-	namefind = re.search(namepattern, header)
-	nameofLV = namefind.group()
+	nameofLV = headerfind.group(1)
 	nameofLV = nameofLV.strip()
+	semester = headerfind.group(2)
 	print nameofLV + ": ",
-	datepattern = re.compile(r"(?<=\()((WS\d{4}/\d{4})|(SS\d{4}))(?=\))")
-	semesterfind = re.search(datepattern, header)
-	semester = semesterfind.group()
 	print semester,
 	dozents = dozenten(line)
 	print dozents
