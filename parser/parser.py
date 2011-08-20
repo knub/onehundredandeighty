@@ -4,7 +4,7 @@ import json
 import re
 
 class lv:
-	def __init__(self, nameLV="", kennung="", dozent="", cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
+	def __init__(self, nameLV="", kennung=[], dozent=[], cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
 		self.nameLV = nameLV
 		self.kennung = kennung
 		self.dozent = dozent
@@ -92,11 +92,12 @@ def parseLVPage(url):
 	semester = semesterfind.group()
 	print semester,
 	dozents = dozenten(line)
+	print dozents
 	
-	return lv(nameLV=nameofLV, semester=semester)
+	return lv(nameLV=nameofLV, semester=semester, dozent=dozents)
 	
 def dozenten(line):
-	dozentenpattern = re.compile(r'(?<=Dozent: <i>).*(?=\(.*\))')
+	dozentenpattern = re.compile(r'(?<=Dozent: <i>).*?(?=\(.*?\))')
 	dozentenfind = re.search(dozentenpattern, line)
 	dozents = dozentenfind.group()
 	dozents = dozents.split(", ")
