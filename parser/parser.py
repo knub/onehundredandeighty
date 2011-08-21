@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import urllib2
 import sys
 import json
 import re
 
 class lv:
+	"""Klasse der Lehrveranstaltungen"""
 	def __init__(self, nameLV="", kennung=[], dozent=[], cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
 		self.nameLV = nameLV
 		self.kennung = kennung
@@ -16,10 +19,11 @@ class lv:
 		self.vertiefung = vertiefung
 		self.semester = semester
 	
-	def toJSON(self):
+	def toJSON(self): #maschinen- und menschenlesbarer JSON-Dump
 		return json.dump(self, indent=4)
 
 def URLForSemester(semester):
+	"""gibt für ein gewünschtes Semester die entsprechende Liste der Lehrveranstaltungen zurück"""
 	if semester == "now":
 		url = "http://www.hpi.uni-potsdam.de/studium/lehrangebot/itse.html"
 	else:
@@ -41,6 +45,7 @@ def URLForSemester(semester):
 
 
 def URLsPerSemester(url):
+	"""Gibt die URLs der LVs für ein Semester zurück"""
 	site = urllib2.urlopen(url)
 
 	for line in site:
@@ -65,25 +70,42 @@ def URLsPerSemester(url):
 	return urls
 	
 def listOfLVs(urls):
+	"""baut aus den URLs der LVs eine Liste von lv-Objekten"""
 	lvs = []
 	for url in urls:
 		lvs.append(parseLVPage("http://www.hpi.uni-potsdam.de/" + url))
 	return lvs
 
 def parseLVPage(url):
+	"""parsed aus der Seite einer LV die gewünschten Informationen"""
 	page = urllib2.urlopen(url)
 	
 	for line in page:
-		if (line.strip().startswith('<div class="tx-jshuniversity-pi1-singleVi')):
+		if (line.strip().startswith('<div class="tx-jshuniversity-pi1-singleVi')): #kennzeichnet die entsprechenden Informationen
 			break
 			
 	line = str(page.next())
 	
-	headerpattern = re.compile(r"(?<=\<h1\>)(.*?)(\(((WS\d{4}/\d{4})|(SS\d{4}))\))(?=\</h1\>)")
+	headerpattern = re.compile(r"""	(?x)				#Ignoriere Leerzeichen, wenn sie nicht escaped sind
+									(?<=\<h1\>)			#Der Header startet natürlich mit dem entsprechenden Überschriftstag (lookbehind weil wir den nicht brauchen)
+									(.*?)				#Daran schließen sich einige freie Zeichen an
+									\(					#Dann eine Klammer, die das Semester einschließt
+									((
+									  (
+									   WS\d{4}/\d{4}	#entweder z.B. 'WS2006/2007'
+									  )
+									  |					#oder
+									  (
+									   SS\d{4}			#z.B. 'SS2009'
+									  )
+									))
+									\)					#Klammer, die das Semester einschließt
+									(?=\</h1\>)			#und der Überschriftstag wird abgeschlossen""")
 	headerfind = re.search(headerpattern, line)
 	nameofLV = headerfind.group(1)
 	nameofLV = nameofLV.strip()
 	semester = headerfind.group(2)
+	semester = semester.strip()
 	print nameofLV + ": ",
 	print semester,
 	dozents = dozenten(line)
@@ -92,7 +114,7 @@ def parseLVPage(url):
 	return lv(nameLV=nameofLV, semester=semester, dozent=dozents)
 	
 def dozenten(line):
-	dozentenpattern = re.compile(r'(?<=Dozent: <i>).*?(?=\(.*?\))')
+	dozentenpattern = re.compile(r'(?<=Dozent: <i>).*?(?=((\(.*?\))|(\<br\ /\>)))')
 	dozentenfind = re.search(dozentenpattern, line)
 	dozents = dozentenfind.group()
 	dozents = dozents.split(", ")
