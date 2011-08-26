@@ -1,0 +1,8 @@
+Im Folgenden Probleme, die beim Hin- und Herschieben der Kurse auftreten können:
+(diese werden dann in der Leiste direkt unter der Überschrift angezeigt)
+	- Bedingung nicht erfüllt (z. B. PT2 vor PT1)
+	- der Kurs wird im gewählten Semester nicht angeboten
+	- es wurden nicht genug Kurse belegt, d. h. es fehlen Leistungspunkte
+	- es fehlen Kurse in bestimmten Kategorien (z. B. Softwarebasissysteme)
+	- 
+	- ... [bitte weitere Problemfälle eintragen]
