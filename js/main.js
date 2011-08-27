@@ -1,6 +1,7 @@
 // The term "#semester-view" refer to the upper list, the list of courses which are currently chosen in a specific semester
 // The term "#courses-pool" refers to the lists of courses, that are currently not chosen, so the lower list
 
+"use strict";
 
 var settings = {
 	// number of list items in one list in unchosen lists
@@ -12,7 +13,7 @@ var frontend = {
 			"use strict";
 			var pool = $("#courses-pool");
 			var course = pool.children().first();
-			// while (course.hasNext()) - loop as long as there is another sibling
+			// "while (course.hasNext())" - loop as long as there is another sibling
 			while (course.get(0).tagName !== "BR") {
 				if (course.children().size() > settings["coursesPoolHeight"]) {
 					var last = course.children().last();
