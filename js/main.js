@@ -27,25 +27,24 @@ var frontend = {
 				}
 				course = course.next();
 			}
-		}
+		},
+	coursesList: ".courses",
+	disabledClass: "disabled"
 };
 $(function() {
 	$(".courses").sortable({
-		connectWith: ".courses",		// specifies lists where li's can be dropped
-		placeholder: "placeholder-highlight",	// css class for placeholder when drag'n dropping
-		cancel: ".disabled",
-		change: frontend.poolSorting,
-		stop: frontend.poolSorting
-	}).disableSelection();				// disableSelection makes text selection impossible
+		connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
+		placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
+		cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
+		change: frontend.poolSorting,			// raised, when there was a change while sorting
+		stop: frontend.poolSorting			// raised, when sorting is finished
+	}).disableSelection();					// disableSelection makes text selection impossible
 
 	$(".courses li button").click(function () {
-		$(this).parent().toggleClass("disabled"); 
+		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
-	$("#semester1 li").knubtip();
+	$("#semester1 li").knubtip();				// activate tooltip for li elements (see jquery.knubtip.js)
 
-	$("#head a").click(function () {
-		$(this).hide();
-		$(this).parent().find("select").show();
-	});
+	//$("select").sSelect();
 });
