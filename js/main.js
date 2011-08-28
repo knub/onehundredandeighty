@@ -38,7 +38,7 @@ $(function() {
 		stop: frontend.poolSorting
 	}).disableSelection();				// disableSelection makes text selection impossible
 
-	$(".courses li a").click(function () {
+	$(".courses li button").click(function () {
 		$(this).parent().toggleClass("disabled"); 
 	});
 

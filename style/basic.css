@@ -126,7 +126,11 @@ h2 {
 	cursor: auto;
 }
 
-.courses li a {
+.courses li button {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
 	color: black;
 	text-decoration: none;
 	position: absolute;
@@ -138,9 +142,10 @@ h2 {
 	text-align: center;
 	font-size: 0.5em;
 }
-.courses li a:hover {
+.courses li button:hover {
 	background: black;
 	color: white;
+	cursor: pointer;
 }
 
 /* Post-it effect taken from --> http://nicolasgallagher.com/pure-css-folded-corner-effect/ <---. Thanks! */
