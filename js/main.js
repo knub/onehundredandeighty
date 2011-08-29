@@ -46,9 +46,10 @@ $(function() {
 
 	$("#semester1 li").knubtip();				// activate tooltip for li elements (see jquery.knubtip.js)
 
-	var courseInfo = data;
+	// data is imported from data.js
 
-	for (var i in courseInfo) {
-		//alert("Key: " + i + "| Value: " + courseInfo[i]);
-	}
+	// DEBUG: display data
+	//for (var i in data) {
+	//	alert("Key: " + i + "| Value: " + data[i]);
+	//}
 });

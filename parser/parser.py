@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 
 import urllib2
@@ -56,10 +57,11 @@ def URLsPerSemester(url):
 	
 def listOfLVs(urls):
 	"""baut aus den URLs der LVs eine Liste von lv-Objekten"""
-	lvs = []
+	lvs = {}
 	i = 0
 	for url in urls:
-		lvs.append(parseLVPage("http://www.hpi.uni-potsdam.de/" + url))
+		lvDict = parseLVPage("http://www.hpi.uni-potsdam.de/" + url)
+		lvs[lvDict['nameLV']] = lvDict
 		i+=1
 		print "\rBisher wurden " + str(i) + " LVs gefunden."
 	return lvs
