@@ -1,5 +1,855 @@
 var data = 
+/*
+ * WS 2010/2011 data
+ */
 {
+    "SWA": {
+        "kennung": [
+            "SWA"
+        ], 
+        "lehrform": [
+            "Vorlesung", 
+            "Projekt"
+        ], 
+        "modul": [
+            "Grundlagen IT-Systems Engineering"
+        ], 
+        "themenkomplex": [
+            "Softwaretechnologie"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 3,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Robert Hirschfeld", 
+            "Dr.-Ing. Michael Haupt"
+        ], 
+        "nameLV": "Software-Architektur"
+    }, 
+    "Wirtschaft I": {
+        "kennung": [
+            "WR2"
+        ], 
+        "lehrform": [
+            "Vorlesung"
+        ], 
+        "modul": [
+            "Rechtliche und wirtschaftliche Grundlagen"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 1,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Prof. Dr. Jan Kratzer"
+        ], 
+        "nameLV": "Wirtschaftliche Grundlagen I"
+    }, 
+    "POIS II": {
+        "kennung": [
+            "VT BPET", 
+            "VT SAMT"
+        ], 
+        "lehrform": [
+            "Vorlesung"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Systemarchitektur", 
+            "Business Computing", 
+            "Internet-Technologien"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Mathias Weske"
+        ], 
+        "nameLV": "Prozessorientierte Informationssysteme II"
+    }, 
+    "Recht II": {
+        "kennung": [
+            "WR1"
+        ], 
+        "lehrform": [
+            "Vorlesung"
+        ], 
+        "modul": [
+            "Rechtliche und wirtschaftliche Grundlagen"
+        ], 
+        "themenkomplex": [
+            "\u00d6konomische und rechtliche Grundlagen"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 3,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Dr. Timm Krohn"
+        ], 
+        "nameLV": "Recht fuer Ingenieure II"
+    }, 
+    "SWT II": {
+        "kennung": [
+            "VT SAMT"
+        ], 
+        "lehrform": [
+            "Vorlesung"
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            "Softwaretechnologie"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Dr. Alexander Zeier", 
+            "J\u00fcrgen M\u00fcller"
+        ], 
+        "nameLV": "Softwaretechnik II"
+    }, 
+    "Mod I": {
+        "kennung": [
+            "MO1"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            "Grundlagen in IT-Systems Engineering"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 1,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Holger Giese"
+        ], 
+        "nameLV": "Modellierung I"
+    }, 
+    "BS I": {
+        "kennung": [
+            "BS"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            "Softwarebasissysteme (Bachelor)"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 3,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Andreas Polze", 
+            "Dr. Peter Tr\u00f6ger"
+        ], 
+        "nameLV": "Betriebssysteme"
+    }, 
+    "TI I": {
+        "kennung": [
+            "TI1"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            "Mathematische und theoretische Grundlagen"
+        ], 
+        "themenkomplex": [
+            "Theoretische Grundlagen der Informatik (Bachelor)"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 3,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Christoph Kreitz"
+        ], 
+        "nameLV": "Theoretische Informatik I"
+    }, 
+    "Android": {
+        "kennung": [
+            "VT OSIS"
+        ], 
+        "lehrform": [
+            "Seminar"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Internet-Technologien", 
+            "Mensch-Maschine-Schnittstelle", 
+            "Verteiles Rechnen"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Prof. Dr. Felix Naumann", 
+            "Alexander Albrecht"
+        ], 
+        "nameLV": "Mobile Computing with Android"
+    }, 
+    "Cloud<br />Computing": {
+        "kennung": [
+            "VT OSIS"
+        ], 
+        "lehrform": [
+            "Seminar"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Business Computing", 
+            "Internet-Technologien", 
+            "Verteiles Rechnen", 
+            "Systemarchitektur"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Prof. Dr. Andreas Polze", 
+            "Dr. Peter Tr\u00f6ger"
+        ], 
+        "nameLV": "Industrieseminar Cloud Computing"
+    }, 
+    "Mathematik I": {
+        "kennung": [
+            "MA1"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            "Mathematik (Bachelor)"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 1,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Christoph Meinel"
+        ], 
+        "nameLV": "Mathematik I - Diskrete Strukturen und Logik"
+    }, 
+    "Collaboration<br />software": {
+        "kennung": [
+            "VT IST"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Internet-Technologien", 
+            "Mensch-Maschine-Schnittstelle"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Christoph Meinel"
+        ], 
+        "nameLV": "User-centered development of collaboration software"
+    }, 
+    "SEO": {
+        "kennung": [
+            "VT IST"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Internet-Technologien", 
+            "Business Computing"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Prof. Dr. Christoph Meinel"
+        ], 
+        "nameLV": "SEO - Search Engine Optimization"
+    }, 
+    "HCI I": {
+        "kennung": [
+            "SB1-5", 
+            "VT HCT"
+        ], 
+        "lehrform": [
+            "Vorlesung"
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            "Softwarebasissysteme (Bachelor)"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Mensch-Maschine-Schnittstelle", 
+            "Systemsicherheit", 
+            "Internet-Technologien"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Patrick Baudisch"
+        ], 
+        "nameLV": "HCI1: Designing Interactive Systems"
+    }, 
+    "Internet-<br />Security": {
+        "kennung": [
+            "VT IST"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Business Computing", 
+            "Internet-Technologien", 
+            "Systemsicherheit", 
+            "Verteiles Rechnen"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Christoph Meinel"
+        ], 
+        "nameLV": "Internet-Security - Weaknesses and Targets (Teleteaching)"
+    }, 
+    "AOP": {
+        "kennung": [
+            "VT SAMT"
+        ], 
+        "lehrform": [
+            "Seminar"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            "Softwaretechnologische Konzepte"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Systemarchitektur", 
+            "Systemsicherheit"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Prof. Dr. Robert Hirschfeld", 
+            "Dr.-Ing. Michael Haupt", 
+            "Malte Appeltauer"
+        ], 
+        "nameLV": "Aspektorientiertes Programmieren"
+    }, 
+    "GdS": {
+        "kennung": [
+            "DS"
+        ], 
+        "lehrform": [
+            "Vorlesung", 
+            "\u00dcbung"
+        ], 
+        "modul": [
+            "Grundlagen IT-Systems Engineering"
+        ], 
+        "themenkomplex": [
+            "Technische Grundlagen der Informatik (Bachelor)"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 1,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Dr.-Ing. Ralf Wollowski"
+        ], 
+        "nameLV": "Grundlagen digitaler Systeme"
+    }, 
+    "Game<br />Programming": {
+        "kennung": [
+            "VT HCT"
+        ], 
+        "lehrform": [
+            "Seminar", 
+            "Projekt"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Internet-Technologien", 
+            "Mensch-Maschine-Schnittstelle", 
+            "Systemarchitektur"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. J\u00fcrgen D\u00f6llner"
+        ], 
+        "nameLV": "Game Programming"
+    }, 
+    "DBS II": {
+        "kennung": [
+            "VT OSIS"
+        ], 
+        "lehrform": [
+            "Vorlesung", 
+            "\u00dcbung"
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Business Computing", 
+            "Internet-Technologien"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Felix Naumann"
+        ], 
+        "nameLV": "Datenbanksysteme II"
+    }, 
+    "POIS I": {
+        "kennung": [
+            "SB1-5", 
+            "VT BPET"
+        ], 
+        "lehrform": [
+            "Vorlesung", 
+            "\u00dcbung", 
+            "Projekt"
+        ], 
+        "modul": [
+            "Softwarebasissysteme", 
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            "Softwarebasissysteme (Bachelor)"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Systemarchitektur", 
+            "Business Computing", 
+            "Internet-Technologien"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Mathias Weske"
+        ], 
+        "nameLV": "Prozessorientierte Informationssysteme I"
+    }, 
+    "eWorld Verkehrs-<br />simulation-Tool": {
+        "kennung": [
+            "VT IST"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Systemarchitektur", 
+            "Mensch-Maschine-Schnittstelle", 
+            "Internet-Technologien"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Christoph Meinel"
+        ], 
+        "nameLV": "eWorld-Open Source Verkehrssimulation-Tool"
+    }, 
+    "Hands, Feet<br />and Devices": {
+        "kennung": [
+            "VT HCT"
+        ], 
+        "lehrform": [
+            "Seminar", 
+            "Projekt"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Mensch-Maschine-Schnittstelle", 
+            "Verteiles Rechnen", 
+            "Systemsicherheit", 
+            "Internet-Technologien"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Patrick Baudisch"
+        ], 
+        "nameLV": "Project Seminar Hands, Feet and Devices"
+    }, 
+    "Computergrafik II": {
+        "kennung": [
+            ""
+        ], 
+        "lehrform": [
+            "Vorlesung"
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Mensch-Maschine-Schnittstelle", 
+            "Internet-Technologien", 
+            "Verteiles Rechnen"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Jan Eric Kyprianidis", 
+            "Prof. Dr. J\u00fcrgen D\u00f6llner"
+        ], 
+        "nameLV": "Computergrafik II"
+    }, 
+    "Process-Based<br />Applications": {
+        "kennung": [
+            "VT BPET"
+        ], 
+        "lehrform": [
+            "Seminar", 
+            "Projekt"
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Business Computing", 
+            "Internet-Technologien", 
+            "Verteiles Rechnen", 
+            "Mensch-Maschine-Schnittstelle", 
+            "Systemarchitektur"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Mathias Weske"
+        ], 
+        "nameLV": "Usability of Process-Based Applications"
+    }, 
+    "Enterprise<br />Software": {
+        "kennung": [
+            "VT BPET"
+        ], 
+        "lehrform": [
+            "Vorlesung", 
+            "\u00dcbung"
+        ], 
+        "modul": [
+            "IT-Systems Engineering", 
+            "Rechtliche und wirtschaftliche Grundlagen"
+        ], 
+        "themenkomplex": [
+            "Angewandte Softwaresystemtechnik (Bachelor)", 
+            "Anwendungssysteme (Bachelor)", 
+            "Freie Informatikthemen (Bachelor)", 
+            "Grundlagen der Betriebswirtschaft"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Business Computing", 
+            "Systemarchitektur"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Dr. Alexander Zeier"
+        ], 
+        "nameLV": "Basics of On-premise and On-demand Enterprise Software"
+    }, 
+    "StudiumPlus": {
+        "kennung": [
+            "SSK2"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            ""
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": false, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            ""
+        ], 
+        "nameLV": "StudiumPlus"
+    }, 
+    "D-School<br />Schnupperkurs": {
+        "kennung": [
+            "SSK-DT"
+        ], 
+        "lehrform": [
+            "Seminar", 
+            "Projekt"
+        ], 
+        "modul": [
+            "Softskills"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Softskills"
+        ], 
+        "cp": 3, 
+        "dozent": [
+            "Prof. Ulrich Weinberg", 
+            "Dr. Claudia Nicolai"
+        ], 
+        "nameLV": "D-School Schnupperkurs"
+    }, 
+    "PT I": {
+        "kennung": [
+            "PT1"
+        ], 
+        "lehrform": [
+            "Vorlesung", 
+            "\u00dcbung"
+        ], 
+        "modul": [
+            "Grundlagen IT-Systems Engineering"
+        ], 
+        "themenkomplex": [
+            "Grundlagen in IT-Systems Engineering"
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 1,
+        "vertiefung": [
+            ""
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Dr. Martin von L\u00f6wis"
+        ], 
+        "nameLV": "Einf\u00fchrung in die Programmiertechnik I"
+    },
+/*
+ * SS 2011 data
+ */
     "NoSQL": {
         "kennung": [
             "VT OSIS"
@@ -13,13 +863,17 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
-        "benotet": true, 
+        "semester": [
+		"SS2011"
+	],
+        "benotet": true,
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Business Computing", 
-            " Internet-Technologien", 
-            " Systemarchitektur", 
-            " Information Systems"
+            "Internet-Technologien", 
+            "Systemarchitektur", 
+            "Information Systems"
         ], 
         "cp": 3, 
         "dozent": [
@@ -28,7 +882,7 @@ var data =
         ], 
         "nameLV": "NoSQL"
     }, 
-    "Projektentwicklung und -management (PEM I und II)": {
+    "PEM": {
         "kennung": [
             "PEM"
         ], 
@@ -41,8 +895,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": "",
         "vertiefung": [
             "Softskills"
         ], 
@@ -54,14 +912,14 @@ var data =
         ], 
         "nameLV": "Projektentwicklung und -management (PEM I und II)"
     }, 
-    "Prozessorientierte Informationssysteme II": {
+    "POIS II": {
         "kennung": [
             "VT BPET", 
             "VT SAMT"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Vertiefungsgebiete"
@@ -69,12 +927,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Systemarchitektur", 
-            " Business Computing", 
-            " Internet-Technologien"
+            "Business Computing", 
+            "Internet-Technologien"
         ], 
         "cp": 6, 
         "dozent": [
@@ -82,7 +944,7 @@ var data =
         ], 
         "nameLV": "Prozessorientierte Informationssysteme II"
     }, 
-    "Betriebssysteme II": {
+    "BS II": {
         "kennung": [
             "VT OSIS"
         ], 
@@ -95,20 +957,24 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Systemsicherheit", 
-            " Verteiles Rechnen", 
-            " Systemarchitektur"
-        ], 
+            "Verteiles Rechnen", 
+            "Systemarchitektur"
+        ],
         "cp": 6, 
         "dozent": [
             "Prof. Dr. Andreas Polze"
         ], 
         "nameLV": "Betriebssysteme II"
     }, 
-    "Real-World Application in RFID-Aided Supply Chains": {
+    "RFID": {
         "kennung": [
             "VT BPET", 
             "VT OSIS", 
@@ -123,20 +989,24 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Business Computing", 
-            " Systemarchitektur", 
-            " Internet-Technologien"
-        ], 
+            "Systemarchitektur", 
+            "Internet-Technologien"
+        ],
         "cp": 6, 
         "dozent": [
             "Dr. Alexander Zeier"
         ], 
-        "nameLV": "Real-World Application in RFID-Aided Supply Chains"
+        "nameLV": "Real-World Applications in RFID-Aided Supply Chains"
     }, 
-    "Weiterf\u00fchrende Themen zu Internet- und WWW-Technologien": {
+    "WWW,<br />weiterführend": {
         "kennung": [
             "VT IST"
         ], 
@@ -149,13 +1019,17 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Internet-Technologien", 
-            " Business Computing", 
-            " Mensch-Maschine-Schnittstelle", 
-            " Verteiles Rechnen"
+            "Business Computing", 
+            "Mensch-Maschine-Schnittstelle", 
+            "Verteiles Rechnen"
         ], 
         "cp": 3, 
         "dozent": [
@@ -163,14 +1037,14 @@ var data =
         ], 
         "nameLV": "Weiterf\u00fchrende Themen zu Internet- und WWW-Technologien"
     }, 
-    "Entwicklung von Workflow-Anwendungen": {
+    "Workflow–<br />Anwendungen": {
         "kennung": [
             "VT BPET", 
             "VT SAMT"
         ], 
         "lehrform": [
             "Projekt", 
-            " Seminar"
+            "Seminar"
         ], 
         "modul": [
             "Vertiefungsgebiete"
@@ -178,12 +1052,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Business Computing", 
-            " Systemarchitektur", 
-            " Internet-Technologien"
+            "Systemarchitektur", 
+            "Internet-Technologien"
         ], 
         "cp": 6, 
         "dozent": [
@@ -191,29 +1069,33 @@ var data =
         ], 
         "nameLV": "Entwicklung von Workflow-Anwendungen"
     }, 
-    "Internet- und WWW-Technologien": {
+    "WWW": {
         "kennung": [
             "SB1-5", 
             "VT IST"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Softwarebasissysteme", 
-            " Vertiefungsgebiete"
+            "Vertiefungsgebiete"
         ], 
         "themenkomplex": [
             "Softwarebasissysteme (Bachelor)"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Business Computing", 
-            " Internet-Technologien", 
-            " Mensch-Maschine-Schnittstelle", 
-            " Verteiles Rechnen"
+            "Internet-Technologien", 
+            "Mensch-Maschine-Schnittstelle", 
+            "Verteiles Rechnen"
         ], 
         "cp": 6, 
         "dozent": [
@@ -221,7 +1103,7 @@ var data =
         ], 
         "nameLV": "Internet- und WWW-Technologien"
     }, 
-    "HCI: Building Interactive Devices & Computer Vision": {
+    "HCI II": {
         "kennung": [
             "SB1-5", 
             "VT HCT"
@@ -235,12 +1117,16 @@ var data =
         "themenkomplex": [
             "Softwarebasissysteme (Bachelor)"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Mensch-Maschine-Schnittstelle", 
-            " Verteiles Rechnen", 
-            " Systemarchitektur"
+            "Verteiles Rechnen", 
+            "Systemarchitektur"
         ], 
         "cp": 6, 
         "dozent": [
@@ -248,14 +1134,14 @@ var data =
         ], 
         "nameLV": "HCI: Building Interactive Devices & Computer Vision"
     }, 
-    "Multimedia/Graphics Library & System": {
+    "Graphics<br />Libraries": {
         "kennung": [
             "VT HCT", 
             "VT SAMT"
         ], 
         "lehrform": [
             "Seminar", 
-            " Projekt"
+            "Projekt"
         ], 
         "modul": [
             "Vertiefungsgebiete"
@@ -263,12 +1149,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Internet-Technologien", 
-            " Systemarchitektur", 
-            " Mensch-Maschine-Schnittstelle"
+            "Systemarchitektur", 
+            "Mensch-Maschine-Schnittstelle"
         ], 
         "cp": 6, 
         "dozent": [
@@ -276,7 +1166,7 @@ var data =
         ], 
         "nameLV": "Multimedia/Graphics Library & System"
     }, 
-    "Fachspezifisches Englisch (Level 2)": {
+    "Fachenglisch<br />Level 2": {
         "kennung": [
             "SSK2"
         ], 
@@ -289,8 +1179,12 @@ var data =
         "themenkomplex": [
             "Freie Themen"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             ""
         ], 
@@ -300,7 +1194,7 @@ var data =
         ], 
         "nameLV": "Fachspezifisches Englisch (Level 2)"
     }, 
-    "Soft-Skills-Kolloquium": {
+/*    "SSK": {
         "kennung": [
             "PEM"
         ], 
@@ -313,8 +1207,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": false, 
+	"pflicht": true,
+	"empfohlen": "",
         "vertiefung": [
             "Softskills"
         ], 
@@ -323,8 +1221,8 @@ var data =
             ""
         ], 
         "nameLV": "Soft-Skills-Kolloquium"
-    }, 
-    "Multimedia Analyse Technologien": {
+    },*/
+    "Multimedia<br />Analyse": {
         "kennung": [
             "VT IST", 
             "VT OSIS", 
@@ -339,12 +1237,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
-        "benotet": true, 
+        "semester": [
+		"SS2011"
+	],
+        "benotet": true,
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Verteiles Rechnen", 
-            " Internet-Technologien", 
-            " Mensch-Maschine-Schnittstelle"
+            "Internet-Technologien", 
+            "Mensch-Maschine-Schnittstelle"
         ], 
         "cp": 6, 
         "dozent": [
@@ -352,13 +1254,13 @@ var data =
         ], 
         "nameLV": "Multimedia Analyse Technologien"
     }, 
-    "Softwaretechnik I": {
+    "SWT I": {
         "kennung": [
             "SWT"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Softwaretechnik und Modellierung"
@@ -366,8 +1268,12 @@ var data =
         "themenkomplex": [
             "Softwaretechnologie"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": "",
         "vertiefung": [
             ""
         ], 
@@ -377,7 +1283,7 @@ var data =
         ], 
         "nameLV": "Softwaretechnik I"
     }, 
-    "Entwurf und Implementierung digitaler Schaltungen mit VHDL": {
+    "VHDL": {
         "kennung": [
             "VT OSIS", 
             "VT SAMT"
@@ -391,8 +1297,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Systemarchitektur"
         ], 
@@ -402,13 +1312,13 @@ var data =
         ], 
         "nameLV": "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
     }, 
-    "Theoretische Informatik II": {
+    "TI II": {
         "kennung": [
             "TI2"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Mathematische und theoretische Grundlagen"
@@ -416,8 +1326,12 @@ var data =
         "themenkomplex": [
             "Theoretische Grundlagen der Informatik (Bachelor)"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 4,
         "vertiefung": [
             ""
         ], 
@@ -427,7 +1341,7 @@ var data =
         ], 
         "nameLV": "Theoretische Informatik II"
     }, 
-    "History of Programming Languages": {
+    "History": {
         "kennung": [
             "VT SAMT"
         ], 
@@ -440,11 +1354,15 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Business Computing", 
-            " Systemarchitektur"
+            "Systemarchitektur"
         ], 
         "cp": 3, 
         "dozent": [
@@ -453,7 +1371,7 @@ var data =
         ], 
         "nameLV": "History of Programming Languages"
     }, 
-    "\"R\u00e4uber und Gendarm\" (CTF-Szenarien)": {
+    "R\u00e4uber und<br />Gendarm": {
         "kennung": [
             "VT IST", 
             "SWA"
@@ -467,12 +1385,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Internet-Technologien", 
-            " Mensch-Maschine-Schnittstelle", 
-            " Systemarchitektur"
+            "Mensch-Maschine-Schnittstelle", 
+            "Systemarchitektur"
         ], 
         "cp": 6, 
         "dozent": [
@@ -482,7 +1404,7 @@ var data =
         ], 
         "nameLV": "\"R\u00e4uber und Gendarm\" (CTF-Szenarien)"
     }, 
-    "Grundlagen der modellgetriebenen Softwareentwicklung": {
+    "Modellgetriebene<br />Softwareentwicklung": {
         "kennung": [
             "VT SAMT"
         ], 
@@ -494,11 +1416,15 @@ var data =
         ], 
         "themenkomplex": [
             "Freie Informatikthemen (Bachelor)", 
-            " Grundlagen der Systemmodellierung", 
-            " Softwaretechnologische Konzepte"
-        ], 
-        "semester": "SS2011", 
+            "Grundlagen der Systemmodellierung", 
+            "Softwaretechnologische Konzepte"
+        ],
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Software Engineering"
         ], 
@@ -509,7 +1435,7 @@ var data =
         ], 
         "nameLV": "Grundlagen der modellgetriebenen Softwareentwicklung"
     }, 
-    "Wirtschaftliche Grundlagen II": {
+    "Wirtschaft II": {
         "kennung": [
             "WR2"
         ], 
@@ -522,8 +1448,12 @@ var data =
         "themenkomplex": [
             "\u00d6konomische und rechtliche Grundlagen"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 2,
         "vertiefung": [
             ""
         ], 
@@ -533,7 +1463,7 @@ var data =
         ], 
         "nameLV": "Wirtschaftliche Grundlagen II"
     }, 
-    "Web Service Technologien": {
+    "Web Service<br />Technologien": {
         "kennung": [
             "VT IST"
         ], 
@@ -546,12 +1476,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Internet-Technologien", 
-            " Verteiles Rechnen", 
-            " Systemarchitektur"
+            "Verteiles Rechnen", 
+            "Systemarchitektur"
         ], 
         "cp": 3, 
         "dozent": [
@@ -559,13 +1493,13 @@ var data =
         ], 
         "nameLV": "Web Service Technologien"
     }, 
-    "Modellierung II": {
+    "Mod II": {
         "kennung": [
             "MO2"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Softwaretechnik und Modellierung"
@@ -573,8 +1507,12 @@ var data =
         "themenkomplex": [
             "Grundlagen in IT-Systems Engineering"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 2,
         "vertiefung": [
             ""
         ], 
@@ -584,28 +1522,32 @@ var data =
         ], 
         "nameLV": "Modellierung II"
     }, 
-    "Datenbanksysteme I": {
+    "DBS I": {
         "kennung": [
             "SB1-5", 
             "VT OSIS"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Softwarebasissysteme", 
-            " Vertiefungsgebiete"
+            "Vertiefungsgebiete"
         ], 
         "themenkomplex": [
             "Softwarebasissysteme (Bachelor)"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Business Computing", 
-            " Internet-Technologien", 
-            " Systemarchitektur"
+            "Internet-Technologien", 
+            "Systemarchitektur"
         ], 
         "cp": 6, 
         "dozent": [
@@ -619,7 +1561,7 @@ var data =
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Mathematische und theoretische Grundlagen"
@@ -627,8 +1569,12 @@ var data =
         "themenkomplex": [
             "Mathematik (Bachelor)"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 2,
         "vertiefung": [
             ""
         ], 
@@ -638,7 +1584,7 @@ var data =
         ], 
         "nameLV": "Mathematik II"
     }, 
-    "Entwicklungsprozesse in Open-Source-Projekten": {
+    "Open-Source-<br />Projekte": {
         "kennung": [
             "VT OSIS", 
             "VT SAMT"
@@ -652,8 +1598,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Systemarchitektur"
         ], 
@@ -663,7 +1613,7 @@ var data =
         ], 
         "nameLV": "Entwicklungsprozesse in Open-Source-Projekten"
     }, 
-    "Recht fuer Ingenieure I": {
+    "Recht I": {
         "kennung": [
             "WR1"
         ], 
@@ -676,8 +1626,12 @@ var data =
         "themenkomplex": [
             "\u00d6konomische und rechtliche Grundlagen"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 2,
         "vertiefung": [
             ""
         ], 
@@ -687,28 +1641,32 @@ var data =
         ], 
         "nameLV": "Recht fuer Ingenieure I"
     }, 
-    "3D-Computergrafik I": {
+    "Computergrafik I": {
         "kennung": [
             "SB1-5", 
             "VT HCT"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Vertiefungsgebiete", 
-            " Softwarebasissysteme"
+            "Softwarebasissysteme"
         ], 
         "themenkomplex": [
             "Softwarebasissysteme (Bachelor)"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Mensch-Maschine-Schnittstelle", 
-            " Systemsicherheit", 
-            " Internet-Technologien"
+            "Systemsicherheit", 
+            "Internet-Technologien"
         ], 
         "cp": 6, 
         "dozent": [
@@ -716,13 +1674,13 @@ var data =
         ], 
         "nameLV": "3D-Computergrafik I"
     }, 
-    "Einf\u00fchrung in das Design Thinking": {
+    "Design Thinking": {
         "kennung": [
             "SSK1"
         ], 
         "lehrform": [
             "Projekt", 
-            " Seminar"
+            "Seminar"
         ], 
         "modul": [
             "Softskills"
@@ -730,8 +1688,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": false, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Softskills"
         ], 
@@ -742,7 +1704,7 @@ var data =
         ], 
         "nameLV": "Einf\u00fchrung in das Design Thinking"
     }, 
-    "Qualit\u00e4tssicherung in Web-Applikationen": {
+    "Qualit\u00e4tssicherung<br />in Web-Apps": {
         "kennung": [
             "VT IST"
         ], 
@@ -755,11 +1717,15 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Internet-Technologien", 
-            " Mensch-Maschine-Schnittstelle"
+            "Mensch-Maschine-Schnittstelle"
         ], 
         "cp": 3, 
         "dozent": [
@@ -767,13 +1733,13 @@ var data =
         ], 
         "nameLV": "Qualit\u00e4tssicherung in Web-Applikationen"
     }, 
-    "Einf\u00fchrung in die Programmiertechnik II": {
+    "PT II": {
         "kennung": [
             "PT2"
         ], 
         "lehrform": [
             "Vorlesung", 
-            " \u00dcbung"
+            "\u00dcbung"
         ], 
         "modul": [
             "Grundlagen IT-Systems Engineering"
@@ -781,8 +1747,12 @@ var data =
         "themenkomplex": [
             "Grundlagen in IT-Systems Engineering"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": true,
+	"empfohlen": 2,
         "vertiefung": [
             ""
         ], 
@@ -792,7 +1762,7 @@ var data =
         ], 
         "nameLV": "Einf\u00fchrung in die Programmiertechnik II"
     }, 
-    "HCI Undergrad Project: 3D Games and Interactive Floors": {
+    "HCI Undergrad<br />Project": {
         "kennung": [
             "VT HCT"
         ], 
@@ -805,14 +1775,18 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Mensch-Maschine-Schnittstelle", 
-            " Verteiles Rechnen", 
-            " Systemarchitektur", 
-            " Systemsicherheit", 
-            " Internet-Technologien"
+            "Verteiles Rechnen", 
+            "Systemarchitektur", 
+            "Systemsicherheit", 
+            "Internet-Technologien"
         ], 
         "cp": 6, 
         "dozent": [
@@ -820,13 +1794,13 @@ var data =
         ], 
         "nameLV": "HCI Undergrad Project: 3D Games and Interactive Floors"
     }, 
-    "D-School Basic Track": {
+    "D-School<br />Basic Track": {
         "kennung": [
             "SSK1"
         ], 
         "lehrform": [
             "Projekt", 
-            " Seminar"
+            "Seminar"
         ], 
         "modul": [
             "Softskills"
@@ -834,8 +1808,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": false, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Softskills"
         ], 
@@ -846,7 +1824,7 @@ var data =
         ], 
         "nameLV": "D-School Basic Track"
     }, 
-    "Fachspezifisches Englisch (Level 1)": {
+    "Fachenglisch<br />Level 1": {
         "kennung": [
             "SSK2"
         ], 
@@ -859,8 +1837,12 @@ var data =
         "themenkomplex": [
             "Freie Themen"
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": 1,
         "vertiefung": [
             ""
         ], 
@@ -883,8 +1865,12 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": false, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Softskills"
         ], 
@@ -894,7 +1880,7 @@ var data =
         ], 
         "nameLV": "StudiumPlus"
     }, 
-    "Beauty is Our Business": {
+    "Beauty is Our<br />Business": {
         "kennung": [
             "VT OSIS"
         ], 
@@ -907,12 +1893,16 @@ var data =
         "themenkomplex": [
             ""
         ], 
-        "semester": "SS2011", 
+        "semester": [
+		"SS2011"
+	],
         "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
         "vertiefung": [
             "Systemarchitektur", 
-            " Mensch-Maschine-Schnittstelle", 
-            " Internet-Technologien"
+            "Mensch-Maschine-Schnittstelle", 
+            "Internet-Technologien"
         ], 
         "cp": 3, 
         "dozent": [

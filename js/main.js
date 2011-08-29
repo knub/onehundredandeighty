@@ -48,16 +48,43 @@ $(function() {
 		stop: frontend.endSorting			// raised, when sorting is finished
 	}).disableSelection();					// disableSelection makes text selection impossible
 
+	// data is imported from data.js
+
+	var currentPool = 1;
+	var coursesInCurrentPool = 0;
+	for (var e in data) {
+		var course = data[e];
+		var courseInfo = 	"<div class='info'>" +
+					"<h3>" + course['nameLV'] + "</h3>" +
+					"<div>" +
+					course['modul'] + "<br />" +
+					course['dozent'].join(", ") + "<br />" + 
+					course['cp'] + " Leistungspunkte<br />" +
+					course['lehrform'].join(" + ") + "<br />" + 
+					course['vertiefung'].join(", ") + "<br />" +
+					"</div>" +
+					"</div>";
+		var oneliner = "";
+		if (e.indexOf("<br />") === -1) {
+			oneliner = " class='oneliner'";
+		}
+		var html = $("<li" + oneliner + ">" + e + "<button>ⴲ</button>" + courseInfo + "</li>");
+		if (course['empfohlen'] === "") {
+			$("#extra" + currentPool).append(html);
+			coursesInCurrentPool += 1;
+			if (coursesInCurrentPool === settings.coursesPoolHeight) {
+				coursesInCurrentPool = 0;
+				currentPool += 1;
+			}
+		}
+		else {
+			$("#semester" + course['empfohlen']).append(html);
+		}
+	}
+
 	$(".courses li button").click(function () {
 		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
-	$("#semester1 li").knubtip("init");			// activate tooltip for li elements (see jquery.knubtip.js)
-
-	// data is imported from data.js
-
-	// DEBUG: display data
-	//for (var i in data) {
-	//	alert("Key: " + i + "| Value: " + data[i]);
-	//}
+	$(".courses li").knubtip("init");			// activate tooltip for li elements (see jquery.knubtip.js)
 });

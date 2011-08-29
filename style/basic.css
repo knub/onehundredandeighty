@@ -88,14 +88,16 @@ h2 {
 	border-top: 1px dotted gray;
 }
 .courses li {
-	font-size: 1.2em;
-	height: 1.5em;
+	font-size: 1.1em;
+	/*height: 1.5em;*/
+	height: 2.7em;
 	cursor: move;
 	border: 1px solid black; /* maybe border: 1px solid gray; looks better? */
 	text-align: center;
 	margin: 15px 0px;
 	border-radius: 5px;
 	position: relative;
+	overflow: hidden;
 
 	/* gradients in whole document created by: --> http://www.colorzilla.com/gradient-editor/ <--. Thanks! */
 	background: #ffffff; /* Old browsers */
@@ -125,6 +127,9 @@ h2 {
 }
 .courses li.disabled:hover {
 	cursor: auto;
+}
+.courses li.oneliner {
+	line-height: 2.7em;
 }
 
 .courses li button {
