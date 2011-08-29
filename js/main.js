@@ -10,10 +10,10 @@ var settings = {
 
 var frontend = {
 	startSorting: function(event, ui) {
-			$("#semester1 li").knubtip("disable");
+			$(".courses li").knubtip("disable");
 		},
 	endSorting: function(event, ui) {
-			$("#semester1 li").knubtip("enable");
+			$(".courses li").knubtip("enable");
 			frontend.poolSorting(event, ui);
 		},
 	poolSorting : function (event, ui) {
