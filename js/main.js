@@ -9,6 +9,13 @@ var settings = {
 };
 
 var frontend = {
+	startSorting: function(event, ui) {
+			$("#semester1 li").knubtip("disable");
+		},
+	endSorting: function(event, ui) {
+			$("#semester1 li").knubtip("enable");
+			frontend.poolSorting(event, ui);
+		},
 	poolSorting : function (event, ui) {
 			"use strict";
 			var pool = $("#courses-pool");
@@ -37,14 +44,15 @@ $(function() {
 		placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
 		cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
 		change: frontend.poolSorting,			// raised, when there was a change while sorting
-		stop: frontend.poolSorting			// raised, when sorting is finished
+		start: frontend.startSorting,			// raised, when sorting starts
+		stop: frontend.endSorting			// raised, when sorting is finished
 	}).disableSelection();					// disableSelection makes text selection impossible
 
 	$(".courses li button").click(function () {
 		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
-	$("#semester1 li").knubtip();				// activate tooltip for li elements (see jquery.knubtip.js)
+	$("#semester1 li").knubtip("init");			// activate tooltip for li elements (see jquery.knubtip.js)
 
 	// data is imported from data.js
 
