@@ -48,6 +48,14 @@ $(function() {
 		stop: frontend.endSorting			// raised, when sorting is finished
 	}).disableSelection();					// disableSelection makes text selection impossible
 
+	var displayArray = function (value) {
+		if (Array.isArray(value) && value[0] !== "") {
+			return value.join(", ");
+		}
+		return "<em>Information fehlt</em>";
+	};
+
+
 	// data is imported from data.js
 
 	var currentPool = 1;
@@ -57,11 +65,13 @@ $(function() {
 		var courseInfo = 	"<div class='info'>" +
 					"<h3>" + course['nameLV'] + "</h3>" +
 					"<div>" +
-					course['modul'] + "<br />" +
-					course['dozent'].join(", ") + "<br />" + 
-					course['cp'] + " Leistungspunkte<br />" +
-					course['lehrform'].join(" + ") + "<br />" + 
-					course['vertiefung'].join(", ") + "<br />" +
+					"<table>" +
+					"<tr><td>Modul</td><td>" + displayArray(course['modul']) + "</td></tr>" +
+					"<tr><td>Dozent/en</td><td>" + displayArray(course['dozent'])+ "</td></tr>" + 
+					"<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" +
+					"<tr><td>Lehrform</td><td>" + displayArray(course['lehrform']) + "</td></tr>" + 
+					"<tr><td>Vertiefungsgebiet/e</td><td>" + displayArray(course['vertiefung']) + "</td></tr>" +
+					"</table>" +
 					"</div>" +
 					"</div>";
 		var oneliner = "";

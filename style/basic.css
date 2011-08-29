@@ -158,8 +158,8 @@ h2 {
 /* TODO: I think a complete redesign of tooltip is neccessary - does not like quite good right now. */
 .info {
 	display: none;
-	width: 450px;
-	height: 300px;
+	width: 500px;
+	min-height: 350px;
 	z-index: 999;
 	position: absolute;
 	top: 0px;
@@ -189,6 +189,24 @@ h2 {
 	padding: 15px 15px 10px 30px;
 	border-bottom: 1px solid #CCC;
 	margin-bottom: 10px;
+}
+.info table {
+	border-collapse: collapse;
+	border: 1px solid #DDD;
+}
+.info tr:nth-child(even) {
+	background: #F1F1F1;
+}
+.info tr:nth-child(odd) {
+	background: #F9F9F9;
+}
+.info tr td:first-child {
+	border-right: 1px dotted gray;
+	padding: 0px 10px;
+	font-weight: bold;
+}
+.info td {
+	padding: 14px;
 }
 /*
 .info:before {
@@ -226,10 +244,10 @@ h2 {
 	width: 11.6%; /* 80% (chosen list box-width) * 14.5% (width of one list) */
 }
 #courses-pool ul:first-child {
-	margin-left: 15%;
+	margin-left: 10%;
 }
 #courses-pool ul li {
-	margin: 0px;
+	margin: 4px;
 }
 
 .placeholder-highlight {
