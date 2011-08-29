@@ -7,20 +7,6 @@ import re
 
 attributepattern = re.compile(r"\<p\>(.*?)\</p\>")
 
-class lv:
-	"""Klasse der Lehrveranstaltungen"""
-	def __init__(self, nameLV="", kennung=[], dozent=[], cp=0, benotet=False, modul=[], lehrform=[], themenkomplex=[], vertiefung=[], semester=""):
-		self.nameLV = nameLV
-		self.kennung = kennung
-		self.dozent = dozent
-		self.cp = cp
-		self.benotet = benotet
-		self.modul = modul
-		self.lehrform = lehrform
-		self.themenkomplex = themenkomplex
-		self.vertiefung = vertiefung
-		self.semester = semester
-
 def URLForSemester(semester):
 	"""gibt für ein gewünschtes Semester die entsprechende Liste der Lehrveranstaltungen zurück"""
 	if semester == "now":
@@ -214,8 +200,20 @@ def parseLVPage(url):
 		if (line.strip().endswith("Vertiefungsgebiet:</p></td>")):
 			break
 	vertiefung = attributeAsList(page.next()) #hier hab ich versucht, so unverständlich wie möglich zu sein
-	
-	return lv(nameLV=nameofLV, semester=semester, dozent=dozents, kennung=kennung, cp=cp, benotet=benotet, modul=modul, lehrform=lehrform, themenkomplex=themenkomplex, vertiefung=vertiefung)
+
+	# lv wird als dictionary zurückgegeben, damit es einfacher jsonifizierbar ist
+	lv = {}
+	lv['nameLV'] = nameofLV
+	lv['semester'] = semester
+	lv['dozent'] = dozents
+	lv['kennung'] = kennung
+	lv['cp'] = cp
+	lv['benotet'] = benotet
+	lv['modul'] = modul
+	lv['lehrform'] = lehrform
+	lv['themenkomplex'] = themenkomplex
+	lv['vertiefung'] = vertiefung
+	return lv
 	
 def attributeAsList(line):
 	found = re.search(attributepattern, line)
@@ -260,9 +258,9 @@ place = raw_input("Please input the name of the local file that the JSON dump sh
 
 dumpfile = open("./" + place, "w")
 
+#lvs ist ein array von dictionarys; in jedem dictionary stehen die infos für eine lv
 lvs = listOfLVs(URLsPerSemester(URLForSemester(semester)))
 
-for lv in lvs:
-	dumpfile.write(json.dumps(vars(lv), indent=4))
+dumpfile.write(json.dumps(lvs, indent=4))
 
 dumpfile.close()
