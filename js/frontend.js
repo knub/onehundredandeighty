@@ -10,6 +10,25 @@ var settings = {
 };
 
 var frontend = {
+	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
+	organizeSemesters: function () {
+			// for the first semester displayed, start with the in semesterManager.startswith specified semester
+			var currentSemesterIndex = semesterManager.semesters.indexOf(semesterManager.startswith);
+			// for all six semester ..
+			for (var i = 1; i <= 6; i++) {
+				// .. build options and select the correct one
+				var options = "", selected = "";
+				// fill selects with all possible semesters (possible semesters specified in semesterManager.semesters)
+				for (var j = 0; j < semesterManager.semesters.length; j++) {
+					// check whether the current <option> must be selected
+					selected = j === currentSemesterIndex ? " selected" : "";
+					options += "<option" + selected + ">" + semesterManager.semesters[j] + "</option>";
+				}
+				// assume, that there are no breaks while studying and go on with the following semester
+				currentSemesterIndex += 1;
+				$("#selectSemester" + i).append(options);
+			}
+		},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function (event, ui) {
 			$(".courses li").knubtip("disable");
@@ -63,6 +82,10 @@ var frontend = {
  */
 // note: $(function () ...) is the same as $(document).ready(function () ..)
 $(function () {
+
+	/* initialize <select>'s with correct semesters from logic (see logic.js) */
+	frontend.organizeSemesters();
+
 	/* apply jquery drag'n'dropping */
 	$(frontend.coursesList).sortable({
 		connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
