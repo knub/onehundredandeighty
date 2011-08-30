@@ -1,6 +1,7 @@
 var data = 
 {
-    "Android": {
+    "android": {
+    	"kurz": "Android",
         "kennung": [
             "VT OSIS"
         ], 
@@ -31,7 +32,8 @@ var data =
         ], 
         "nameLV": "Mobile Computing with Android"
     }, 
-    "AOP": {
+    "aop": {
+    	"kurz": "AOP",
         "kennung": [
             "VT SAMT"
         ], 
@@ -62,7 +64,8 @@ var data =
         ], 
         "nameLV": "Aspektorientiertes Programmieren"
     }, 
-    "Beauty is Our<br />Business": {
+    "beauty": {
+    	"kurz": "Beauty is Our<br />Business",
         "kennung": [
             "VT OSIS"
         ], 
@@ -92,7 +95,8 @@ var data =
         ], 
         "nameLV": "Beauty is Our Business"
     },
-    "BS I": {
+    "bs1": {
+    	"kurz": "BS I",
         "kennung": [
             "BS"
         ], 
@@ -121,7 +125,8 @@ var data =
         ], 
         "nameLV": "Betriebssysteme"
     }, 
-    "BS II": {
+    "bs2": {
+    	"kurz": "BS II",
         "kennung": [
             "VT OSIS"
         ], 
@@ -151,7 +156,8 @@ var data =
         ], 
         "nameLV": "Betriebssysteme II"
     }, 
-    "Cloud<br />Computing": {
+    "cloud": {
+    	"kurz": "Cloud<br />Computing",
         "kennung": [
             "VT OSIS"
         ], 
@@ -183,7 +189,38 @@ var data =
         ], 
         "nameLV": "Industrieseminar Cloud Computing"
     }, 
-    "Computergrafik I": {
+    "collaboration": {
+    	"kurz": "Collaboration<br />software",
+        "kennung": [
+            "VT IST"
+        ], 
+        "lehrform": [
+            ""
+        ], 
+        "modul": [
+            "Vertiefungsgebiete"
+        ], 
+        "themenkomplex": [
+            ""
+        ], 
+        "semester": [
+		"WS2010/2011"
+	],
+        "benotet": true, 
+	"pflicht": false,
+	"empfohlen": "",
+        "vertiefung": [
+            "Internet-Technologien", 
+            "Mensch-Maschine-Schnittstelle"
+        ], 
+        "cp": 6, 
+        "dozent": [
+            "Prof. Dr. Christoph Meinel"
+        ], 
+        "nameLV": "User-centered development of collaboration software"
+    }, 
+    "grafik1": {
+    	"kurz": "Computergrafik I",
         "kennung": [
             "SB1-5", 
             "VT HCT"
@@ -216,36 +253,8 @@ var data =
         ], 
         "nameLV": "3D-Computergrafik I"
     }, 
-    "Collaboration<br />software": {
-        "kennung": [
-            "VT IST"
-        ], 
-        "lehrform": [
-            ""
-        ], 
-        "modul": [
-            "Vertiefungsgebiete"
-        ], 
-        "themenkomplex": [
-            ""
-        ], 
-        "semester": [
-		"WS2010/2011"
-	],
-        "benotet": true, 
-	"pflicht": false,
-	"empfohlen": "",
-        "vertiefung": [
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle"
-        ], 
-        "cp": 6, 
-        "dozent": [
-            "Prof. Dr. Christoph Meinel"
-        ], 
-        "nameLV": "User-centered development of collaboration software"
-    }, 
-    "Computergrafik II": {
+    "grafik2": {
+    	"kurz": "Computergrafik II",
         "kennung": [
             ""
         ], 
@@ -276,7 +285,8 @@ var data =
         ], 
         "nameLV": "Computergrafik II"
     }, 
-    "DBS I": {
+    "dbs1": {
+    	"kurz": "DBS I",
         "kennung": [
             "SB1-5", 
             "VT OSIS"
@@ -309,7 +319,8 @@ var data =
         ], 
         "nameLV": "Datenbanksysteme I"
     }, 
-    "DBS II": {
+    "dbs2": {
+    	"kurz": "DBS II",
         "kennung": [
             "VT OSIS"
         ], 
@@ -339,7 +350,8 @@ var data =
         ], 
         "nameLV": "Datenbanksysteme II"
     }, 
-    "Design Thinking": {
+    "designthinking": {
+    	"kurz": "Design Thinking",
         "kennung": [
             "SSK1"
         ], 
@@ -369,7 +381,8 @@ var data =
         ], 
         "nameLV": "Einf\u00fchrung in das Design Thinking"
     }, 
-    "D-School<br />Basic Track": {
+    "dschoolbasic": {
+    	"kurz": "D-School<br />Basic Track",
         "kennung": [
             "SSK1"
         ], 
@@ -399,7 +412,8 @@ var data =
         ], 
         "nameLV": "D-School Basic Track"
     },
-    "D-School<br />Schnupperkurs": {
+    "dschoolschnupper": {
+    	"kurz": "D-School<br />Schnupperkurs",
         "kennung": [
             "SSK-DT"
         ], 
@@ -429,7 +443,8 @@ var data =
         ], 
         "nameLV": "D-School Schnupperkurs"
     }, 
-    "Enterprise<br />Software": {
+    "enterprise": {
+    	"kurz": "Enterprise<br />Software",
         "kennung": [
             "VT BPET"
         ], 
@@ -463,7 +478,8 @@ var data =
         ], 
         "nameLV": "Basics of On-premise and On-demand Enterprise Software"
     }, 
-    "eWorld Verkehrs-<br />simulation-Tool": {
+    "eworld": {
+    	"kurz": "eWorld Verkehrs-<br />simulation-Tool",
         "kennung": [
             "VT IST"
         ], 
@@ -493,7 +509,8 @@ var data =
         ], 
         "nameLV": "eWorld-Open Source Verkehrssimulation-Tool"
     }, 
-    "Fachenglisch<br />Level 1": {
+    "fachenglisch1": {
+    	"kurz": "Fachenglisch<br />Level 1",
         "kennung": [
             "SSK2"
         ], 
@@ -522,7 +539,8 @@ var data =
         ], 
         "nameLV": "Fachspezifisches Englisch (Level 1)"
     },
-    "Fachenglisch<br />Level 2": {
+    "fachenglisch2": {
+    	"kurz": "Fachenglisch<br />Level 2",
         "kennung": [
             "SSK2"
         ], 
@@ -551,7 +569,8 @@ var data =
         ], 
         "nameLV": "Fachspezifisches Englisch (Level 2)"
     }, 
-    "Game<br />Programming": {
+    "game": {
+    	"kurz": "Game<br />Programming",
         "kennung": [
             "VT HCT"
         ], 
@@ -582,7 +601,8 @@ var data =
         ], 
         "nameLV": "Game Programming"
     }, 
-    "GdS": {
+    "gds": {
+    	"kurz": "GdS",
         "kennung": [
             "DS"
         ], 
@@ -611,7 +631,8 @@ var data =
         ], 
         "nameLV": "Grundlagen digitaler Systeme"
     }, 
-    "Graphics<br />Libraries": {
+    "graphicslibraries": {
+    	"kurz": "Graphics<br />Libraries",
         "kennung": [
             "VT HCT", 
             "VT SAMT"
@@ -643,7 +664,8 @@ var data =
         ], 
         "nameLV": "Multimedia/Graphics Library & System"
     }, 
-    "Hands, Feet<br />and Devices": {
+    "handsfeedevices": {
+    	"kurz": "Hands, Feet<br />and Devices",
         "kennung": [
             "VT HCT"
         ], 
@@ -675,7 +697,8 @@ var data =
         ], 
         "nameLV": "Project Seminar Hands, Feet and Devices"
     }, 
-    "HCI Undergrad<br />Project": {
+    "hciundergrad": {
+    	"kurz": "HCI Undergrad<br />Project",
         "kennung": [
             "VT HCT"
         ], 
@@ -707,7 +730,8 @@ var data =
         ], 
         "nameLV": "HCI Undergrad Project: 3D Games and Interactive Floors"
     }, 
-    "HCI I": {
+    "hci1": {
+    	"kurz": "HCI I",
         "kennung": [
             "SB1-5", 
             "VT HCT"
@@ -738,7 +762,8 @@ var data =
         ], 
         "nameLV": "HCI1: Designing Interactive Systems"
     }, 
-    "HCI II": {
+    "hci2": {
+    	"kurz": "HCI II",
         "kennung": [
             "SB1-5", 
             "VT HCT"
@@ -769,7 +794,8 @@ var data =
         ], 
         "nameLV": "HCI: Building Interactive Devices & Computer Vision"
     }, 
-    "History": {
+    "history": {
+    	"kurz": "History",
         "kennung": [
             "VT SAMT"
         ], 
@@ -799,7 +825,8 @@ var data =
         ], 
         "nameLV": "History of Programming Languages"
     }, 
-    "Internet-<br />Security": {
+    "internetsecurity": {
+    	"kurz": "Internet-<br />Security",
         "kennung": [
             "VT IST"
         ], 
@@ -830,7 +857,8 @@ var data =
         ], 
         "nameLV": "Internet-Security - Weaknesses and Targets (Teleteaching)"
     }, 
-    "Mathematik I": {
+    "mathematik1": {
+    	"kurz": "Mathematik I",
         "kennung": [
             "MA1"
         ], 
@@ -858,7 +886,8 @@ var data =
         ], 
         "nameLV": "Mathematik I - Diskrete Strukturen und Logik"
     }, 
-    "Mathematik II": {
+    "mathematik2": {
+    	"kurz": "Mathematik II",
         "kennung": [
             "MA2"
         ], 
@@ -887,7 +916,8 @@ var data =
         ], 
         "nameLV": "Mathematik II"
     }, 
-    "MOD I": {
+    "mod1": {
+    	"kurz": "MOD I",
         "kennung": [
             "MO1"
         ], 
@@ -915,7 +945,8 @@ var data =
         ], 
         "nameLV": "Modellierung I"
     }, 
-    "MOD II": {
+    "mod2": {
+    	"kurz": "MOD II",
         "kennung": [
             "MO2"
         ], 
@@ -944,7 +975,8 @@ var data =
         ], 
         "nameLV": "Modellierung II"
     }, 
-    "Modellgetriebene<br />Softwareentwicklung": {
+    "modellgetriebenesoftwareentwicklung": {
+    	"kurz": "Modellgetriebene<br />Softwareentwicklung",
         "kennung": [
             "VT SAMT"
         ], 
@@ -975,7 +1007,8 @@ var data =
         ], 
         "nameLV": "Grundlagen der modellgetriebenen Softwareentwicklung"
     }, 
-    "Multimedia<br />Analyse": {
+    "multimediaanalyse": {
+    	"kurz": "Multimedia<br />Analyse",
         "kennung": [
             "VT IST", 
             "VT OSIS", 
@@ -1007,7 +1040,8 @@ var data =
         ], 
         "nameLV": "Multimedia Analyse Technologien"
     }, 
-    "NoSQL": {
+    "nosql": {
+    	"kurz": "NoSQL",
         "kennung": [
             "VT OSIS"
         ], 
@@ -1039,7 +1073,8 @@ var data =
         ], 
         "nameLV": "NoSQL"
     }, 
-    "Open-Source-<br />Projekte": {
+    "opensource": {
+    	"kurz": "Open-Source-<br />Projekte",
         "kennung": [
             "VT OSIS", 
             "VT SAMT"
@@ -1068,7 +1103,8 @@ var data =
         ], 
         "nameLV": "Entwicklungsprozesse in Open-Source-Projekten"
     }, 
-    "PEM": {
+    "pem": {
+    	"kurz": "PEM",
         "kennung": [
             "PEM"
         ], 
@@ -1099,7 +1135,8 @@ var data =
         ], 
         "nameLV": "Projektentwicklung und -management (PEM I und II)"
     }, 
-    "POIS I": {
+    "pois1": {
+    	"kurz": "POIS I",
         "kennung": [
             "SB1-5", 
             "VT BPET"
@@ -1133,7 +1170,8 @@ var data =
         ], 
         "nameLV": "Prozessorientierte Informationssysteme I"
     }, 
-    "POIS II": {
+    "pois2": {
+    	"kurz": "POIS II",
         "kennung": [
             "VT BPET", 
             "VT SAMT"
@@ -1166,7 +1204,8 @@ var data =
         ], 
         "nameLV": "Prozessorientierte Informationssysteme II"
     }, 
-    "Process-Based<br />Applications": {
+    "processapplications": {
+    	"kurz": "Process-Based<br />Applications",
         "kennung": [
             "VT BPET"
         ], 
@@ -1199,7 +1238,8 @@ var data =
         ], 
         "nameLV": "Usability of Process-Based Applications"
     }, 
-    "PT I": {
+    "pt1": {
+    	"kurz": "PT I",
         "kennung": [
             "PT1"
         ], 
@@ -1228,7 +1268,8 @@ var data =
         ], 
         "nameLV": "Einf\u00fchrung in die Programmiertechnik I"
     },
-    "PT II": {
+    "pt2": {
+    	"kurz": "PT II",
         "kennung": [
             "PT2"
         ], 
@@ -1257,7 +1298,8 @@ var data =
         ], 
         "nameLV": "Einf\u00fchrung in die Programmiertechnik II"
     }, 
-    "Qualit\u00e4tssicherung<br />in Web-Apps": {
+    "qualitaetssicherunginwebapps": {
+    	"kurz": "Qualit\u00e4tssicherung<br />in Web-Apps",
         "kennung": [
             "VT IST"
         ], 
@@ -1286,7 +1328,8 @@ var data =
         ], 
         "nameLV": "Qualit\u00e4tssicherung in Web-Applikationen"
     },
-    "R\u00e4uber und<br />Gendarm": {
+    "raeuberundgendarm": {
+    	"kurz": "R\u00e4uber und<br />Gendarm",
         "kennung": [
             "VT IST", 
             "SWA"
@@ -1319,7 +1362,8 @@ var data =
         ], 
         "nameLV": "\"R\u00e4uber und Gendarm\" (CTF-Szenarien)"
     }, 
-    "Recht I": {
+    "recht1": {
+    	"kurz": "Recht I",
         "kennung": [
             "WR1"
         ], 
@@ -1347,7 +1391,8 @@ var data =
         ], 
         "nameLV": "Recht fuer Ingenieure I"
     }, 
-    "Recht II": {
+    "recht2": {
+    	"kurz": "Recht II",
         "kennung": [
             "WR1"
         ], 
@@ -1375,7 +1420,8 @@ var data =
         ], 
         "nameLV": "Recht fuer Ingenieure II"
     }, 
-    "RFID": {
+    "rfid": {
+    	"kurz": "RFID",
         "kennung": [
             "VT BPET", 
             "VT OSIS", 
@@ -1407,7 +1453,8 @@ var data =
         ], 
         "nameLV": "Real-World Applications in RFID-Aided Supply Chains"
     }, 
-    "SEO": {
+    "seo": {
+    	"kurz": "SEO",
         "kennung": [
             "VT IST"
         ], 
@@ -1436,7 +1483,8 @@ var data =
         ], 
         "nameLV": "SEO - Search Engine Optimization"
     }, 
-    "StudiumPlus": {
+    "studiumplus": {
+    	"kurz": "StudiumPlus",
         "kennung": [
             "SSK-SK"
         ], 
@@ -1465,7 +1513,8 @@ var data =
         ], 
         "nameLV": "StudiumPlus"
     }, 
-    "SWA": {
+    "swa": {
+    	"kurz": "SWA",
         "kennung": [
             "SWA"
         ], 
@@ -1495,7 +1544,8 @@ var data =
         ], 
         "nameLV": "Software-Architektur"
     }, 
-    "SWT I": {
+    "swt1": {
+    	"kurz": "SWT I",
         "kennung": [
             "SWT"
         ], 
@@ -1524,7 +1574,8 @@ var data =
         ], 
         "nameLV": "Softwaretechnik I"
     }, 
-    "SWT II": {
+    "swt2": {
+    	"kurz": "SWT II",
         "kennung": [
             "VT SAMT"
         ], 
@@ -1553,7 +1604,8 @@ var data =
         ], 
         "nameLV": "Softwaretechnik II"
     }, 
-    "TI I": {
+    "ti1": {
+    	"kurz": "TI I",
         "kennung": [
             "TI1"
         ], 
@@ -1581,7 +1633,8 @@ var data =
         ], 
         "nameLV": "Theoretische Informatik I"
     }, 
-    "TI II": {
+    "ti2": {
+    	"kurz": "TI II",
         "kennung": [
             "TI2"
         ], 
@@ -1610,7 +1663,8 @@ var data =
         ], 
         "nameLV": "Theoretische Informatik II"
     }, 
-    "VHDL": {
+    "vhdl": {
+    	"kurz": "VHDL",
         "kennung": [
             "VT OSIS", 
             "VT SAMT"
@@ -1639,7 +1693,8 @@ var data =
         ], 
         "nameLV": "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
     }, 
-    "Web Service<br />Technologien": {
+    "webservice": {
+    	"kurz": "Web Service<br />Technologien",
         "kennung": [
             "VT IST"
         ], 
@@ -1669,7 +1724,8 @@ var data =
         ], 
         "nameLV": "Web Service Technologien"
     }, 
-    "Wirtschaft I": {
+    "wirtschaft1": {
+    	"kurz": "Wirtschaft I",
         "kennung": [
             "WR2"
         ], 
@@ -1697,7 +1753,8 @@ var data =
         ], 
         "nameLV": "Wirtschaftliche Grundlagen I"
     }, 
-    "Wirtschaft II": {
+    "wirtschaft2": {
+    	"kurz": "Wirtschaft II",
         "kennung": [
             "WR2"
         ], 
@@ -1725,7 +1782,8 @@ var data =
         ], 
         "nameLV": "Wirtschaftliche Grundlagen II"
     }, 
-    "Workflow–<br />Anwendungen": {
+    "workflow": {
+    	"kurz": "Workflow–<br />Anwendungen",
         "kennung": [
             "VT BPET", 
             "VT SAMT"
@@ -1757,7 +1815,8 @@ var data =
         ], 
         "nameLV": "Entwicklung von Workflow-Anwendungen"
     }, 
-    "WWW": {
+    "www": {
+    	"kurz": "WWW",
         "kennung": [
             "SB1-5", 
             "VT IST"
@@ -1791,7 +1850,8 @@ var data =
         ], 
         "nameLV": "Internet- und WWW-Technologien"
     }, 
-    "WWW,<br />weiterführend": {
+    "wwwextra": {
+    	"kurz": "WWW,<br />weiterführend",
         "kennung": [
             "VT IST"
         ], 

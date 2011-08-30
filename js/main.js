@@ -75,10 +75,10 @@ $(function() {
 					"</div>" +
 					"</div>";
 		var oneliner = "";
-		if (e.indexOf("<br />") === -1) {
+		if (course['kurz'].indexOf("<br />") === -1) {
 			oneliner = " class='oneliner'";
 		}
-		var html = $("<li" + oneliner + ">" + e + "<button>ⴲ</button>" + courseInfo + "</li>");
+		var html = $("<li" + oneliner + ">" + course['kurz'] + "<button>ⴲ</button>" + courseInfo + "</li>");
 		if (course['empfohlen'] === "") {
 			$("#extra" + currentPool).append(html);
 			coursesInCurrentPool += 1;
