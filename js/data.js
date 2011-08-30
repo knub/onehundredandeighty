@@ -1389,7 +1389,7 @@ var data =
         "dozent": [
             "Dr. Timm Krohn"
         ], 
-        "nameLV": "Recht fuer Ingenieure I"
+        "nameLV": "Recht für Ingenieure I"
     }, 
     "recht2": {
     	"kurz": "Recht II",
@@ -1418,7 +1418,7 @@ var data =
         "dozent": [
             "Dr. Timm Krohn"
         ], 
-        "nameLV": "Recht fuer Ingenieure II"
+        "nameLV": "Recht für Ingenieure II"
     }, 
     "rfid": {
     	"kurz": "RFID",
@@ -1880,6 +1880,6 @@ var data =
         "dozent": [
             "Prof. Dr. Christoph Meinel"
         ], 
-        "nameLV": "Weiterf\u00fchrende Themen zu Internet- und WWW-Technologien"
+        "nameLV": "Weiterführende Themen zu Internet- und WWW-Technologien"
     }, 
 }

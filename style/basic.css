@@ -16,6 +16,7 @@ div#message {
 	background: #B56767; /* red */
 	background: #B2B567; /* yellow - to be improved! */
 	background: #7BB567; /* green */
+	background: #333;
 	color: white;
 	text-align: center;
 	font-variant: small-caps;
