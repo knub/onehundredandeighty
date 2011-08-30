@@ -1,5 +1,5 @@
-// The term "#semester-view" refer to the upper list, the list of courses which are currently chosen in a specific semester
-// The term "#courses-pool" refers to the lists of courses, that are currently not chosen, so the lower list
+// The term "semester-view" refer to the upper list, the list of courses which are currently chosen in a specific semester
+// The term "courses-pool" refers to the lists of courses, that are currently not chosen, so the lower list
 
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
@@ -11,11 +11,11 @@ var settings = {
 
 var frontend = {
 	/* used, when user starts drag'n'dropping courses */
-	startSorting: function(event, ui) {
+	startSorting: function (event, ui) {
 			$(".courses li").knubtip("disable");
 		},
 	/* used, when user finished drag'n'dropping courses */
-	endSorting: function(event, ui) {
+	endSorting: function (event, ui) {
 			$(".courses li").knubtip("enable");
 			frontend.sortPool(event, ui);
 		},
@@ -56,7 +56,13 @@ var frontend = {
 	/* when a li has this class it cannot be dragged */
 	disabledClass: "disabled"
 };
-$(function() {
+
+
+/*
+ * here starts real execution
+ */
+// note: $(function () ...) is the same as $(document).ready(function () ..)
+$(function () {
 	/* apply jquery drag'n'dropping */
 	$(frontend.coursesList).sortable({
 		connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
@@ -123,6 +129,7 @@ $(function() {
 		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
+	/* apply check routine on button click */
 	$("button#check").click(function () {
 		alert("test");
 	});
