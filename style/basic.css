@@ -1,6 +1,5 @@
 /* Font taken from: --> http://www.theleagueofmoveabletype.com/fonts/13-prociono <--. Thanks! */
 
-/*@font-face { font-family: Prociono; src: url('Prociono.otf'); } --- this was the old style*/
 @font-face {
 	font-family: 'ProcionoRegular';
 	src: url('prociono-webfont.eot');
@@ -40,7 +39,6 @@ section {
 section#head {
 	width: 80%;
 	margin: 0 auto;
-	/*border-bottom: 1px dotted gray;*/
 }
 section#semester-view {
 	margin: 0 auto;
@@ -57,16 +55,13 @@ section#courses-pool {
 footer {
 	background: #EEE;
 	border-bottom: 4px solid black;
-	/*border-top: 1px solid black;*/
 	width: 100%;
 	font-size: 1.2em;
 	text-align: center;
-	/*height: 328px;*/
 }
 h1 {
 	margin: 0;
 	padding: 50px 50px;
-	font-family: ProcionoRegular;
 	font-size: 2.5em;
 	font-weight: normal;
 	color: #111;
@@ -87,7 +82,6 @@ h2 {
 }
 
 #head select {
-	width: 220px;
 	width: 100%;
 	background: white;
 	font-size: 1em;
@@ -103,12 +97,11 @@ h2 {
 }
 .courses li {
 	font-size: 1.1em;
-	/*height: 1.5em;*/
 	height: 2.7em;
 	cursor: move;
-	border: 1px solid black; /* maybe border: 1px solid gray; looks better? */
+	border: 1px solid black;
 	text-align: center;
-	margin: 15px 0px;
+	margin: 0.75em 0;
 	border-radius: 5px;
 	position: relative;
 	overflow: hidden;
@@ -144,6 +137,14 @@ h2 {
 }
 .courses li.oneliner {
 	line-height: 2.7em;
+}
+.courses li.double-time {
+	height: 6.2em;
+	line-height: 6.2em;
+}
+.courses li.triple-time {
+	height: 9.75em;
+	line-height: 9.75em;
 }
 
 .courses li button {
@@ -196,7 +197,7 @@ h2 {
 	padding: 1em 1.5em;
 	line-height: 1.6em;
 }
-.info h3 {
+h3 {
 	color: black;
 	background: #DDD;
 	margin: 0;
@@ -245,7 +246,7 @@ h2 {
 	margin: 0;
 	padding: 15px 1%;
 	float: left;
-	min-height: 400px;
+	min-height: 21em;
 	border-right: 1px dotted gray;
 }
 
