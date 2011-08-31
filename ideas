@@ -5,10 +5,13 @@ Verwaltung für die LVS, damit man das nicht immer alles in JSON machen muss.
 responsives layout mit kleinerer schriftgröße, wenn browserfenster kleiner
 was ist mit wiederholern?
 auf em umstellen
+speichermöglichkeit!!
 eventuell select box schöner machen
 favicon
 wenn ein semester geändert wird, müssen sich die nachfolgenden auch ändern (also ggf nach hinten verschieben) da sonst z.b. ein viertes semester zeitlich vor einem dritten kommen könnte
 bei semester, bei denen es noch keine lv-planung gibt, weil es einfach noch nicht soweit ist, wird das letzte semester (winter bzw. sommer) herangezogen und angenommen, diese werden lvs werden auch in zukunft angeboten. dennoch sollte es dann eine warnung geben bei solch einer planung, dass die lv potenziell wegfallen könnte.
 man sollte vielleicht auch leute beachten, die mehr als 6 semester benötigen :)
+
+klubsprechertätigkeit als ssk2 einbinden
 
 sehr gute idee: selektion mittels checkboxen im pool nach dingen wie modul, vertiefungsgebiet, zeit etc.
