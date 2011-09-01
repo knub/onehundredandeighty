@@ -1,4 +1,5 @@
 (function ($) {
+	"use strict";
 	$.fn.knubtip = function (method) {
 		var settings = {
 			'duration'	: 200,
