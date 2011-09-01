@@ -12,6 +12,14 @@ var semesterManager = {
 		"WS13/14",
 		"SS14"
 	],
+	shownSemesters: [
+		"WS10/11",
+		"SS11",
+		"WS11/12",
+		"SS12",
+		"WS12/13",
+		"SS13"
+	],
 	current: "WS11/12",
 	startswith: "WS11/12"	/* the semester that is the first semester when you first start the application */
 };

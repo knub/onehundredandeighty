@@ -154,9 +154,26 @@ $(function () {
 
 	/* apply check routine on button click */
 	$("button#check").click(function () {
-		alert("test");
+		alert("check!");
+	});
+
+	var filtering = false;
+	/* apply filter routine on filter-button-div click */
+	$("#filter-button").click(function () {
+		if (filtering) {
+			$(this).children("h2").text("Filter");
+			$("#filter").animate({ width: '0' }, 350);
+		}
+		else {
+			$(this).children("h2").text("Fertig");
+			$("#filter").animate({ width: '100%' }, 350);
+		}
+		filtering = !filtering;
 	});
 	
 	/* initialize tooltips for all courses */
 	$(".courses li").knubtip("init");			// activate tooltip for li elements (see jquery.knubtip.js)
+
+	/* initialize selectables for filter div */
+	$("#filter-options ul").knubselect();
 });

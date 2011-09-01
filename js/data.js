@@ -15,7 +15,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -47,7 +47,7 @@ var data =
             "Softwaretechnologische Konzepte"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -79,7 +79,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -110,7 +110,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -140,7 +140,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -171,7 +171,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -204,7 +204,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -237,7 +237,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -268,7 +268,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -303,7 +303,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -335,7 +335,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -366,7 +366,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: false, 
 	pflicht: false,
@@ -397,7 +397,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: false, 
 	pflicht: false,
@@ -428,7 +428,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -463,7 +463,7 @@ var data =
             "Grundlagen der Betriebswirtschaft"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -493,7 +493,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -524,8 +524,8 @@ var data =
             "Freie Themen"
         ], 
         semester: [
-		"WS2010/2011",
-		"SS2011"
+		"WS10/11",
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -554,8 +554,8 @@ var data =
             "Freie Themen"
         ], 
         semester: [
-		"WS2010/2011",
-		"SS2011"
+		"WS10/11",
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -585,7 +585,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -617,7 +617,7 @@ var data =
             "Technische Grundlagen der Informatik (Bachelor)"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -648,7 +648,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -680,7 +680,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -712,7 +712,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -746,7 +746,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -778,7 +778,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -809,7 +809,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -840,7 +840,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -872,7 +872,7 @@ var data =
             "Mathematik (Bachelor)"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -902,7 +902,7 @@ var data =
             "Mathematik (Bachelor)"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -931,7 +931,7 @@ var data =
             "Grundlagen in IT-Systems Engineering"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -961,7 +961,7 @@ var data =
             "Grundlagen in IT-Systems Engineering"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -992,7 +992,7 @@ var data =
             "Softwaretechnologische Konzepte"
         ],
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1024,7 +1024,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true,
 	pflicht: false,
@@ -1055,7 +1055,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true,
 	pflicht: false,
@@ -1089,7 +1089,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1118,8 +1118,8 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011",
-		"SS2011"
+		"WS10/11",
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1154,7 +1154,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1187,8 +1187,8 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011",
-		"SS2011"
+		"WS10/11",
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1220,7 +1220,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1254,7 +1254,7 @@ var data =
             "Grundlagen in IT-Systems Engineering"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1284,7 +1284,7 @@ var data =
             "Grundlagen in IT-Systems Engineering"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1313,7 +1313,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1344,7 +1344,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1377,7 +1377,7 @@ var data =
             "\u00d6konomische und rechtliche Grundlagen"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1406,7 +1406,7 @@ var data =
             "\u00d6konomische und rechtliche Grundlagen"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1437,7 +1437,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1468,7 +1468,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1498,8 +1498,8 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011",
-		"SS2011"
+		"WS10/11",
+		"SS11"
 	],
         benotet: false, 
 	pflicht: false,
@@ -1529,7 +1529,7 @@ var data =
             "Softwaretechnologie"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1560,7 +1560,7 @@ var data =
             "Softwaretechnologie"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1589,7 +1589,7 @@ var data =
             "Softwaretechnologie"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1619,7 +1619,7 @@ var data =
             "Theoretische Grundlagen der Informatik (Bachelor)"
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1649,7 +1649,7 @@ var data =
             "Theoretische Grundlagen der Informatik (Bachelor)"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1679,7 +1679,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1708,7 +1708,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1739,7 +1739,7 @@ var data =
             ""
         ], 
         semester: [
-		"WS2010/2011"
+		"WS10/11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1768,7 +1768,7 @@ var data =
             "\u00d6konomische und rechtliche Grundlagen"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: true,
@@ -1799,7 +1799,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1833,7 +1833,7 @@ var data =
             "Softwarebasissysteme (Bachelor)"
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
@@ -1865,7 +1865,7 @@ var data =
             ""
         ], 
         semester: [
-		"SS2011"
+		"SS11"
 	],
         benotet: true, 
 	pflicht: false,
