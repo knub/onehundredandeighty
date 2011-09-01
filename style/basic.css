@@ -40,6 +40,20 @@ section#head {
 	width: 80%;
 	margin: 0 auto;
 }
+@media screen and (max-width: 1280px) {
+	section#head {
+		width: 100%;
+	}
+	#semester-view {
+		width: 100% !important;
+	}
+	#courses-pool ul {
+		width: 14.5% !important; /* 100% (chosen list box-width) * 14.5% (width of one list) */
+	}
+	#courses-pool ul:first-child {
+		margin-left: 5% !important;
+	}
+} 
 section#semester-view {
 	margin: 0 auto;
 	width: 80%;

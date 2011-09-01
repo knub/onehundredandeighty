@@ -65,7 +65,7 @@ var data =
         nameLV: "Aspektorientiertes Programmieren"
     }, 
     beauty: {
-    	kurz: "Beauty is Our<br />Business",
+    	kurz: "Beauty is<br />Our Business",
         kennung: [
             "VT OSIS"
         ], 
@@ -220,7 +220,7 @@ var data =
         nameLV: "User-centered development of collaboration software"
     }, 
     grafik1: {
-    	kurz: "Computergrafik I",
+    	kurz: "Computer-<br />grafik I",
         kennung: [
             "SB1-5", 
             "VT HCT"
@@ -251,10 +251,10 @@ var data =
         dozent: [
             "Prof. Dr. J\u00fcrgen D\u00f6llner"
         ], 
-        nameLV: "3D-Computergrafik I"
+        nameLV: "3D-Computer-<br />grafik I"
     }, 
     grafik2: {
-    	kurz: "Computergrafik II",
+    	kurz: "Computer-<br />grafik II",
         kennung: [
             ""
         ], 
@@ -413,7 +413,7 @@ var data =
         nameLV: "D-School Basic Track"
     },
     dschoolschnupper: {
-    	kurz: "D-School<br />Schnupperkurs",
+    	kurz: "D-School<br />Schnupper",
         kennung: [
             "SSK-DT"
         ], 
@@ -479,7 +479,7 @@ var data =
         nameLV: "Basics of On-premise and On-demand Enterprise Software"
     }, 
     eworld: {
-    	kurz: "eWorld Verkehrs-<br />simulation-Tool",
+    	kurz: "eWorld",
         kennung: [
             "VT IST"
         ], 
@@ -698,7 +698,7 @@ var data =
         nameLV: "Project Seminar Hands, Feet and Devices"
     }, 
     hciundergrad: {
-    	kurz: "HCI Undergrad<br />Project",
+    	kurz: "HCI<br />Undergrad",
         kennung: [
             "VT HCT"
         ], 
@@ -976,7 +976,7 @@ var data =
         nameLV: "Modellierung II"
     }, 
     modellgetriebenesoftwareentwicklung: {
-    	kurz: "Modellgetriebene<br />Softwareentwicklung",
+    	kurz: "MDSD",
         kennung: [
             "VT SAMT"
         ], 
@@ -1205,7 +1205,7 @@ var data =
         nameLV: "Prozessorientierte Informationssysteme II"
     }, 
     processapplications: {
-    	kurz: "Process-Based<br />Applications",
+    	kurz: "Process-<br />Based Apps",
         kennung: [
             "VT BPET"
         ], 
@@ -1299,7 +1299,7 @@ var data =
         nameLV: "Einf\u00fchrung in die Programmiertechnik II"
     }, 
     qualitaetssicherunginwebapps: {
-    	kurz: "Qualit\u00e4tssicherung<br />in Web-Apps",
+    	kurz: "Qualit\u00e4t<br />in Web-Apps",
         kennung: [
             "VT IST"
         ], 
@@ -1694,7 +1694,7 @@ var data =
         nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
     }, 
     webservice: {
-    	kurz: "Web Service<br />Technologien",
+    	kurz: "Web<br />Services",
         kennung: [
             "VT IST"
         ], 
