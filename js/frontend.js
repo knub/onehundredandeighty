@@ -41,28 +41,25 @@ var frontend = {
 		},
 	/* used sort courses pool, ensures that each stack has the same height (settings.coursesPoolHeight) */
 	sortPool : function (event, ui) {
-			// get pool, and its first child (= #extra1).
-			var pool = $("#courses-pool");
-			// get immediate children which are ul's (there is one <br /> after ul's, so we have to filter
-			var courses = pool.children("ul");
+			var listitems = $("#courses-pool > ul li:not(.hidden)");
 
-			// loop through all ul's
-			courses.each(function (index, course) {
-				// course is current ul, jquerify it
-				course = $(course);
-				// if it has too much children ..
-				if (course.children().size() > settings["coursesPoolHeight"]) {
-					// .. move one item from the current to the next.
-					var last = course.children().last();
-					last.detach();
-					course.next().prepend(last);
-				}
-				// if it has too less children ..
-				else if (course.children().size() < settings["coursesPoolHeight"] && course.next().get(0).tagName !== "BR") {
-					// .. move one item from the next to the current.
-					var nextFirst = course.next().children().first();
-					nextFirst.detach();
-					course.append(nextFirst);
+			// There can be at most settings.coursesPoolHeight items in one stack.
+			// The following to var's ensure this.
+			var currentPool = 1;
+			var coursesInCurrentPool = 0;
+
+			// for each listitem
+			listitems.each(function (index, listitem) {
+				// listitem is li dom element, jquerify it
+				listitem = $(listitem);
+				// detach it from wherever it is at the moment
+				listitem.detach();
+				// .. put it in the courses pool taking care of settings.coursesPoolHeight
+				$("#extra" + currentPool).append(listitem);
+				coursesInCurrentPool += 1;
+				if (coursesInCurrentPool === settings.coursesPoolHeight) {
+					coursesInCurrentPool = 0;
+					currentPool += 1;
 				}
 			});
 		},
@@ -213,11 +210,10 @@ $(function () {
 					}
 
 					if (intersect === false) {
-						$(this).css("display", "none");
-						//$(this).fadeOut();
+						$(this).addClass("hidden");
 					}
 					else {
-						$(this).css("display", "block");
+						$(this).removeClass("hidden");
 					}
 				});
 			}

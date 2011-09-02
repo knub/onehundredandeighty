@@ -344,6 +344,9 @@ h3 {
 #courses-pool > ul li {
 	margin: 4px;
 }
+#courses-pool .hidden {
+	display: none;
+}
 
 .placeholder-highlight {
 	height: 1.5em;
