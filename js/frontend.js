@@ -43,9 +43,13 @@ var frontend = {
 	sortPool : function (event, ui) {
 			// get pool, and its first child (= #extra1).
 			var pool = $("#courses-pool");
-			var course = pool.children().first();
-			// "while (course.hasNext())" - loop as long as there is another sibling, so through all children
-			while (course.get(0).tagName !== "BR") {
+			// get immediate children which are ul's (there is one <br /> after ul's, so we have to filter
+			var courses = pool.children("ul");
+
+			// loop through all ul's
+			courses.each(function (index, course) {
+				// course is current ul, jquerify it
+				course = $(course);
 				// if it has too much children ..
 				if (course.children().size() > settings["coursesPoolHeight"]) {
 					// .. move one item from the current to the next.
@@ -60,9 +64,7 @@ var frontend = {
 					nextFirst.detach();
 					course.append(nextFirst);
 				}
-				// go on with next course
-				course = course.next();
-			}
+			});
 		},
 	/* used to display informationen from an array in a nice way, used for tooltips */
 	displayArray: function (value) {
@@ -170,6 +172,7 @@ $(function () {
 
 	/* apply check routine on button click */
 	$("button#check").click(function () {
+		frontend.sortPool();
 		alert("check!");
 	});
 
@@ -211,12 +214,14 @@ $(function () {
 
 					if (intersect === false) {
 						$(this).css("display", "none");
+						//$(this).fadeOut();
 					}
 					else {
 						$(this).css("display", "block");
 					}
 				});
 			}
+			frontend.sortPool();
 		}
 	});
 });
