@@ -98,7 +98,7 @@ div#filter {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 100%;
+	width: 0%;
 	overflow: hidden;
 	background: rgba(0, 0, 0, 0.8);
 }
@@ -109,18 +109,21 @@ div#filter-options {
 	bottom: 15px;
 	left: 90px;
 	right: 25px;
-	border: 4px solid white;
 	border-radius: 10px;
 }
 div#filter-options ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	border: 1px solid white;
+	margin: 10px;
+	color: white;
 }
 div#filter-options ul li {
 	display: block;
-	background: yellow;
+	cursor: pointer;
+}
+div#filter-options ul li:before {
+	content: 'li:before ';
 }
 footer {
 	background: #EEE;

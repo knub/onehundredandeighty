@@ -4,6 +4,7 @@
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
 
+
 var settings = {
 	// number of list items in one list in unchosen lists
 	coursesPoolHeight: 8
@@ -70,6 +71,18 @@ var frontend = {
 			}
 			return "<em>Information fehlt</em>";
 		},
+	/* used to initialize course pool with correct selectors */
+	initializeFilter: function () {
+			// Build semester list
+			var semesterList = "<ul id='semester-filter'>";
+			for (var semester in semesterManager.shownSemesters) {
+				semesterList += "<li class='selected'>" + semesterManager.shownSemesters[semester] + "</li>";
+			}
+			semesterList += "</ul>";
+			semesterList = $(semesterList);
+			$("#filter-options").append(semesterList).
+			                     append("<ul><li class='selected' id='pflicht-filter'>Pflicht</li><li class='selected'>Wahl</li></ul>");
+		},
 	/* selector for droppables */
 	coursesList: ".courses",
 	/* when a li has this class it cannot be dragged */
@@ -85,6 +98,9 @@ $(function () {
 
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */
 	frontend.organizeSemesters();
+
+	/* initialize filter with correct settings */
+	frontend.initializeFilter();
 
 	/* apply jquery drag'n'dropping */
 	$(frontend.coursesList).sortable({
@@ -128,7 +144,7 @@ $(function () {
 		if (course['kurz'].indexOf("<br />") === -1) {
 			oneliner = " class='oneliner'";
 		}
-		var html = $("<li" + oneliner + ">" + course['kurz'] + "<button>ⴲ</button>" + courseInfo + "</li>");
+		var html = $("<li" + oneliner + " id='course-" + e + "'>" + course['kurz'] + "<button>ⴲ</button>" + courseInfo + "</li>");
 		// now the element has been created, decide where to put it on the page
 		// if it is not recommended for a specific semester ..
 		if (course['empfohlen'] === "") {
@@ -162,11 +178,11 @@ $(function () {
 	$("#filter-button").click(function () {
 		if (filtering) {
 			$(this).children("h2").text("Filter");
-			$("#filter").animate({ width: '0' }, 350);
+			$("#filter").animate({ width: '0' }, 250);
 		}
 		else {
 			$(this).children("h2").text("Fertig");
-			$("#filter").animate({ width: '100%' }, 350);
+			$("#filter").animate({ width: '100%' }, 250);
 		}
 		filtering = !filtering;
 	});
@@ -175,5 +191,32 @@ $(function () {
 	$(".courses li").knubtip("init");			// activate tooltip for li elements (see jquery.knubtip.js)
 
 	/* initialize selectables for filter div */
-	$("#filter-options ul").knubselect();
+	$("#filter-options ul").knubselect({
+		change: function (selected, id) {
+			var key;
+			if (id === "semester-filter") {
+				$("#courses-pool > ul li").each(function () {
+					// .slice(7) to remove foregoing "course-"
+					key = $(this).attr("id").slice(7);
+					var intersect = false;
+
+					for (var s in selected) {
+						//alert(selected[s]);
+						for (var t in data[key].semester) {
+							if (selected[s] === data[key].semester[t]) {
+								intersect = true;
+							}
+						}
+					}
+
+					if (intersect === false) {
+						$(this).css("display", "none");
+					}
+					else {
+						$(this).css("display", "block");
+					}
+				});
+			}
+		}
+	});
 });
