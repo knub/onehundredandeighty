@@ -21,9 +21,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Verteiles Rechnen"
+            "OSIS"
         ], 
         cp: 3, 
         dozent: [
@@ -53,8 +51,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur", 
-            "Systemsicherheit"
+            "SAMT"
         ], 
         cp: 3, 
         dozent: [
@@ -85,9 +82,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Internet-Technologien"
+            "OSIS"
         ], 
         cp: 3, 
         dozent: [
@@ -104,7 +99,7 @@ var data =
             ""
         ], 
         modul: [
-            ""
+            "Softwarebasissysteme"
         ], 
         themenkomplex: [
             "Softwarebasissysteme (Bachelor)"
@@ -146,9 +141,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemsicherheit", 
-            "Verteiles Rechnen", 
-            "Systemarchitektur"
+            "OSIS"
         ],
         cp: 6, 
         dozent: [
@@ -177,10 +170,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien", 
-            "Verteiles Rechnen", 
-            "Systemarchitektur"
+            "OSIS"
         ], 
         cp: 3, 
         dozent: [
@@ -210,8 +200,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle"
+            "IST"
         ], 
         cp: 6, 
         dozent: [
@@ -243,9 +232,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Mensch-Maschine-Schnittstelle", 
-            "Systemsicherheit", 
-            "Internet-Technologien"
+            "HCT", 
         ], 
         cp: 6, 
         dozent: [
@@ -262,7 +249,7 @@ var data =
             "Vorlesung"
         ], 
         modul: [
-            ""
+            "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             ""
@@ -274,9 +261,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Mensch-Maschine-Schnittstelle", 
-            "Internet-Technologien", 
-            "Verteiles Rechnen"
+            "HCT"
         ], 
         cp: 3, 
         dozent: [
@@ -309,9 +294,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien", 
-            "Systemarchitektur"
+            "OSIS"
         ], 
         cp: 6, 
         dozent: [
@@ -329,7 +312,7 @@ var data =
             "\u00dcbung"
         ], 
         modul: [
-            ""
+            "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             ""
@@ -341,8 +324,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien"
+            "OSIS"
         ], 
         cp: 6, 
         dozent: [
@@ -434,7 +416,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Softskills"
+            ""
         ], 
         cp: 3, 
         dozent: [
@@ -453,8 +435,7 @@ var data =
             "\u00dcbung"
         ], 
         modul: [
-            "IT-Systems Engineering", 
-            "Rechtliche und wirtschaftliche Grundlagen"
+            "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             "Angewandte Softwaresystemtechnik (Bachelor)", 
@@ -469,8 +450,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Systemarchitektur"
+            "BPET"
         ], 
         cp: 3, 
         dozent: [
@@ -499,9 +479,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Internet-Technologien"
+            "IST"
         ], 
         cp: 6, 
         dozent: [
@@ -591,9 +569,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Systemarchitektur"
+            "HCT"
         ], 
         cp: 6, 
         dozent: [
@@ -654,9 +630,8 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Systemarchitektur", 
-            "Mensch-Maschine-Schnittstelle"
+            "HCT", 
+            "SAMT"
         ], 
         cp: 6, 
         dozent: [
@@ -686,10 +661,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Mensch-Maschine-Schnittstelle", 
-            "Verteiles Rechnen", 
-            "Systemsicherheit", 
-            "Internet-Technologien"
+            "HCT"
         ], 
         cp: 6, 
         dozent: [
@@ -718,11 +690,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Mensch-Maschine-Schnittstelle", 
-            "Verteiles Rechnen", 
-            "Systemarchitektur", 
-            "Systemsicherheit", 
-            "Internet-Technologien"
+            "HCT"
         ], 
         cp: 6, 
         dozent: [
@@ -740,7 +708,8 @@ var data =
             "Vorlesung"
         ], 
         modul: [
-            ""
+            "Softwarebasissysteme",
+	    "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             "Softwarebasissysteme (Bachelor)"
@@ -752,9 +721,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Mensch-Maschine-Schnittstelle", 
-            "Systemsicherheit", 
-            "Internet-Technologien"
+            "HCT"
         ], 
         cp: 6, 
         dozent: [
@@ -772,7 +739,7 @@ var data =
             "Vorlesung"
         ], 
         modul: [
-            ""
+            "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             "Softwarebasissysteme (Bachelor)"
@@ -784,9 +751,8 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Mensch-Maschine-Schnittstelle", 
-            "Verteiles Rechnen", 
-            "Systemarchitektur"
+            "HCT", 
+            "SAMT"
         ], 
         cp: 6, 
         dozent: [
@@ -815,8 +781,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Systemarchitektur"
+            "SAMT"
         ], 
         cp: 3, 
         dozent: [
@@ -834,7 +799,7 @@ var data =
             ""
         ], 
         modul: [
-            ""
+            "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             ""
@@ -846,10 +811,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien", 
-            "Systemsicherheit", 
-            "Verteiles Rechnen"
+            "IST"
         ], 
         cp: 6, 
         dozent: [
@@ -866,7 +828,7 @@ var data =
             ""
         ], 
         modul: [
-            ""
+            "Mathematische und theoretische Grundlagen"
         ], 
         themenkomplex: [
             "Mathematik (Bachelor)"
@@ -925,7 +887,7 @@ var data =
             ""
         ], 
         modul: [
-            ""
+            "Softwaretechnik und Modellierung"
         ], 
         themenkomplex: [
             "Grundlagen in IT-Systems Engineering"
@@ -998,7 +960,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Software Engineering"
+            "SAMT"
         ], 
         cp: 3, 
         dozent: [
@@ -1030,9 +992,9 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Verteiles Rechnen", 
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle"
+            "IST", 
+            "OSIS", 
+            "HCT"
         ], 
         cp: 6, 
         dozent: [
@@ -1061,10 +1023,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien", 
-            "Systemarchitektur", 
-            "Information Systems"
+            "OSIS"
         ], 
         cp: 3, 
         dozent: [
@@ -1095,7 +1054,8 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur"
+            "OSIS",
+	    "SAMT"
         ], 
         cp: 3, 
         dozent: [
@@ -1125,7 +1085,7 @@ var data =
 	pflicht: true,
 	empfohlen: "",
         vertiefung: [
-            "Softskills"
+            ""
         ], 
         cp: 6, 
         dozent: [
@@ -1160,9 +1120,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur", 
-            "Business Computing", 
-            "Internet-Technologien"
+            "BPET"
         ], 
         cp: 6, 
         dozent: [
@@ -1194,9 +1152,8 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur", 
-            "Business Computing", 
-            "Internet-Technologien"
+            "BPET", 
+            "SAMT"
         ], 
         cp: 6, 
         dozent: [
@@ -1226,11 +1183,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien", 
-            "Verteiles Rechnen", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Systemarchitektur"
+            "BPET"
         ], 
         cp: 6, 
         dozent: [
@@ -1319,8 +1272,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle"
+            "IST"
         ], 
         cp: 3, 
         dozent: [
@@ -1350,9 +1302,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Systemarchitektur"
+            "IST"
         ], 
         cp: 6, 
         dozent: [
@@ -1443,9 +1393,9 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Systemarchitektur", 
-            "Internet-Technologien"
+            "BPET", 
+            "OSIS", 
+            "HCT"
         ],
         cp: 6, 
         dozent: [
@@ -1474,8 +1424,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Business Computing"
+            "IST"
         ], 
         cp: 3, 
         dozent: [
@@ -1505,7 +1454,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Softskills"
+            ""
         ], 
         cp: "bis zu 6", 
         dozent: [
@@ -1583,7 +1532,7 @@ var data =
             "Vorlesung"
         ], 
         modul: [
-            ""
+            "Vertiefungsgebiete"
         ], 
         themenkomplex: [
             "Softwaretechnologie"
@@ -1595,7 +1544,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            ""
+            "SAMT"
         ], 
         cp: 6, 
         dozent: [
@@ -1685,7 +1634,8 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Systemarchitektur"
+            "OSIS",
+	    "SAMT"
         ], 
         cp: 6, 
         dozent: [
@@ -1714,9 +1664,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Verteiles Rechnen", 
-            "Systemarchitektur"
+            "IST"
         ], 
         cp: 3, 
         dozent: [
@@ -1805,9 +1753,8 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Systemarchitektur", 
-            "Internet-Technologien"
+            "BPET", 
+            "SAMT"
         ], 
         cp: 6, 
         dozent: [
@@ -1839,10 +1786,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Business Computing", 
-            "Internet-Technologien", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Verteiles Rechnen"
+            "IST"
         ], 
         cp: 6, 
         dozent: [
@@ -1871,10 +1815,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Internet-Technologien", 
-            "Business Computing", 
-            "Mensch-Maschine-Schnittstelle", 
-            "Verteiles Rechnen"
+            "IST"
         ], 
         cp: 3, 
         dozent: [
