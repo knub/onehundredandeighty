@@ -66,6 +66,7 @@ section#courses-pool {
 	background-position: center left, top left, bottom left, center left;
 	border: 1px dotted black;
 	position: relative; /* needed to be able to position filter absolute */
+	min-height: 300px;
 }
 div#filter-button {
 	position: absolute;
@@ -117,13 +118,25 @@ div#filter-options ul {
 	padding: 0;
 	margin: 10px;
 	color: white;
+	float: left;
 }
 div#filter-options ul li {
 	display: block;
 	cursor: pointer;
+	background: white;
+	border: 2px solid black;
+	color: black;
+	width: 200px;
+	padding: 15px;
 }
 div#filter-options ul li:before {
-	content: 'li:before ';
+	content: '☐';
+	padding-right: 30px;
+}
+div#filter-options ul li.selected:before {
+	content: '☑';
+	content: '☒';
+	padding-right: 30px;
 }
 footer {
 	background: #EEE;

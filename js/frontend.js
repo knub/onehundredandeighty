@@ -11,6 +11,45 @@ var settings = {
 };
 
 var frontend = {
+	filterManager: {
+			selectedSemester: semesterManager.semesters,
+			selectedWahlpflicht: ["Pflicht", "Wahl"],
+			selectedModule: ["Softwarebasissysteme", "Vertiefungsgebiete", "Softskills", "Rechtliche und wirtschaftliche Grundlagen", "Grundlagen IT-Systems Engineering", "Softwaretechnik und Modellierung", "Mathematische und theoretische Grundlagen"],
+			selectedVertiefungsgebiete: ["BPET", "HCT", "IST", "OSIS", "SAMT"],
+			checkSemester: function (key) {
+				var semesterSelected = false;
+				
+				for (var s in this.selectedSemester) {
+					for (var t in data[key].semester) {
+						if (this.selectedSemester[s] === data[key].semester[t]) {
+							semesterSelected = true;
+							break;
+						}
+					}
+					if (semesterSelected) break;
+				}
+
+				return semesterSelected;
+
+			},
+			checkWahlpflicht: function (key) {
+				var wahlpflichtSelected = false;
+
+
+				if (this.selectedWahlpflicht.indexOf("Wahl") !== -1 && this.selectedWahlpflicht.indexOf("Pflicht") !== -1)
+					return true;
+
+				if (this.selectedWahlpflicht[0] === "Pflicht")
+					return data[key].pflicht;
+
+				if (this.selectedWahlpflicht[0] === "Wahl")
+					return !data[key].pflicht;
+			},
+			checkModule: function () {
+			},
+			checkVertiefungsgebiete: function () {
+			},
+		},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function () {
 			// for the first semester displayed, start with the in semesterManager.startswith specified semester
@@ -80,7 +119,7 @@ var frontend = {
 			semesterList += "</ul>";
 			semesterList = $(semesterList);
 			$("#filter-options").append(semesterList).
-			                     append("<ul><li class='selected' id='pflicht-filter'>Pflicht</li><li class='selected'>Wahl</li></ul>");
+			                     append("<ul id='wahlpflicht-filter'><li class='selected'>Pflicht</li><li class='selected'>Wahl</li></ul>");
 		},
 	/* selector for droppables */
 	coursesList: ".courses",
@@ -195,28 +234,22 @@ $(function () {
 		change: function (selected, id) {
 			var key;
 			if (id === "semester-filter") {
-				$("#courses-pool > ul li").each(function () {
-					// .slice(7) to remove foregoing "course-"
-					key = $(this).attr("id").slice(7);
-					var intersect = false;
-
-					for (var s in selected) {
-						//alert(selected[s]);
-						for (var t in data[key].semester) {
-							if (selected[s] === data[key].semester[t]) {
-								intersect = true;
-							}
-						}
-					}
-
-					if (intersect === false) {
-						$(this).addClass("hidden");
-					}
-					else {
-						$(this).removeClass("hidden");
-					}
-				});
+				frontend.filterManager.selectedSemester = selected;
+			} else if (id === "wahlpflicht-filter") {
+				frontend.filterManager.selectedWahlpflicht = selected;
 			}
+			$("#courses-pool > ul li").each(function () {
+				// .slice(7) to remove foregoing "course-" from id
+				key = $(this).attr("id").slice(7);
+
+				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key);
+				if (show === false) {
+					$(this).addClass("hidden");
+				}
+				else {
+					$(this).removeClass("hidden");
+				}
+			});
 			frontend.sortPool();
 		}
 	});
