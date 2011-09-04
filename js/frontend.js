@@ -10,6 +10,20 @@ var settings = {
 	coursesPoolHeight: 8
 };
 
+Array.prototype.haveIntersection = function (that) {
+	var intersect = false;
+	for (var i in this) {
+		for (var j in that) {
+			if (this[i] === that[j] && this.hasOwnProperty(i) && that.hasOwnProperty(j)) {
+				intersect = true;
+				break;
+			}
+		}
+		if (intersect) break;
+	}
+	return intersect;
+};
+
 var frontend = {
 	filterManager: {
 			selectedSemester: semesterManager.shownSemesters,
@@ -17,20 +31,7 @@ var frontend = {
 			selectedModule: ["Softwarebasissysteme", "Vertiefungsgebiete", "Softskills", "Rechtliche und wirtschaftliche Grundlagen", "Grundlagen IT-Systems Engineering", "Softwaretechnik und Modellierung", "Mathematische und theoretische Grundlagen"],
 			selectedVertiefungsgebiete: ["BPET", "HCT", "IST", "OSIS", "SAMT"],
 			checkSemester: function (key) {
-				var semesterSelected = false;
-				
-				for (var s1 in this.selectedSemester) {
-					for (var s2 in data[key].semester) {
-						if (this.selectedSemester[s1] === data[key].semester[s2]) {
-							semesterSelected = true;
-							break;
-						}
-					}
-					if (semesterSelected) break;
-				}
-
-				return semesterSelected;
-
+				return this.selectedSemester.haveIntersection(data[key].semester);
 			},
 			checkWahlpflicht: function (key) {
 				var wahlpflichtSelected = false;
@@ -47,37 +48,12 @@ var frontend = {
 				return false;
 			},
 			checkModule: function (key) {
-				var modulSelected = false;
-
-				for (var m1 in this.selectedModule) {
-					for (var m2 in data[key].modul) {
-						if (this.selectedModule[m1] === data[key].modul[m2]) {
-							modulSelected = true;
-							break;
-						}
-					}
-					if (modulSelected) break;
-				}
-
-				return modulSelected;
+				return this.selectedModule.haveIntersection(data[key].modul);
 			},
 			checkVertiefungsgebiete: function (key) {
 				if (data[key].vertiefung[0] === "")
 					return true;
-
-				var vertiefungsgebieteSelected = false;
-
-				for (var v1 in this.selectedVertiefungsgebiete) {
-					for (var v2 in data[key].vertiefung) {
-						if (this.selectedVertiefungsgebiete[v1] === data[key].vertiefung[v2]) {
-							vertiefungsgebieteSelected = true;
-							break;
-						}
-					}
-					if (vertiefungsgebieteSelected) break;
-				}
-
-				return vertiefungsgebieteSelected;
+				return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
 			},
 		},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
@@ -132,6 +108,15 @@ var frontend = {
 				}
 			});
 		},
+	adjustPoolHeight: function () {
+			// count all visible courses
+			var shownCourses = $("#courses-pool > ul li:not(.hidden)").length;
+			// there are seven ul's but try to use the first six only (seventh is there, but normally not used)
+			settings.coursesPoolHeight = Math.floor(shownCourses / 6);
+			// but if showCourses is one more than a multiple of six, avoid 'Hurenkind' and use seventh as well
+			if (shownCourses % 6 === 1)
+				settings.coursesPoolHeight = Math.floor(shownCourses / 6) + 1;
+		},
 	/* used to display informationen from an array in a nice way, used for tooltips */
 	displayArray: function (value) {
 			if (Array.isArray(value) && value[0] !== "") {
@@ -144,6 +129,7 @@ var frontend = {
 			// build semester list
 			var semesterList = "<ul id='semester-filter'>";
 			for (var semester in frontend.filterManager.selectedSemester) {
+				if (!frontend.filterManager.selectedSemester.hasOwnProperty(semester)) continue;
 				semesterList += "<li class='selected'>" + frontend.filterManager.selectedSemester[semester] + "</li>";
 			}
 			semesterList += "</ul>";
@@ -151,8 +137,9 @@ var frontend = {
 
 			// build module list
 			var moduleList = "<ul id='module-filter'>";
-			for (var module in frontend.filterManager.selectedModule) {
-				moduleList += "<li class='selected'>" + frontend.filterManager.selectedModule[module] + "</li>";
+			for (var modul in frontend.filterManager.selectedModule) {
+				if (!frontend.filterManager.selectedModule.hasOwnProperty(modul)) continue;
+				moduleList += "<li class='selected'>" + frontend.filterManager.selectedModule[modul] + "</li>";
 			}
 			moduleList += "</ul>";
 			moduleList = $(moduleList);
@@ -160,6 +147,7 @@ var frontend = {
 			// build vertiefungsgebiete list
 			var vertiefungsgebieteList = "<ul id='vertiefungsgebiete-filter'>";
 			for (var vertiefungsgebiet in frontend.filterManager.selectedVertiefungsgebiete) {
+				if (!frontend.filterManager.selectedVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
 				vertiefungsgebieteList += "<li class='selected'>" + frontend.filterManager.selectedVertiefungsgebiete[vertiefungsgebiet] + "</li>";
 			}
 			vertiefungsgebieteList += "</ul>";
@@ -206,13 +194,9 @@ $(function () {
 	 * It is an object containing all relevant informationen about courses.
 	 */
 
-	// There can be at most settings.coursesPoolHeight items in one stack.
-	// The following to var's ensure this.
-	var currentPool = 1;
-	var coursesInCurrentPool = 0;
-
 	// for each course in data
 	for (var e in data) {
+		if (!data.hasOwnProperty(e)) continue;
 		// build list item and associated .info for tooltip
 		var course = data[e];
 		var courseInfo = 	"<div class='info'>" +
@@ -236,13 +220,9 @@ $(function () {
 		// now the element has been created, decide where to put it on the page
 		// if it is not recommended for a specific semester ..
 		if (course['empfohlen'] === "") {
-			// .. put it in the courses pool taking care of settings.coursesPoolHeight
-			$("#extra" + currentPool).append(html);
-			coursesInCurrentPool += 1;
-			if (coursesInCurrentPool === settings.coursesPoolHeight) {
-				coursesInCurrentPool = 0;
-				currentPool += 1;
-			}
+			// .. put it in the courses pool
+			// for now, putting in the first ul is ok, because whole courses-pool will be rearranged afterwards
+			$("#extra1").append(html);
 		}
 		// if it is recommended for a specific semester ..
 		else {
@@ -250,6 +230,8 @@ $(function () {
 			$("#semester" + course['empfohlen']).append(html);
 		}
 	}
+	frontend.adjustPoolHeight();
+	frontend.sortPool();
 
 	/* apply click routine for buttons which disable possibility to drag it */
 	$(".courses li button").click(function () {
@@ -294,6 +276,8 @@ $(function () {
 			} else if (id === "vertiefungsgebiete-filter") {
 				frontend.filterManager.selectedVertiefungsgebiete = selected;
 			}
+
+			var shownCourses = 0;
 			$("#courses-pool > ul li").each(function () {
 				// .slice(7) to remove foregoing "course-" from id
 				key = $(this).attr("id").slice(7);
@@ -305,8 +289,11 @@ $(function () {
 				}
 				else {
 					$(this).removeClass("hidden");
+					shownCourses += 1;
 				}
 			});
+
+			frontend.adjustPoolHeight();
 			frontend.sortPool();
 		}
 	});
