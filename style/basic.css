@@ -114,10 +114,19 @@ div#filter-options {
 }
 div#filter-options ul {
 	list-style-type: none;
-	margin: 0;
 	padding: 0;
 	margin: 10px;
 	color: white;
+}
+#semester_wahlpflicht {
+	float: left;
+	width: 300px;
+}
+#module_vertiefungsgebiete {
+	width: 650px;
+	float: left;
+}
+#module_vertiefungsgebiete ul {
 	float: left;
 }
 div#filter-options ul li {
@@ -126,7 +135,7 @@ div#filter-options ul li {
 	background: white;
 	border: 2px solid black;
 	color: black;
-	width: 200px;
+	width: 250px;
 	padding: 15px;
 }
 div#filter-options ul li:before {
@@ -367,7 +376,6 @@ h3 {
 	height: 2.0em;
 	border: 1px dashed #666 !important;
 }
-
 
 
 /* Following styles are taken from --> http://twitter.github.com/bootstrap/ <---. Thanks! */

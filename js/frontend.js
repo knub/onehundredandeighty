@@ -12,16 +12,16 @@ var settings = {
 
 var frontend = {
 	filterManager: {
-			selectedSemester: semesterManager.semesters,
+			selectedSemester: semesterManager.shownSemesters,
 			selectedWahlpflicht: ["Pflicht", "Wahl"],
 			selectedModule: ["Softwarebasissysteme", "Vertiefungsgebiete", "Softskills", "Rechtliche und wirtschaftliche Grundlagen", "Grundlagen IT-Systems Engineering", "Softwaretechnik und Modellierung", "Mathematische und theoretische Grundlagen"],
 			selectedVertiefungsgebiete: ["BPET", "HCT", "IST", "OSIS", "SAMT"],
 			checkSemester: function (key) {
 				var semesterSelected = false;
 				
-				for (var s in this.selectedSemester) {
-					for (var t in data[key].semester) {
-						if (this.selectedSemester[s] === data[key].semester[t]) {
+				for (var s1 in this.selectedSemester) {
+					for (var s2 in data[key].semester) {
+						if (this.selectedSemester[s1] === data[key].semester[s2]) {
 							semesterSelected = true;
 							break;
 						}
@@ -35,7 +35,6 @@ var frontend = {
 			checkWahlpflicht: function (key) {
 				var wahlpflichtSelected = false;
 
-
 				if (this.selectedWahlpflicht.indexOf("Wahl") !== -1 && this.selectedWahlpflicht.indexOf("Pflicht") !== -1)
 					return true;
 
@@ -44,10 +43,41 @@ var frontend = {
 
 				if (this.selectedWahlpflicht[0] === "Wahl")
 					return !data[key].pflicht;
+
+				return false;
 			},
-			checkModule: function () {
+			checkModule: function (key) {
+				var modulSelected = false;
+
+				for (var m1 in this.selectedModule) {
+					for (var m2 in data[key].modul) {
+						if (this.selectedModule[m1] === data[key].modul[m2]) {
+							modulSelected = true;
+							break;
+						}
+					}
+					if (modulSelected) break;
+				}
+
+				return modulSelected;
 			},
-			checkVertiefungsgebiete: function () {
+			checkVertiefungsgebiete: function (key) {
+				if (data[key].vertiefung[0] === "")
+					return true;
+
+				var vertiefungsgebieteSelected = false;
+
+				for (var v1 in this.selectedVertiefungsgebiete) {
+					for (var v2 in data[key].vertiefung) {
+						if (this.selectedVertiefungsgebiete[v1] === data[key].vertiefung[v2]) {
+							vertiefungsgebieteSelected = true;
+							break;
+						}
+					}
+					if (vertiefungsgebieteSelected) break;
+				}
+
+				return vertiefungsgebieteSelected;
 			},
 		},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
@@ -111,15 +141,35 @@ var frontend = {
 		},
 	/* used to initialize course pool with correct selectors */
 	initializeFilter: function () {
-			// Build semester list
+			// build semester list
 			var semesterList = "<ul id='semester-filter'>";
-			for (var semester in semesterManager.shownSemesters) {
-				semesterList += "<li class='selected'>" + semesterManager.shownSemesters[semester] + "</li>";
+			for (var semester in frontend.filterManager.selectedSemester) {
+				semesterList += "<li class='selected'>" + frontend.filterManager.selectedSemester[semester] + "</li>";
 			}
 			semesterList += "</ul>";
 			semesterList = $(semesterList);
-			$("#filter-options").append(semesterList).
-			                     append("<ul id='wahlpflicht-filter'><li class='selected'>Pflicht</li><li class='selected'>Wahl</li></ul>");
+
+			// build module list
+			var moduleList = "<ul id='module-filter'>";
+			for (var module in frontend.filterManager.selectedModule) {
+				moduleList += "<li class='selected'>" + frontend.filterManager.selectedModule[module] + "</li>";
+			}
+			moduleList += "</ul>";
+			moduleList = $(moduleList);
+
+			// build vertiefungsgebiete list
+			var vertiefungsgebieteList = "<ul id='vertiefungsgebiete-filter'>";
+			for (var vertiefungsgebiet in frontend.filterManager.selectedVertiefungsgebiete) {
+				vertiefungsgebieteList += "<li class='selected'>" + frontend.filterManager.selectedVertiefungsgebiete[vertiefungsgebiet] + "</li>";
+			}
+			vertiefungsgebieteList += "</ul>";
+			vertiefungsgebieteList = $(vertiefungsgebieteList);
+
+
+			$("#semester_wahlpflicht").append(semesterList)
+			                    .append("<ul id='wahlpflicht-filter'><li class='selected'>Pflicht</li><li class='selected'>Wahl</li></ul>");
+			$("#module_vertiefungsgebiete").append(moduleList)
+					    .append(vertiefungsgebieteList);
 		},
 	/* selector for droppables */
 	coursesList: ".courses",
@@ -232,17 +282,24 @@ $(function () {
 	/* initialize selectables for filter div */
 	$("#filter-options ul").knubselect({
 		change: function (selected, id) {
+			// TODO: Filter when dropped to #courses-pool.
 			var key;
+			// update selected
 			if (id === "semester-filter") {
 				frontend.filterManager.selectedSemester = selected;
 			} else if (id === "wahlpflicht-filter") {
 				frontend.filterManager.selectedWahlpflicht = selected;
+			} else if (id === "module-filter") {
+				frontend.filterManager.selectedModule = selected;
+			} else if (id === "vertiefungsgebiete-filter") {
+				frontend.filterManager.selectedVertiefungsgebiete = selected;
 			}
 			$("#courses-pool > ul li").each(function () {
 				// .slice(7) to remove foregoing "course-" from id
 				key = $(this).attr("id").slice(7);
 
-				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key);
+				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key) &&
+					   frontend.filterManager.checkModule(key) && frontend.filterManager.checkVertiefungsgebiete(key);
 				if (show === false) {
 					$(this).addClass("hidden");
 				}
