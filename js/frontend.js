@@ -4,12 +4,10 @@
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
 
-
-var settings = {
-	// number of list items in one list in unchosen lists
-	coursesPoolHeight: 8
-};
-
+/*
+ * checks, whether to arrays (this and parameter that) have elements in common
+ * true, when this is the case
+ */
 Array.prototype.haveIntersection = function (that) {
 	var intersect = false;
 	for (var i in this) {
@@ -23,155 +21,187 @@ Array.prototype.haveIntersection = function (that) {
 	}
 	return intersect;
 };
+/*
+ * create Object.create method, if not already existing
+ * mainly neccessary because of Opera, which does not implement it yet
+ */
+(function () {
+	if (Object.create)
+		return;
+	Object.create = function (o) {
+		if (arguments.length > 1) {
+			throw new Error('Object.create implementation only accepts the first parameter.');
+		}
+		function F() {};
+		F.prototype = o;
+		return new F();
+	};
+})();
 
 var frontend = {
 	filterManager: {
-			selectedSemester: semesterManager.shownSemesters,
-			selectedWahlpflicht: ["Pflicht", "Wahl"],
-			selectedModule: ["Softwarebasissysteme", "Vertiefungsgebiete", "Softskills", "Rechtliche und wirtschaftliche Grundlagen", "Grundlagen IT-Systems Engineering", "Softwaretechnik und Modellierung", "Mathematische und theoretische Grundlagen"],
-			selectedVertiefungsgebiete: ["BPET", "HCT", "IST", "OSIS", "SAMT"],
-			checkSemester: function (key) {
-				return this.selectedSemester.haveIntersection(data[key].semester);
-			},
-			checkWahlpflicht: function (key) {
-				var wahlpflichtSelected = false;
+		/* saves the semesters, which are currently selected by the filter */
+		selectedSemester: semesterManager.shownSemesters,
+		/* saves the modules, which are currently selected by the filter */
+		selectedModule: studyRegulations.module,
+		/* saves the vertiefungsgebiete, which are currently selected by the filter */
+		selectedVertiefungsgebiete: studyRegulations.vertiefungsgebiete,
+		/* saves whether 'Wahl' or 'Pflicht' courses should be displayed */
+		selectedWahlpflicht: ["Pflicht", "Wahl"],
+		/*
+		 * Used to determine, whether a special course should be displayed according to its semester.
+		 * That means, there is at least one course selected the current course is/was offered in.
+		 * True, when course should be displayed.
+		 */
+		checkSemester: function (key) {
+			// key is the array index to one course in data
 
-				if (this.selectedWahlpflicht.indexOf("Wahl") !== -1 && this.selectedWahlpflicht.indexOf("Pflicht") !== -1)
-					return true;
-
-				if (this.selectedWahlpflicht[0] === "Pflicht")
-					return data[key].pflicht;
-
-				if (this.selectedWahlpflicht[0] === "Wahl")
-					return !data[key].pflicht;
-
-				return false;
-			},
-			checkModule: function (key) {
-				return this.selectedModule.haveIntersection(data[key].modul);
-			},
-			checkVertiefungsgebiete: function (key) {
-				if (data[key].vertiefung[0] === "")
-					return true;
-				return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
-			},
+			return this.selectedSemester.haveIntersection(data[key].semester);
 		},
+		/* see checkSemester for documentation, same procedure */
+		checkModule: function (key) {
+			return this.selectedModule.haveIntersection(data[key].modul);
+		},
+		/* see checkSemester for documentation, same procedure */
+		checkVertiefungsgebiete: function (key) {
+			if (data[key].vertiefung[0] === "")
+				return true;
+			return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
+		},
+		checkWahlpflicht: function (key) {
+			// if both 'Wahl' and 'Pflicht' are in the array, its always true
+			if (this.selectedWahlpflicht.indexOf("Wahl") !== -1 && this.selectedWahlpflicht.indexOf("Pflicht") !== -1)
+				return true;
+			// if its only 'Pflicht' return true, when the course is 'Pflicht'
+			else if (this.selectedWahlpflicht[0] === "Pflicht")
+				return data[key].pflicht;
+			// if its only 'Wahl' return true, when the course is not 'Pflicht'
+			else if (this.selectedWahlpflicht[0] === "Wahl")
+				return !data[key].pflicht;
+			// if nothing is selected, return false
+			return false;
+		}
+	},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function () {
-			// for the first semester displayed, start with the in semesterManager.startswith specified semester
-			var currentSemesterIndex = semesterManager.semesters.indexOf(semesterManager.startswith);
-			// for all six semester ..
-			for (var i = 1; i <= 6; i++) {
-				// .. build options and select the correct one
-				var options = "", selected = "";
-				// fill selects with all possible semesters (possible semesters specified in semesterManager.semesters)
-				for (var j = 0; j < semesterManager.semesters.length; j++) {
-					// check whether the current <option> must be selected
-					selected = j === currentSemesterIndex ? " selected" : "";
-					options += "<option" + selected + ">" + semesterManager.semesters[j] + "</option>";
-				}
-				// assume, that there are no breaks while studying and go on with the following semester
-				currentSemesterIndex += 1;
-				$("#selectSemester" + i).append(options);
+		// for the first semester displayed, start with the in semesterManager.startswith specified semester
+		var currentSemesterIndex = semesterManager.semesters.indexOf(semesterManager.startswith);
+		// for all six semester ..
+		for (var i = 1; i <= 6; i++) {
+			// .. build options and select the correct one
+			var options = "", selected = "";
+			// fill selects with all possible semesters (possible semesters specified in semesterManager.semesters)
+			for (var j = 0; j < semesterManager.semesters.length; j++) {
+				// check whether the current <option> must be selected
+				selected = j === currentSemesterIndex ? " selected" : "";
+				options += "<option" + selected + ">" + semesterManager.semesters[j] + "</option>";
 			}
-		},
+			// assume, that there are no breaks while studying and go on with the following semester
+			currentSemesterIndex += 1;
+			$("#selectSemester" + i).append(options);
+		}
+	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function (event, ui) {
-			$(".courses li").knubtip("disable");
-		},
+		$(".courses li").knubtip("disable");
+	},
 	/* used, when user finished drag'n'dropping courses */
 	endSorting: function (event, ui) {
-			$(".courses li").knubtip("enable");
-			frontend.sortPool(event, ui);
-		},
-	/* used sort courses pool, ensures that each stack has the same height (settings.coursesPoolHeight) */
+		$(".courses li").knubtip("enable");
+		frontend.sortPool(event, ui);
+	},
+	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool : function (event, ui) {
-			var listitems = $("#courses-pool > ul li:not(.hidden)");
+		var listitems = $("#courses-pool > ul li:not(.hidden)");
 
-			// There can be at most settings.coursesPoolHeight items in one stack.
-			// The following to var's ensure this.
-			var currentPool = 1;
-			var coursesInCurrentPool = 0;
+		// There can be at most frontend.coursesPoolHeight items in one stack.
+		// The following to var's ensure this.
+		var currentPool = 1;
+		var coursesInCurrentPool = 0;
 
-			// for each listitem
-			listitems.each(function (index, listitem) {
-				// listitem is li dom element, jquerify it
-				listitem = $(listitem);
-				// detach it from wherever it is at the moment
-				listitem.detach();
-				// .. put it in the courses pool taking care of settings.coursesPoolHeight
-				$("#extra" + currentPool).append(listitem);
-				coursesInCurrentPool += 1;
-				if (coursesInCurrentPool === settings.coursesPoolHeight) {
-					coursesInCurrentPool = 0;
-					currentPool += 1;
-				}
-			});
-		},
+		// for each listitem
+		listitems.each(function (index, listitem) {
+			// listitem is li dom element, jquerify it
+			listitem = $(listitem);
+			// detach it from wherever it is at the moment
+			listitem.detach();
+			// .. put it in the courses pool taking care of frontend.coursesPoolHeight
+			$("#extra" + currentPool).append(listitem);
+			coursesInCurrentPool += 1;
+			if (coursesInCurrentPool === frontend.coursesPoolHeight) {
+				coursesInCurrentPool = 0;
+				currentPool += 1;
+			}
+		});
+	},
+	/* used to adjust the height of one stack in courses-pool */
 	adjustPoolHeight: function () {
-			// count all visible courses
-			var shownCourses = $("#courses-pool > ul li:not(.hidden)").length;
-			// there are seven ul's but try to use the first six only (seventh is there, but normally not used)
-			settings.coursesPoolHeight = Math.floor(shownCourses / 6);
-			// but if showCourses is one more than a multiple of six, avoid 'Hurenkind' and use seventh as well
-			if (shownCourses % 6 === 1)
-				settings.coursesPoolHeight = Math.floor(shownCourses / 6) + 1;
-		},
+		// count all visible courses
+		var shownCourses = $("#courses-pool > ul li:not(.hidden)").length;
+		// there are seven ul's but try to use the first six only (seventh is there, but normally not used)
+		frontend.coursesPoolHeight = Math.floor(shownCourses / 6);
+		// but if showCourses is one more than a multiple of six, avoid 'Hurenkind' and use seventh as well
+		if (shownCourses % 6 === 1)
+			frontend.coursesPoolHeight = Math.floor(shownCourses / 6) + 1;
+	},
 	/* used to display informationen from an array in a nice way, used for tooltips */
 	displayArray: function (value) {
-			if (Array.isArray(value) && value[0] !== "") {
-				return value.join(", ");
-			}
-			return "<em>Information fehlt</em>";
-		},
-	/* used to initialize course pool with correct selectors */
+		if (Array.isArray(value) && value[0] !== "") {
+			return value.join(", ");
+		}
+		return "<em>Information fehlt</em>";
+	},
+	/* used to initialize course pool filter with correct selectors */
 	initializeFilter: function () {
-			// build semester list
-			var semesterList = "<ul id='semester-filter'>";
-			for (var semester in frontend.filterManager.selectedSemester) {
-				if (!frontend.filterManager.selectedSemester.hasOwnProperty(semester)) continue;
-				semesterList += "<li class='selected'>" + frontend.filterManager.selectedSemester[semester] + "</li>";
-			}
-			semesterList += "</ul>";
-			semesterList = $(semesterList);
+		// build semester list
+		var semesterList = "<ul id='semester-filter'>";
+		for (var semester in frontend.filterManager.selectedSemester) {
+			if (!frontend.filterManager.selectedSemester.hasOwnProperty(semester)) continue;
+			semesterList += "<li class='selected'>" + frontend.filterManager.selectedSemester[semester] + "</li>";
+		}
+		semesterList += "</ul>";
+		semesterList = $(semesterList);
 
-			// build module list
-			var moduleList = "<ul id='module-filter'>";
-			for (var modul in frontend.filterManager.selectedModule) {
-				if (!frontend.filterManager.selectedModule.hasOwnProperty(modul)) continue;
-				moduleList += "<li class='selected'>" + frontend.filterManager.selectedModule[modul] + "</li>";
-			}
-			moduleList += "</ul>";
-			moduleList = $(moduleList);
+		// build module list
+		var moduleList = "<ul id='module-filter'>";
+		for (var modul in frontend.filterManager.selectedModule) {
+			// only own properties matter
+			// if the following line wouldnt be there things like Array.prototype.haveIntersection would also count
+			if (!frontend.filterManager.selectedModule.hasOwnProperty(modul)) continue;
+			moduleList += "<li class='selected'>" + frontend.filterManager.selectedModule[modul] + "</li>";
+		}
+		moduleList += "</ul>";
+		moduleList = $(moduleList);
 
-			// build vertiefungsgebiete list
-			var vertiefungsgebieteList = "<ul id='vertiefungsgebiete-filter'>";
-			for (var vertiefungsgebiet in frontend.filterManager.selectedVertiefungsgebiete) {
-				if (!frontend.filterManager.selectedVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
-				vertiefungsgebieteList += "<li class='selected'>" + frontend.filterManager.selectedVertiefungsgebiete[vertiefungsgebiet] + "</li>";
-			}
-			vertiefungsgebieteList += "</ul>";
-			vertiefungsgebieteList = $(vertiefungsgebieteList);
+		// build vertiefungsgebiete list
+		var vertiefungsgebieteList = "<ul id='vertiefungsgebiete-filter'>";
+		for (var vertiefungsgebiet in frontend.filterManager.selectedVertiefungsgebiete) {
+			if (!frontend.filterManager.selectedVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
+			vertiefungsgebieteList += "<li class='selected'>" + frontend.filterManager.selectedVertiefungsgebiete[vertiefungsgebiet] + "</li>";
+		}
+		vertiefungsgebieteList += "</ul>";
+		vertiefungsgebieteList = $(vertiefungsgebieteList);
 
 
-			$("#semester_wahlpflicht").append(semesterList)
-			                    .append("<ul id='wahlpflicht-filter'><li class='selected'>Pflicht</li><li class='selected'>Wahl</li></ul>");
-			$("#module_vertiefungsgebiete").append(moduleList)
-					    .append(vertiefungsgebieteList);
-		},
+		// append built ul to correct div
+		$("#semester_wahlpflicht").append(semesterList)
+		                    .append("<ul id='wahlpflicht-filter'><li class='selected'>Pflicht</li><li class='selected'>Wahl</li></ul>");
+		$("#module_vertiefungsgebiete").append(moduleList)
+				    .append(vertiefungsgebieteList);
+	},
 	/* selector for droppables */
 	coursesList: ".courses",
 	/* when a li has this class it cannot be dragged */
-	disabledClass: "disabled"
+	disabledClass: "disabled",
+	/* number of list items in one list in unchosen lists */
+	coursesPoolHeight: 8
 };
-
 
 /*
  * here starts real execution
  */
 // note: $(function () ...) is the same as $(document).ready(function () ..)
 $(function () {
-
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */
 	frontend.organizeSemesters();
 
@@ -230,6 +260,7 @@ $(function () {
 			$("#semester" + course['empfohlen']).append(html);
 		}
 	}
+	// until now, all courses are in the first ul. now adjust pool height and sort pool.
 	frontend.adjustPoolHeight();
 	frontend.sortPool();
 
@@ -263,10 +294,11 @@ $(function () {
 
 	/* initialize selectables for filter div */
 	$("#filter-options ul").knubselect({
+		// change is raised when the selection changed
 		change: function (selected, id) {
 			// TODO: Filter when dropped to #courses-pool.
 			var key;
-			// update selected
+			// according to the ul, where the selection change happened, update selected
 			if (id === "semester-filter") {
 				frontend.filterManager.selectedSemester = selected;
 			} else if (id === "wahlpflicht-filter") {
@@ -277,7 +309,6 @@ $(function () {
 				frontend.filterManager.selectedVertiefungsgebiete = selected;
 			}
 
-			var shownCourses = 0;
 			$("#courses-pool > ul li").each(function () {
 				// .slice(7) to remove foregoing "course-" from id
 				key = $(this).attr("id").slice(7);
@@ -289,10 +320,8 @@ $(function () {
 				}
 				else {
 					$(this).removeClass("hidden");
-					shownCourses += 1;
 				}
 			});
-
 			frontend.adjustPoolHeight();
 			frontend.sortPool();
 		}
