@@ -67,6 +67,17 @@ var frontend = {
 			$("#selectSemester" + i).append(options);
 		}
 	},
+	/* returns the currently chosen semester for a given course */
+	getSemester: function (course) {
+		var parent = $("#course-" + course).parent();
+		if (parent.attr("id").substr(0, 5) === "extra") {
+			return -1;
+		}
+		else if (parent.attr("id").substr(0, 8) === "semester") {
+			return parseInt(parent.attr("id").substr(8, 1));
+		}
+		alert("Shouldnt be here!");
+	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function (event, ui) {
 		$(".courses li").knubtip("disable");
@@ -235,10 +246,17 @@ $(function () {
 		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
+	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
+	ruleManager.init(frontend.getSemester);
 	/* apply check routine on button click */
 	$("button#check").click(function () {
-		frontend.sortPool();
-		alert("check!");
+		var messages = ruleManager.checkAll();
+		for (var message = 0; message < messages.length; message += 1) {
+			alert(messages[message]);
+		}
+
+		if (messages.length === 0)
+			alert("Everything is fine!");
 	});
 
 	var filtering = false;

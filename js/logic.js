@@ -49,6 +49,22 @@ var semesterManager = {
 
 
 
+var ruleManager = {
+	getSemester: null,
+	rules: [],
+	init: function (getSemester_Function) {
+		this.getSemester = getSemester_Function;
+	},
+	checkAll: function () {
+		var messages = [];
+		for (var rule = 0; rule < this.rules.length; rule += 1) {
+			if (!this.rules[rule].check(this.getSemester)) {
+				messages.push(this.rules[rule].message);
+			}
+		}
+		return messages;
+	}
+};
 /*
  Regeln:
   - must do
@@ -57,15 +73,19 @@ var semesterManager = {
 */
 var mustDoRule = {
 	course: "",
-	message: "",
-	check: function () {
-		alert("get the check");
+	message: "Das Fach muss belegt werden.",
+	check: function (getSemester) {
+		this.message = "Das Fach '" + data[this.course].nameLV + "' muss belegt werden.";
+		if (getSemester(this.course) === -1)
+			return false;
+		return true;
 	}
 };
 
+// TODO: Hübscher machen, nicht zwei Anweisungen nötig. Init irgendwas.
+var pt1MustDoRule = Object.create(mustDoRule); pt1MustDoRule.course = "pt1";
 
-
-
+ruleManager.rules.push(pt1MustDoRule);
 /*
 var obj = {
 	a: 1,
