@@ -354,7 +354,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Softskills"
+            ""
         ], 
         cp: 3, 
         dozent: [
@@ -385,7 +385,7 @@ var data =
 	pflicht: false,
 	empfohlen: "",
         vertiefung: [
-            "Softskills"
+            ""
         ], 
         cp: 6, 
         dozent: [
