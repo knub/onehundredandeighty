@@ -130,13 +130,24 @@ var dependencyRule = {
 	dependency: "",
 	course: ""
 };
-
-/*
- Regeln:
-  - must do
-  - etwas muss vorher gemacht werden
-  - es fehlt ein sbs
-*/
+/* 3. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
+var sbsRule = {
+	/* constructor */
+	init: function() {
+	},
+	/* check method */
+	check: function (getSemester) {
+		var sbs = ['dbs1', 'hci1', 'grafik1', 'pois1', 'www'];
+		var sbsNumber = 0;
+		for (var i = 0; i < sbs.length; i += 1) {
+			if (getSemester(sbs[i]) !== -1)
+				sbsNumber += 1;
+		}
+		return sbsNumber >= 3;
+	},
+	/* message */
+	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
+};
 
 // TODO: merge todos for more efficient solution
 
@@ -161,6 +172,8 @@ for (var course in data) {
 		}
 	}
 }
+/* 3: create sbs-rule, just push it to rules-array */
+ruleManager.rules.push(sbsRule);
 
 
 /*

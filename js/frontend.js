@@ -4,6 +4,10 @@
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
 
+$("#debug").click(function () {
+	$(this).css("display", "none");
+});
+
 var frontend = {
 	filterManager: {
 		/* saves the semesters, which are currently selected by the filter */
@@ -251,12 +255,18 @@ $(function () {
 	/* apply check routine on button click */
 	$("button#check").click(function () {
 		var messages = ruleManager.checkAll();
+		$("#message ul").empty();
 		for (var message = 0; message < messages.length; message += 1) {
-			alert(messages[message]);
+			$("#message ul").append("<li>" + messages[message] + "</li>");
 		}
 
 		if (messages.length === 0)
 			alert("Everything is fine!");
+
+		// each li is 2em high
+		var ulheight= $("#message li").length * 2;
+		$("#message").animate({ height: ulheight + 'em' }, 300);
+
 	});
 
 	var filtering = false;

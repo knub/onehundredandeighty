@@ -32,10 +32,42 @@ div#message {
 	background: #7BB567; /* green */
 	background: #333;
 	color: white;
-	text-align: center;
+	/*
 	font-variant: small-caps;
-	font-size: 1.3em;
+	*/
+	text-align: center;
+	font-size: 1.8em;
+	height: 2em;
+	line-height: 2em;
 	padding: 10px 0;
+	overflow: hidden;
+}
+div#message div {
+	position: absolute;
+	right: 40px;
+	height: 1em;
+	font-size: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+div#message div button {
+	vertical-align: top;
+	height: 100%;
+	font-size: 1em;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: none;
+	color: white;
+}
+div#message span {
+}
+div#message ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+div#message ul:first-child {
 }
 section {
 	font-size: 1.2em;
@@ -171,7 +203,7 @@ h1 img {
 	position: relative;
 	top: 15px;
 }
-h1 + span {
+h1 ~ span {
 	color: red;
 	display: block;
 	text-align: center;
