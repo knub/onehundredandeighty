@@ -98,24 +98,37 @@ var mustDoRule = {
 	/* needed to save for what course the current rule applies */
 	course: ""
 };
-/* 2. Before-Rule: a certain course must be done before another */
-var beforeRule = {
+/* 2. Dependency-Rule: a certain course must be done before another */
+var dependencyRule = {
 	/* constructor */
-	init: function (before, after) {
-		this.before = before;
-		this.after = after;
+	init: function (course, dependency) {
+		this.course= course;
+		this.dependency = dependency;
+		this.message = "Das Fach '" + data[this.dependency].nameLV + "' muss vor dem Fach '" + data[this.course].nameLV + "' belegt werden.";
+
+		return this;
 	},
 	/* check method */
 	check: function (getSemester) {
-		/* before -1, fail!
-		* after -1, no problem
-		*/
+		var courseSemester = getSemester(this.course);
+		var dependencySemester = getSemester(this.dependency);
+		// if course, which has a dependency is not selected, test passes automatically
+		if (courseSemester === -1)
+			return true;
+		// course is chosen, but dependency not
+		else if (dependencySemester === -1)
+			return false;
+		// both are chosen, now check for semesters
+		else {
+			// check whether course was chosen before its dependency
+			return courseSemester > dependencySemester;
+		}
 	},
 	/* message */
 	message: "Ein Fach muss vor einem anderen belegt werden.",
-	/* needed to save, which course must be done before which */
-	before: "",
-	after: ""
+	/* save which course must be done before which */
+	dependency: "",
+	course: ""
 };
 
 /*
@@ -125,7 +138,9 @@ var beforeRule = {
   - es fehlt ein sbs
 */
 
-/* 1: create must-do-rules according to the informationen saved in data */
+// TODO: merge todos for more efficient solution
+
+/* 1: create must-do-rules according to the information saved in data */
 for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
 	// if course must be done ..
@@ -134,6 +149,19 @@ for (var course in data) {
 		ruleManager.rules.push(Object.create(mustDoRule).init(course));
 	}
 }
+/* 2: create dependency-rules according to the information saved in data */
+for (var course in data) {
+	if (!data.hasOwnProperty(course)) continue;
+	// if there are dependencies ..
+	if(data[course].vorher.length !== 0) {
+		// .. loop through all dependencies and ..
+		for (var i = 0; i < data[course].vorher.length; i++) {
+			// .. add rule to rule manager
+			ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
+		}
+	}
+}
+
 
 /*
 var obj = {

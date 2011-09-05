@@ -24,6 +24,7 @@ var data =
             "OSIS"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Felix Naumann", 
             "Alexander Albrecht"
@@ -54,6 +55,7 @@ var data =
             "SAMT"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Robert Hirschfeld", 
             "Dr.-Ing. Michael Haupt", 
@@ -85,6 +87,7 @@ var data =
             "OSIS"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Felix Naumann"
         ], 
@@ -114,6 +117,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Andreas Polze", 
             "Dr. Peter Tr\u00f6ger"
@@ -144,6 +148,7 @@ var data =
             "OSIS"
         ],
         cp: 6, 
+	vorher: ["bs1"],
         dozent: [
             "Prof. Dr. Andreas Polze"
         ], 
@@ -173,6 +178,7 @@ var data =
             "OSIS"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Andreas Polze", 
             "Dr. Peter Tr\u00f6ger"
@@ -203,6 +209,7 @@ var data =
             "IST"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -235,6 +242,7 @@ var data =
             "HCT", 
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. J\u00fcrgen D\u00f6llner"
         ], 
@@ -264,6 +272,7 @@ var data =
             "HCT"
         ], 
         cp: 3, 
+	vorher: ["grafik1"],
         dozent: [
             "Jan Eric Kyprianidis", 
             "Prof. Dr. J\u00fcrgen D\u00f6llner"
@@ -297,6 +306,7 @@ var data =
             "OSIS"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Felix Naumann"
         ], 
@@ -327,6 +337,7 @@ var data =
             "OSIS"
         ], 
         cp: 6, 
+	vorher: ["dbs1"],
         dozent: [
             "Prof. Dr. Felix Naumann"
         ], 
@@ -357,6 +368,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Ulrich Weinberg", 
             "Dr. Claudia Nicolai"
@@ -388,6 +400,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Ulrich Weinberg", 
             "Dr. Claudia Nicolai"
@@ -419,6 +432,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Ulrich Weinberg", 
             "Dr. Claudia Nicolai"
@@ -453,6 +467,7 @@ var data =
             "BPET"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Dr. Alexander Zeier"
         ], 
@@ -482,6 +497,7 @@ var data =
             "IST"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -512,6 +528,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Wolfgang L\u00fcer"
         ], 
@@ -542,6 +559,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: ["fachenglisch1"],
         dozent: [
             "Wolfgang L\u00fcer"
         ], 
@@ -572,6 +590,7 @@ var data =
             "HCT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. J\u00fcrgen D\u00f6llner"
         ], 
@@ -602,6 +621,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Dr.-Ing. Ralf Wollowski"
         ], 
@@ -634,6 +654,7 @@ var data =
             "SAMT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. J\u00fcrgen D\u00f6llner"
         ], 
@@ -664,6 +685,7 @@ var data =
             "HCT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Patrick Baudisch"
         ], 
@@ -693,6 +715,7 @@ var data =
             "HCT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Patrick Baudisch"
         ], 
@@ -724,6 +747,7 @@ var data =
             "HCT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Patrick Baudisch"
         ], 
@@ -755,6 +779,7 @@ var data =
             "SAMT"
         ], 
         cp: 6, 
+	vorher: ["hci1"],
         dozent: [
             "Prof. Dr. Patrick Baudisch"
         ], 
@@ -784,6 +809,7 @@ var data =
             "SAMT"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Robert Hirschfeld", 
             "Malte Appeltauer"
@@ -814,6 +840,7 @@ var data =
             "IST"
         ], 
         cp: 6, 
+	vorher: ["www"],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -843,6 +870,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -873,6 +901,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: ["mathematik1"],
         dozent: [
             "Dr. habil. Ferdinand B\u00f6rner"
         ], 
@@ -902,6 +931,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Holger Giese"
         ], 
@@ -932,6 +962,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: ["mod1"],
         dozent: [
             "Prof. Dr. Holger Giese"
         ], 
@@ -963,6 +994,7 @@ var data =
             "SAMT"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Holger Giese", 
             "Leen Lambers"
@@ -997,6 +1029,7 @@ var data =
             "HCT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Dr. rer. nat. Harald Sack"
         ], 
@@ -1026,6 +1059,7 @@ var data =
             "OSIS"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Felix Naumann", 
             "Johannes Lorey"
@@ -1058,6 +1092,7 @@ var data =
 	    "SAMT"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Dr. Martin von L\u00f6wis"
         ], 
@@ -1088,6 +1123,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Dr. Michaela Schumacher", 
             "Andrea Bassen", 
@@ -1123,6 +1159,7 @@ var data =
             "BPET"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Mathias Weske"
         ], 
@@ -1156,6 +1193,7 @@ var data =
             "SAMT"
         ], 
         cp: 6, 
+	vorher: ["pois1"],
         dozent: [
             "Prof. Dr. Mathias Weske"
         ], 
@@ -1186,6 +1224,7 @@ var data =
             "BPET"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Mathias Weske"
         ], 
@@ -1216,6 +1255,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Dr. Martin von L\u00f6wis"
         ], 
@@ -1246,6 +1286,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: ["pt1"],
         dozent: [
             "Dr. Martin von L\u00f6wis"
         ], 
@@ -1275,6 +1316,7 @@ var data =
             "IST"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -1305,6 +1347,7 @@ var data =
             "IST"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel", 
             "Dr. Feng Cheng", 
@@ -1336,6 +1379,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Dr. Timm Krohn"
         ], 
@@ -1365,6 +1409,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: ["recht1"],
         dozent: [
             "Dr. Timm Krohn"
         ], 
@@ -1398,6 +1443,7 @@ var data =
             "HCT"
         ],
         cp: 6, 
+	vorher: [],
         dozent: [
             "Dr. Alexander Zeier"
         ], 
@@ -1427,6 +1473,7 @@ var data =
             "IST"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -1457,6 +1504,7 @@ var data =
             ""
         ], 
         cp: "bis zu 6", 
+	vorher: [],
         dozent: [
             ""
         ], 
@@ -1487,6 +1535,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Robert Hirschfeld", 
             "Dr.-Ing. Michael Haupt"
@@ -1518,6 +1567,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Robert Hirschfeld"
         ], 
@@ -1547,6 +1597,7 @@ var data =
             "SAMT"
         ], 
         cp: 6, 
+	vorher: ["swt1"],
         dozent: [
             "Dr. Alexander Zeier", 
             "J\u00fcrgen M\u00fcller"
@@ -1577,6 +1628,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Kreitz"
         ], 
@@ -1607,6 +1659,7 @@ var data =
             ""
         ], 
         cp: 6, 
+	vorher: ["ti1"],
         dozent: [
             "Prof. Dr. Christoph Kreitz"
         ], 
@@ -1638,6 +1691,7 @@ var data =
 	    "SAMT"
         ], 
         cp: 6, 
+	vorher: ["gds"],
         dozent: [
             "Dr.-Ing. Ralf Wollowski"
         ], 
@@ -1667,6 +1721,7 @@ var data =
             "IST"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -1696,6 +1751,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Jan Kratzer"
         ], 
@@ -1725,6 +1781,7 @@ var data =
             ""
         ], 
         cp: 3, 
+	vorher: ["wirtschaft1"],
         dozent: [
             "Prof. Dr. Jan Kratzer"
         ], 
@@ -1757,6 +1814,7 @@ var data =
             "SAMT"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Mathias Weske"
         ], 
@@ -1789,6 +1847,7 @@ var data =
             "IST"
         ], 
         cp: 6, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
@@ -1818,6 +1877,7 @@ var data =
             "IST"
         ], 
         cp: 3, 
+	vorher: [],
         dozent: [
             "Prof. Dr. Christoph Meinel"
         ], 
