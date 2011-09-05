@@ -65,27 +65,76 @@ var ruleManager = {
 		return messages;
 	}
 };
+
+/*
+ * Rule-objectes, each representing one special type of rule
+ * These objects basically act as classes (will be 'cloned' by Object.create later
+ * It's a kind of 'inheritance by convention', meaning:
+ * 	- each rule must have a check method, which - given a special course to check - passes or fails
+ *	- each rule must have a message property, which will be displayed, if the rule/test fails
+ *	- there is one init-method, serving as constructor, which takes neccessary parameters and saves them, finally returning 'this'
+ *
+ * Furthermore, most objects have some special properties needed for that special kind of rule
+ */
+
+/* 1. Must-Do-Rule: a certain course must be done. */
+var mustDoRule = {
+	/* constructor */
+	init: function (course) {
+		this.course = course;
+		this.message = "Das Fach '" + data[this.course].nameLV + "' muss belegt werden.";
+
+		return this;
+	},
+	/* check method */
+	check: function (getSemester) {
+		// if course is currently not selected for a certain semester, but put in courses-pool (indicated by -1), return false
+		if (getSemester(this.course) === -1)
+			return false;
+		return true;
+	},
+	/* message */
+	message: "Das Fach muss belegt werden.",
+	/* needed to save for what course the current rule applies */
+	course: ""
+};
+/* 2. Before-Rule: a certain course must be done before another */
+var beforeRule = {
+	/* constructor */
+	init: function (before, after) {
+		this.before = before;
+		this.after = after;
+	},
+	/* check method */
+	check: function (getSemester) {
+		/* before -1, fail!
+		* after -1, no problem
+		*/
+	},
+	/* message */
+	message: "Ein Fach muss vor einem anderen belegt werden.",
+	/* needed to save, which course must be done before which */
+	before: "",
+	after: ""
+};
+
 /*
  Regeln:
   - must do
   - etwas muss vorher gemacht werden
   - es fehlt ein sbs
 */
-var mustDoRule = {
-	course: "",
-	message: "Das Fach muss belegt werden.",
-	check: function (getSemester) {
-		this.message = "Das Fach '" + data[this.course].nameLV + "' muss belegt werden.";
-		if (getSemester(this.course) === -1)
-			return false;
-		return true;
+
+/* 1: create must-do-rules according to the informationen saved in data */
+for (var course in data) {
+	if (!data.hasOwnProperty(course)) continue;
+	// if course must be done ..
+	if(data[course].pflicht) {
+	 	// .. add rule to rule manager
+		ruleManager.rules.push(Object.create(mustDoRule).init(course));
 	}
-};
+}
 
-// TODO: Hübscher machen, nicht zwei Anweisungen nötig. Init irgendwas.
-var pt1MustDoRule = Object.create(mustDoRule); pt1MustDoRule.course = "pt1";
-
-ruleManager.rules.push(pt1MustDoRule);
 /*
 var obj = {
 	a: 1,
