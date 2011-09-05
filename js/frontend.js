@@ -52,6 +52,17 @@ var frontend = {
 			return false;
 		}
 	},
+	/* used to check all rules and display them in div#messages */
+	checkRules: function () {
+		var messages = ruleManager.checkAll();
+		$("#message ul").empty();
+		for (var message = 0; message < messages.length; message += 1) {
+			$("#message ul").append("<li>" + messages[message] + "</li>");
+		}
+
+		if (messages.length === 0)
+			alert("Everything is fine!");
+	},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function () {
 		// for the first semester displayed, start with the in semesterManager.startswith specified semester
@@ -183,6 +194,20 @@ var frontend = {
  */
 // note: $(function () ...) is the same as $(document).ready(function () ..)
 $(function () {
+	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
+	ruleManager.init(frontend.getSemester);
+	/* apply check routine on button click */
+	$("button#check").click(function () {
+		frontend.checkRules();
+	});
+
+	/* add click handler for slide button to show messages */
+	$("#slide-messages").click(function () {
+		// each li is 2em high
+		var ulheight= $("#message li").length * 2;
+		$("#message").animate({ height: ulheight + 'em' }, 300);
+	});
+
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */
 	frontend.organizeSemesters();
 
@@ -250,24 +275,6 @@ $(function () {
 		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
-	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
-	ruleManager.init(frontend.getSemester);
-	/* apply check routine on button click */
-	$("button#check").click(function () {
-		var messages = ruleManager.checkAll();
-		$("#message ul").empty();
-		for (var message = 0; message < messages.length; message += 1) {
-			$("#message ul").append("<li>" + messages[message] + "</li>");
-		}
-
-		if (messages.length === 0)
-			alert("Everything is fine!");
-
-		// each li is 2em high
-		var ulheight= $("#message li").length * 2;
-		$("#message").animate({ height: ulheight + 'em' }, 300);
-
-	});
 
 	var filtering = false;
 	/* apply filter routine on filter-button-div click */
