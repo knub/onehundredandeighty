@@ -54,26 +54,27 @@ var frontend = {
 	},
 	/* used to check all rules and display them in div#messages */
 	checkRules: function () {
-		var messages = ruleManager.checkAll();
+		var failedRules = ruleManager.checkAll();
 		$("#message ul").empty();
-		if (messages.length === 0) {
+		if (failedRules.length === 0) {
 			$("#message ul").append("<li>Der Belegungsplan ist gültig!</li>");
-			// does not work! jquery cant animate colors
-			// $("#message").animate( { backgroundColor: '7BB567' }, 1000);
-			$("#message").css("background-color", "green");
+			// animate to green
+			$("#message").animate( { backgroundColor: '#008000' }, 150);
 		}
 		else {
-			for (var message = 0; message < messages.length; message += 1) {
-				$("#message ul").append("<li>" + messages[message] + "</li>");
+			for (var rule = 0; rule < failedRules.length; rule += 1) {
+				var extra = '';
+				if (failedRules[rule].type === 'sbsRule')
+					extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
+				$("#message ul").append("<li>" + failedRules[rule].message + extra + "</li>");
 			}
-			// does not work! jquery cant animate colors
-			// $("#message").animate( { backgroundColor: '#7BB567' }, 1000);
-			$("#message").css("background-color", "red");
+			// animate to red
+			$("#message").animate( { backgroundColor: '#FF0000' }, 150);
 		}
 
 	},
-	slideMessages: function (allMessagesVisible) {
-		if (allMessagesVisible === false) {
+	slideMessages: function () {
+		if (frontend.allMessagesVisible === true) {
 			$("#slide-messages").text("△");
 			// each li is 2em high
 			var ulheight= $("#message li").length * 2;
@@ -215,6 +216,8 @@ var frontend = {
 	coursesList: ".courses",
 	/* when a li has this class it cannot be dragged */
 	disabledClass: "disabled",
+	/* true, when all error messages are visible in drop down list */
+	allMessagesVisible: false,
 	/* when true, rules are checked permanently */
 	checkPermanently: false,
 	/* number of list items in one list in unchosen lists */
@@ -235,11 +238,10 @@ $(function () {
 		frontend.checkPermanently = true;
 	});
 
-	var allMessagesVisible = false;
 	/* add click handler for slide button to show messages */
 	$("#slide-messages").click(function () {
-		frontend.slideMessages(allMessagesVisible);
-		allMessagesVisible= !allMessagesVisible;
+		frontend.allMessagesVisible= !frontend.allMessagesVisible;
+		frontend.slideMessages();
 	});
 
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */

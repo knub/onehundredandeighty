@@ -56,13 +56,13 @@ var ruleManager = {
 		this.getSemester = getSemester_Function;
 	},
 	checkAll: function () {
-		var messages = [];
+		var failedRules = [];
 		for (var rule = 0; rule < this.rules.length; rule += 1) {
 			if (!this.rules[rule].check(this.getSemester)) {
-				messages.push(this.rules[rule].message);
+				failedRules.push(this.rules[rule]);
 			}
 		}
-		return messages;
+		return failedRules;
 	}
 };
 
@@ -70,6 +70,7 @@ var ruleManager = {
  * Rule-objectes, each representing one special type of rule
  * These objects basically act as classes (will be 'cloned' by Object.create later
  * It's a kind of 'inheritance by convention', meaning:
+ *	- each rule has a type, by which it can be identified
  * 	- each rule must have a check method, which - given a special course to check - passes or fails
  *	- each rule must have a message property, which will be displayed, if the rule/test fails
  *	- there is one init-method, serving as constructor, which takes neccessary parameters and saves them, finally returning 'this'
@@ -79,6 +80,8 @@ var ruleManager = {
 
 /* 1. Must-Do-Rule: a certain course must be done. */
 var mustDoRule = {
+	/* type */
+	type: 'mustDoRule',
 	/* constructor */
 	init: function (course) {
 		this.course = course;
@@ -100,6 +103,8 @@ var mustDoRule = {
 };
 /* 2. Dependency-Rule: a certain course must be done before another */
 var dependencyRule = {
+	/* type */
+	type: 'dependencyRule',
 	/* constructor */
 	init: function (course, dependency) {
 		this.course= course;
@@ -132,6 +137,8 @@ var dependencyRule = {
 };
 /* 3. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
 var sbsRule = {
+	/* type */
+	type: "sbsRule",
 	/* constructor */
 	init: function() {
 	},
@@ -146,7 +153,7 @@ var sbsRule = {
 		return sbsNumber >= 3;
 	},
 	/* message */
-	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden. <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>'
+	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
 };
 
 // TODO: merge todos for more efficient solution

@@ -3,7 +3,7 @@
 	$.fn.knubtip = function (method) {
 		var settings = {
 			'duration'	: 200,
-			'wait-time'	: 800
+			'wait-time'	: 1200
 		};
 
 		var i = 0;
