@@ -6,7 +6,9 @@
 			'wait-time'	: 1200
 		};
 
+		// counter, counts tooltips so an unique id (for the div) can be built with this number
 		var i = 0;
+		// timer will save what setTimeout returns
 		var timer;
 
 		var methods = {
@@ -32,23 +34,29 @@
 						var $this = $(this);
 						clearTimeout(timer);
 						timer = setTimeout(function () {
-							// only display tooltip, if element is not disabled (is this useful? - think about it)
-							if($this.hasClass("disabled"))
-								return;
 							// only display tooltip, if whole plugin is enabled
 							if($this.data('enabled') !== true)
 								return;
+							// only display tooltip, if element is not disabled (is this useful? - think about it)
+							if($this.hasClass("disabled"))
+								return;
 							// get corresponding div
 							var cssClass = $this.data('knubtip')['info'];
+							// position of the current li
 							var offset = $this.offset();
-							// calculate left offset, so that center of li matches center of div
-							// li :            |     c     |                       (c for center of block element)
-							// div: |                c               |
-							//      ^: calculate this left-offset
-							// the formula comes from the following main idea:
-							// li-left + li-width / 2 = div-left + div-width / 2 (the center of the li element is the same like the center of the div element)
-							var left = offset.left + ($this.width() - $(".info").width()) / 2;
-							$(cssClass).css({ top: offset.top + $this.height() + 5, left: left }).fadeIn(settings['duration']);
+							// if displayed tooltip would still be in viewport ..
+							if (offset.top + $this.height() + 5 + $(cssClass).height() < $(window).height() + $(window).scrollTop()) {
+								// .. display it
+
+								// calculate left offset, so that center of li matches center of div
+								// li :            |     c     |                       (c for center of block element)
+								// div: |                c               |
+								//      ^: calculate this left-offset
+								// the formula comes from the following main idea:
+								// li-left + li-width / 2 = div-left + div-width / 2 (the center of the li element is the same like the center of the div element)
+								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								$(cssClass).css({ top: offset.top + $this.height() + 5, left: left }).fadeIn(settings['duration']);
+							}
 						}, settings['wait-time']);
 					}).mouseout(function () {
 						clearTimeout(timer);

@@ -5,7 +5,8 @@
 "use strict";
 
 $("#debug").click(function () {
-	$(this).css("display", "none");
+	alert($(window).height());
+	//$(this).css("display", "none");
 });
 
 var frontend = {
