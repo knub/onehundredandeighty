@@ -56,12 +56,38 @@ var frontend = {
 	checkRules: function () {
 		var messages = ruleManager.checkAll();
 		$("#message ul").empty();
-		for (var message = 0; message < messages.length; message += 1) {
-			$("#message ul").append("<li>" + messages[message] + "</li>");
+		if (messages.length === 0) {
+			$("#message ul").append("<li>Der Belegungsplan ist gültig!</li>");
+			// does not work! jquery cant animate colors
+			// $("#message").animate( { backgroundColor: '7BB567' }, 1000);
+			$("#message").css("background-color", "green");
+		}
+		else {
+			for (var message = 0; message < messages.length; message += 1) {
+				$("#message ul").append("<li>" + messages[message] + "</li>");
+			}
+			// does not work! jquery cant animate colors
+			// $("#message").animate( { backgroundColor: '#7BB567' }, 1000);
+			$("#message").css("background-color", "red");
 		}
 
-		if (messages.length === 0)
-			alert("Everything is fine!");
+	},
+	slideMessages: function (allMessagesVisible) {
+		if (allMessagesVisible === false) {
+			$("#slide-messages").text("△");
+			// each li is 2em high
+			var ulheight= $("#message li").length * 2;
+			$("#message").animate({ height: ulheight + 'em' }, 300);
+		} else {
+			$("#slide-messages").text("▽");
+			$("#message").animate({ height: '2em' }, 300);
+		}
+		if ($("#message li").length > 1) {
+			$("#slide-messages").css("visibility", "visible");
+		}
+		else {
+			$("#slide-messages").css("visibility", "hidden");
+		}
 	},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function () {
@@ -99,6 +125,10 @@ var frontend = {
 	},
 	/* used, when user finished drag'n'dropping courses */
 	endSorting: function (event, ui) {
+		if (frontend.checkPermanently === true) {
+			frontend.checkRules();
+			frontend.slideMessages();
+		}
 		$(".courses li").knubtip("enable");
 		frontend.sortPool(event, ui);
 	},
@@ -185,6 +215,8 @@ var frontend = {
 	coursesList: ".courses",
 	/* when a li has this class it cannot be dragged */
 	disabledClass: "disabled",
+	/* when true, rules are checked permanently */
+	checkPermanently: false,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8
 };
@@ -199,13 +231,15 @@ $(function () {
 	/* apply check routine on button click */
 	$("button#check").click(function () {
 		frontend.checkRules();
+		frontend.slideMessages();
+		frontend.checkPermanently = true;
 	});
 
+	var allMessagesVisible = false;
 	/* add click handler for slide button to show messages */
 	$("#slide-messages").click(function () {
-		// each li is 2em high
-		var ulheight= $("#message li").length * 2;
-		$("#message").animate({ height: ulheight + 'em' }, 300);
+		frontend.slideMessages(allMessagesVisible);
+		allMessagesVisible= !allMessagesVisible;
 	});
 
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */

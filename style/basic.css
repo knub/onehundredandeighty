@@ -32,10 +32,6 @@ div#message {
 	background: #7BB567; /* green */
 	background: #333;
 	color: white;
-	/*
-	font-variant: small-caps;
-	*/
-	text-align: center;
 	font-size: 1.8em;
 	height: 2em;
 	line-height: 2em;
@@ -59,15 +55,21 @@ div#message div button {
 	border: none;
 	background: none;
 	color: white;
+	visibility: hidden;
 }
-div#message span {
-}
-div#message ul{
+div#message ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
+	text-indent: 5em;
 }
-div#message ul:first-child {
+div#message a {
+	color: black;
+}
+.teaser {
+	font-variant: small-caps;
+	text-align: center;
+	text-indent: 0;
 }
 section {
 	font-size: 1.2em;

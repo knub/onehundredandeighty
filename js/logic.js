@@ -146,7 +146,7 @@ var sbsRule = {
 		return sbsNumber >= 3;
 	},
 	/* message */
-	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
+	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden. <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>'
 };
 
 // TODO: merge todos for more efficient solution
