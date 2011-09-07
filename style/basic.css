@@ -105,13 +105,15 @@ section#courses-pool {
 	border: 1px dotted black;
 	position: relative; /* needed to be able to position filter absolute */
 	min-height: 500px;
+	min-height: 27em;
 }
 div#filter-button {
 	position: absolute;
 	top: 50%;
-	margin-top: -100px;
+	margin-top: -5.275em;
 	left: 0px;
 	height: 200px;
+	height: 10.55em;
 	width: 50px;
 	background:#ccc;
 	border-radius: 0px 10px 10px 0px;
