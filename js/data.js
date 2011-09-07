@@ -846,6 +846,35 @@ var data =
         ], 
         nameLV: "Internet-Security - Weaknesses and Targets (Teleteaching)"
     }, 
+    klubsprecher: {
+    	kurz: "Klubsprecher",
+        kennung: [
+            ""
+        ], 
+        lehrform: [
+            ""
+        ], 
+        modul: [
+            "Softskills"
+        ], 
+        themenkomplex: [
+            ""
+        ], 
+        semester: [
+		"WS10/11",
+		"SS11"
+	],
+        benotet: false, 
+	pflicht: false,
+	empfohlen: "",
+        vertiefung: [
+            ""
+        ], 
+        cp: 3, 
+	vorher: [],
+        dozent: [],
+        nameLV: "Klubsprechertätigkeit über mindestens zwei Semester"
+    }, 
     mathematik1: {
     	kurz: "Mathematik I",
         kennung: [
