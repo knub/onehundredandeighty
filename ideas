@@ -1,5 +1,5 @@
 ☑	Tooltip geht nicht außerhalb des Viewports
--	Tooltip funktioniert nicht bei allen Bildschirmgrößen
+-	Tooltip funktioniert nicht bei allen Bildschirmgrößen, insbesondere ganz links wirds teilweise abgeschnitten
 -	sofort ersichtliche Kennzeichnung, ob Pflicht/nicht Pflicht, Vorlesung/Seminar und solche Dinge
 -	vielleicht Trash einbauen, in den man LVs, die man auf keinen Fall belegen will, verschieben kann.
 -	Verwaltung für die LVS, damit man das nicht immer alles in JSON machen muss.

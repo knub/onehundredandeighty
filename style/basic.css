@@ -31,6 +31,7 @@ div#message {
 	background: #B2B567; /* yellow - to be improved! */
 	background: #7BB567; /* green */
 	background: #333;
+	/*border: 3px solid #333;*/
 	color: white;
 	font-size: 1.8em;
 	height: 2em;
@@ -204,12 +205,12 @@ h1 img {
 	position: relative;
 	top: 15px;
 }
-h1 ~ span {
-	color: red;
-	display: block;
+h1 span {
+	color: #555;
+	margin-left: 20px;
 	text-align: center;
 	text-transform: uppercase;
-	font-size: 2em;
+	font-size: 0.5em;
 }
 #head h2 {
 	float: left;

@@ -60,17 +60,21 @@ var frontend = {
 		if (failedRules.length === 0) {
 			$("#message ul").append("<li>Der Belegungsplan ist gültig!</li>");
 			// animate to green
-			$("#message").animate( { backgroundColor: '#008000' }, 150);
+			//$("#message").animate( { backgroundColor: '#008000' }, 150);
+			$("#message").animate( { backgroundColor: '#026400' }, 150);
 		}
 		else {
 			for (var rule = 0; rule < failedRules.length; rule += 1) {
 				var extra = '';
 				if (failedRules[rule].type === 'sbsRule')
+					//extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
 					extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
 				$("#message ul").append("<li>" + failedRules[rule].message + extra + "</li>");
 			}
 			// animate to red
-			$("#message").animate( { backgroundColor: '#FF0000' }, 150);
+			//$("#message").animate( { backgroundColor: '#FF0000' }, 150);
+			$("#message").animate( { backgroundColor: '#9F0606' }, 150);
+			
 		}
 
 	},
