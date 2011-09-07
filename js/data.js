@@ -1532,7 +1532,8 @@ var data =
         vertiefung: [
             ""
         ], 
-        cp: "bis zu 6", 
+        //cp: "bis zu 6", 
+	cp: 3,
 	vorher: [],
         dozent: [
             ""

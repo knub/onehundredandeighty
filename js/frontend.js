@@ -67,8 +67,9 @@ var frontend = {
 			for (var rule = 0; rule < failedRules.length; rule += 1) {
 				var extra = '';
 				if (failedRules[rule].type === 'sbsRule')
-					//extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
 					extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
+				else if (failedRules[rule].type === 'softskillsRule')
+					extra = ' <a href="studienordnung.html#Softskills">Was bedeutet das?</a>';
 				$("#message ul").append("<li>" + failedRules[rule].message + extra + "</li>");
 			}
 			// animate to red

@@ -135,6 +135,9 @@ var dependencyRule = {
 	dependency: "",
 	course: ""
 };
+
+// TODO: merge todos for more efficient solution
+
 /* 3. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
 var sbsRule = {
 	/* type */
@@ -156,7 +159,27 @@ var sbsRule = {
 	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
 };
 
-// TODO: merge todos for more efficient solution
+/* 4. Softskills-Rule: atleast six credit points in  Softskills module must be done */
+var softskillsRule = {
+	/* type */
+	type: "softskillsRule",
+	/* constructor */
+	init: function() {
+	},
+	/* check method */
+	check: function (getSemester) {
+		var creditpoints = 0;
+		for (var course in data) {
+			if (!data.hasOwnProperty(course)) continue;
+			if (data[course].modul.indexOf("Softskills") !== -1 && course !== 'pem' && getSemester(course) !== -1) {
+				creditpoints += data[course].cp;
+			}
+		}
+		return creditpoints >= 6;
+	},
+	/* message */
+	message: 'Es müssen mindestens sechs Leistungspunkte im Softskills-Bereich erworben werden.'
+};
 
 /* 1: create must-do-rules according to the information saved in data */
 for (var course in data) {
@@ -182,6 +205,8 @@ for (var course in data) {
 /* 3: create sbs-rule, just push it to rules-array */
 ruleManager.rules.push(sbsRule);
 
+/* 4: create softskills-rule, just push it to rules-array */
+ruleManager.rules.push(softskillsRule);
 
 /*
 var obj = {
