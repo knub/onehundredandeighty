@@ -106,6 +106,12 @@
 			}
 		};
 
+		// when the window is scrolled, stop the timer
+		// fixes a bug that even though document is scrolled, the tooltip appears (because there is no mouse move obviously)
+		$(window).scroll(function () {
+			clearTimeout(timer);
+		});
+
 		// Method calling logic
 		if (methods[method]) {
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
