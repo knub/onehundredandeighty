@@ -22,6 +22,13 @@ var studyRegulations = {
 		"IST",
 		"OSIS",
 		"SAMT"
+	],
+	softwarebasissysteme: [
+		'dbs1',
+		'hci1',
+		'grafik1',
+		'pois1',
+		'www'
 	]
 };
 var semesterManager = {
@@ -150,7 +157,7 @@ var sbsRule = {
 	},
 	/* check method */
 	check: function (getSemester) {
-		var sbs = ['dbs1', 'hci1', 'grafik1', 'pois1', 'www'];
+		var sbs = studyRegulations.softwarebasissysteme;
 		var sbsNumber = 0;
 		for (var i = 0; i < sbs.length; i += 1) {
 			if (getSemester(sbs[i]) !== -1)
@@ -236,6 +243,61 @@ var timeRule = {
 	course: ""
 };
 
+/* 6. Vertiefungsgebiete-Rule: take care of complex Vertiefungsgebiete rules */
+var vertiefungsgebieteRule = {
+	/* type */
+	type: "vertiefungsgebieteRule",
+	/* constructor */
+	init: function() {
+		return this;
+	},
+	/* check method */
+	check: function (getSemester) {
+		// at first, check how many Softwarebasissysteme there are. If there are more than three, one of them will be counted to Vertiefungsgebiete
+		var sbs = studyRegulations.softwarebasissysteme;
+		var sbsNumber = 0;
+		for (var i = 0; i < sbs.length; i += 1) {
+			if (getSemester(sbs[i]) !== -1)
+				sbsNumber += 1;
+		}
+
+		if (sbsNumber <= 3) {
+			/* THIS IMPLEMENTATION IS WRONG, MUST BE THOUGHT OVER AGAIN */
+			var chosenVertiefungen = [];
+			for (var course in data) {
+				if (!data.hasOwnProperty(course)) continue;
+				if (data[course].modul.indexOf("Vertiefungsgebiete") !== -1 && data[course].modul.indexOf("Softwarebasissysteme") === -1 && getSemester(course) >= 1) {
+					chosenVertiefungen.push(data[course]);
+				}
+			}
+			var chosenVertiefungsgebiete = [];
+			var possibleCombinationsNumber = 1;
+			for (var i = 0; i < chosenVertiefungen.length; i += 1) {
+				chosenVertiefungsgebiete.push(chosenVertiefungen[i].vertiefung);
+				possibleCombinationsNumber *= chosenVertiefungen[i].vertiefung.length;
+			}
+
+			var possibleCombinations = [];
+			for (var i = 0; i < possibleCombinationsNumber; i += 1) {
+				var combination = [];
+				for (var j = 0; j < chosenVertiefungen.length; j += 1) {
+					combination.push(chosenVertiefungen[j].vertiefung[i % chosenVertiefungen[j].vertiefung.length]);
+				}
+				possibleCombinations.push(combination);
+			}
+			for (var i in possibleCombinations) {
+				if (!possibleCombinations.hasOwnProperty(i)) continue;
+				//alert(possibleCombinations[i]);
+			}
+			return true;
+		} else {
+			alert("sbs number is higher than three. this currently cant be managed by 180");
+		}
+	},
+	/* message */
+	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.'
+};
+
 // ---
 // Rules created, now started adding them to rule manager
 // ---
@@ -272,3 +334,6 @@ for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
 	ruleManager.rules.push(Object.create(timeRule).init(course));
 }
+
+/* 6: create vertiefungsgebiete-rule, just push it to rules-array */
+ruleManager.rules.push(vertiefungsgebieteRule);
