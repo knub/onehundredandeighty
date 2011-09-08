@@ -84,10 +84,12 @@ var frontend = {
 			$("#slide-messages").text("△");
 			// each li is 2em high
 			var ulheight= $("#message li").length * 2;
-			$("#message").animate({ height: ulheight + 'em' }, 300);
+			//$("#message").animate({ height: ulheight + 'em' }, 300);
+			$("#message").css("height", "auto");
 		} else {
 			$("#slide-messages").text("▽");
-			$("#message").animate({ height: '2em' }, 300);
+			//$("#message").animate({ height: '2em' }, 300);
+			$("#message").css("height", "2em");
 		}
 		if ($("#message li").length > 1) {
 			$("#slide-messages").css("visibility", "visible");

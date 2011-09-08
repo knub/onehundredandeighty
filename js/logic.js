@@ -43,8 +43,10 @@ var semesterManager = {
 		"WS12/13",
 		"SS13"
 	],
-	current: "WS11/12",
-	startswith: "WS11/12"	/* the semester that is the first semester when you first start the application */
+	current: "SS11",
+	lastSummerSemester: "SS11",
+	lastWinterSemester: "WS10/11",
+	startswith: "WS10/11"	/* the semester that is the first semester when you first start the application */
 };
 
 
@@ -85,7 +87,7 @@ var mustDoRule = {
 	/* constructor */
 	init: function (course) {
 		this.course = course;
-		this.message = "Das Fach '" + data[this.course].nameLV + "' muss belegt werden.";
+		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' muss belegt werden.";
 
 		return this;
 	},
@@ -97,7 +99,7 @@ var mustDoRule = {
 		return true;
 	},
 	/* message */
-	message: "Das Fach muss belegt werden.",
+	message: "Eine Veranstaltung muss belegt werden.",
 	/* needed to save for what course the current rule applies */
 	course: ""
 };
@@ -109,7 +111,7 @@ var dependencyRule = {
 	init: function (course, dependency) {
 		this.course= course;
 		this.dependency = dependency;
-		this.message = "Das Fach '" + data[this.dependency].nameLV + "' muss vor dem Fach '" + data[this.course].nameLV + "' belegt werden.";
+		this.message = "Die Veranstaltung '" + data[this.dependency].nameLV + "' muss vor der Veranstaltung '" + data[this.course].nameLV + "' belegt werden.";
 
 		return this;
 	},
@@ -130,7 +132,7 @@ var dependencyRule = {
 		}
 	},
 	/* message */
-	message: "Ein Fach muss vor einem anderen belegt werden.",
+	message: "Eine Veranstaltung muss vor einer anderen belegt werden.",
 	/* save which course must be done before which */
 	dependency: "",
 	course: ""
@@ -144,6 +146,7 @@ var sbsRule = {
 	type: "sbsRule",
 	/* constructor */
 	init: function() {
+		return this;
 	},
 	/* check method */
 	check: function (getSemester) {
@@ -165,6 +168,7 @@ var softskillsRule = {
 	type: "softskillsRule",
 	/* constructor */
 	init: function() {
+		return this;
 	},
 	/* check method */
 	check: function (getSemester) {
@@ -180,6 +184,61 @@ var softskillsRule = {
 	/* message */
 	message: 'Es müssen mindestens sechs Leistungspunkte im Softskills-Bereich erworben werden.'
 };
+
+/* 5. Time-Rule: course is not schedulable in the chosen semester */
+var timeRule = {
+	/* type */
+	type: "timeRule",
+	/* constructor */
+	init: function (course) {
+		this.course = course;
+		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
+
+		return this;
+	},
+	/* check method */
+	check: function (getSemester) {
+		// get the semester number (first, second, third ...) for the given course
+		var semesterNumber = getSemester(this.course);
+		if (semesterNumber === -1)
+			return true;
+		// now get the semester time (WS10/11, SS10, ...) for the given course
+		// important: subtract 1, because semester number starts at 1, while array starts at 0
+		var semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
+
+		// now we have to distinguish two cases:
+		// -	the semester is in the past/present
+		// -	the semester is in the future
+		if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.current)) {
+			// past or present
+			return data[this.course].semester.indexOf(semesterTime) !== -1;
+		}
+		else {
+			// if the course is currently chosen for a summer semester
+			if (semesterTime.indexOf("SS") >= 0) {
+				// check if it was offered in the last summer semester
+				return data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== -1;
+			}
+			// if the course is currently chosen for a winter semester
+			else if (semesterTime.indexOf("WS") >= 0) {
+				// check if it was offered in the last summer semester
+				return data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== -1;
+			}
+			// else something went completly wrong
+			else {
+				alert("Something is wrong with the semester-time (js/logic.js 5th rule)!");
+			}
+			return true;
+		}
+	},
+	/* message */
+	message: 'Der Kurs wird im gewählten Semester nicht angeboten.',
+	course: ""
+};
+
+// ---
+// Rules created, now started adding them to rule manager
+// ---
 
 /* 1: create must-do-rules according to the information saved in data */
 for (var course in data) {
@@ -203,22 +262,13 @@ for (var course in data) {
 	}
 }
 /* 3: create sbs-rule, just push it to rules-array */
-ruleManager.rules.push(sbsRule);
+//ruleManager.rules.push(sbsRule);
 
 /* 4: create softskills-rule, just push it to rules-array */
-ruleManager.rules.push(softskillsRule);
+//ruleManager.rules.push(softskillsRule);
 
-/*
-var obj = {
-	a: 1,
-	b: "Stefan Bunk",
-	c: function () {
-		alert(this.b);
-	}
-};
-
-var obj2 = Object.create(obj);
-obj2.c();
-obj2.b = "Tanja Bergmann";
-obj2.c();
-*/
+/* 5: create time-rules for all courses saved in data */
+for (var course in data) {
+	if (!data.hasOwnProperty(course)) continue;
+	ruleManager.rules.push(Object.create(timeRule).init(course));
+}
