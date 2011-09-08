@@ -207,6 +207,8 @@ var timeRule = {
 	check: function (getSemester) {
 		// get the semester number (first, second, third ...) for the given course
 		var semesterNumber = getSemester(this.course);
+		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
+
 		if (semesterNumber === -1)
 			return true;
 		// now get the semester time (WS10/11, SS10, ...) for the given course
