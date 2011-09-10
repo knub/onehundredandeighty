@@ -9,6 +9,21 @@ $("#debug").click(function () {
 	//$(this).css("display", "none");
 });
 
+//alert([1, 2, 1].subsetOf([1, 2, 3]));
+
+/*
+var a = [1, 2, 3, 4, 5];
+var b = a.slice();
+
+//for (var i = 0; i < a.length; i += 1) {
+a.forEach(function (element, i) {
+	alert(a[i]);
+	if (a[i] === 3)
+		a.remove(i);
+});
+alert(b);
+*/
+
 var frontend = {
 	filterManager: {
 		/* saves the semesters, which are currently selected by the filter */

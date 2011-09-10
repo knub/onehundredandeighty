@@ -319,7 +319,7 @@ var data =
         ], 
         lehrform: [
             "Vorlesung", 
-            "\u00dcbung"
+            "Übung"
         ], 
         modul: [
             "Vertiefungsgebiete"
@@ -822,7 +822,7 @@ var data =
             "VT IST"
         ], 
         lehrform: [
-            ""
+            "Vorlesung"
         ], 
         modul: [
             "Vertiefungsgebiete"
@@ -1202,7 +1202,7 @@ var data =
         ], 
         lehrform: [
             "Vorlesung", 
-            "\u00dcbung"
+            "Übung"
         ], 
         modul: [
             "Vertiefungsgebiete"
@@ -1914,5 +1914,26 @@ var data =
     }, 
 }
 /* Debugging data, to be removed when life */
+/*
 data['hci2'].empfohlen = 3;
 data['pois2'].empfohlen = 3;
+data['wwwextra'].empfohlen = 3;
+data['android'].empfohlen = 3;
+data['dbs2'].empfohlen = 3;
+*/
+data['fachenglisch1'].empfohlen = 1;
+data['pem'].empfohlen = 2;
+
+data['dbs1'].empfohlen = 2;
+data['www'].empfohlen = 4;
+data['hci1'].empfohlen = 3;
+
+data['dbs2'].empfohlen = 3;			// 6 OSIS
+//data['internetsecurity'].empfohlen = 4;		// 6 IST
+data['wwwextra'].empfohlen = 4;			// 3 IST
+data['beauty'].empfohlen = 4;			// 3 OSIS
+data['collaboration'].empfohlen = 3;		// 6 IST
+data['raeuberundgendarm'].empfohlen = 4;	// 6 IST
+
+data['pois2'].empfohlen = 5;
+data['rfid'].empfohlen = 5;

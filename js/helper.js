@@ -55,3 +55,13 @@ Array.cartesianProduct = function () {
 		return ret;
 	}, [[]]);
 };
+
+
+// Not the best implementation, because [1, 2, 1].subsetOf([1, 2, 3]) is true but enough for what we need.
+Array.prototype.subsetOf = function (other) {
+	for (var i = 0; i < this.length; i += 1) {
+		if (other.indexOf(this[i]) === -1)
+			return false;
+	}
+	return true;
+};
