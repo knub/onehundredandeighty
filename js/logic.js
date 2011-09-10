@@ -264,7 +264,6 @@ var vertiefungsgebieteRule = {
 		}
 
 		if (sbsNumber <= 3) {
-			/* THIS IMPLEMENTATION IS WRONG, MUST BE THOUGHT OVER AGAIN */
 			var chosenVertiefungen = [];
 			for (var course in data) {
 				if (!data.hasOwnProperty(course)) continue;
@@ -279,18 +278,24 @@ var vertiefungsgebieteRule = {
 				possibleCombinationsNumber *= chosenVertiefungen[i].vertiefung.length;
 			}
 
-			var possibleCombinations = [];
-			for (var i = 0; i < possibleCombinationsNumber; i += 1) {
-				var combination = [];
-				for (var j = 0; j < chosenVertiefungen.length; j += 1) {
-					combination.push(chosenVertiefungen[j].vertiefung[i % chosenVertiefungen[j].vertiefung.length]);
+			var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
+
+			for (var i = 0; i < possibleCombinations.length; i += 1) {
+				var combination = possibleCombinations[i];
+				var creditPointsPerVertiefung = [0, 0, 0, 0, 0];
+				for (var j = 0; j < combination.length; j += 1) {
+					var vertiefung = combination[j];
+					var index = studyRegulations.vertiefungsgebiete.indexOf(vertiefung);
+					if (creditPointsPerVertiefung[index] === undefined)
+						creditPointsPerVertiefung[index] = chosenVertiefungen[j].cp;
+					else {
+						creditPointsPerVertiefung[index] += chosenVertiefungen[j].cp;
+					}
 				}
-				possibleCombinations.push(combination);
+
+				// mit Array.filter ausfiltern ...
 			}
-			for (var i in possibleCombinations) {
-				if (!possibleCombinations.hasOwnProperty(i)) continue;
-				//alert(possibleCombinations[i]);
-			}
+
 			return true;
 		} else {
 			alert("sbs number is higher than three. this currently cant be managed by 180");

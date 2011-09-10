@@ -3,7 +3,7 @@
 	$.fn.knubtip = function (method) {
 		var settings = {
 			'duration'	: 200,
-			'wait-time'	: 1200
+			'wait-time'	: 1000
 		};
 
 		// counter, counts tooltips so an unique id (for the div) can be built with this number

@@ -34,3 +34,24 @@ Array.prototype.haveIntersection = function (that) {
 		return new F();
 	};
 })();
+/*
+ * Given an arbitrary number of arrays, these function calculates the Cartesian Product
+ * Taken from: http://gotochriswest.com/blog/2011/05/02/cartesian-product-of-multiple-arrays/
+ *
+ * Note: It is very elegant, but hard to grasp at the first moment.
+ * Maybe helpful to understand:
+ * -	https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+ * -	https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/call
+ * -	https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/foreach
+ */
+Array.cartesianProduct = function () {
+	return Array.prototype.reduce.call(arguments, function(previousValue, currentValue) {
+		var ret = [];
+		previousValue.forEach(function(previousValue) {
+			currentValue.forEach(function(currentValue) {
+				ret.push(previousValue.concat([currentValue]));
+			});
+		});
+		return ret;
+	}, [[]]);
+};

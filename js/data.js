@@ -1211,7 +1211,6 @@ var data =
             ""
         ], 
         semester: [
-		"WS10/11",
 		"SS11"
 	],
         benotet: true, 
@@ -1914,3 +1913,6 @@ var data =
         nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
     }, 
 }
+/* Debugging data, to be removed when life */
+data['hci2'].empfohlen = 3;
+data['pois2'].empfohlen = 3;
