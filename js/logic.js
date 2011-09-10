@@ -471,26 +471,21 @@ var vertiefungsgebieteRule = {
 
 			// And finally, check the last rule: whether a Lecture is enroled for the given Vertiefung
 			var haveLecture = haveTwoVertiefungsgebiete.filter(function (combination) {
-				// combination is one possible combination.
-				combination.vertiefungPair = combination.vertiefungPair.filter(function (vertiefungen) {
-					// vertiefungen is one tupel of Vertiefungen for the current combination, for example element = ['HCT', 'OSIS']
-					// Following variables will save, whether there is a lecture for the first/second Vertiefung
-					var firstVertiefung = false;
-					var secondVertiefung = false;
-					combination.forEach(function (course) {
-						// check if there is a lecture for the first Vertiefung
-						if (course.vertiefung === vertiefungen[0] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-							firstVertiefung = true;
-						}
-						// accordingly ..
-						if (course.vertiefung === vertiefungen[1] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-							secondVertiefung = true;
-						}
-					});
-					// Both Vertiefungen must have a lecture to succeed.
-					return firstVertiefung && secondVertiefung;
+				// Following variables will save, whether there is a lecture for the first/second Vertiefung
+				var firstVertiefung = false;
+				var secondVertiefung = false;
+				combination.forEach(function (course) {
+					// check if there is a lecture for the first Vertiefung
+					if (course.vertiefung === combination.vertiefungPair[0] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
+						firstVertiefung = true;
+					}
+					// accordingly ..
+					if (course.vertiefung === combination.vertiefungPair[1] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
+						secondVertiefung = true;
+					}
 				});
-				return combination.vertiefungPair.length > 0;
+				// Both Vertiefungen must have a lecture to succeed.
+				return firstVertiefung && secondVertiefung;
 			});
 
 			// Same procedure as above.
