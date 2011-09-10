@@ -120,6 +120,10 @@ var frontend = {
 	/* returns the currently chosen semester for a given course */
 	getSemester: function (course) {
 		var parent = $("#course-" + course).parent();
+		if (parent.attr("id") === undefined) {
+			console.log(course);
+			console.log(parent);
+		}
 		if (parent.attr("id").substr(0, 5) === "extra") {
 			return -1;
 		}
@@ -143,6 +147,7 @@ var frontend = {
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool : function (event, ui) {
+		frontend.adjustPoolHeight();
 		var listitems = $("#courses-pool > ul li:not(.hidden)");
 
 		// There can be at most frontend.coursesPoolHeight items in one stack.
@@ -263,7 +268,7 @@ $(function () {
 		connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
 		placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
 		cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
-		change: frontend.sortPool,			// raised, when there was a change while sorting
+		update: frontend.sortPool,			// raised, when there was a change while sorting
 		start: frontend.startSorting,			// raised, when sorting starts
 		stop: frontend.endSorting			// raised, when sorting is finished
 	}).disableSelection();					// disableSelection makes text selection impossible
@@ -311,7 +316,6 @@ $(function () {
 		}
 	}
 	// until now, all courses are in the first ul. now adjust pool height and sort pool.
-	frontend.adjustPoolHeight();
 	frontend.sortPool();
 
 	/* apply click routine for buttons which disable possibility to drag it */
@@ -367,7 +371,6 @@ $(function () {
 					$(this).removeClass("hidden");
 				}
 			});
-			frontend.adjustPoolHeight();
 			frontend.sortPool();
 		}
 	});
