@@ -20,6 +20,7 @@ body {
 	width: 100%;
 	min-width: 960px;
 	font-family: ProcionoRegular;
+	font-size: 0.8em;
 }
 header {
 	background: #EEE;
@@ -177,7 +178,7 @@ div#filter-options ul li {
 	border: 2px solid black;
 	color: black;
 	width: 250px;
-	padding: 15px;
+	padding: 10px;
 }
 div#filter-options ul li:before {
 	content: '☐';

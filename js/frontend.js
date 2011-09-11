@@ -158,7 +158,7 @@ var frontend = {
 			frontend.slideMessages();
 		}
 		$(".courses li").knubtip("enable");
-		frontend.sortPool(event, ui);
+		//frontend.sortPool(event, ui);
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool : function (event, ui) {
@@ -174,6 +174,7 @@ var frontend = {
 		listitems.each(function (index, listitem) {
 			// listitem is li dom element, jquerify it
 			listitem = $(listitem);
+
 			// detach it from wherever it is at the moment
 			listitem.detach();
 			// .. put it in the courses pool taking care of frontend.coursesPoolHeight
@@ -190,10 +191,10 @@ var frontend = {
 		// count all visible courses
 		var shownCourses = $("#courses-pool > ul li:not(.hidden)").length;
 		// there are seven ul's but try to use the first six only (seventh is there, but normally not used)
-		frontend.coursesPoolHeight = Math.floor(shownCourses / 6);
+		frontend.coursesPoolHeight = Math.ceil(shownCourses / 6);
 		// but if showCourses is one more than a multiple of six, avoid 'Hurenkind' and use seventh as well
-		if (shownCourses % 6 === 1)
-			frontend.coursesPoolHeight = Math.floor(shownCourses / 6) + 1;
+		//if (shownCourses % 6 === 1)
+		//	frontend.coursesPoolHeight = Math.ceil(shownCourses / 6) + 1;
 	},
 	/* used to display informationen from an array in a nice way, used for tooltips */
 	displayArray: function (value) {
