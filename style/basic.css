@@ -401,6 +401,7 @@ h3 {
 	float: left;
 	padding: 0;
 	width: 11.6%; /* 80% (chosen list box-width) * 14.5% (width of one list) */
+	min-height: 10em;
 }
 #courses-pool > ul:first-child {
 	margin-left: 10%;
