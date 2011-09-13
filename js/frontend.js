@@ -75,8 +75,7 @@ var frontend = {
 		if (failedRules.length === 0) {
 			$("#message ul").append("<li>Der Belegungsplan ist gültig!</li>");
 			// animate to green
-			//$("#message").animate( { backgroundColor: '#008000' }, 150);
-			$("#message").animate( { backgroundColor: '#026400' }, 150);
+			$("#message").animate( { backgroundColor: '#026400' }, 350);
 		}
 		else {
 			for (var rule = 0; rule < failedRules.length; rule += 1) {
@@ -85,11 +84,44 @@ var frontend = {
 					extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
 				else if (failedRules[rule].type === 'softskillsRule')
 					extra = ' <a href="studienordnung.html#Softskills">Was bedeutet das?</a>';
+				else if (failedRules[rule].type === 'vertiefungsgebieteRule') {
+					var possibilities = failedRules[rule].extra;
+					extra += '<br />Denkbare Kombination der gewählten Kurse sind:<ul>';
+					for (var i = 0; i < possibilities.length; i += 1) {
+						var possibility = possibilities[i];
+						extra += "<li><table><tr><td>" + possibility.vertiefungPair[0] + "</td><td>" + possibility.vertiefungPair[1] + "</td></tr>";
+						var first = [];
+						var second = [];
+						var firstCP = 0, secondCP = 0;
+						for (var j = 0; j < possibility.length; j += 1) {
+							var course = possibility[j];
+							if (course.vertiefung === possibility.vertiefungPair[0]) {
+								first.push(data[course.key].kurz.replace(/<br \/>/g, " "));
+								firstCP += data[course.key].cp;
+							}
+							else if (course.vertiefung === possibility.vertiefungPair[1]) {
+								second.push(data[course.key].kurz.replace(/<br \/>/g, " "));
+								secondCP += data[course.key].cp;
+							}
+						}
+						var firstLectures = [];
+						var secondLectures = [];
+						for (var j = 0; j < possibility.firstVertiefungLectures.length; j += 1)
+							firstLectures.push(possibility.firstVertiefungLectures[j].kurz); //.replace(/<br \/>/g, " "));
+						for (var j = 0; j < possibility.secondVertiefungLectures.length; j += 1)
+							secondLectures.push(possibility.secondVertiefungLectures[j].kurz); //.replace(/<br \/>/g, " "));
+
+						extra +=	"<tr><td>" + first.join(", ") + "</td><td>" + second.join(", ") + "</td></tr>" + 
+								"<tr><td>" + firstCP + " Leistungspunkte</td><td>" + secondCP + " Leistungspunkte</td></tr>" +
+								"<tr><td>" + firstLectures.join(", ") + "</td><td>" + secondLectures.join(", ") + "</td></tr>" +
+								"</table></li>";
+					}
+					extra = extra + "</ul>";
+				}
 				$("#message ul").append("<li>" + failedRules[rule].message + extra + "</li>");
 			}
 			// animate to red
-			//$("#message").animate( { backgroundColor: '#FF0000' }, 150);
-			$("#message").animate( { backgroundColor: '#9F0606' }, 150);
+			$("#message").animate( { backgroundColor: '#9F0606' }, 350);
 			
 		}
 

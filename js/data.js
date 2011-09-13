@@ -1883,7 +1883,7 @@ var data =
         nameLV: "Internet- und WWW-Technologien"
     }, 
     wwwextra: {
-    	kurz: "WWW,<br />weiterführend",
+    	kurz: "WWW –<br />weiterführend",
         kennung: [
             "VT IST"
         ], 

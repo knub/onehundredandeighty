@@ -472,25 +472,28 @@ var vertiefungsgebieteRule = {
 			// And finally, check the last rule: whether a Lecture is enroled for the given Vertiefung
 			var haveLecture = haveTwoVertiefungsgebiete.filter(function (combination) {
 				// Following variables will save, whether there is a lecture for the first/second Vertiefung
-				var firstVertiefung = false;
-				var secondVertiefung = false;
+				var firstVertiefungLectures = [];
+				var secondVertiefungLectures = [];
 				combination.forEach(function (course) {
 					// check if there is a lecture for the first Vertiefung
 					if (course.vertiefung === combination.vertiefungPair[0] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-						firstVertiefung = true;
+						firstVertiefungLectures.push(data[course.key]);
 					}
 					// accordingly ..
 					if (course.vertiefung === combination.vertiefungPair[1] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-						secondVertiefung = true;
+						secondVertiefungLectures.push(data[course.key]);
 					}
 				});
+				combination.firstVertiefungLectures = firstVertiefungLectures;
+				combination.secondVertiefungLectures = secondVertiefungLectures;
 				// Both Vertiefungen must have a lecture to succeed.
-				return firstVertiefung && secondVertiefung;
+				return firstVertiefungLectures.length > 0 && secondVertiefungLectures.length > 0;
 			});
 
 			// Same procedure as above.
 			if (haveLecture.length === 0) {
 				this.message = "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden.";
+				this.extra = haveTwoVertiefungsgebiete;
 				return false;
 			}
 
@@ -501,7 +504,9 @@ var vertiefungsgebieteRule = {
 		}
 	},
 	/* message */
-	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.'
+	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.',
+	/* extra information */
+	extra: {}
 };
 
 // ---
