@@ -52,7 +52,7 @@
 							// first we test, we can display it below the item
 							// offset.top: start at the position of the top-right corner of the element
 							// $this.outerHeight: add the height (including padding and border) of the element, so now we are at the bottom left corner of the element
-							// 5: add a little offset, so we do not stick right to the element's corner
+							// add a little offset, so we do not stick right to the element's corner
 							// $(tooltipDivSelector).outerHeight: add the height of the tooltip to be displayed, so now we are at the bottom left corner of the tooltip
 							// if this is less than bottom of the viewport (top of viewport + height of viewport) ..
 							if (offset.top + $this.outerHeight() + 5 + $(tooltipDivSelector).outerHeight() < $(window).scrollTop() + $(window).height()) {
@@ -65,26 +65,39 @@
 								// the formula comes from the following main idea:
 								// li-left + li-width / 2 = div-left + div-width / 2 (the center of the li element is the same like the center of the div element)
 								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								if (left <= $(window).scrollLeft()) left = $(window).scrollLeft();
+								else if (left > $(window).scrollLeft() + $(window).width() - $(".info").outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 							// now we test, whether it can be displayed over the element
 							// same procedure as before, with slightly different logic
 							else if ($(window).scrollTop() < offset.top - 5 - $(tooltipDivSelector).outerHeight()) {
 								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								if (left <= $(window).scrollLeft()) left = $(window).scrollLeft();
+								else if (left > $(window).scrollLeft() + $(window).width() - $(".info").outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
 								$(tooltipDivSelector).css({ top: offset.top - 5 - $(tooltipDivSelector).outerHeight(), left: left }).fadeIn(settings['duration']);
 							}
 							// now we test, whether we can display it right next to the element
 							// logic is the same as in the first case, left replaced by top, and height replaced by width
 							else if (offset.left + $this.outerWidth() + 5 + $(tooltipDivSelector).outerWidth() < $(window).scrollLeft() + $(window).width()) {
 								var top = offset.top + ($this.outerHeight() - $(".info").outerHeight()) / 2;
+								if (top <= $(window).scrollTop()) top = $(window).scrollTop();
+								else if (top > $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30) top = $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30;
 								$(tooltipDivSelector).css({ top: top, left: offset.left + $this.outerWidth() + 5}).fadeIn(settings['duration']);
 							}
 							// and finally test, whether it can be displayed on the element's left
 							else if ($(window).scrollLeft() < offset.left - 5 - $(tooltipDivSelector).outerWidth()) {
 								var top = offset.top + ($this.outerHeight() - $(".info").outerHeight()) / 2;
+								if (top <= $(window).scrollTop()) top = $(window).scrollTop();
+								else if (top > $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30) top = $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30;
 								$(tooltipDivSelector).css({ top: top, left: offset.left - 5 - $(tooltipDivSelector).outerWidth()}).fadeIn(settings['duration']);
 							}
 							else {
+								// else, display it below, as in the first case
+								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								if (left <= $(window).scrollLeft()) left = $(window).scrollLeft();
+								else if (left > $(window).scrollLeft() + $(window).width() - $(".info").outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
+								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 						}, settings['wait-time']);
 					}).mouseout(function () {
