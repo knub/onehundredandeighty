@@ -67,16 +67,15 @@ var semesterManager = {
 		var new_chosen = this.semesters.indexOf(semester_string);
 		var difference = new_chosen - old_chosen;
 
-		for (var i = index + 1; i < this.shownSemesters.length; i += 1) {
-			var old_index = this.semesters.indexOf(this.shownSemesters[i]);
-			this.shownSemesters[i] = this.semesters[old_index + difference];
-			
-		}
-
 		this.shownSemesters[index] = semester_string;
 
-		//alert(old_chosen);
-		//alert(new_chosen);
+		for (var i = index + 1; i < this.shownSemesters.length; i += 1) {
+			var old_index = this.semesters.indexOf(this.shownSemesters[i]);
+			if (old_index + difference < this.semesters.length)
+				this.shownSemesters[i] = this.semesters[old_index + difference];
+			else
+				this.shownSemesters[i] = this.semesters[this.semesters.length - 1];
+		}
 	}
 };
 
@@ -111,7 +110,30 @@ var ruleManager = {
  * Furthermore, most objects have some special properties needed for that special kind of rule
  */
 
-/* 1. Must-Do-Rule: a certain course must be done. */
+/* 1. Semester-Rule: Check that the chosen semesters are valid. */
+var semesterRule = {
+	/* type */
+	type: 'semesterRule',
+	/* constructor */
+	init: function (course) {
+		return this;
+	},
+	/* check method */
+	check: function (getSemester) {
+		for (var i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
+			var earlier_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i]);
+			var later_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i + 1]);
+			if (earlier_index >= later_index) {
+				this.message = "Das " + (i + 2).toString() + "te Semester kommt zeitlich nicht nach dem " + (i + 1).toString() + "ten.";
+				return false;
+			}
+		}
+		return true;
+	},
+	/* message */
+	message: "Eine späteres Semester kommt vor einem früheren."
+};
+/* 2. Must-Do-Rule: a certain course must be done. */
 var mustDoRule = {
 	/* type */
 	type: 'mustDoRule',
@@ -134,7 +156,7 @@ var mustDoRule = {
 	/* needed to save for what course the current rule applies */
 	course: ""
 };
-/* 2. Dependency-Rule: a certain course must be done before another */
+/* 3. Dependency-Rule: a certain course must be done before another */
 var dependencyRule = {
 	/* type */
 	type: 'dependencyRule',
@@ -171,7 +193,7 @@ var dependencyRule = {
 
 // TODO: merge todos for more efficient solution
 
-/* 3. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
+/* 4. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
 var sbsRule = {
 	/* type */
 	type: "sbsRule",
@@ -193,7 +215,7 @@ var sbsRule = {
 	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
 };
 
-/* 4. Softskills-Rule: atleast six credit points in  Softskills module must be done */
+/* 5. Softskills-Rule: atleast six credit points in  Softskills module must be done */
 var softskillsRule = {
 	/* type */
 	type: "softskillsRule",
@@ -216,7 +238,7 @@ var softskillsRule = {
 	message: 'Es müssen mindestens sechs Leistungspunkte im Softskills-Bereich erworben werden.'
 };
 
-/* 5. Time-Rule: course is not schedulable in the chosen semester */
+/* 6. Time-Rule: course is not schedulable in the chosen semester */
 var timeRule = {
 	/* type */
 	type: "timeRule",
@@ -269,7 +291,7 @@ var timeRule = {
 	course: ""
 };
 
-/* 6. Vertiefungsgebiete-Rule: take care of complex Vertiefungsgebiete rules */
+/* 7. Vertiefungsgebiete-Rule: take care of complex Vertiefungsgebiete rules */
 var vertiefungsgebieteRule = {
 	/* type */
 	type: "vertiefungsgebieteRule",
@@ -537,7 +559,9 @@ var vertiefungsgebieteRule = {
 // Rules created, now started adding them to rule manager
 // ---
 
-/* 1: create must-do-rules according to the information saved in data */
+/* 1: create semester rule, just push it to rules array */
+ruleManager.rules.push(semesterRule);
+/* 2: create must-do-rules according to the information saved in data */
 for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
 	// if course must be done ..
@@ -546,7 +570,7 @@ for (var course in data) {
 //		ruleManager.rules.push(Object.create(mustDoRule).init(course));
 	}
 }
-/* 2: create dependency-rules according to the information saved in data */
+/* 3: create dependency-rules according to the information saved in data */
 for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
 	// if there are dependencies ..
@@ -558,17 +582,17 @@ for (var course in data) {
 		}
 	}
 }
-/* 3: create sbs-rule, just push it to rules-array */
+/* 4: create sbs-rule, just push it to rules-array */
 //ruleManager.rules.push(sbsRule);
 
-/* 4: create softskills-rule, just push it to rules-array */
+/* 5: create softskills-rule, just push it to rules-array */
 //ruleManager.rules.push(softskillsRule);
 
-/* 5: create time-rules for all courses saved in data */
+/* 6: create time-rules for all courses saved in data */
 for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
 //	ruleManager.rules.push(Object.create(timeRule).init(course));
 }
 
-/* 6: create vertiefungsgebiete-rule, just push it to rules-array */
+/* 7: create vertiefungsgebiete-rule, just push it to rules-array */
 ruleManager.rules.push(vertiefungsgebieteRule);

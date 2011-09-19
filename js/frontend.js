@@ -229,9 +229,11 @@ var frontend = {
 					}
 				});
 			}
-			/*for (var i in eventObject) {
-				alert(i + "         " + eventObject[i]);
-			}*/
+
+			if (frontend.checkPermanently === true) {
+				frontend.checkRules();
+				frontend.slideMessages();
+			}
 		});
 	},
 	/* returns the currently chosen semester for a given course */
@@ -260,7 +262,6 @@ var frontend = {
 			frontend.slideMessages();
 		}
 		$(".courses li").knubtip("enable");
-		//frontend.sortPool(event, ui);
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool : function (event, ui) {
