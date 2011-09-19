@@ -307,14 +307,14 @@ var vertiefungsgebieteRule = {
 		 * -	getCurrentlyChosenVertiefungen: Returns an array of Vertiefungen, which are currently chosen.
 		 */
 		// At first, check how many Softwarebasissysteme there are. If there are more than three, one of them will be counted to Vertiefungsgebiete.
-		var getSBSNumber = function () {
+		var getSBSCourses = function () {
 			var sbs = studyRegulations.softwarebasissysteme;
-			var sbsNumber = 0;
+			var sbsCourses = [];
 			for (var i = 0; i < sbs.length; i += 1) {
 				if (getSemester(sbs[i]) !== -1)
-					sbsNumber += 1;
+					sbsCourses.push(sbs[i]);
 			}
-			return sbsNumber;
+			return sbsCourses;
 		}
 		var getCurrentlyChosenVertiefungen = function () {
 			var chosenVertiefungen = [];
@@ -358,196 +358,207 @@ var vertiefungsgebieteRule = {
 			}
 			return chosenVertiefungsgebiete;
 		}
-
-		if (getSBSNumber() <= 3) {
-			// At first, find all Vertiefung courses, which are currently chosen for a semester.
-			var chosenVertiefungen = getCurrentlyChosenVertiefungen();
-			// Then make it an array with all possible Vertiefungsgebiete (see getChosenVertiefungsgebiete definition for details)
-			var chosenVertiefungsgebiete = getChosenVertiefungsgebiete(chosenVertiefungen);
-
-			// Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
-			// Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
-			// As we have an array, which contains all parameters, we have to use cartesianProduct.apply
-
-			// So now we calculate all possibilites how the current plan could be interpreted.
-			// This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCT' and 'pois2' as 'BPET'.
-			// Another is to interpret 'hci2' as 'HCT' and 'pois2' as 'SAMT'
-			// Another is to interpret 'hci2' as 'SAMT' ... and so on.
-			// Of course this normally happens with more courses than two.
-			var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
-
-			// Now we all possible interpretations of the current plan.
-
-			// Now make a first, vague check for all interpretations:
-			// Check if all Vertiefungsgebiete summed up make more than 24 creditpoints.
-			// Filter those, which do not make 24 creditpoints.
-			var have24CreditPoints = possibleCombinations.filter(function (element) {
-				var creditpoints = 0;
-				element.forEach(function (element) {
-					creditpoints += data[element.key].cp;
-				});
-				return creditpoints >= 24;
-			});
-
-			// If no courses are left, the plan is obviously not valid.
-			if (have24CreditPoints.length === 0) {
-				// Adjust message and let rule fail.
-				this.message = "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden.";
-				return false;
-			}
-
-			// Another check, this time its quite precise:
-			// Filter out those, which do not met the following criteria:
-			// Quoting from paper:
-			// "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen. In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule). Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden, die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
-			var haveTwoVertiefungsgebiete = have24CreditPoints.filter(function (combination) {
-				// Count creditpoints for each Vertiefung
-				// This will be done in creditPointsPerVertiefung.
-				// The indices are determined by studyRegulations.vertiefungsgebiete, so 'BPET' is counted at index 0, 'HCT' at index 1 and so on
-				var creditPointsPerVertiefung = [0, 0, 0, 0, 0];
-				combination.forEach(function (element) {
-					// calculate index as described above
-					var index = studyRegulations.vertiefungsgebiete.indexOf(element.vertiefung);
-					creditPointsPerVertiefung[index] += data[element.key].cp;
-				});
-				// Now we have counted all creditpoints.
-
-				// Now test all possible pairs if they met the given criteria.
-				// Found pairs are pushed to combination.possibleVertiefungen:
-				combination.possibleVertiefungen = [];
-				for (var i = 0; i < creditPointsPerVertiefung.length; i+= 1) {
-					for (var j = 0; j < creditPointsPerVertiefung.length; j += 1) {
-						// i < j because we want each pair only once
-						if (i < j &&	creditPointsPerVertiefung[i] >= 9 &&
-								creditPointsPerVertiefung[j] >= 9 &&
-								creditPointsPerVertiefung[i] + creditPointsPerVertiefung[j] >= 24) {
-							
-							var newPossibleVertiefung = [studyRegulations.vertiefungsgebiete[i], studyRegulations.vertiefungsgebiete[j]];
-							combination.possibleVertiefungen.push(newPossibleVertiefung);
-						}
-					}
-				}
-				// Filter this out, if no possible pairs were found.
-				return combination.possibleVertiefungen.length > 0;
-			});
-
-			// Same procedure as above.
-			if (haveTwoVertiefungsgebiete.length === 0) {
-				this.message = "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben.";
-				return false;
-			}
-
-			// So now we have to do a lot of cleanup.
-			// At first we isolate the possibleVertiefungen which are currently saved as properties to different arrays to one clean array.
-			// And we remove those courses which are not neccessary for the chosen Vertiefungen
-			// So when we have ['BPET', 'HCT'] as Vertiefungen, courses which belong to the other three Vertiefungen are removed.
-			var cleanedCombinations = [];
-			// For all combinations ..
-			haveTwoVertiefungsgebiete.forEach(function (combination, index) {
-				var possible = combination.possibleVertiefungen;
-				// For each combination, there are possibleVertiefungen
-				// Walk through all these
-				possible.forEach(function (possibleVertiefung) {
-					var cleaned = [];
-					// Walk through all courses ..
-					combination.forEach(function (course) {
-						// add only those, which are important for the current Vertiefungsgebiet
-						if (possibleVertiefung.indexOf(course.vertiefung) >= 0)
-							cleaned.push(course);
-					});
-					// save Vertiefung Pair
-					cleaned.vertiefungPair = possibleVertiefung;
-					cleanedCombinations.push(cleaned);
-				});
-			});
-			// write changes back to haveTwoVertiefungsgebiete
-			haveTwoVertiefungsgebiete = cleanedCombinations;
-
-			// now that we cleaned up, there are still a lot of doubled Vertiefung pairs
-			// lets clean that up a little bit, start with a clean empty array
-			var mergedCombinations = [];
-			haveTwoVertiefungsgebiete.forEach(function (combination, index) {
-				// Make a string of Vertiefung pair. Will be used to identifiy same Vertiefung pairs
-				var vertiefungsstring = combination.vertiefungPair.join("");
-
-				// will save, whether a special combination of Vertiefungen (a Vertiefung pair) is already pushed to the array.
-				var alreadyIn = false;
-				// Walk through all combinations and then decide, whether to save it in the array.
-				mergedCombinations.forEach(function (combinationOld, helpindex) {
-					// if the Vertiefung pair is already in the array ..
-					if (combinationOld.vertiefungPair.join("") === vertiefungsstring) {
-						// decide whether it is worthy to override the old value
-						alreadyIn = true;
-						// it IS worthy, when it is longer than the old value and is a superset of it
-						if (combinationOld.length < combination.length && combinationOld.subsetOf(combination)) {
-							mergedCombinations[helpindex] = combination;
-						}
-						else {
-							// if not, check if adds a new course, something unique so its worth to save it
-							if (combinationOld.subsetOf(combination) === false && combination.subsetOf(combinationOld) === false)
-								// if so, save it
-								mergedCombinations.push(combination);
-						}
-					}
-				});
-				// if this combination has not already been pushed to the array, push it now.
-				if (!alreadyIn)
-					mergedCombinations.push(combination);
-			});
-
-			// write changes back to haveTwoVertiefungsgebiete
-			haveTwoVertiefungsgebiete = mergedCombinations;
-
-			//
-			// DEBUG: Alert remaining combinations with all relevant information.
-			//
-			/*
-			for (var combination in haveTwoVertiefungsgebiete) {
-				if (!haveTwoVertiefungsgebiete.hasOwnProperty(combination)) continue;
-				var comb = haveTwoVertiefungsgebiete[combination];
-				var string = "";
-				for (var i = 0; i < comb.length; i += 1) {
-					if (comb[i] === undefined) continue;
-					var course = data[comb[i].key];
-					string += course.nameLV + "___" + course.cp + "___" + comb[i].vertiefung + "\n";
-				}
-				alert(string);
-			}
-			*/
-
-			// And finally, check the last rule: whether a Lecture is enroled for the given Vertiefung
-			var haveLecture = haveTwoVertiefungsgebiete.filter(function (combination) {
-				// Following variables will save, whether there is a lecture for the first/second Vertiefung
-				var firstVertiefungLectures = [];
-				var secondVertiefungLectures = [];
-				combination.forEach(function (course) {
-					// check if there is a lecture for the first Vertiefung
-					if (course.vertiefung === combination.vertiefungPair[0] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-						firstVertiefungLectures.push(data[course.key]);
-					}
-					// accordingly ..
-					if (course.vertiefung === combination.vertiefungPair[1] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-						secondVertiefungLectures.push(data[course.key]);
-					}
-				});
-				combination.firstVertiefungLectures = firstVertiefungLectures;
-				combination.secondVertiefungLectures = secondVertiefungLectures;
-				// Both Vertiefungen must have a lecture to succeed.
-				return firstVertiefungLectures.length > 0 && secondVertiefungLectures.length > 0;
-			});
-
-			// Same procedure as above.
-			if (haveLecture.length === 0) {
-				this.message = "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden.";
-				this.extra = haveTwoVertiefungsgebiete;
-				return false;
-			}
-
-			// If you came so far, you a worthy to return with true :)
-			return true;
-		} else {
-			alert("sbs number is higher than three. this currently cant be managed by 180");
+		var sbsCourses = getSBSCourses();
+		var sbsNumber = sbsCourses.length;
+		if (sbsNumber === 5) {
+			alert("Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.");
 		}
+
+		// At first, find all Vertiefung courses, which are currently chosen for a semester.
+		var chosenVertiefungen = getCurrentlyChosenVertiefungen();
+		// Then make it an array with all possible Vertiefungsgebiete (see getChosenVertiefungsgebiete definition for details)
+		var chosenVertiefungsgebiete = getChosenVertiefungsgebiete(chosenVertiefungen);
+		// if there are four Softwarebasissysteme, one of them must be treated like a Vertiefungsgebiet
+		if (sbsNumber === 4) {
+			// so we add all of them to chosenVertiefungsgebiete
+			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for the current study regulations).
+			var addSBS = [];
+			for (var i = 0; i < sbsCourses.length; i += 1) {
+				addSBS.push({'key': sbsCourses[i], 'vertiefung': data[sbsCourses[i]].vertiefung });
+			}
+			chosenVertiefungsgebiete.push(addSBS);
+		}
+
+		// Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
+		// Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
+		// As we have an array, which contains all parameters, we have to use cartesianProduct.apply
+
+		// So now we calculate all possibilites how the current plan could be interpreted.
+		// This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCT' and 'pois2' as 'BPET'.
+		// Another is to interpret 'hci2' as 'HCT' and 'pois2' as 'SAMT'
+		// Another is to interpret 'hci2' as 'SAMT' ... and so on.
+		// Of course this normally happens with more courses than two.
+		var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
+
+		// Now we all possible interpretations of the current plan.
+
+		// Now make a first, vague check for all interpretations:
+		// Check if all Vertiefungsgebiete summed up make more than 24 creditpoints.
+		// Filter those, which do not make 24 creditpoints.
+		var have24CreditPoints = possibleCombinations.filter(function (element) {
+			var creditpoints = 0;
+			element.forEach(function (element) {
+				creditpoints += data[element.key].cp;
+			});
+			return creditpoints >= 24;
+		});
+
+		// If no courses are left, the plan is obviously not valid.
+		if (have24CreditPoints.length === 0) {
+			// Adjust message and let rule fail.
+			this.message = "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden.";
+			return false;
+		}
+
+		// Another check, this time its quite precise:
+		// Filter out those, which do not met the following criteria:
+		// Quoting from paper:
+		// "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen. In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule). Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden, die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
+		var haveTwoVertiefungsgebiete = have24CreditPoints.filter(function (combination) {
+			// Count creditpoints for each Vertiefung
+			// This will be done in creditPointsPerVertiefung.
+			// The indices are determined by studyRegulations.vertiefungsgebiete, so 'BPET' is counted at index 0, 'HCT' at index 1 and so on
+			var creditPointsPerVertiefung = [0, 0, 0, 0, 0];
+			combination.forEach(function (element) {
+				// calculate index as described above
+				var index = studyRegulations.vertiefungsgebiete.indexOf(element.vertiefung);
+				creditPointsPerVertiefung[index] += data[element.key].cp;
+			});
+			// Now we have counted all creditpoints.
+
+			// Now test all possible pairs if they met the given criteria.
+			// Found pairs are pushed to combination.possibleVertiefungen:
+			combination.possibleVertiefungen = [];
+			for (var i = 0; i < creditPointsPerVertiefung.length; i+= 1) {
+				for (var j = 0; j < creditPointsPerVertiefung.length; j += 1) {
+					// i < j because we want each pair only once
+					if (i < j &&	creditPointsPerVertiefung[i] >= 9 &&
+							creditPointsPerVertiefung[j] >= 9 &&
+							creditPointsPerVertiefung[i] + creditPointsPerVertiefung[j] >= 24) {
+						
+						var newPossibleVertiefung = [studyRegulations.vertiefungsgebiete[i], studyRegulations.vertiefungsgebiete[j]];
+						combination.possibleVertiefungen.push(newPossibleVertiefung);
+					}
+				}
+			}
+			// Filter this out, if no possible pairs were found.
+			return combination.possibleVertiefungen.length > 0;
+		});
+
+		// Same procedure as above.
+		if (haveTwoVertiefungsgebiete.length === 0) {
+			this.message = "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben.";
+			return false;
+		}
+
+		// So now we have to do a lot of cleanup.
+		// At first we isolate the possibleVertiefungen which are currently saved as properties to different arrays to one clean array.
+		// And we remove those courses which are not neccessary for the chosen Vertiefungen
+		// So when we have ['BPET', 'HCT'] as Vertiefungen, courses which belong to the other three Vertiefungen are removed.
+		var cleanedCombinations = [];
+		// For all combinations ..
+		haveTwoVertiefungsgebiete.forEach(function (combination, index) {
+			var possible = combination.possibleVertiefungen;
+			// For each combination, there are possibleVertiefungen
+			// Walk through all these
+			possible.forEach(function (possibleVertiefung) {
+				var cleaned = [];
+				// Walk through all courses ..
+				combination.forEach(function (course) {
+					// add only those, which are important for the current Vertiefungsgebiet
+					if (possibleVertiefung.indexOf(course.vertiefung) >= 0)
+						cleaned.push(course);
+				});
+				// save Vertiefung Pair
+				cleaned.vertiefungPair = possibleVertiefung;
+				cleanedCombinations.push(cleaned);
+			});
+		});
+		// write changes back to haveTwoVertiefungsgebiete
+		haveTwoVertiefungsgebiete = cleanedCombinations;
+
+		// now that we cleaned up, there are still a lot of doubled Vertiefung pairs
+		// lets clean that up a little bit, start with a clean empty array
+		var mergedCombinations = [];
+		haveTwoVertiefungsgebiete.forEach(function (combination, index) {
+			// Make a string of Vertiefung pair. Will be used to identifiy same Vertiefung pairs
+			var vertiefungsstring = combination.vertiefungPair.join("");
+
+			// will save, whether a special combination of Vertiefungen (a Vertiefung pair) is already pushed to the array.
+			var alreadyIn = false;
+			// Walk through all combinations and then decide, whether to save it in the array.
+			mergedCombinations.forEach(function (combinationOld, helpindex) {
+				// if the Vertiefung pair is already in the array ..
+				if (combinationOld.vertiefungPair.join("") === vertiefungsstring) {
+					// decide whether it is worthy to override the old value
+					alreadyIn = true;
+					// it IS worthy, when it is longer than the old value and is a superset of it
+					if (combinationOld.length < combination.length && combinationOld.subsetOf(combination)) {
+						mergedCombinations[helpindex] = combination;
+					}
+					else {
+						// if not, check if adds a new course, something unique so its worth to save it
+						if (combinationOld.subsetOf(combination) === false && combination.subsetOf(combinationOld) === false)
+							// if so, save it
+							mergedCombinations.push(combination);
+					}
+				}
+			});
+			// if this combination has not already been pushed to the array, push it now.
+			if (!alreadyIn)
+				mergedCombinations.push(combination);
+		});
+
+		// write changes back to haveTwoVertiefungsgebiete
+		haveTwoVertiefungsgebiete = mergedCombinations;
+
+		//
+		// DEBUG: Alert remaining combinations with all relevant information.
+		//
+		/*
+		for (var combination in haveTwoVertiefungsgebiete) {
+			if (!haveTwoVertiefungsgebiete.hasOwnProperty(combination)) continue;
+			var comb = haveTwoVertiefungsgebiete[combination];
+			var string = "";
+			for (var i = 0; i < comb.length; i += 1) {
+				if (comb[i] === undefined) continue;
+				var course = data[comb[i].key];
+				string += course.nameLV + "___" + course.cp + "___" + comb[i].vertiefung + "\n";
+			}
+			alert(string);
+		}
+		*/
+
+		// And finally, check the last rule: whether a Lecture is enroled for the given Vertiefung
+		var haveLecture = haveTwoVertiefungsgebiete.filter(function (combination) {
+			// Following variables will save, whether there is a lecture for the first/second Vertiefung
+			var firstVertiefungLectures = [];
+			var secondVertiefungLectures = [];
+			combination.forEach(function (course) {
+				// check if there is a lecture for the first Vertiefung
+				if (course.vertiefung === combination.vertiefungPair[0] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
+					firstVertiefungLectures.push(data[course.key]);
+				}
+				// accordingly ..
+				if (course.vertiefung === combination.vertiefungPair[1] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
+					secondVertiefungLectures.push(data[course.key]);
+				}
+			});
+			combination.firstVertiefungLectures = firstVertiefungLectures;
+			combination.secondVertiefungLectures = secondVertiefungLectures;
+			// Both Vertiefungen must have a lecture to succeed.
+			return firstVertiefungLectures.length > 0 && secondVertiefungLectures.length > 0;
+		});
+
+		// Same procedure as above.
+		if (haveLecture.length === 0) {
+			this.message = "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden.";
+			this.extra = haveTwoVertiefungsgebiete;
+			return false;
+		}
+
+		// If you came so far, you are worthy to return with true :)
+		return true;
 	},
 	/* message */
 	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.',
