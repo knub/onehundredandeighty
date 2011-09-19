@@ -86,7 +86,59 @@ var frontend = {
 					extra = ' <a href="studienordnung.html#Softskills">Was bedeutet das?</a>';
 				else if (failedRules[rule].type === 'vertiefungsgebieteRule') {
 					var possibilities = failedRules[rule].extra;
-					extra += '<br />Denkbare Kombination der gewählten Kurse sind:<ul>';
+					extra += '<div class="extra-inf">Folgende Vertiefungsgebiete sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
+					extra += "<table>";
+					extra += "<tr><td></td><td>Vertiefungsgebiete</td><td>Lehrveranstaltungen</td><td>aktuell belegte<br />Leistungspunkte</td><td>Vorlesung/en<br />in diesem Gebiet</td></tr>";
+					for (var i = 0; i < possibilities.length; i+= 1) {
+						var possibility = possibilities[i];
+
+						// at first, do some calculation stuff, so collect all courses, creditpoints and lectures
+						var first = [];
+						var second = [];
+						var firstCP = 0, secondCP = 0;
+						for (var j = 0; j < possibility.length; j += 1) {
+							var course = possibility[j];
+							if (course.vertiefung === possibility.vertiefungPair[0]) {
+								first.push(data[course.key].kurz.replace(/<br \/>/g, " "));
+								firstCP += data[course.key].cp;
+							}
+							else if (course.vertiefung === possibility.vertiefungPair[1]) {
+								second.push(data[course.key].kurz.replace(/<br \/>/g, " "));
+								secondCP += data[course.key].cp;
+							}
+						}
+						var firstLectures = [];
+						var secondLectures = [];
+						for (var j = 0; j < possibility.firstVertiefungLectures.length; j += 1)
+							firstLectures.push(possibility.firstVertiefungLectures[j].kurz); //.replace(/<br \/>/g, " "));
+						for (var j = 0; j < possibility.secondVertiefungLectures.length; j += 1)
+							secondLectures.push(possibility.secondVertiefungLectures[j].kurz); //.replace(/<br \/>/g, " "));
+
+
+						extra += "<tr><td rowspan='2'>Variante " + (i + 1).toString() + "</td>";
+
+						// now display first Vertiefungsgebiet
+						extra += "<td>" + possibility.vertiefungPair[0] + "</td>";
+						extra += "<td><ul>" + first.reduce(function (prev, current) {
+							return prev + "<li>" + current + "</li>";
+						}, "") + "</ul></td>";
+						extra += "<td>" + firstCP + "</td>";
+						extra += "<td>" + firstLectures.join(", ") + "</td>";
+
+						extra += "</tr><tr>";
+
+						// now display second Vertiefungsgebiet
+						extra += "<td>" + possibility.vertiefungPair[1] + "</td>";
+						extra += "<td><ul>" + second.reduce(function (prev, current) {
+							return prev + "<li>" + current + "</li>";
+						}, "") + "</ul></td>";
+						extra += "<td>" + secondCP + "</td>";
+						extra += "<td>" + secondLectures.join(", ") + "</td>";
+
+						extra += "</tr>";
+					}
+					extra += "</table>";
+					/*
 					for (var i = 0; i < possibilities.length; i += 1) {
 						var possibility = possibilities[i];
 						extra += "<li><table><tr><td>" + possibility.vertiefungPair[0] + "</td><td>" + possibility.vertiefungPair[1] + "</td></tr>";
@@ -116,7 +168,8 @@ var frontend = {
 								"<tr><td>" + firstLectures.join(", ") + "</td><td>" + secondLectures.join(", ") + "</td></tr>" +
 								"</table></li>";
 					}
-					extra = extra + "</ul>";
+					extra = extra + "</ul><br style='clear: both;' /></div>";
+					*/
 				}
 				$("#message ul").append("<li>" + failedRules[rule].message + extra + "</li>");
 			}

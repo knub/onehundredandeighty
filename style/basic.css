@@ -1,5 +1,5 @@
 /*
- * Creator: Stefan Bunk
+ * creator: Stefan Bunk
  */
 
 /* Font taken from: --> http://www.theleagueofmoveabletype.com/fonts/13-prociono <--. Thanks! */
@@ -41,7 +41,7 @@ div#message {
 	padding: 10px 0;
 	overflow: hidden;
 }
-div#message div {
+div#message div#button {
 	position: absolute;
 	right: 40px;
 	height: 1em;
@@ -49,7 +49,7 @@ div#message div {
 	margin: 0;
 	padding: 0;
 }
-div#message div button {
+div#message div#button button {
 	vertical-align: top;
 	font-size: 1em;
 	padding: 0;
@@ -58,6 +58,16 @@ div#message div button {
 	background: none;
 	color: white;
 	visibility: hidden;
+}
+div#message div.extra-inf {
+	background: #EEE;
+	border: 2px solid black;
+	color: black;
+	margin-left: 7em;
+	margin-right: 4em;
+	margin-top: 0.5em;
+	border-radius: 3px;
+	font-size: 0.8em;
 }
 div#message > ul {
 	margin: 0;
@@ -69,24 +79,49 @@ div#message a {
 	color: black;
 }
 div#message ul ul {
+}
+div#message table {
 	text-indent: 0;
 	margin: 0;
 	padding: 0;
-	list-style: none;
-	font-size: 0.8em;
-}
-div#message table {
 	border-collapse: collapse;
-	float: left;
-	width: 450px;
+	margin: 10px;
 	margin-right: 15px;
 }
 div#message table td {
-	border: 1px solid black;
+	text-align: center;
+	border: 1px dotted #CCC;
 	margin: 0;
-	padding: 0;
+	padding: 5px 10px;
 	line-height: 1em;
 }
+div#message table tr:nth-child(even) td {
+	border-top: 2px solid black;
+}
+div#message table tr:first-child td {
+	background: #444;
+	border: 1px solid #222;
+	border-left: 1px solid #444;
+	border-right: 1px solid #444;
+	color: white;
+	font-size: 1.1em;
+	line-height: 1.2em;
+	padding: 10px 30px;
+}
+/*div#message table td[rowspan]:first-child {
+	border-bottom: 2px solid black;
+}*/
+div#message table tr td[rowspan] {
+	background: #CCC;
+	border: 1px solid #444;
+	border-top: 2px solid black;
+}
+div#message table ul {
+	list-style-type: square;
+	text-align: left;
+	margin-right: 2em;
+}
+
 .teaser {
 	font-variant: small-caps;
 	text-align: center;
