@@ -40,7 +40,9 @@ var semesterManager = {
 		"WS12/13",
 		"SS13",
 		"WS13/14",
-		"SS14"
+		"SS14",
+		"WS14/15",
+		"SS15"
 	],
 	shownSemesters: [
 		"WS10/11",
@@ -53,7 +55,29 @@ var semesterManager = {
 	current: "SS11",
 	lastSummerSemester: "SS11",
 	lastWinterSemester: "WS10/11",
-	startswith: "WS10/11"	/* the semester that is the first semester when you first start the application */
+	startswith: "WS10/11"	/* the semester that is the first semester when you first start the application */,
+	updateSemester: function(semester_number, semester_string) {
+		var index = semester_number - 1;
+		if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {
+			alert("DEBUG: Mismatched semester string.");
+			return;
+		}
+		
+		var old_chosen = this.semesters.indexOf(this.shownSemesters[index]);
+		var new_chosen = this.semesters.indexOf(semester_string);
+		var difference = new_chosen - old_chosen;
+
+		for (var i = index + 1; i < this.shownSemesters.length; i += 1) {
+			var old_index = this.semesters.indexOf(this.shownSemesters[i]);
+			this.shownSemesters[i] = this.semesters[old_index + difference];
+			
+		}
+
+		this.shownSemesters[index] = semester_string;
+
+		//alert(old_chosen);
+		//alert(new_chosen);
+	}
 };
 
 

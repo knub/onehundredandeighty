@@ -216,6 +216,23 @@ var frontend = {
 			currentSemesterIndex += 1;
 			$("#selectSemester" + i).append(options);
 		}
+		$("#head select").change(function (eventObject) {
+			var select = $(this);
+			var id = $(this).attr("id");
+			id = parseInt(id[id.length - 1]);
+			semesterManager.updateSemester(id, this.value);
+			select.children(":selected").removeAttr("selected");
+			for (var i = 1; i <= semesterManager.shownSemesters.length; i += 1) {
+				$("#selectSemester" + i).children().each(function () {
+					if (this.value === semesterManager.shownSemesters[i - 1]) {
+						$(this).attr("selected", "");
+					}
+				});
+			}
+			/*for (var i in eventObject) {
+				alert(i + "         " + eventObject[i]);
+			}*/
+		});
 	},
 	/* returns the currently chosen semester for a given course */
 	getSemester: function (course) {
