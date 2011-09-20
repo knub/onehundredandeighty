@@ -88,13 +88,18 @@ var ruleManager = {
 		this.getSemester = getSemester_Function;
 	},
 	checkAll: function () {
-		var failedRules = [];
+		var numberFailedRules = 0;
+		var rules = [];
 		for (var rule = 0; rule < this.rules.length; rule += 1) {
+			this.rules[rule].success = true;
 			if (!this.rules[rule].check(this.getSemester)) {
-				failedRules.push(this.rules[rule]);
+				numberFailedRules += 1;
+				this.rules[rule].success = false;
 			}
+			rules.push(this.rules[rule]);
 		}
-		return failedRules;
+		rules.numberFailedRules = numberFailedRules;
+		return rules;
 	}
 };
 
@@ -568,9 +573,8 @@ var vertiefungsgebieteRule = {
 			return false;
 		}
 
-		// DEBUG: ONLY FOR DEBUG REASONS, SHOULD NOT BE IN LIVE CODE
+		// save information about all correct combinations in extra, so frontend has access to this information
 		this.extra = haveLecture;
-		return false;
 
 		// If you came so far, you are worthy to return with true :)
 		return true;
