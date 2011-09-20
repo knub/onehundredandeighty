@@ -1936,4 +1936,5 @@ data['collaboration'].empfohlen = 3;		// 6 IST
 data['raeuberundgendarm'].empfohlen = 4;	// 6 IST
 
 data['pois2'].empfohlen = 5;
+data['pois1'].empfohlen = 5;
 data['rfid'].empfohlen = 5;

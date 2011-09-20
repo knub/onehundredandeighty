@@ -374,9 +374,10 @@ var vertiefungsgebieteRule = {
 			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for the current study regulations).
 			var addSBS = [];
 			for (var i = 0; i < sbsCourses.length; i += 1) {
-				addSBS.push({'key': sbsCourses[i], 'vertiefung': data[sbsCourses[i]].vertiefung });
+				addSBS.push({'key': sbsCourses[i], 'vertiefung': data[sbsCourses[i]].vertiefung[0] });
 			}
-			chosenVertiefungsgebiete.push(addSBS);
+			// add at the beginning
+			chosenVertiefungsgebiete.unshift(addSBS);
 		}
 
 		// Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
@@ -486,6 +487,8 @@ var vertiefungsgebieteRule = {
 
 			// will save, whether a special combination of Vertiefungen (a Vertiefung pair) is already pushed to the array.
 			var alreadyIn = false;
+
+			var unique = true;
 			// Walk through all combinations and then decide, whether to save it in the array.
 			mergedCombinations.forEach(function (combinationOld, helpindex) {
 				// if the Vertiefung pair is already in the array ..
@@ -495,18 +498,26 @@ var vertiefungsgebieteRule = {
 					// it IS worthy, when it is longer than the old value and is a superset of it
 					if (combinationOld.length < combination.length && combinationOld.subsetOf(combination)) {
 						mergedCombinations[helpindex] = combination;
+						unique = false;
 					}
 					else {
+						/*
 						// if not, check if adds a new course, something unique so its worth to save it
 						if (combinationOld.subsetOf(combination) === false && combination.subsetOf(combinationOld) === false)
 							// if so, save it
 							mergedCombinations.push(combination);
+						*/
+						if (combination.subsetOf(combinationOld) === true)
+							unique = false;
 					}
 				}
 			});
 			// if this combination has not already been pushed to the array, push it now.
 			if (!alreadyIn)
 				mergedCombinations.push(combination);
+			else if (unique)
+				mergedCombinations.push(combination);
+				
 		});
 
 		// write changes back to haveTwoVertiefungsgebiete
@@ -556,6 +567,10 @@ var vertiefungsgebieteRule = {
 			this.extra = haveTwoVertiefungsgebiete;
 			return false;
 		}
+
+		// DEBUG: ONLY FOR DEBUG REASONS, SHOULD NOT BE IN LIVE CODE
+		this.extra = haveLecture;
+		return false;
 
 		// If you came so far, you are worthy to return with true :)
 		return true;

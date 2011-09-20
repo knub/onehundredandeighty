@@ -336,7 +336,7 @@ var frontend = {
 	/* true, when all error messages are visible in drop down list */
 	allMessagesVisible: false,
 	/* when true, rules are checked permanently */
-	checkPermanently: true,
+	checkPermanently: false,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8
 };
@@ -367,12 +367,20 @@ $(function () {
 	});
 
 	/* apply check routine on button click */
-	$("button.check").click(function () {
+	$("button#check").click(function () {
 		frontend.checkRules();
 		frontend.slideMessages();
+		frontend.checkPermanently = true;
 		$("#checkbox-div").css("visibility", "visible");
 		$("#button-div").css("visibility", "visible");
 	});
+
+	/* apply check routine on button click */
+	$("button#recheck").click(function () {
+		frontend.checkRules();
+		frontend.slideMessages();
+	});
+
 
 	/* add click handler for slide button to show messages */
 	$("#slide-messages").click(function () {
