@@ -597,7 +597,7 @@ for (var course in data) {
 	// if course must be done ..
 	if(data[course].pflicht) {
 	 	// .. add rule to rule manager
-//		ruleManager.rules.push(Object.create(mustDoRule).init(course));
+		ruleManager.rules.push(Object.create(mustDoRule).init(course));
 	}
 }
 /* 3: create dependency-rules according to the information saved in data */
@@ -608,20 +608,20 @@ for (var course in data) {
 		// .. loop through all dependencies and ..
 		for (var i = 0; i < data[course].vorher.length; i++) {
 			// .. add rule to rule manager
-//			ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
+			ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
 		}
 	}
 }
 /* 4: create sbs-rule, just push it to rules-array */
-//ruleManager.rules.push(sbsRule);
+ruleManager.rules.push(sbsRule);
 
 /* 5: create softskills-rule, just push it to rules-array */
-//ruleManager.rules.push(softskillsRule);
+ruleManager.rules.push(softskillsRule);
 
 /* 6: create time-rules for all courses saved in data */
 for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
-//	ruleManager.rules.push(Object.create(timeRule).init(course));
+	ruleManager.rules.push(Object.create(timeRule).init(course));
 }
 
 /* 7: create vertiefungsgebiete-rule, just push it to rules-array */
