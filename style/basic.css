@@ -26,6 +26,45 @@ header {
 	background: #EEE;
 	border-top: 4px solid black;
 	border-bottom: 1px dashed black;
+	position: relative;
+}
+div#button-div {
+	position: absolute;
+	bottom: 0;
+	right: 28em;
+	display: none;
+	visibility: hidden;
+}
+div#checkbox-div {
+	border-radius: 10px 10px 0 0;
+	border: 1px solid black;
+	border-bottom: none;
+	position: absolute;
+	font-size: 1.2em;
+	bottom: -1px;
+	right: 3em;
+	margin: 0;
+	padding: 12px 40px 10px 20px;
+	width: 15em;
+	background: #333;
+	color: white;
+	visibility: hidden;
+}
+div#checkbox-div ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+div#checkbox-div li {
+	display: block;
+	cursor: pointer;
+}
+div#checkbox-div li:before {
+	content: '☐';
+	padding-right: 30px;
+}
+div#checkbox-div li.selected:before {
+	content: '☑';
 }
 div#message {
 	background: #B56767; /* red */
@@ -241,7 +280,6 @@ div#filter-options ul li:before {
 div#filter-options ul li.selected:before {
 	content: '☑';
 	content: '☒';
-	padding-right: 30px;
 }
 footer {
 	background: #EEE;

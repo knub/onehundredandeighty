@@ -71,7 +71,7 @@ var frontend = {
 					extra = ' <a href="studienordnung.html#Softskills">Was bedeutet das?</a>';
 				else if (failedRules[rule].type === 'vertiefungsgebieteRule') {
 					var possibilities = failedRules[rule].extra;
-					extra += '<div class="extra-inf">Folgende Vertiefungsgebiete sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
+					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
 					extra += "<table>";
 					extra += "<tr><td></td><td>Vertiefungsgebiete</td><td>Lehrveranstaltungen</td><td>aktuell belegte<br />Leistungspunkte</td><td>Vorlesung/en<br />in diesem Gebiet</td></tr>";
 					for (var i = 0; i < possibilities.length; i+= 1) {
@@ -336,7 +336,7 @@ var frontend = {
 	/* true, when all error messages are visible in drop down list */
 	allMessagesVisible: false,
 	/* when true, rules are checked permanently */
-	checkPermanently: false,
+	checkPermanently: true,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8
 };
@@ -348,11 +348,30 @@ var frontend = {
 $(function () {
 	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
 	ruleManager.init(frontend.getSemester);
+
+	/* initialize check permanently checkbox */
+	$("#checkbox-div ul").knubselect({
+		// change is raised when the selection changed
+		change: function (selected, id) {
+			if (selected.length === 1) {
+				frontend.checkPermanently = true;
+				$("#button-div").fadeOut(100);
+				frontend.checkRules();
+				frontend.slideMessages();
+			}
+			else {
+				frontend.checkPermanently = false;
+				$("#button-div").fadeIn(100);
+			}
+		}
+	});
+
 	/* apply check routine on button click */
-	$("button#check").click(function () {
+	$("button.check").click(function () {
 		frontend.checkRules();
 		frontend.slideMessages();
-		frontend.checkPermanently = true;
+		$("#checkbox-div").css("visibility", "visible");
+		$("#button-div").css("visibility", "visible");
 	});
 
 	/* add click handler for slide button to show messages */
