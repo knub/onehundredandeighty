@@ -4,20 +4,25 @@
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
 
-$("#debug").click(function () {
-	alert($(window).height());
-	//$(this).css("display", "none");
+$("header img").click(function () {
+	localStorage.clear();
+	location.reload();
+
 });
 
 var frontend = {
+	/* filterManager controls the possibility to filter the courses-pool */
 	filterManager: {
+		/* saves all possibly selectable semesters */
+		possibleSemesters: semesterManager.shownSemesters,
 		/* saves the semesters, which are currently selected by the filter */
-		selectedSemester: semesterManager.shownSemesters,
-		/* saves the modules, which are currently selected by the filter */
+		selectedSemesters: semesterManager.shownSemesters,
+		/* rest accordingly .. */
+		possibleModule: studyRegulations.module,
 		selectedModule: studyRegulations.module,
-		/* saves the vertiefungsgebiete, which are currently selected by the filter */
+		possibleVertiefungsgebiete: studyRegulations.vertiefungsgebiete,
 		selectedVertiefungsgebiete: studyRegulations.vertiefungsgebiete,
-		/* saves whether 'Wahl' or 'Pflicht' courses should be displayed */
+		possibleWahlpflicht: ["Pflicht", "Wahl"],
 		selectedWahlpflicht: ["Pflicht", "Wahl"],
 		/*
 		 * Used to determine, whether a special course should be displayed according to its semester.
@@ -26,8 +31,7 @@ var frontend = {
 		 */
 		checkSemester: function (key) {
 			// key is the array index to one course in data
-
-			return this.selectedSemester.haveIntersection(data[key].semester);
+			return this.selectedSemesters.haveIntersection(data[key].semester);
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkModule: function (key) {
@@ -39,6 +43,7 @@ var frontend = {
 				return true;
 			return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
 		},
+		/* see checkSemester for documentation, same procedure */
 		checkWahlpflicht: function (key) {
 			// if both 'Wahl' and 'Pflicht' are in the array, its always true
 			if (this.selectedWahlpflicht.indexOf("Wahl") !== -1 && this.selectedWahlpflicht.indexOf("Pflicht") !== -1)
@@ -51,6 +56,39 @@ var frontend = {
 				return !data[key].pflicht;
 			// if nothing is selected, return false
 			return false;
+		},
+		filter: function () {
+			$("#courses-pool > ul li").each(function () {
+				// .slice(7) to remove foregoing "course-" from id
+				var key = $(this).attr("id").slice(7);
+
+				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key) &&
+					   frontend.filterManager.checkModule(key) && frontend.filterManager.checkVertiefungsgebiete(key);
+				if (show === false) {
+					$(this).addClass("hidden");
+				}
+				else {
+					$(this).removeClass("hidden");
+				}
+			});
+			frontend.sortPool();
+		}
+	},
+	/* saveManager saves the current status via Web-Storage */
+	saveManager: {
+		save: function () {
+			var courseToSemester = {};
+			for (var key in data) {
+				if (!data.hasOwnProperty(key)) continue;
+				courseToSemester[key] = frontend.getSemester(key);
+			}
+			// SAVE data
+			localStorage.hasData = true;
+			localStorage.courseToSemester = JSON.stringify(courseToSemester);
+			localStorage.filterManager = JSON.stringify(frontend.filterManager);
+			localStorage.semesters = JSON.stringify(semesterManager.shownSemesters);
+			localStorage.checkPermanently = frontend.checkPermanently;
+			localStorage.allMessagesVisible = frontend.allMessagesVisible;
 		}
 	},
 	/* used to display information about possible Vertiefungsgebiete */
@@ -151,13 +189,10 @@ var frontend = {
 	slideMessages: function () {
 		if (frontend.allMessagesVisible === true) {
 			$("#slide-messages").text("△");
-			// each li is 2em high
 			var ulheight= $("#message li").length * 2;
-			//$("#message").animate({ height: ulheight + 'em' }, 300);
 			$("#message").css("height", "auto");
 		} else {
 			$("#slide-messages").text("▽");
-			//$("#message").animate({ height: '2em' }, 300);
 			$("#message").css("height", "2em");
 		}
 		if ($("#message li").length > 1) {
@@ -169,21 +204,29 @@ var frontend = {
 	},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function () {
-		// for the first semester displayed, start with the in semesterManager.startswith specified semester
-		var currentSemesterIndex = semesterManager.semesters.indexOf(semesterManager.startswith);
-		// for all six semester ..
-		for (var i = 1; i <= 6; i++) {
+		// if shownSemesters has not been initialized so far ..
+		if (semesterManager.shownSemesters.length === 0) {
+			// .. initialize starting at semesterManager.startswith-Semester
+			var index = semesterManager.semesters.indexOf(semesterManager.startswith);
+			// do it for six semesters
+			for (var i = 0; i < 6; i += 1) {
+				semesterManager.shownSemesters[i] = semesterManager.semesters[index];
+				index += 1;
+			}
+		}
+
+		// now initialize select-boxes according to information in semesterManager.shownSemesters
+		for (var i = 0; i < semesterManager.shownSemesters.length; i++) {
 			// .. build options and select the correct one
 			var options = "", selected = "";
 			// fill selects with all possible semesters (possible semesters specified in semesterManager.semesters)
 			for (var j = 0; j < semesterManager.semesters.length; j++) {
 				// check whether the current <option> must be selected
-				selected = j === currentSemesterIndex ? " selected" : "";
+				selected = semesterManager.shownSemesters[i] === semesterManager.semesters[j] ? " selected" : "";
 				options += "<option" + selected + ">" + semesterManager.semesters[j] + "</option>";
 			}
 			// assume, that there are no breaks while studying and go on with the following semester
-			currentSemesterIndex += 1;
-			$("#selectSemester" + i).append(options);
+			$("#selectSemester" + (i + 1).toString()).append(options);
 		}
 		$("#head select").change(function (eventObject) {
 			var select = $(this);
@@ -203,6 +246,7 @@ var frontend = {
 				frontend.checkRules();
 				frontend.slideMessages();
 			}
+			frontend.saveManager.save();
 		});
 	},
 	/* returns the currently chosen semester for a given course */
@@ -221,19 +265,24 @@ var frontend = {
 		alert("Shouldnt be here!");
 	},
 	/* used, when user starts drag'n'dropping courses */
-	startSorting: function (event, ui) {
+	startSorting: function () {
 		$(".courses li").knubtip("disable");
 	},
 	/* used, when user finished drag'n'dropping courses */
-	endSorting: function (event, ui) {
+	endSorting: function () {
 		if (frontend.checkPermanently === true) {
 			frontend.checkRules();
 			frontend.slideMessages();
 		}
 		$(".courses li").knubtip("enable");
+		frontend.saveManager.save();
+	},
+	/* called when user drag'n'dropped something */
+	update: function () {
+		frontend.sortPool();
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
-	sortPool : function (event, ui) {
+	sortPool : function () {
 		frontend.adjustPoolHeight();
 		var listitems = $("#courses-pool > ul li:not(.hidden)");
 
@@ -279,37 +328,47 @@ var frontend = {
 	initializeFilter: function () {
 		// build semester list
 		var semesterList = "<ul id='semester-filter'>";
-		for (var semester in frontend.filterManager.selectedSemester) {
-			if (!frontend.filterManager.selectedSemester.hasOwnProperty(semester)) continue;
-			semesterList += "<li class='selected'>" + frontend.filterManager.selectedSemester[semester] + "</li>";
+		for (var semester in frontend.filterManager.possibleSemesters) {
+			if (!frontend.filterManager.possibleSemesters.hasOwnProperty(semester)) continue;
+			var selected = frontend.filterManager.selectedSemesters.indexOf(frontend.filterManager.possibleSemesters[semester]) === -1 ? "" : " class='selected'";
+			semesterList += "<li" + selected + ">" + frontend.filterManager.possibleSemesters[semester] + "</li>";
 		}
 		semesterList += "</ul>";
 		semesterList = $(semesterList);
 
 		// build module list
 		var moduleList = "<ul id='module-filter'>";
-		for (var modul in frontend.filterManager.selectedModule) {
-			// only own properties matter
-			// if the following line wouldnt be there things like Array.prototype.haveIntersection would also count
-			if (!frontend.filterManager.selectedModule.hasOwnProperty(modul)) continue;
-			moduleList += "<li class='selected'>" + frontend.filterManager.selectedModule[modul] + "</li>";
+		for (var modul in frontend.filterManager.possibleModule) {
+			if (!frontend.filterManager.possibleModule.hasOwnProperty(modul)) continue;
+			var selected = frontend.filterManager.selectedModule.indexOf(frontend.filterManager.possibleModule[modul]) === -1 ? "" : " class='selected'";
+			moduleList += "<li" + selected + ">" + frontend.filterManager.possibleModule[modul] + "</li>";
 		}
 		moduleList += "</ul>";
 		moduleList = $(moduleList);
 
 		// build vertiefungsgebiete list
 		var vertiefungsgebieteList = "<ul id='vertiefungsgebiete-filter'>";
-		for (var vertiefungsgebiet in frontend.filterManager.selectedVertiefungsgebiete) {
-			if (!frontend.filterManager.selectedVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
-			vertiefungsgebieteList += "<li class='selected'>" + frontend.filterManager.selectedVertiefungsgebiete[vertiefungsgebiet] + "</li>";
+		for (var vertiefungsgebiet in frontend.filterManager.possibleVertiefungsgebiete) {
+			if (!frontend.filterManager.possibleVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
+			var selected = frontend.filterManager.selectedVertiefungsgebiete.indexOf(frontend.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) === -1 ? "" : " class='selected'";
+			vertiefungsgebieteList += "<li" + selected + ">" + frontend.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet] + "</li>";
 		}
 		vertiefungsgebieteList += "</ul>";
 		vertiefungsgebieteList = $(vertiefungsgebieteList);
 
+		// build wahlpflicht list
+		var wahlpflichtList = "<ul id='wahlpflicht-filter'>";
+		for (var wahlpflicht in frontend.filterManager.possibleWahlpflicht) {
+			if (!frontend.filterManager.possibleWahlpflicht.hasOwnProperty(wahlpflicht)) continue;
+			var selected = frontend.filterManager.selectedWahlpflicht.indexOf(frontend.filterManager.possibleWahlpflicht[wahlpflicht]) === -1 ? "" : " class='selected'";
+			wahlpflichtList += "<li" + selected + ">" + frontend.filterManager.possibleWahlpflicht[wahlpflicht] + "</li>";
+		}
+		wahlpflichtList += "</ul>";
+		wahlpflichtList = $(wahlpflichtList);
 
 		// append built ul to correct div
 		$("#semester_wahlpflicht").append(semesterList)
-		                    .append("<ul id='wahlpflicht-filter'><li class='selected'>Pflicht</li><li class='selected'>Wahl</li></ul>");
+		                    .append(wahlpflichtList);
 		$("#module_vertiefungsgebiete").append(moduleList)
 				    .append(vertiefungsgebieteList);
 	},
@@ -325,9 +384,6 @@ var frontend = {
 	coursesPoolHeight: 8
 };
 
-/*
- * here starts real execution
- */
 // note: $(function () ...) is the same as $(document).ready(function () ..)
 $(function () {
 	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
@@ -347,6 +403,7 @@ $(function () {
 				frontend.checkPermanently = false;
 				$("#button-div").fadeIn(100);
 			}
+			frontend.saveManager.save();
 		}
 	});
 
@@ -355,22 +412,63 @@ $(function () {
 		frontend.checkRules();
 		frontend.slideMessages();
 		frontend.checkPermanently = true;
+		$("#permacheck li").attr("class", "selected");
 		$("#checkbox-div").css("visibility", "visible");
 		$("#button-div").css("visibility", "visible");
+		localStorage.alreadyChecked = true;
+		frontend.saveManager.save();
 	});
 
 	/* apply check routine on button click */
 	$("button#recheck").click(function () {
 		frontend.checkRules();
 		frontend.slideMessages();
+		frontend.saveManager.save();
 	});
-
 
 	/* add click handler for slide button to show messages */
 	$("#slide-messages").click(function () {
 		frontend.allMessagesVisible= !frontend.allMessagesVisible;
 		frontend.slideMessages();
+		frontend.saveManager.save();
 	});
+
+	/* apply jquery drag'n'dropping */
+	$(frontend.coursesList).sortable({
+		connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
+		placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
+		cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
+		update: frontend.update,			// raised, when there was a change while sorting
+		start: frontend.startSorting,			// raised, when sorting starts
+		stop: frontend.endSorting			// raised, when sorting is finished
+	}).disableSelection();					// disableSelection makes text selection impossible
+
+	var filtering = false;
+	/* apply filter routine on filter-button-div click */
+	$("#filter-button").click(function () {
+		if (filtering) {
+			$(this).children("h2").text("Filter");
+			$("#filter").animate({ width: '0' }, 250);
+		}
+		else {
+			$(this).children("h2").text("Fertig");
+			$("#filter").animate({ width: '100%' }, 250);
+		}
+		filtering = !filtering;
+	});
+
+	if (localStorage.hasData === "true") {
+		frontend.checkPermanently = localStorage.checkPermanently === "true";
+		frontend.allMessagesVisible= localStorage.allMessagesVisible === "true";
+
+		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
+
+		frontend.filterManager = $.extend(frontend.filterManager, JSON.parse(localStorage.filterManager));
+		if (frontend.checkPermanently)
+			$("#permacheck li").attr("class", "selected");
+		else
+			$("#button-div").fadeIn(100);
+	}
 
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */
 	frontend.organizeSemesters();
@@ -378,16 +476,25 @@ $(function () {
 	/* initialize filter with correct settings */
 	frontend.initializeFilter();
 
-	/* apply jquery drag'n'dropping */
-	$(frontend.coursesList).sortable({
-		connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
-		placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
-		cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
-		update: frontend.sortPool,			// raised, when there was a change while sorting
-		start: frontend.startSorting,			// raised, when sorting starts
-		stop: frontend.endSorting			// raised, when sorting is finished
-	}).disableSelection();					// disableSelection makes text selection impossible
-
+	/* initialize selectables for filter div */
+	$("#filter-options ul").knubselect({
+		// change is raised when the selection changed
+		change: function (selected, id) {
+			// TODO: Filter when dropped to #courses-pool.
+			// according to the ul, where the selection change happened, update selected
+			if (id === "semester-filter") {
+				frontend.filterManager.selectedSemesters = selected;
+			} else if (id === "wahlpflicht-filter") {
+				frontend.filterManager.selectedWahlpflicht = selected;
+			} else if (id === "module-filter") {
+				frontend.filterManager.selectedModule = selected;
+			} else if (id === "vertiefungsgebiete-filter") {
+				frontend.filterManager.selectedVertiefungsgebiete = selected;
+			}
+			frontend.filterManager.filter();
+			frontend.saveManager.save();
+		}
+	});
 	/*
 	 * Information:
 	 * var data is imported from data.js
@@ -395,10 +502,10 @@ $(function () {
 	 */
 
 	// for each course in data
-	for (var e in data) {
-		if (!data.hasOwnProperty(e)) continue;
+	for (var key in data) {
+		if (!data.hasOwnProperty(key)) continue;
 		// build list item and associated .info for tooltip
-		var course = data[e];
+		var course = data[key];
 		var courseInfo = 	"<div class='info'>" +
 					"<h3>" + course['nameLV'] + "</h3>" +
 					"<div>" +
@@ -416,18 +523,28 @@ $(function () {
 		if (course['kurz'].indexOf("<br />") === -1) {
 			oneliner = " class='oneliner'";
 		}
-		var html = $("<li" + oneliner + " id='course-" + e + "'>" + course['kurz'] + "<button>ⴲ</button>" + courseInfo + "</li>");
+		var html = $("<li" + oneliner + " id='course-" + key + "'>" + course['kurz'] + "<button>ⴲ</button>" + courseInfo + "</li>");
+
 		// now the element has been created, decide where to put it on the page
-		// if it is not recommended for a specific semester ..
-		if (course['empfohlen'] === "") {
-			// .. put it in the courses pool
-			// for now, putting in the first ul is ok, because whole courses-pool will be rearranged afterwards
-			$("#extra1").append(html);
+		if (localStorage.courseToSemester !== undefined && localStorage.courseToSemester !== null) {
+				var semester = JSON.parse(localStorage.courseToSemester)[key];
+				if (semester === undefined || semester === -1)
+					$("#extra1").append(html);
+				else if(semester >= 0)
+					$("#semester" + JSON.parse(localStorage.courseToSemester)[key]).append(html);
 		}
-		// if it is recommended for a specific semester ..
 		else {
-			// .. just put it there.
-			$("#semester" + course['empfohlen']).append(html);
+			// if it is not recommended for a specific semester ..
+			if (course['empfohlen'] === "") {
+				// .. put it in the courses pool
+				// for now, putting in the first ul is ok, because whole courses-pool will be rearranged afterwards
+				$("#extra1").append(html);
+			}
+			// if it is recommended for a specific semester ..
+			else {
+				// .. just put it there.
+				$("#semester" + course['empfohlen']).append(html);
+			}
 		}
 	}
 	// until now, all courses are in the first ul. now adjust pool height and sort pool.
@@ -438,55 +555,14 @@ $(function () {
 		$(this).parent().toggleClass("disabled"); 	// disable list element, when button in list element is clicked
 	});
 
-
-	var filtering = false;
-	/* apply filter routine on filter-button-div click */
-	$("#filter-button").click(function () {
-		if (filtering) {
-			$(this).children("h2").text("Filter");
-			$("#filter").animate({ width: '0' }, 250);
-		}
-		else {
-			$(this).children("h2").text("Fertig");
-			$("#filter").animate({ width: '100%' }, 250);
-		}
-		filtering = !filtering;
-	});
-	
 	/* initialize tooltips for all courses */
 	$(".courses li").knubtip("init");			// activate tooltip for li elements (see jquery.knubtip.js)
 
-	/* initialize selectables for filter div */
-	$("#filter-options ul").knubselect({
-		// change is raised when the selection changed
-		change: function (selected, id) {
-			// TODO: Filter when dropped to #courses-pool.
-			var key;
-			// according to the ul, where the selection change happened, update selected
-			if (id === "semester-filter") {
-				frontend.filterManager.selectedSemester = selected;
-			} else if (id === "wahlpflicht-filter") {
-				frontend.filterManager.selectedWahlpflicht = selected;
-			} else if (id === "module-filter") {
-				frontend.filterManager.selectedModule = selected;
-			} else if (id === "vertiefungsgebiete-filter") {
-				frontend.filterManager.selectedVertiefungsgebiete = selected;
-			}
-
-			$("#courses-pool > ul li").each(function () {
-				// .slice(7) to remove foregoing "course-" from id
-				key = $(this).attr("id").slice(7);
-
-				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key) &&
-					   frontend.filterManager.checkModule(key) && frontend.filterManager.checkVertiefungsgebiete(key);
-				if (show === false) {
-					$(this).addClass("hidden");
-				}
-				else {
-					$(this).removeClass("hidden");
-				}
-			});
-			frontend.sortPool();
-		}
-	});
+	frontend.filterManager.filter();
+	if (localStorage.alreadyChecked === "true") {
+		frontend.checkRules();
+		frontend.slideMessages();
+		$("#checkbox-div").css("visibility", "visible");
+		$("#button-div").css("visibility", "visible");
+	}
 });

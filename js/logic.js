@@ -45,12 +45,14 @@ var semesterManager = {
 		"SS15"
 	],
 	shownSemesters: [
+		/*
 		"WS10/11",
 		"SS11",
 		"WS11/12",
 		"SS12",
 		"WS12/13",
 		"SS13"
+		*/
 	],
 	current: "SS11",
 	lastSummerSemester: "SS11",

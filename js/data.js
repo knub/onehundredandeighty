@@ -1,5 +1,4 @@
-var data = 
-{
+var data =  {
     android: {
     	kurz: "Android",
         kennung: [
@@ -246,7 +245,7 @@ var data =
         dozent: [
             "Prof. Dr. J\u00fcrgen D\u00f6llner"
         ], 
-        nameLV: "3D-Computer-<br />grafik I"
+        nameLV: "3D-Computer-grafik I"
     }, 
     grafik2: {
     	kurz: "Computer-<br />grafik II",
