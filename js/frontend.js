@@ -297,6 +297,7 @@ var frontend = {
 	/* called when user drag'n'dropped something */
 	update: function() {
 		frontend.sortPool();
+		frontend.filterManager.filter();
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool: function() {
