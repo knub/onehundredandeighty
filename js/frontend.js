@@ -262,6 +262,7 @@ var frontend = {
 				frontend.checkRules();
 				frontend.slideMessages();
 			}
+			frontend.filterManager.filter();
 			frontend.saveManager.save();
 		});
 	},
