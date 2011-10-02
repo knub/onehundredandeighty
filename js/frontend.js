@@ -278,7 +278,8 @@ var frontend = {
 		else if (parent.attr("id").substr(0, 8) === "semester") {
 			return parseInt(parent.attr("id").substr(8, 1));
 		}
-		alert("Shouldnt be here!");
+		console.error("Function getSemester returning invalid data!");
+		return -1;
 	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function() {

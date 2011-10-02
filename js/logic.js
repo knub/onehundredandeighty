@@ -249,7 +249,7 @@ var timeRule = {
 			}
 			// else something went completly wrong
 			else {
-				alert("Something is wrong with the semester-time (js/logic.js 5th rule)!");
+				console.error("Something is wrong with the semester-time. Check data!");
 			}
 			return true;
 		}
