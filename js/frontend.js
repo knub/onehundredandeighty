@@ -30,7 +30,19 @@ var frontend = {
 		 */
 		checkSemester: function(key) {
 			// key is the array index to one course in data
-			return this.selectedSemesters.haveIntersection(data[key].semester);
+			var copy = this.selectedSemesters.slice();
+			for (var i = 0; i < copy.length; i += 1) {
+				// if semester is in the future, reset it to the last winter/summer-semester
+				if (semesterManager.semesters.indexOf(copy[i]) > semesterManager.semesters.indexOf(semesterManager.current)) {
+					if (copy[i].indexOf("SS") >= 0)
+						copy[i] = semesterManager.lastSummerSemester;
+					else if (copy[i].indexOf("WS") >= 0)
+						copy[i] = semesterManager.lastWinterSemester;
+					else
+						console.error("Something is wrong with the semester-time. Check data!");
+				}
+			}
+			return copy.haveIntersection(data[key].semester);
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkModule: function(key) {
@@ -577,4 +589,3 @@ $(function() {
 		$("#button-div").css("visibility", "visible");
 	}
 });
-

@@ -1910,8 +1910,8 @@ var data =  {
             "Prof. Dr. Christoph Meinel"
         ], 
         nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
-    }, 
-}
+    }
+};
 /* Debugging data, to be removed when life */
 /*
 data['hci2'].empfohlen = 3;
