@@ -418,6 +418,7 @@ $(function() {
 	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
 	ruleManager.init(frontend.getSemester);
 
+	$("#last-update").html("Daten: WS10/11 bis einschließlich " + semesterManager.current);
 	/* initialize check permanently checkbox */
 	$("#checkbox-div ul").knubselect({
 		// change is raised when the selection changed

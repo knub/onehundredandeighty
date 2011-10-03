@@ -66,6 +66,13 @@ div#checkbox-div li:before {
 div#checkbox-div li.selected:before {
 	content: '☑';
 }
+div#last-update {
+	position: absolute;
+	bottom: 0;
+	left: 100px;
+	color: #555;
+	font-size: 1.3em;
+}
 div#message {
 	background: #B56767; /* red */
 	background: #B2B567; /* yellow - to be improved! */
