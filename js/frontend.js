@@ -349,11 +349,13 @@ var frontend = {
 		//	frontend.coursesPoolHeight = Math.ceil(shownCourses / 6) + 1;
 	},
 	/* used to display informationen from an array in a nice way, used for tooltips */
-	displayArray: function(value) {
-		if (Array.isArray(value) && value[0] !== "") {
-			return value.join(", ");
-		}
-		return "<em>Information fehlt</em>";
+	displayArray: function(value, headline) {
+		if (value === undefined || !Array.isArray(value) || value.length === 0 || value[0] === "")
+			return "";
+		var row = "<tr><td>" + headline + "</td><td>";
+		row += value.join(", ");
+		row += "</td></tr>";
+		return row;
 	},
 	/* used to initialize course pool filter with correct selectors */
 	initializeFilter: function() {
@@ -544,7 +546,7 @@ $(function() {
 		if (!data.hasOwnProperty(key)) continue;
 		// build list item and associated .info for tooltip
 		var course = data[key];
-		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + "<tr><td>Modul</td><td>" + frontend.displayArray(course['modul']) + "</td></tr>" + "<tr><td>Dozent/en</td><td>" + frontend.displayArray(course['dozent']) + "</td></tr>" + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + "<tr><td>Lehrform</td><td>" + frontend.displayArray(course['lehrform']) + "</td></tr>" + "<tr><td>Vertiefungsgebiet/e</td><td>" + frontend.displayArray(course['vertiefung']) + "</td></tr>" + "</table>" + "</div>" + "</div>";
+		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + frontend.displayArray(course['modul'], "Modul") + frontend.displayArray(course['dozent'], "Dozent") + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + frontend.displayArray(course['lehrform'], "Lehrform") + frontend.displayArray(course['vertiefung'], "Vertiefungsgebiet") + "</table>" + "</div>" + "</div>";
 		var oneliner = "";
 		// if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
 		if (course['kurz'].indexOf("<br />") === - 1) {
