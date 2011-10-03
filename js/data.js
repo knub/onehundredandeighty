@@ -906,6 +906,7 @@ var data = {
 	}
 };
 /* Debugging data, to be removed when life */
+
 /*
 data['hci2'].empfohlen = 3;
 data['pois2'].empfohlen = 3;
@@ -913,6 +914,8 @@ data['wwwextra'].empfohlen = 3;
 data['android'].empfohlen = 3;
 data['dbs2'].empfohlen = 3;
 */
+
+/*
 data['fachenglisch1'].empfohlen = 1;
 data['pem'].empfohlen = 2;
 
@@ -929,5 +932,6 @@ data['raeuberundgendarm'].empfohlen = 4; // 6 IST
 data['pois2'].empfohlen = 5;
 data['pois1'].empfohlen = 5;
 data['rfid'].empfohlen = 5;
+*/
 
-// Studienbegleitendes Seminar?
+/* Studienbegleitendes Seminar?*/

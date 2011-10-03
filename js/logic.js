@@ -535,7 +535,7 @@ var vertiefungsgebieteRule = {
 	/* message */
 	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.',
 	/* extra information */
-	extra: {}
+	extra: null
 };
 
 // ---
