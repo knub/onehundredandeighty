@@ -180,8 +180,8 @@ var frontend = {
 			for (var rule = 0; rule < rules.length; rule += 1) {
 				if (rules[rule].success === true) continue;
 				var extra = '';
-				if (rules[rule].type === 'sbsRule') extra = ' <a href="studienordnung.html#Softwarebasissysteme">Was bedeutet das?</a>';
-				else if (rules[rule].type === 'softskillsRule') extra = ' <a href="studienordnung.html#Softskills">Was bedeutet das?</a>';
+				if (rules[rule].type === 'sbsRule') extra = ' <a href="faq.html#Softwarebasissysteme">Was bedeutet das?</a>';
+				else if (rules[rule].type === 'softskillsRule') extra = ' <a href="faq.html#Softskills">Was bedeutet das?</a>';
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].extra !== null) {
 					var possibilities = rules[rule].extra;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';

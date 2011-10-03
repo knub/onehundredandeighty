@@ -1,0 +1,61 @@
+body {
+}
+
+section {
+	font-size: 1.5em;
+	max-width: 1250px;
+	padding: 10px 100px;
+}
+a {
+	color: #333;
+}
+h2 {
+	font-size: 2.5em;
+	padding-left: 50px;
+}
+h3 {
+	margin-top: 70px;
+	margin-left: -20px;
+}
+blockquote {
+	background: #EEE;
+	border: 1px solid #777;
+	quotes: "\201C" "\201D";
+	padding: 20px;
+	box-shadow: 6px 6px 4px #888;
+	padding-left: 150px;
+	position: relative;
+}
+blockquote:before {
+	content: open-quote;
+	font-weight: bold;
+	font-size: 20em;
+	color: #DDD;
+	position: absolute;
+	left: 0;
+	top: 50%;
+}
+section#introduction {
+	line-height: 1.9em;
+}
+section p {
+	line-height: 1.7em;
+}
+section blockquote {
+	line-height: 1.7em;
+}
+section table {
+	border-collapse: collapse;
+}
+section table td {
+	border: 1px solid black;
+	background: #FAFAFA;
+	padding: 10px 15px;
+}
+section table tr:nth-child(odd) td {
+	background: #E2E2E2;
+}
+section thead tr td {
+	background: #111 !important;
+	color: white;
+}
