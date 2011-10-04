@@ -162,7 +162,6 @@ var dependencyRule = {
 	course: ""
 };
 
-// TODO: merge todos for more efficient solution
 /* 4. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
 var sbsRule = {
 	/* type */
@@ -543,18 +542,18 @@ var vertiefungsgebieteRule = {
 // ---
 /* 1: create semester rule, just push it to rules array */
 ruleManager.rules.push(semesterRule);
-/* 2: create must-do-rules according to the information saved in data */
+
+/* now walk through the array and add data-dependent rules */
 for (var course in data) {
 	if (!data.hasOwnProperty(course)) continue;
+	/* 2: create must-do-rules according to the information saved in data */
 	// if course must be done ..
 	if (data[course].pflicht) {
 		// .. add rule to rule manager
 		ruleManager.rules.push(Object.create(mustDoRule).init(course));
 	}
-}
-/* 3: create dependency-rules according to the information saved in data */
-for (var course in data) {
-	if (!data.hasOwnProperty(course)) continue;
+
+	/* 3: create dependency-rules according to the information saved in data */
 	// if there are dependencies ..
 	if (data[course].vorher.length !== 0) {
 		// .. loop through all dependencies and ..
@@ -563,18 +562,15 @@ for (var course in data) {
 			ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
 		}
 	}
+
+	/* 6: create time-rules for all courses saved in data */
+	ruleManager.rules.push(Object.create(timeRule).init(course));
 }
 /* 4: create sbs-rule, just push it to rules-array */
 ruleManager.rules.push(sbsRule);
 
 /* 5: create softskills-rule, just push it to rules-array */
 ruleManager.rules.push(softskillsRule);
-
-/* 6: create time-rules for all courses saved in data */
-for (var course in data) {
-	if (!data.hasOwnProperty(course)) continue;
-	ruleManager.rules.push(Object.create(timeRule).init(course));
-}
 
 /* 7: create vertiefungsgebiete-rule, just push it to rules-array */
 ruleManager.rules.push(vertiefungsgebieteRule);
