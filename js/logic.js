@@ -268,6 +268,8 @@ var vertiefungsgebieteRule = {
 	},
 	/* check method */
 	check: function(getSemester) {
+		this.vertiefungen = null;
+		this.combinations = null;
 		/*
 		 * At first, define some helper functions, which will help writing the actual algorithm:
 		 * -	getSBSNumber: Returns the number of Softwarebasissysteme currently chosen.
@@ -378,6 +380,7 @@ var vertiefungsgebieteRule = {
 		if (have24CreditPoints.length === 0) {
 			// Adjust message and let rule fail.
 			this.message = "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden.";
+			this.vertiefungen = chosenVertiefungen;
 			return false;
 		}
 
@@ -416,6 +419,7 @@ var vertiefungsgebieteRule = {
 		// Same procedure as above.
 		if (haveTwoVertiefungsgebiete.length === 0) {
 			this.message = "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben.";
+			this.vertiefungen = chosenVertiefungen;
 			return false;
 		}
 
@@ -533,6 +537,8 @@ var vertiefungsgebieteRule = {
 	},
 	/* message */
 	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.',
+	/* extra information */
+	vertiefungen: null,
 	/* extra information */
 	combinations: null
 };

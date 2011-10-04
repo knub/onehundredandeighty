@@ -141,8 +141,17 @@ div#message table td {
 	padding: 5px 10px;
 	line-height: 1em;
 }
-div#message table tr:nth-child(even) td {
+div#message table.combinations tr:nth-child(even) td {
 	border-top: 2px solid black;
+}
+div#message table.vertiefungen tr:last-child {
+	visibility: hidden;
+}
+div#message tr td.sum {
+	visibility: visible;
+	background: #DDD;
+	border: 1px solid #DDD;
+	border-top: 3px double black;
 }
 div#message table tr:first-child td {
 	background: #444;

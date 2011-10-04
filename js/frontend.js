@@ -97,9 +97,27 @@ var frontend = {
 			localStorage.allMessagesVisible = frontend.allMessagesVisible;
 		}
 	},
+	makeVertiefungsgebieteTable: function(vertiefungen) {
+		var cp = 0;
+		var table = "<table class='vertiefungen'>";
+		table += "<tr><td>Lehrveranstaltung</td><td>Leistungspunkte</td><td>Vertiefungsgebiet</td><td style='width: 300px'>Dozent</td></tr>";
+		for (var i = 0; i < vertiefungen.length; i += 1) {
+			var course = data[vertiefungen[i]];
+			cp += course.cp;
+			table += "<tr><td>" + course.nameLV + "</td>" +
+			         "<td>" + course.cp + "</td>" +
+				 "<td>" + course.vertiefung.join(", ") + "</td>" +
+				 "<td>" + course.dozent.join(", ") + "</td>" +
+				 "</tr>";
+		}
+		if (cp < 24)
+			table += "<tr><td></td><td class='sum'>" + cp + "</td><td></td><td></td></tr>";
+		table += "</table>";
+		return table;
+	},
 	/* used to display information about possible Vertiefungsgebiete */
-	makeVertiefungsgebieteTable: function(possibilities) {
-		var table = "<table>";
+	makeCombinationsTable: function(possibilities) {
+		var table = "<table class='combinations'>";
 		table += "<tr><td></td><td>Vertiefungsgebiete</td><td>Lehrveranstaltungen</td><td>aktuell belegte<br />Leistungspunkte</td><td>Vorlesung/en<br />in diesem Gebiet</td></tr>";
 		for (var i = 0; i < possibilities.length; i += 1) {
 			var possibility = possibilities[i];
@@ -166,15 +184,14 @@ var frontend = {
 				if (rules[rule].type === 'vertiefungsgebieteRule') {
 					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind gültig im Sinne der Studienordnung:';
-					extra += frontend.makeVertiefungsgebieteTable(possibilities);
+					extra += frontend.makeCombinationsTable(possibilities);
 					extra += "</div>";
 					$("#message ul").append("<li>" + extra + "</li>");
 				}
 			}
 			$("#message").animate({
 				backgroundColor: '#026400'
-			},
-			350);
+			}, 350);
 		}
 		else {
 			for (var rule = 0; rule < rules.length; rule += 1) {
@@ -185,7 +202,13 @@ var frontend = {
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].combinations !== null) {
 					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
-					extra += frontend.makeVertiefungsgebieteTable(possibilities);
+					extra += frontend.makeCombinationsTable(possibilities);
+					extra += "</div>";
+				}
+				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].vertiefungen !== null) {
+					var vertiefungen = rules[rule].vertiefungen;
+					extra += '<div class="extra-inf">Folgende Vertiefungsgebiete sind bisher gewählt; dies erfüllt aber noch nicht alle Kriterien:';
+					extra += frontend.makeVertiefungsgebieteTable(vertiefungen);
 					extra += "</div>";
 				}
 				$("#message ul").append("<li>" + rules[rule].message + extra + "</li>");
