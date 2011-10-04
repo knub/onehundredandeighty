@@ -164,7 +164,7 @@ var frontend = {
 			for (var rule = 0; rule < rules.length; rule += 1) {
 				var extra = '';
 				if (rules[rule].type === 'vertiefungsgebieteRule') {
-					var possibilities = rules[rule].extra;
+					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind gültig im Sinne der Studienordnung:';
 					extra += frontend.makeVertiefungsgebieteTable(possibilities);
 					extra += "</div>";
@@ -182,8 +182,8 @@ var frontend = {
 				var extra = '';
 				if (rules[rule].type === 'sbsRule') extra = ' <a href="faq.html#Softwarebasissysteme">Was bedeutet das?</a>';
 				else if (rules[rule].type === 'softskillsRule') extra = ' <a href="faq.html#Softskills">Was bedeutet das?</a>';
-				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].extra !== null) {
-					var possibilities = rules[rule].extra;
+				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].combinations !== null) {
+					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
 					extra += frontend.makeVertiefungsgebieteTable(possibilities);
 					extra += "</div>";

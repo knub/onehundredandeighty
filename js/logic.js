@@ -522,12 +522,12 @@ var vertiefungsgebieteRule = {
 		// Same procedure as above.
 		if (haveLecture.length === 0) {
 			this.message = "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden.";
-			this.extra = haveTwoVertiefungsgebiete;
+			this.combinations = haveTwoVertiefungsgebiete;
 			return false;
 		}
 
-		// save information about all correct combinations in extra, so frontend has access to this information
-		this.extra = haveLecture;
+		// save information about all correct combinations in combinations, so frontend has access to this information
+		this.combinations = haveLecture;
 
 		// If you came so far, you are worthy to return with true :)
 		return true;
@@ -535,7 +535,7 @@ var vertiefungsgebieteRule = {
 	/* message */
 	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.',
 	/* extra information */
-	extra: null
+	combinations: null
 };
 
 // ---
