@@ -35,7 +35,7 @@ blockquote:before {
 	left: 0;
 	top: 50%;
 }
-section#introduction {
+section.introduction {
 	line-height: 1.9em;
 }
 section p {
