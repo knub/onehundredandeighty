@@ -121,6 +121,9 @@ div#message > ul {
 	list-style-type: none;
 	text-indent: 5em;
 }
+div#message > ul li {
+	margin-right: 70px;
+}
 div#message a {
 	color: black;
 }
