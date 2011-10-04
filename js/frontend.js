@@ -113,6 +113,22 @@ var frontend = {
 		if (cp < 24)
 			table += "<tr><td></td><td class='sum'>" + cp + "</td><td></td><td></td></tr>";
 		table += "</table>";
+
+		if (vertiefungen.sbsCourses.length === 4) {
+			table += "<p>Es wurden vier Softwarebasissysteme gewählt, sodass eines davon als Vertiefung gewertet wird (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>).<br />Damit ergeben sich nicht " + cp + " sondern " + (cp + 6).toString() + " Leistungspunkte. Die vier gewählten Softwarebasissysteme mit ihren Vertiefungsgebieten sind:<br /><ul>" + vertiefungen.sbsCourses.reduce(function(prev, current) {
+				return prev + "<li>" + data[current].nameLV + " (" + data[current].vertiefung[0] + ")</li>";
+			}, "") + "</ul></p>";
+		}
+		else if (vertiefungen.sbsCourses.length === 5) {
+			table += "<p>Es wurden fünf Softwarebasissysteme gewählt, sodass zwei davon als Vertiefung gewertet werden (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>).<br />Damit ergeben sich nicht " + cp + " sondern " + (cp + 12).toString() + " Leistungspunkte. Die fünf gewählten Softwarebasissysteme mit ihren Vertiefungsgebieten sind:<br /><ul>" + vertiefungen.sbsCourses.reduce(function(prev, current) {
+				return prev + "<li>" + data[current].nameLV + " (" + data[current].vertiefung[0] + ")</li>";
+			}, "") + "</ul></p>";
+		}
+
+		// and now there is a dirty little hack:
+		// the arrow on the left of the messages box is only displayed, if there is more than <li> in the box
+		// as we want to have the arrow here, because the table is quite big, we add a <li> here
+		table += "<ul style='display:none;'><li></li></ul>";
 		return table;
 	},
 	/* used to display information about possible Vertiefungsgebiete */
@@ -197,8 +213,8 @@ var frontend = {
 			for (var rule = 0; rule < rules.length; rule += 1) {
 				if (rules[rule].success === true) continue;
 				var extra = '';
-				if (rules[rule].type === 'sbsRule') extra = ' <a href="faq.html#Softwarebasissysteme">Was bedeutet das?</a>';
-				else if (rules[rule].type === 'softskillsRule') extra = ' <a href="faq.html#Softskills">Was bedeutet das?</a>';
+				if (rules[rule].type === 'sbsRule') extra = ' <a href="fragen.html#softwarebasissysteme">Was bedeutet das?</a>';
+				else if (rules[rule].type === 'softskillsRule') extra = ' <a href="fragen.html#softskills">Was bedeutet das?</a>';
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].combinations !== null) {
 					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';

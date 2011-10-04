@@ -342,7 +342,7 @@ var vertiefungsgebieteRule = {
 		// if there are four Softwarebasissysteme, one of them must be treated like a Vertiefungsgebiet
 		if (sbsNumber === 4) {
 			// so we add all of them to chosenVertiefungsgebiete
-			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for the current study regulations).
+			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for current study regulations).
 			var addSBS = [];
 			for (var i = 0; i < sbsCourses.length; i += 1) {
 				addSBS.push({
@@ -381,6 +381,7 @@ var vertiefungsgebieteRule = {
 			// Adjust message and let rule fail.
 			this.message = "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden.";
 			this.vertiefungen = chosenVertiefungen;
+			this.vertiefungen.sbsCourses = sbsCourses;
 			return false;
 		}
 
@@ -420,6 +421,7 @@ var vertiefungsgebieteRule = {
 		if (haveTwoVertiefungsgebiete.length === 0) {
 			this.message = "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben.";
 			this.vertiefungen = chosenVertiefungen;
+			this.vertiefungen.sbsCourses = sbsCourses;
 			return false;
 		}
 

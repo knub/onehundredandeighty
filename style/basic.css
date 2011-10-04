@@ -124,8 +124,6 @@ div#message > ul {
 div#message a {
 	color: black;
 }
-div#message ul ul {
-}
 div#message table {
 	text-indent: 0;
 	margin: 0;
@@ -163,9 +161,6 @@ div#message table tr:first-child td {
 	line-height: 1.2em;
 	padding: 10px 30px;
 }
-/*div#message table td[rowspan]:first-child {
-	border-bottom: 2px solid black;
-}*/
 div#message table tr td[rowspan] {
 	background: #CCC;
 	border: 1px solid #444;
@@ -175,6 +170,16 @@ div#message table ul {
 	list-style-type: square;
 	text-align: left;
 	margin-right: 2em;
+}
+div#message .extra-inf p {
+	text-indent: 0;
+	line-height: 1.6em;
+	margin: 5px auto;
+}
+div#message p ~ ul {
+	line-height: 1.2em;
+	list-style-type: square;
+	text-indent: 2em;
 }
 
 .teaser {
