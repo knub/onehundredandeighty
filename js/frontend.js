@@ -29,6 +29,8 @@ var frontend = {
 		 * True, when course should be displayed.
 		 */
 		checkSemester: function(key) {
+			if (key.search("clone") >= 0)
+				alert(key);
 			// key is the array index to one course in data
 			var copy = this.selectedSemesters.slice();
 			for (var i = 0; i < copy.length; i += 1) {
@@ -68,6 +70,7 @@ var frontend = {
 			$("#courses-pool > ul li").each(function() {
 				// .slice(7) to remove foregoing "course-" from id
 				var key = $(this).attr("id").slice(7);
+				console.log(key);
 
 				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key) && frontend.filterManager.checkModule(key) && frontend.filterManager.checkVertiefungsgebiete(key);
 				if (show === false) {
@@ -80,17 +83,73 @@ var frontend = {
 			frontend.sortPool();
 		}
 	},
+	repetitionManager: {
+		cloneNode: function(li) {
+			var key = $(li).attr("id").substr(7);
+			var semester = frontend.getSemester(key);
+			var cloneId = "";
+			if (this.repetitions[key] !== undefined) {
+				cloneId = key + "-clone-" + (this.repetitions[key].count + 1).toString();
+				this.repetitions[key].list.push({ id: cloneId, semester: semester });
+			}
+			else {
+				cloneId = key + "-clone-1";
+				this.repetitions[key] = { count: 0, list: [{ id: cloneId, semester: semester }] };
+			}
+			this.repetitions[key].count += 1;
+
+			var clone = li.cloneNode(true);
+			var ul = li.parentNode;
+			var that = this;
+			$(clone).attr("id", "course-" + cloneId).addClass("clone").children("button").text("x").click(function () {
+				that.deleteNode(this.parentNode, cloneId, key);
+				/*
+				var index = that.repetitions[key].list.indexOf(cloneId);
+				that.repetitions[key].list.splice(index, 1);
+				if (that.repetitions[key].list.length === 0)
+					delete that.repetitions[key];
+				$(this.parentNode).remove();
+				frontend.saveManager.save();
+				*/
+			});
+			$(ul).append(clone);
+		},
+		deleteNode: function(li, cloneId, key) {
+			var index = -1;
+			var index = this.repetitions[key].list.forEach(function(value, i) {
+				if (value.id === cloneId)
+					index = i;
+			});
+			this.repetitions[key].list.splice(index, 1);
+			if (this.repetitions[key].list.length === 0)
+				delete this.repetitions[key];
+			$(li).remove();
+			frontend.saveManager.save();
+		},
+		repetitions: {}
+	},
 	/* saveManager saves the current status via Web-Storage */
 	saveManager: {
 		save: function() {
 			var courseToSemester = {};
+			/* save courses */
 			for (var key in data) {
 				if (!data.hasOwnProperty(key)) continue;
 				courseToSemester[key] = frontend.getSemester(key);
 			}
+			/* save repetitions */
+			for (var repetition in frontend.repetitionManager.repetitions) {
+				if (!frontend.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
+				var courseRepetition = frontend.repetitionManager.repetitions[repetition];
+				for (var i = 0; i < courseRepetition.list.length; i += 1) {
+					var id = courseRepetition.list[i].id;
+					courseRepetition.list[i].semester = frontend.getSemester(id);
+				}
+			}
 			// SAVE data
 			localStorage.hasData = true;
 			localStorage.courseToSemester = JSON.stringify(courseToSemester);
+			localStorage.repetitionManager = JSON.stringify(frontend.repetitionManager);
 			localStorage.filterManager = JSON.stringify(frontend.filterManager);
 			localStorage.semesters = JSON.stringify(semesterManager.shownSemesters);
 			localStorage.checkPermanently = frontend.checkPermanently;
@@ -333,6 +392,33 @@ var frontend = {
 		console.error("Function getSemester returning invalid data!");
 		return -1;
 	},
+	/*
+	 * This functions builds a complete <li> element containing information about one course
+	 * key: The course's key to information in data.
+	 * repetition: This has two meanings. On the one hand, it indicates that the course to build the <li> for is just a repetition and on the other hand, it holds the repetition's html-id
+	 */
+	buildCourseData: function(key, repetition) {
+		if (repetition === undefined)
+			repetition = key;
+		var course = data[key];
+		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + frontend.displayArray(course['modul'], "Modul") + frontend.displayArray(course['dozent'], "Dozent") + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + frontend.displayArray(course['lehrform'], "Lehrform") + frontend.displayArray(course['vertiefung'], "Vertiefungsgebiet") + "</table>" + "</div>" + "</div>";
+
+		// if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
+		var classes = [];
+		if (course['kurz'].indexOf("<br />") === - 1) {
+			classes.push("oneliner");
+		}
+		if (repetition !== key)
+			classes.push("clone");
+		var cssclass = "";
+		if (repetition.length != 0)
+			cssclass = " class='" + classes.join(" ") + "'";
+
+		var character = "⎘";
+		if (repetition !== key)
+			character = "x";
+		return "<li" + cssclass + " id='course-" + repetition + "'>" + course['kurz'] + "<button><!--⎗-->" + character + "</button>" + courseInfo + "</li>";
+	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function() {
 		$(".courses li").knubtip("disable");
@@ -545,6 +631,7 @@ $(function() {
 		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
 
 		frontend.filterManager = $.extend(frontend.filterManager, JSON.parse(localStorage.filterManager));
+		frontend.repetitionManager = $.extend(frontend.repetitionManager, JSON.parse(localStorage.repetitionManager));
 		if (frontend.checkPermanently) $("#permacheck li").attr("class", "selected");
 		else $("#button-div").fadeIn(100);
 	}
@@ -583,22 +670,21 @@ $(function() {
 	// for each course in data
 	for (var key in data) {
 		if (!data.hasOwnProperty(key)) continue;
-		// build list item and associated .info for tooltip
 		var course = data[key];
-		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + frontend.displayArray(course['modul'], "Modul") + frontend.displayArray(course['dozent'], "Dozent") + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + frontend.displayArray(course['lehrform'], "Lehrform") + frontend.displayArray(course['vertiefung'], "Vertiefungsgebiet") + "</table>" + "</div>" + "</div>";
-		var oneliner = "";
-		// if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
-		if (course['kurz'].indexOf("<br />") === - 1) {
-			oneliner = " class='oneliner'";
-		}
-		var html = $("<li" + oneliner + " id='course-" + key + "'>" + course['kurz'] + "<button>ⴲ</button>" + courseInfo + "</li>");
+
+		// build list item and associated .info for tooltip
+		var html = frontend.buildCourseData(key);
 
 		// now the element has been created, decide where to put it on the page
+
+		// lookup, if there is localStorage data for this semester
+		// if this is the case, use this information
 		if (localStorage.courseToSemester !== undefined && localStorage.courseToSemester !== null) {
 			var semester = JSON.parse(localStorage.courseToSemester)[key];
 			if (semester === undefined || semester === - 1) $("#extra1").append(html);
 			else if (semester >= 0) $("#semester" + JSON.parse(localStorage.courseToSemester)[key]).append(html);
 		}
+		// else use standard behaviour
 		else {
 			// if it is not recommended for a specific semester ..
 			if (course['empfohlen'] === "") {
@@ -613,12 +699,27 @@ $(function() {
 			}
 		}
 	}
+	for (var repetition in frontend.repetitionManager.repetitions) {
+		if (!frontend.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
+		var courseRepetition = frontend.repetitionManager.repetitions[repetition];
+		for (var i = 0; i < courseRepetition.list.length; i += 1) {
+			if (courseRepetition.list[i].semester !== -1) {
+				var id = courseRepetition.list[i].id;
+				var index = id.indexOf("-");
+				var key = id.substr(0, index);
+
+				var html = frontend.buildCourseData(key, id);
+				$("#semester" + courseRepetition.list[i].semester).append(html);
+			}
+		}
+	}
 	// until now, all courses are in the first ul. now adjust pool height and sort pool.
 	frontend.sortPool();
 
 	/* apply click routine for buttons which disable possibility to drag it */
-	$(".courses li button").click(function() {
-		$(this).parent().toggleClass("disabled"); // disable list element, when button in list element is clicked
+	$(".courses li:not(.clone) button").click(function() {
+		frontend.repetitionManager.cloneNode(this.parentNode);
+		frontend.saveManager.save();
 	});
 
 	/* initialize tooltips for all courses */
