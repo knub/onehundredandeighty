@@ -107,19 +107,12 @@ var frontend = {
 			var ul = li.parentNode;
 			var that = this;
 			$(clone).attr("id", "course-" + cloneId).addClass("clone").children("button").text("x").click(function () {
-				that.deleteNode(this.parentNode, cloneId, key);
-				/*
-				var index = that.repetitions[key].list.indexOf(cloneId);
-				that.repetitions[key].list.splice(index, 1);
-				if (that.repetitions[key].list.length === 0)
-					delete that.repetitions[key];
-				$(this.parentNode).remove();
-				frontend.saveManager.save();
-				*/
+				that.deleteNode(this.parentNode, cloneId);
 			});
 			$(ul).append(clone);
 		},
-		deleteNode: function(li, cloneId, key) {
+		deleteNode: function(li, cloneId) {
+			var key = frontend.repetitionManager.cloneIdToCourseId(cloneId);
 			var index = -1;
 			var index = this.repetitions[key].list.forEach(function(value, i) {
 				if (value.id === cloneId)
@@ -408,8 +401,9 @@ var frontend = {
 	 * repetition: This has two meanings. On the one hand, it indicates that the course to build the <li> for is just a repetition and on the other hand, it holds the repetition's html-id
 	 */
 	buildCourseData: function(key, repetition) {
-		if (repetition === undefined)
-			repetition = key;
+		var id = key;
+		if (repetition !== undefined)
+			id = repetition;
 		var course = data[key];
 		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + frontend.displayArray(course['modul'], "Modul") + frontend.displayArray(course['dozent'], "Dozent") + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + frontend.displayArray(course['lehrform'], "Lehrform") + frontend.displayArray(course['vertiefung'], "Vertiefungsgebiet") + "</table>" + "</div>" + "</div>";
 
@@ -418,16 +412,16 @@ var frontend = {
 		if (course['kurz'].indexOf("<br />") === - 1) {
 			classes.push("oneliner");
 		}
-		if (repetition !== key)
+		if (repetition !== undefined)
 			classes.push("clone");
 		var cssclass = "";
-		if (repetition.length != 0)
+		if (classes.length != 0)
 			cssclass = " class='" + classes.join(" ") + "'";
 
 		var character = "⎘";
-		if (repetition !== key)
+		if (repetition !== undefined)
 			character = "x";
-		return "<li" + cssclass + " id='course-" + repetition + "'>" + course['kurz'] + "<button><!--⎗-->" + character + "</button>" + courseInfo + "</li>";
+		return "<li" + cssclass + " id='course-" + id + "'>" + course['kurz'] + "<button><!--⎗-->" + character + "</button>" + courseInfo + "</li>";
 	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function() {
@@ -732,9 +726,15 @@ $(function() {
 	// data of repetitionManager has changed, so save changes
 	frontend.saveManager.save();
 
-	/* apply click routine for buttons which disable possibility to drag it */
+	/* apply click routine for buttons which clone a course */
 	$(".courses li:not(.clone) button").click(function() {
 		frontend.repetitionManager.cloneNode(this.parentNode);
+		frontend.saveManager.save();
+	});
+	/* apply click routine for buttons to remove a cloned course */
+	$(".courses li.clone button").click(function() {
+		// substr(7) to crop leading "course-"
+		frontend.repetitionManager.deleteNode(this.parentNode, $(this.parentNode).attr("id").substr(7));
 		frontend.saveManager.save();
 	});
 
