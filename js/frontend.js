@@ -106,7 +106,7 @@ var frontend = {
 			var clone = li.cloneNode(true);
 			var ul = li.parentNode;
 			var that = this;
-			$(clone).attr("id", "course-" + cloneId).addClass("clone").children("button").text("x").click(function () {
+			$(clone).attr("id", "course-" + cloneId).prepend("<span>W<br />D<br />H</span>").addClass("clone").children("button").text("x").click(function () {
 				that.deleteNode(this.parentNode, cloneId);
 			});
 			$(ul).append(clone);
@@ -421,7 +421,11 @@ var frontend = {
 		var character = "⎘";
 		if (repetition !== undefined)
 			character = "x";
-		return "<li" + cssclass + " id='course-" + id + "'>" + course['kurz'] + "<button><!--⎗-->" + character + "</button>" + courseInfo + "</li>";
+
+		var repetitionString = "";
+		if (repetition !== undefined)
+			repetitionString = "<span>W<br />D<br />H</span>";
+		return "<li" + cssclass + " id='course-" + id + "'>" +repetitionString + course['kurz'] + "<button><!--⎗-->" + character + "</button>" + courseInfo + "</li>";
 	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function() {
@@ -539,7 +543,7 @@ var frontend = {
 	/* true, when all error messages are visible in drop down list */
 	allMessagesVisible: false,
 	/* when true, rules are checked permanently */
-	checkPermanently: false,
+	checkPermanently: true,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8
 };

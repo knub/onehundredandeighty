@@ -396,8 +396,16 @@ h1 span {
 	cursor: auto;
 }
 .courses li.clone {
-	background: #AAA;
+	background: white;
 	border: 1px solid gray;
+}
+.courses li.clone span {
+	color: #AAA;
+	position: absolute;
+	left: 3px;
+	top: 0px;
+	font-size: 0.9em;
+	line-height: 1em;
 }
 .courses li.oneliner {
 	line-height: 2.7em;
