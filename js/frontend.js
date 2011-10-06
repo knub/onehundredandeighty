@@ -543,7 +543,7 @@ var frontend = {
 	/* true, when all error messages are visible in drop down list */
 	allMessagesVisible: false,
 	/* when true, rules are checked permanently */
-	checkPermanently: true,
+	checkPermanently: false,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8
 };
