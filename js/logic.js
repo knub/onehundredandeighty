@@ -544,6 +544,65 @@ var vertiefungsgebieteRule = {
 	/* extra information */
 	combinations: null
 };
+/* 8. Clone-Rule: take care of clones (repetitions) of a specific course */
+var cloneRule = {
+	/* type */
+	type: "cloneRule",
+	/* constructor */
+	init: function(cloneId) {
+		this.cloneId = cloneId;
+		var index = cloneId.indexOf("-");
+		this.course = cloneId.substr(0, index);
+
+		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
+
+		return this;
+	},
+	/* check method */
+	check: function(getSemester) {
+		// get the semester number (first, second, third ...) for the given course
+		var semesterNumber = getSemester(this.cloneId);
+		if (semesterNumber <= getSemester(this.course)) {
+			this.message = "Die Wiederholung von '" + data[this.course].nameLV + "' muss nach dem ersten Belegen der Veranstaltung geschehen.";
+			return false;
+		}
+		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
+
+		if (semesterNumber === - 1) return true;
+		// now get the semester time (WS10/11, SS10, ...) for the given course
+		// important: subtract 1, because semester number starts at 1, while array starts at 0
+		var semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
+
+		// now we have to distinguish two cases:
+		// -	the semester is in the past/present
+		// -	the semester is in the future
+		if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.current)) {
+			// past or present
+			return data[this.course].semester.indexOf(semesterTime) !== - 1;
+		}
+		else {
+			// if the course is currently chosen for a summer semester
+			if (semesterTime.indexOf("SS") >= 0) {
+				// check if it was offered in the last summer semester
+				return data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
+			}
+			// if the course is currently chosen for a winter semester
+			else if (semesterTime.indexOf("WS") >= 0) {
+				// check if it was offered in the last summer semester
+				return data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
+			}
+			// else something went completly wrong
+			else {
+				console.error("Something is wrong with the semester-time. Check data!");
+			}
+			return true;
+		}
+	},
+	/* message */
+	message: 'Der Kurs wird im gewählten Semester nicht angeboten.',
+	course: "",
+	cloneId: ""
+};
 
 // ---
 // Rules created, now started adding them to rule manager

@@ -110,6 +110,7 @@ var frontend = {
 				that.deleteNode(this.parentNode, cloneId);
 			});
 			$(ul).append(clone);
+			ruleManager.rules.unshift(Object.create(cloneRule).init(cloneId));
 		},
 		deleteNode: function(li, cloneId) {
 			var key = frontend.repetitionManager.cloneIdToCourseId(cloneId);
@@ -721,6 +722,7 @@ $(function() {
 		}
 		for (var i = 0; i < courseRepetition.list.length; i += 1) {
 			var id = courseRepetition.list[i].id;
+			ruleManager.rules.unshift(Object.create(cloneRule).init(id));
 			var key = frontend.repetitionManager.cloneIdToCourseId(id);
 
 			var html = frontend.buildCourseData(key, id);
