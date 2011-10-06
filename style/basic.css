@@ -193,15 +193,15 @@ div#message p ~ ul {
 section {
 	font-size: 1.2em;
 }
-section#head {
+section.semester-time {
 	width: 80%;
 	margin: 0 auto;
 }
 @media screen and (max-width: 1280px) {
-	section#head {
+	section.semester-time {
 		width: 100%;
 	}
-	#semester-view {
+	.semester-view {
 		width: 100% !important;
 	}
 	#courses-pool > ul {
@@ -211,7 +211,7 @@ section#head {
 		margin-left: 7% !important;
 	}
 } 
-section#semester-view {
+section.semester-view {
 	margin: 0 auto;
 	width: 80%;
 }
@@ -332,7 +332,7 @@ h1 span {
 	text-transform: uppercase;
 	font-size: 0.5em;
 }
-#head h2 {
+.semester-time h2 {
 	float: left;
 	width: 14.5%;
 	margin: 15px 0px;
@@ -341,7 +341,7 @@ h1 span {
 	text-align: center;
 }
 
-#head select {
+.semester-time select {
 	width: 100%;
 	background: white;
 	font-size: 1em;

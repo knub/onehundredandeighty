@@ -12,7 +12,7 @@ var studyRegulations = {
 	softwarebasissysteme: ['dbs1', 'hci1', 'grafik1', 'pois1', 'www']
 };
 var semesterManager = {
-	semesters: ["WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14", "WS14/15", "SS15"],
+	semesters: ["WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14", "WS14/15", "SS15", "WS15/16", "SS16"],
 	shownSemesters: [
 	/*
 		"WS10/11",
