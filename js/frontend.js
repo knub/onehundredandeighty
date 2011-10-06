@@ -30,7 +30,7 @@ var frontend = {
 		 */
 		checkSemester: function(key) {
 			if (key.search("clone") >= 0)
-				alert(key);
+				key = frontend.repetitionManager.cloneIdToCourseId(key);
 			// key is the array index to one course in data
 			var copy = this.selectedSemesters.slice();
 			for (var i = 0; i < copy.length; i += 1) {
@@ -48,15 +48,21 @@ var frontend = {
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkModule: function(key) {
+			if (key.search("clone") >= 0)
+				key = frontend.repetitionManager.cloneIdToCourseId(key);
 			return this.selectedModule.haveIntersection(data[key].modul);
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkVertiefungsgebiete: function(key) {
+			if (key.search("clone") >= 0)
+				key = frontend.repetitionManager.cloneIdToCourseId(key);
 			if (data[key].vertiefung[0] === "") return true;
 			return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkWahlpflicht: function(key) {
+			if (key.search("clone") >= 0)
+				key = frontend.repetitionManager.cloneIdToCourseId(key);
 			// if both 'Wahl' and 'Pflicht' are in the array, its always true
 			if (this.selectedWahlpflicht.indexOf("Wahl") !== - 1 && this.selectedWahlpflicht.indexOf("Pflicht") !== - 1) return true;
 			// if its only 'Pflicht' return true, when the course is 'Pflicht'
@@ -70,7 +76,6 @@ var frontend = {
 			$("#courses-pool > ul li").each(function() {
 				// .slice(7) to remove foregoing "course-" from id
 				var key = $(this).attr("id").slice(7);
-				console.log(key);
 
 				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key) && frontend.filterManager.checkModule(key) && frontend.filterManager.checkVertiefungsgebiete(key);
 				if (show === false) {
@@ -125,6 +130,11 @@ var frontend = {
 				delete this.repetitions[key];
 			$(li).remove();
 			frontend.saveManager.save();
+		},
+		cloneIdToCourseId: function(cloneId) {
+			var index = cloneId.indexOf("-");
+			var key = cloneId.substr(0, index);
+			return key;
 		},
 		repetitions: {}
 	},
@@ -646,7 +656,6 @@ $(function() {
 	$("#filter-options ul").knubselect({
 		// change is raised when the selection changed
 		change: function(selected, id) {
-			// TODO: Filter when dropped to #courses-pool.
 			// according to the ul, where the selection change happened, update selected
 			if (id === "semester-filter") {
 				frontend.filterManager.selectedSemesters = selected;
@@ -699,22 +708,29 @@ $(function() {
 			}
 		}
 	}
+	// until now, all courses are in the first ul. now adjust pool height and sort pool.
+	frontend.sortPool();
+
 	for (var repetition in frontend.repetitionManager.repetitions) {
 		if (!frontend.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
 		var courseRepetition = frontend.repetitionManager.repetitions[repetition];
+		frontend.repetitionManager.repetitions[repetition].list = courseRepetition.list.filter(function (value) {
+			return value.semester !== -1;
+		});
+		if (courseRepetition.list.length === 0) {
+			delete frontend.repetitionManager.repetitions[repetition];
+			continue;
+		}
 		for (var i = 0; i < courseRepetition.list.length; i += 1) {
-			if (courseRepetition.list[i].semester !== -1) {
-				var id = courseRepetition.list[i].id;
-				var index = id.indexOf("-");
-				var key = id.substr(0, index);
+			var id = courseRepetition.list[i].id;
+			var key = frontend.repetitionManager.cloneIdToCourseId(id);
 
-				var html = frontend.buildCourseData(key, id);
-				$("#semester" + courseRepetition.list[i].semester).append(html);
-			}
+			var html = frontend.buildCourseData(key, id);
+			$("#semester" + courseRepetition.list[i].semester).append(html);
 		}
 	}
-	// until now, all courses are in the first ul. now adjust pool height and sort pool.
-	frontend.sortPool();
+	// data of repetitionManager has changed, so save changes
+	frontend.saveManager.save();
 
 	/* apply click routine for buttons which disable possibility to drag it */
 	$(".courses li:not(.clone) button").click(function() {
