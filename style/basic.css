@@ -366,7 +366,7 @@ h1 span {
 	position: relative;
 	overflow: hidden;
 
-	/* gradients in whole document created by: --> http://www.colorzilla.com/gradient-editor/ <--. Thanks! */
+	/* gradients created by: --> http://www.colorzilla.com/gradient-editor/ <--. Thanks! */
 	background: #ffffff; /* Old browsers */
 	background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
@@ -441,7 +441,6 @@ h1 span {
 	cursor: pointer;
 }
 
-/* Post-it effect taken from --> http://nicolasgallagher.com/pure-css-folded-corner-effect/ <---. Thanks! */
 /* TODO: I think a complete redesign of tooltip is neccessary - does not like quite good right now. */
 .info {
 	display: none;
@@ -521,9 +520,11 @@ h3 {
 	min-height: 21em;
 	border-right: 1px dotted gray;
 }
-
 .chosen:first-child {
 	border-left: 1px dotted gray;
+}
+#semester-view2 .chosen {
+	min-height: 10em;
 }
 #courses-pool > ul {
 	float: left;

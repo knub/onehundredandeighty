@@ -4,24 +4,8 @@
 "use strict";
 
 $("header img").click(function() {
-	if (semesterManager.numberDisplayed === 12)
-		return;
-
-	var s1time = (semesterManager.numberDisplayed + 1);
-	var s2time = (semesterManager.numberDisplayed + 2);
-
-	var semesterTime = "<h2>" + s1time  + ". Semester<br><select id='selectSemester" + s1time + "' name='selectSemester" + s1time + "' size='1'></select></h2>" +
-	                   "<h2>" + s2time  + ". Semester<br><select id='selectSemester" + s2time + "' name='selectSemester" + s2time + "' size='1'></select></h2>";
-	$("#semester-time2 br:last").before(semesterTime);
-
-	var semesterView = "<ul id='semester" + s1time + "' class='chosen courses'></ul>" +
-	                   "<ul id='semester" + s2time + "' class='chosen courses'></ul>";
-	$("#semester-view2 br:last").before(semesterView);
-	
-	semesterManager.numberDisplayed += 2;
-	frontend.organizeSemesters();
-	frontend.initializeSortable();
-
+	frontend.removeSemester(2);
+	frontend.saveManager.save();
 });
 
 var frontend = {
@@ -126,7 +110,7 @@ var frontend = {
 				frontend.saveManager.save();
 			});
 			$(ul).append(clone);
-			ruleManager.rules.push(Object.create(cloneRule).init(cloneId));
+			ruleManager.rules.unshift(Object.create(cloneRule).init(cloneId));
 			if (frontend.checkPermanently === true) {
 				frontend.checkRules();
 				frontend.slideMessages();
@@ -339,12 +323,51 @@ var frontend = {
 			$("#slide-messages").text("▽");
 			$("#message").css("height", "2em");
 		}
-		if ($("#message li").length > 1) {
+		if ($("#message li").length > 1)
 			$("#slide-messages").css("visibility", "visible");
-		}
-		else {
+		else
 			$("#slide-messages").css("visibility", "hidden");
+	},
+	/* used to add more than six semesters */
+	addSemester: function(number) {
+		if (number === undefined) number = 1;
+		for (var i = 0; i < number; i+= 1) {
+			if (semesterManager.numberDisplayed === 12)
+				return;
+
+			var num = (semesterManager.numberDisplayed + 1);
+
+			var semesterTime = "<h2>" + num  + ". Semester<br><select id='selectSemester" + num + "' name='selectSemester" + num + "' size='1'></select></h2>";
+			$("#semester-time2 br:last").before(semesterTime);
+
+			var semesterView = "<ul id='semester" + num + "' class='chosen courses'></ul>";
+			$("#semester-view2 br:last").before(semesterView);
+			
+			semesterManager.numberDisplayed += 1;
 		}
+		frontend.organizeSemesters();
+		frontend.initializeSortable();
+	},
+	/* used to remove previously added semesters */
+	removeSemester: function(number) {
+		if (number === undefined) number = 1;
+		for (var i = 0; i < number; i += 1) {
+			if (semesterManager.numberDisplayed === 6)
+				return;
+			var num = semesterManager.numberDisplayed;
+			$("#semester" + num + " li").each(function() {
+				var li = $(this);
+				// remove it from its current location ..
+				li.detach();
+				// and move it to the end of courses pool
+				$("#extra7").append(li);
+			});
+			$("#semester" + num).remove();
+			$("#selectSemester" + num).parent().remove();
+			semesterManager.numberDisplayed -= 1;
+		}
+		frontend.sortPool();
+		frontend.organizeSemesters();
 	},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function() {
@@ -361,12 +384,19 @@ var frontend = {
 			// number displayed has been increased by two, so the last two shownSemesters must be intialized
 			var lastSemester = semesterManager.shownSemesters.last();
 			var index = semesterManager.semesters.indexOf(lastSemester);
-			var s1 = index + 1;
-			var s2 = index + 2;
-			if (s1 >= semesterManager.semesters.length) s1 = semesterManager.semesters.length - 1;
-			if (s2 >= semesterManager.semesters.length) s2 = semesterManager.semesters.length - 1;
-			semesterManager.shownSemesters.push(semesterManager.semesters[s1]);
-			semesterManager.shownSemesters.push(semesterManager.semesters[s2]);
+			while (semesterManager.shownSemesters.length !== semesterManager.numberDisplayed) {
+				index += 1;
+				if (index >= semesterManager.semesters.length)
+					index = semesterManager.semesters.length - 1;
+				semesterManager.shownSemesters.push(semesterManager.semesters[index]);
+			}
+		}
+		else if (semesterManager.shownSemesters.length > semesterManager.numberDisplayed) {
+			while (semesterManager.shownSemesters.length !== semesterManager.numberDisplayed) {	
+				semesterManager.shownSemesters.pop();
+			}
+			// semesters did not change, so we dont have to initialize them
+			return;
 		}
 
 		// now initialize select-boxes according to information in semesterManager.shownSemesters
@@ -675,6 +705,12 @@ $(function() {
 		frontend.allMessagesVisible = localStorage.allMessagesVisible === "true";
 
 		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
+		// if there are more than six semester, we need a special row
+		if (semesterManager.shownSemesters.length > 6) {
+			for (var i = 6; i < semesterManager.shownSemesters.length; i += 1) {
+				frontend.addSemester();
+			}
+		}
 
 		frontend.filterManager = $.extend(frontend.filterManager, JSON.parse(localStorage.filterManager));
 		frontend.repetitionManager = $.extend(frontend.repetitionManager, JSON.parse(localStorage.repetitionManager));
@@ -764,7 +800,7 @@ $(function() {
 			var html = frontend.buildCourseData(key, id);
 			$("#semester" + courseRepetition.list[i].semester).append(html);
 			/* add rule */
-			ruleManager.rules.push(Object.create(cloneRule).init(id));
+			ruleManager.rules.unshift(Object.create(cloneRule).init(id));
 		}
 	}
 	// data of repetitionManager has changed, so save changes
@@ -796,5 +832,9 @@ $(function() {
 	$("button#reset").click(function() {
 		localStorage.clear();
 		location.reload();
+	});
+	$("button#moresemester").click(function() {
+		frontend.addSemester(2);
+		frontend.saveManager.save();
 	});
 });
