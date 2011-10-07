@@ -46,7 +46,7 @@ var semesterManager = {
 		for (var i = index + 1; i < this.shownSemesters.length; i += 1) {
 			var old_index = this.semesters.indexOf(this.shownSemesters[i]);
 			if (old_index + difference < this.semesters.length) this.shownSemesters[i] = this.semesters[old_index + difference];
-			else this.shownSemesters[i] = this.semesters[this.semesters.length - 1];
+			else this.shownSemesters[i] = this.semesters.last();
 		}
 	}
 };

@@ -12,11 +12,11 @@ $("header img").click(function() {
 
 	var semesterTime = "<h2>" + s1time  + ". Semester<br><select id='selectSemester" + s1time + "' name='selectSemester" + s1time + "' size='1'></select></h2>" +
 	                   "<h2>" + s2time  + ". Semester<br><select id='selectSemester" + s2time + "' name='selectSemester" + s2time + "' size='1'></select></h2>";
-	$("#semester-time2 br").before(semesterTime);
+	$("#semester-time2 br:last").before(semesterTime);
 
 	var semesterView = "<ul id='semester" + s1time + "' class='chosen courses'></ul>" +
 	                   "<ul id='semester" + s2time + "' class='chosen courses'></ul>";
-	$("#semester-view2 br").before(semesterView);
+	$("#semester-view2 br:last").before(semesterView);
 	
 	semesterManager.numberDisplayed += 2;
 	frontend.organizeSemesters();
@@ -361,8 +361,12 @@ var frontend = {
 			// number displayed has been increased by two, so the last two shownSemesters must be intialized
 			var lastSemester = semesterManager.shownSemesters.last();
 			var index = semesterManager.semesters.indexOf(lastSemester);
-			semesterManager.shownSemesters.push(semesterManager.semesters[index + 1]);
-			semesterManager.shownSemesters.push(semesterManager.semesters[index + 2]);
+			var s1 = index + 1;
+			var s2 = index + 2;
+			if (s1 >= semesterManager.semesters.length) s1 = semesterManager.semesters.length - 1;
+			if (s2 >= semesterManager.semesters.length) s2 = semesterManager.semesters.length - 1;
+			semesterManager.shownSemesters.push(semesterManager.semesters[s1]);
+			semesterManager.shownSemesters.push(semesterManager.semesters[s2]);
 		}
 
 		// now initialize select-boxes according to information in semesterManager.shownSemesters
@@ -377,7 +381,7 @@ var frontend = {
 				options += "<option" + selected + ">" + semesterManager.semesters[j] + "</option>";
 			}
 			// assume, that there are no breaks while studying and go on with the following semester
-			$("#selectSemester" + (i + 1).toString()).empty().append(options);
+			$("#selectSemester" + (i + 1).toString()).html(options);
 		}
 		$(".semester-time select").change(function(eventObject) {
 			var select = $(this);
