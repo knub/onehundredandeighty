@@ -562,7 +562,7 @@ var cloneRule = {
 	check: function(getSemester) {
 		// get the semester number (first, second, third ...) for the given course
 		var semesterNumber = getSemester(this.cloneId);
-		if (semesterNumber <= getSemester(this.course)) {
+		if (semesterNumber <= getSemester(this.course) || getSemester(this.course) === -1) {
 			this.message = "Die Wiederholung von '" + data[this.course].nameLV + "' muss nach dem ersten Belegen der Veranstaltung geschehen.";
 			return false;
 		}

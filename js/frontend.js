@@ -108,9 +108,14 @@ var frontend = {
 			var that = this;
 			$(clone).attr("id", "course-" + cloneId).prepend("<span>W<br />D<br />H</span>").addClass("clone").children("button").text("x").click(function () {
 				that.deleteNode(this.parentNode, cloneId);
+				frontend.saveManager.save();
 			});
 			$(ul).append(clone);
 			ruleManager.rules.push(Object.create(cloneRule).init(cloneId));
+			if (frontend.checkPermanently === true) {
+				frontend.checkRules();
+				frontend.slideMessages();
+			}
 		},
 		deleteNode: function(li, cloneId) {
 			var key = frontend.repetitionManager.cloneIdToCourseId(cloneId);
@@ -123,7 +128,17 @@ var frontend = {
 			if (this.repetitions[key].list.length === 0)
 				delete this.repetitions[key];
 			$(li).remove();
-			frontend.saveManager.save();
+			for (var i = 0; i < ruleManager.rules.length; i += 1) {
+				var rule = ruleManager.rules[i];
+				if (rule.type === 'cloneRule' && rule.cloneId === cloneId) {
+					ruleManager.rules.splice(i, 1);
+					break;
+				}
+			}
+			if (frontend.checkPermanently === true) {
+				frontend.checkRules();
+				frontend.slideMessages();
+			}
 		},
 		cloneIdToCourseId: function(cloneId) {
 			var index = cloneId.indexOf("-");
@@ -343,7 +358,7 @@ var frontend = {
 			// assume, that there are no breaks while studying and go on with the following semester
 			$("#selectSemester" + (i + 1).toString()).append(options);
 		}
-		$("#head select").change(function(eventObject) {
+		$(".semester-time select").change(function(eventObject) {
 			var select = $(this);
 			var id = $(this).attr("id");
 			id = parseInt(id[id.length - 1]);
