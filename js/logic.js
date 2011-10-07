@@ -23,6 +23,7 @@ var semesterManager = {
 		"SS13"
 		*/
 	],
+	numberDisplayed: 6,
 	current: "SS11",
 	lastSummerSemester: "SS11",
 	lastWinterSemester: "WS10/11",

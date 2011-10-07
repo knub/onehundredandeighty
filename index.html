@@ -32,7 +32,7 @@
 		</ul>
 		<!-- im Fehlerfall muss hier auch ein link auf eine genauere Erläuterung, a la "was bedeutet das?" stehen -->
 	</div>
-	<section class="semester-time">
+	<section class="semester-time" id="semester-time1">
 		<h2>
 			1. Semester<br>
 			<select id="selectSemester1" name="selectSemester1" size="1">
@@ -73,7 +73,7 @@
 		</h2>
 		<br style="clear: both;" />
 	</section>
-	<section class="semester-view">
+	<section class="semester-view" id="semester-view1">
 		<ul id="semester1" class="chosen courses">
 			<!--
 			<li>
@@ -105,8 +105,8 @@
 		</ul>
 		<br style="clear: both;" />
 	</section>
-	<!--
-	<section class="semester-time">
+	<section class="semester-time" id="semester-time2">
+		<!--
 		<h2>
 			7. Semester<br>
 			<select id="selectSemester7" name="selectSemester7" size="1">
@@ -117,16 +117,18 @@
 			<select id="selectSemester8" name="selectSemester8" size="1">
 			</select>
 		</h2>
+		-->
 		<br style="clear: both;" />
 	</section>
-	<section class="semester-view">
+	<section class="semester-view" id="semester-view2">
+	<!--
 		<ul id="semester7" class="chosen courses">
 		</ul>
 		<ul id="semester8" class="chosen courses">
 		</ul>
+	-->
 		<br style="clear: both;" />
 	</section>
-	-->
 	<br />
 	<section id="courses-pool">
 		<ul class="courses" id="extra1">
@@ -167,6 +169,7 @@
 		</div>
 	</section>
 	<footer>
+		<button class="btn" id="reset">RESET</button><br />
 		Tested in Chrome 14 beta so far ...; knub <br />
 		parser and name by patrick schmidt <br />
 		using html5 elements, multiple backgrounds css, css gradients, font-face, jquery, css media queries, css transformations ... <br>

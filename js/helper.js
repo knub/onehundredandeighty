@@ -65,3 +65,8 @@ Array.prototype.subsetOf = function (other) {
 	}
 	return true;
 };
+
+/* returns an array's last element */
+Array.prototype.last = function () {
+	return this[this.length - 1];
+}

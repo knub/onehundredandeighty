@@ -4,8 +4,23 @@
 "use strict";
 
 $("header img").click(function() {
-	localStorage.clear();
-	location.reload();
+	if (semesterManager.numberDisplayed === 12)
+		return;
+
+	var s1time = (semesterManager.numberDisplayed + 1);
+	var s2time = (semesterManager.numberDisplayed + 2);
+
+	var semesterTime = "<h2>" + s1time  + ". Semester<br><select id='selectSemester" + s1time + "' name='selectSemester" + s1time + "' size='1'></select></h2>" +
+	                   "<h2>" + s2time  + ". Semester<br><select id='selectSemester" + s2time + "' name='selectSemester" + s2time + "' size='1'></select></h2>";
+	$("#semester-time2 br").before(semesterTime);
+
+	var semesterView = "<ul id='semester" + s1time + "' class='chosen courses'></ul>" +
+	                   "<ul id='semester" + s2time + "' class='chosen courses'></ul>";
+	$("#semester-view2 br").before(semesterView);
+	
+	semesterManager.numberDisplayed += 2;
+	frontend.organizeSemesters();
+	frontend.initializeSortable();
 
 });
 
@@ -337,11 +352,17 @@ var frontend = {
 		if (semesterManager.shownSemesters.length === 0) {
 			// .. initialize starting at semesterManager.startswith-Semester
 			var index = semesterManager.semesters.indexOf(semesterManager.startswith);
-			// do it for six semesters
-			for (var i = 0; i < 6; i += 1) {
+			for (var i = 0; i < semesterManager.numberDisplayed; i += 1) {
 				semesterManager.shownSemesters[i] = semesterManager.semesters[index];
 				index += 1;
 			}
+		}
+		else if (semesterManager.shownSemesters.length < semesterManager.numberDisplayed) {
+			// number displayed has been increased by two, so the last two shownSemesters must be intialized
+			var lastSemester = semesterManager.shownSemesters.last();
+			var index = semesterManager.semesters.indexOf(lastSemester);
+			semesterManager.shownSemesters.push(semesterManager.semesters[index + 1]);
+			semesterManager.shownSemesters.push(semesterManager.semesters[index + 2]);
 		}
 
 		// now initialize select-boxes according to information in semesterManager.shownSemesters
@@ -356,7 +377,7 @@ var frontend = {
 				options += "<option" + selected + ">" + semesterManager.semesters[j] + "</option>";
 			}
 			// assume, that there are no breaks while studying and go on with the following semester
-			$("#selectSemester" + (i + 1).toString()).append(options);
+			$("#selectSemester" + (i + 1).toString()).empty().append(options);
 		}
 		$(".semester-time select").change(function(eventObject) {
 			var select = $(this);
@@ -491,11 +512,7 @@ var frontend = {
 	adjustPoolHeight: function() {
 		// count all visible courses
 		var shownCourses = $("#courses-pool > ul li:not(.hidden)").length;
-		// there are seven ul's but try to use the first six only (seventh is there, but normally not used)
 		frontend.coursesPoolHeight = Math.ceil(shownCourses / 6);
-		// but if showCourses is one more than a multiple of six, avoid 'Hurenkind' and use seventh as well
-		//if (shownCourses % 6 === 1)
-		//	frontend.coursesPoolHeight = Math.ceil(shownCourses / 6) + 1;
 	},
 	/* used to display informationen from an array in a nice way, used for tooltips */
 	displayArray: function(value, headline) {
@@ -505,6 +522,18 @@ var frontend = {
 		row += value.join(", ");
 		row += "</td></tr>";
 		return row;
+	},
+	/* used to initialize jquery-sortable (drag'n'drop) */
+	initializeSortable: function () {
+		/* apply jquery drag'n'dropping */
+		$(frontend.coursesList).sortable({
+			connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
+			placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
+			cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
+			update: frontend.update,			// raised, when there was a change while sorting
+			start: frontend.startSorting,			// raised, when sorting starts
+			stop: frontend.endSorting			// raised, when sorting is finished
+		}).disableSelection();					// disableSelection makes text selection impossible
 	},
 	/* used to initialize course pool filter with correct selectors */
 	initializeFilter: function() {
@@ -614,20 +643,9 @@ $(function() {
 		frontend.saveManager.save();
 	});
 
-	/* apply jquery drag'n'dropping */
-	$(frontend.coursesList).sortable({
-		connectWith: frontend.coursesList,
-		// specifies lists where li's can be dropped
-		placeholder: "placeholder-highlight",
-		// css class for placeholder when drag'n dropping
-		cancel: "." + frontend.disabledClass,
-		// elements matching this selector cannot be dropped
-		update: frontend.update,
-		// raised, when there was a change while sorting
-		start: frontend.startSorting,
-		// raised, when sorting starts
-		stop: frontend.endSorting // raised, when sorting is finished
-	}).disableSelection(); // disableSelection makes text selection impossible
+	frontend.initializeSortable();
+
+
 	var filtering = false;
 	/* apply filter routine on filter-button-div click */
 	$("#filter-button").click(function() {
@@ -763,10 +781,16 @@ $(function() {
 	/* initialize tooltips for all courses */
 	$(".courses li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
 	frontend.filterManager.filter();
+
 	if (localStorage.alreadyChecked === "true") {
 		frontend.checkRules();
 		frontend.slideMessages();
 		$("#checkbox-div").css("visibility", "visible");
 		$("#button-div").css("visibility", "visible");
 	}
+
+	$("button#reset").click(function() {
+		localStorage.clear();
+		location.reload();
+	});
 });
