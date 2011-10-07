@@ -306,12 +306,16 @@ div#filter-options ul li.selected:before {
 	content: '☒';
 }
 footer {
-	background: #EEE;
+	background: black;
+	color: white;
 	border-bottom: 4px solid black;
 	width: 100%;
-	height: 200px;
-	font-size: 1.2em;
+	font-size: 1.4em;
+	line-height: 2.5em;
 	text-align: center;
+}
+footer a {
+	color: white;
 }
 h1 {
 	margin: 0;
@@ -549,40 +553,29 @@ h3 {
 	height: 2.0em;
 	border: 1px dashed #666 !important;
 }
-
-footer div:last-child {
-	height: 200px;
-	margin-left: 230px;
+#extrafunctions {
+	background: #EEE;
+	border-top: 4px solid #333;
+	border-bottom: 4px solid #333;
 }
-footer div:first-child {
-	background: white;
-	width: 450px;
+#extrafunctions div {
+	width: 29%;
+	line-height: 45px;
 	float: left;
-	position: relative;
-	border-right: 30px solid #DDD;
-	height: 200px;
-	/*
-	border-right: 3px solid black;
-	border-bottom: 3px solid black;
-	*/
+	text-align: center;
+	background: #EEE;
 }
-footer div:first-child span {
-	display: block;
-	text-align: right;
-	font-size: 16px;
-	line-height: 38px;
-	margin: 2px;
-	position: relative;
-	width: 250px;
-	float: left;
-	left: 0px;
+#extrafunctions span {
+	margin-right: 15px;
 }
-footer div:first-child button {
-	width: 190px;
-	position: relative;
-	right: 0px;
+#extrafunctions button {
+	width: 180px;
 }
-
+#extrafunctions div:first-child {
+	background: black url(../images/arrow.png) no-repeat right;
+	color: white;
+	width: 13%;
+}
 /* Following styles are taken from --> http://twitter.github.com/bootstrap/ <---. Thanks! */
 .btn {
 	font-family: "Ubuntu", "Arial";
@@ -616,7 +609,7 @@ footer div:first-child button {
 .go:active {
 	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-.action {
+.action1 {
 	color: #333;
 	background-color: #E6E6E6;
 	background-repeat: no-repeat;
@@ -637,11 +630,30 @@ footer div:first-child button {
 	font-size: 16px;
 	line-height: 18px;
 }
-.action:hover {
+.action1:hover {
 	color: #333;
 }
-.action:active {
+.action1:active {
 	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.action2 {
+	background-color: #0064cd;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+	background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+	background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+	background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+	background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+	background-image: linear-gradient(top, #049cdb, #0064cd);
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	border: 1px solid #004b9a;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-bottom-color: #003f81;
+}
+.action2:hover {
+	color: #fff;
 }
 .danger {
 	color: #ffffff;
