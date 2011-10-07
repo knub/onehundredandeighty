@@ -427,6 +427,7 @@ h1 span {
 }
 
 .courses li button {
+	font-family: "ProcionoRegular";
 	margin: 0;
 	padding: 0;
 	border: none;
@@ -438,6 +439,7 @@ h1 span {
 	right: 5px;
 	width: 20px;
 	height: 20px;
+	line-height: 20px;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 0.9em;

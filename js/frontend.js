@@ -487,7 +487,7 @@ var frontend = {
 		if (classes.length != 0)
 			cssclass = " class='" + classes.join(" ") + "'";
 
-		var character = "⎘";
+		var character = frontend.copyCharacter;
 		if (repetition !== undefined)
 			character = "x";
 
@@ -622,7 +622,8 @@ var frontend = {
 	/* when true, rules are checked permanently */
 	checkPermanently: false,
 	/* number of list items in one list in unchosen lists */
-	coursesPoolHeight: 8
+	coursesPoolHeight: 8,
+	copyCharacter: "⎘"
 };
 
 // note: $(function () ...) is the same as $(document).ready(function () ..)
@@ -705,9 +706,7 @@ $(function() {
 		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
 		// if there are more than six semester, we need a special row
 		if (semesterManager.shownSemesters.length > 6) {
-			for (var i = 6; i < semesterManager.shownSemesters.length; i += 1) {
-				frontend.addSemester();
-			}
+			frontend.addSemester(semesterManager.shownSemesters.length - 6);
 		}
 
 		frontend.filterManager = $.extend(frontend.filterManager, JSON.parse(localStorage.filterManager));
