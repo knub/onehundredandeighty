@@ -4,8 +4,6 @@
 "use strict";
 
 $("header img").click(function() {
-	frontend.removeSemester(2);
-	frontend.saveManager.save();
 });
 
 var frontend = {
@@ -835,6 +833,10 @@ $(function() {
 	});
 	$("button#moresemester").click(function() {
 		frontend.addSemester(2);
+		frontend.saveManager.save();
+	});
+	$("button#lesssemester").click(function() {
+		frontend.removeSemester(2);
 		frontend.saveManager.save();
 	});
 });
