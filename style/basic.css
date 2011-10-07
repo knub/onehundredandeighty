@@ -309,6 +309,7 @@ footer {
 	background: #EEE;
 	border-bottom: 4px solid black;
 	width: 100%;
+	height: 200px;
 	font-size: 1.2em;
 	text-align: center;
 }
@@ -549,10 +550,55 @@ h3 {
 	border: 1px dashed #666 !important;
 }
 
+footer div:last-child {
+	height: 200px;
+	margin-left: 230px;
+}
+footer div:first-child {
+	background: white;
+	width: 450px;
+	float: left;
+	position: relative;
+	border-right: 30px solid #DDD;
+	height: 200px;
+	/*
+	border-right: 3px solid black;
+	border-bottom: 3px solid black;
+	*/
+}
+footer div:first-child span {
+	display: block;
+	text-align: right;
+	font-size: 16px;
+	line-height: 38px;
+	margin: 2px;
+	position: relative;
+	width: 250px;
+	float: left;
+	left: 0px;
+}
+footer div:first-child button {
+	width: 190px;
+	position: relative;
+	right: 0px;
+}
 
 /* Following styles are taken from --> http://twitter.github.com/bootstrap/ <---. Thanks! */
-
 .btn {
+	font-family: "Ubuntu", "Arial";
+	font-size: 16px;
+	line-height: 18px;
+	display: inline-block;
+	padding: 9px 14px 9px;
+	border-radius: 6px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+}
+.btn:hover {
+	background-position: 0 -15px;
+	text-decoration: none;
+}
+.go {
 	color: #ffffff;
 	background-color: #57a957;
 	background-repeat: repeat-x;
@@ -563,21 +609,56 @@ h3 {
 	background-image: -webkit-linear-gradient(top, #62c462, #57a957);
 	background-image: -o-linear-gradient(top, #62c462, #57a957);
 	background-image: linear-gradient(top, #62c462, #57a957);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 	border: 1px solid #ccc;
-	border-radius: 6px;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+ 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.go:active {
+	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.action {
+	color: #333;
+	background-color: #E6E6E6;
+	background-repeat: no-repeat;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+	background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	border-bottom-color: #BBB;
 	display: inline-block;
 	padding: 9px 14px 9px;
- 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	cursor: pointer;
 	font-size: 16px;
 	line-height: 18px;
-	cursor: pointer;
 }
-.btn:hover {
-	background-position: 0 -15px;
-	text-decoration: none;
+.action:hover {
+	color: #333;
 }
-.btn:active {
-	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+.action:active {
+	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.danger {
+	color: #ffffff;
+	background-color: #c43c35;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+	background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
+	background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: linear-gradient(top, #ee5f5b, #c43c35);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	border: 1px solid #CCC;
+	border-bottom-color: #BBB;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+.danger:active {
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
 }

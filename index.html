@@ -14,7 +14,7 @@
 		</div>
 		<div>
 		<div id="button-div">
-			<button class="btn" id="recheck">Überprüfen</button>
+			<button class="btn go" id="recheck">Überprüfen</button>
 		</div>
 		<div id="checkbox-div">
 			<ul id="permacheck">
@@ -28,7 +28,7 @@
 			<button id="slide-messages">▽<!--▼--></button>
 		</div>
 		<ul>
-			<li class="teaser">Einfach Lehrveranstaltungen von unten in das gewünschte Semester ziehen. <button class="btn" id="check">Überprüfen</button></li>
+			<li class="teaser">Einfach Lehrveranstaltungen von unten in das gewünschte Semester ziehen. <button class="btn go" id="check">Überprüfen</button></li>
 		</ul>
 		<!-- im Fehlerfall muss hier auch ein link auf eine genauere Erläuterung, a la "was bedeutet das?" stehen -->
 	</div>
@@ -169,25 +169,28 @@
 		</div>
 	</section>
 	<footer>
-		<button class="btn" id="reset">RESET</button><br />
-		<button class="btn" id="moresemester">mehr Semester</button><br />
-		<button class="btn" id="lesssemester">weniger Semester</button><br />
-		Tested in Chrome 14 beta so far ...; knub <br />
-		parser and name by patrick schmidt <br />
+		<div>
+			<h3>Extrafunktionen</h3>
+			<span>Lehrveranstaltungen zurücksetzen:</span><button class="btn danger" id="reset">RESET</button><br />
+			<span>Zwei Semester mehr verwenden:</span><button class="btn action" id="moresemester">mehr Semester</button><br />
+			<span>Zwei Semester weniger verwenden:</span><button class="btn action" id="lesssemester">weniger Semester</button><br />
+		</div>
+		<div>
+			Tested in Chrome 14 beta so far ...; knub <br />
+			parser and name by patrick schmidt <br />
+			valid html 5 <br />
+		</div>
+		<br style="clear: both;" />
+		<!--
 		using html5 elements, multiple backgrounds css, css gradients, font-face, jquery, css media queries, css transformations ... <br>
 		thanks to font-squirrel <br />
 		possible pin characters: ㄖᨔⲐꙨ𐑏㉤𐏑ⵚⴲ𐎂<br>
 		link zur studienverwaltung <br />
 		link zur studienordnung <br />
 		link zur aufbereiten studienordnung <br />
-		faq (woher kommen die daten: direkt von der hpi seite extrahiert, insbesondere information fehlt nicht unsere schuld) <br />
-		(was wird hier nicht betrachtet ist aber dennoch wichtig: softskills, bachelorarbeit) <br />
-		valid html 5 <br />
-		css not valid right now <br />
 		piwik is planned <br />
-		webstorage is planned <br />
-		message, dass zukunft nur interpoliert wird<br />
 		<span style="font-size: 3em">ﺕ — no warranty of course</span>
+		-->
 	</footer>
 	<script src="jquery/js/jquery-1.6.2.min.js"></script>
 	<script src="jquery/js/jquery-ui-1.8.15.custom.min.js"></script>
