@@ -19,7 +19,11 @@
 				}
 				return this.each(function () {
 					// detach element from li's and append to body (needed for free absolute positioning)
-					var info = $(this).children(".info");
+					var info = $(this).find(".info");
+					// if there is no info element, continue
+					if (info.length === 0)
+						// return true === continue in $.each-function
+						return true;
 					info.detach();
 					$("body").append(info);
 					// save, which div belonged to which li via css-class

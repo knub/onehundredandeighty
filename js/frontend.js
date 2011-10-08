@@ -299,13 +299,13 @@ var frontend = {
 				else if (rules[rule].type === 'softskillsRule') extra = ' <a href="fragen.html#softskills">Was bedeutet das?</a>';
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].combinations !== null) {
 					var possibilities = rules[rule].combinations;
-					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
+					extra += ' <a href="fragen.html#vertiefungsgebiete">Was bedeutet das?</a><div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
 					extra += f.makeCombinationsTable(possibilities);
 					extra += "</div>";
 				}
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].vertiefungen !== null) {
 					var vertiefungen = rules[rule].vertiefungen;
-					extra += '<div class="extra-inf">Folgende Vertiefungsgebiete sind bisher gewählt; dies erfüllt aber noch nicht alle Kriterien:';
+					extra += ' <a href="fragen.html#vertiefungsgebiete">Was bedeutet das?</a><div class="extra-inf">Folgende Vertiefungsgebiete sind bisher gewählt; dies erfüllt aber noch nicht alle Kriterien:';
 					extra += f.makeVertiefungsgebieteTable(vertiefungen);
 					extra += "</div>";
 				}
@@ -600,7 +600,7 @@ var frontend = {
 			var selected = f.filterManager.selectedVertiefungsgebiete.indexOf(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) === - 1 ? "": " class='selected'";
 			vertiefungsgebieteList += "<li" + selected + ">" + f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet] + "</li>";
 		}
-		vertiefungsgebieteList += "</ul>";
+		vertiefungsgebieteList += ' <a href="fragen.html#vertiefungsgebiete">Wofür stehen die Abkürzungen?</a></ul>';
 
 		// build wahlpflicht list
 		var wahlpflichtList = "<ul id='wahlpflicht-filter'>";

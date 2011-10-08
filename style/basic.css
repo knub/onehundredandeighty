@@ -259,7 +259,7 @@ div#filter-button h2 {
 	font-size: 1.9em;
 	color:#505050;
 	text-shadow: 1px 1px 0px #fff;
-	letter-spacing: 6px;
+	letter-spacing: 5px;
 }
 div#filter {
 	width: 90%;
@@ -270,6 +270,11 @@ div#filter {
 	width: 0%;
 	overflow: hidden;
 	background: rgba(0, 0, 0, 0.8);
+}
+div#filter a {
+	color: white;
+	text-align: center;
+	display: block;
 }
 div#filter-options {
 	position: absolute;
@@ -285,6 +290,9 @@ div#filter-options ul {
 	padding: 0;
 	margin: 10px;
 	color: white;
+	background: black;
+	border: 3px solid #444;
+	border-radius: 3px;
 }
 #semester_wahlpflicht {
 	float: left;
@@ -304,7 +312,13 @@ div#filter-options ul li {
 	border: 2px solid black;
 	color: black;
 	width: 250px;
-	padding: 10px;
+	padding: 9px;
+}
+div#filter-options #semester_wahlpflicht ul:last-child {
+	margin-top: 15px;
+}
+div#filter-options #module_vertiefungsgebiete ul:first-child li {
+	padding: 8px 10px;
 }
 div#filter-options ul li:before {
 	content: '☐';
