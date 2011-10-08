@@ -27,7 +27,7 @@ var frontend = {
 		 */
 		checkSemester: function(key) {
 			if (key.search("clone") >= 0)
-				key = frontend.repetitionManager.cloneIdToCourseId(key);
+				key = f.repetitionManager.cloneIdToCourseId(key);
 			// key is the array index to one course in data
 			var copy = this.selectedSemesters.slice();
 			for (var i = 0; i < copy.length; i += 1) {
@@ -46,20 +46,20 @@ var frontend = {
 		/* see checkSemester for documentation, same procedure */
 		checkModule: function(key) {
 			if (key.search("clone") >= 0)
-				key = frontend.repetitionManager.cloneIdToCourseId(key);
+				key = f.repetitionManager.cloneIdToCourseId(key);
 			return this.selectedModule.haveIntersection(data[key].modul);
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkVertiefungsgebiete: function(key) {
 			if (key.search("clone") >= 0)
-				key = frontend.repetitionManager.cloneIdToCourseId(key);
+				key = f.repetitionManager.cloneIdToCourseId(key);
 			if (data[key].vertiefung[0] === "") return true;
 			return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
 		},
 		/* see checkSemester for documentation, same procedure */
 		checkWahlpflicht: function(key) {
 			if (key.search("clone") >= 0)
-				key = frontend.repetitionManager.cloneIdToCourseId(key);
+				key = f.repetitionManager.cloneIdToCourseId(key);
 			// if both 'Wahl' and 'Pflicht' are in the array, its always true
 			if (this.selectedWahlpflicht.indexOf("Wahl") !== - 1 && this.selectedWahlpflicht.indexOf("Pflicht") !== - 1) return true;
 			// if its only 'Pflicht' return true, when the course is 'Pflicht'
@@ -70,11 +70,11 @@ var frontend = {
 			return false;
 		},
 		filter: function() {
-			$("#courses-pool > ul li").each(function() {
+			f.coursesPoolUl.find("li").each(function() {
 				// .slice(7) to remove foregoing "course-" from id
-				var key = $(this).attr("id").slice(7);
+				var key = this.id.slice(7);
 
-				var show = frontend.filterManager.checkSemester(key) && frontend.filterManager.checkWahlpflicht(key) && frontend.filterManager.checkModule(key) && frontend.filterManager.checkVertiefungsgebiete(key);
+				var show = f.filterManager.checkSemester(key) && f.filterManager.checkWahlpflicht(key) && f.filterManager.checkModule(key) && f.filterManager.checkVertiefungsgebiete(key);
 				if (show === false) {
 					$(this).addClass("hidden");
 				}
@@ -82,13 +82,13 @@ var frontend = {
 					$(this).removeClass("hidden");
 				}
 			});
-			frontend.sortPool();
+			f.sortPool();
 		}
 	},
 	repetitionManager: {
 		cloneNode: function(li) {
-			var key = $(li).attr("id").substr(7);
-			var semester = frontend.getSemester(key);
+			var key = li.id.substr(7);
+			var semester = f.getSemester(key);
 			var cloneId = "";
 			if (this.repetitions[key] !== undefined) {
 				cloneId = key + "-clone-" + (this.repetitions[key].count + 1).toString();
@@ -103,19 +103,20 @@ var frontend = {
 			var clone = li.cloneNode(true);
 			var ul = li.parentNode;
 			var that = this;
-			$(clone).attr("id", "course-" + cloneId).prepend("<span>W<br />D<br />H</span>").addClass("clone").children("button").text("x").click(function () {
+			$(clone).attr("id", "course-" + cloneId).prepend("<span>W<br />D<br />H</span>").addClass("clone").find("button").text("x").click(function () {
 				that.deleteNode(this.parentNode, cloneId);
-				frontend.saveManager.save();
+				f.saveManager.save();
 			});
 			$(ul).append(clone);
 			ruleManager.rules.unshift(Object.create(cloneRule).init(cloneId));
-			if (frontend.checkPermanently === true) {
-				frontend.checkRules();
-				frontend.slideMessages();
+			if (f.checkPermanently === true) {
+				f.checkRules();
+				f.slideMessages();
 			}
+			f.coursesUl = $(f.coursesList);
 		},
 		deleteNode: function(li, cloneId) {
-			var key = frontend.repetitionManager.cloneIdToCourseId(cloneId);
+			var key = f.repetitionManager.cloneIdToCourseId(cloneId);
 			var index = -1;
 			var index = this.repetitions[key].list.forEach(function(value, i) {
 				if (value.id === cloneId)
@@ -132,10 +133,11 @@ var frontend = {
 					break;
 				}
 			}
-			if (frontend.checkPermanently === true) {
-				frontend.checkRules();
-				frontend.slideMessages();
+			if (f.checkPermanently === true) {
+				f.checkRules();
+				f.slideMessages();
 			}
+			f.coursesUl = $(f.coursesList);
 		},
 		cloneIdToCourseId: function(cloneId) {
 			var index = cloneId.indexOf("-");
@@ -151,25 +153,25 @@ var frontend = {
 			/* save courses */
 			for (var key in data) {
 				if (!data.hasOwnProperty(key)) continue;
-				courseToSemester[key] = frontend.getSemester(key);
+				courseToSemester[key] = f.getSemester(key);
 			}
 			/* save repetitions */
-			for (var repetition in frontend.repetitionManager.repetitions) {
-				if (!frontend.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
-				var courseRepetition = frontend.repetitionManager.repetitions[repetition];
+			for (var repetition in f.repetitionManager.repetitions) {
+				if (!f.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
+				var courseRepetition = f.repetitionManager.repetitions[repetition];
 				for (var i = 0; i < courseRepetition.list.length; i += 1) {
 					var id = courseRepetition.list[i].id;
-					courseRepetition.list[i].semester = frontend.getSemester(id);
+					courseRepetition.list[i].semester = f.getSemester(id);
 				}
 			}
 			// SAVE data
 			localStorage.hasData = true;
 			localStorage.courseToSemester = JSON.stringify(courseToSemester);
-			localStorage.repetitionManager = JSON.stringify(frontend.repetitionManager);
-			localStorage.filterManager = JSON.stringify(frontend.filterManager);
+			localStorage.repetitionManager = JSON.stringify(f.repetitionManager);
+			localStorage.filterManager = JSON.stringify(f.filterManager);
 			localStorage.semesters = JSON.stringify(semesterManager.shownSemesters);
-			localStorage.checkPermanently = frontend.checkPermanently;
-			localStorage.allMessagesVisible = frontend.allMessagesVisible;
+			localStorage.checkPermanently = f.checkPermanently;
+			localStorage.allMessagesVisible = f.allMessagesVisible;
 		}
 	},
 	makeVertiefungsgebieteTable: function(vertiefungen) {
@@ -270,21 +272,22 @@ var frontend = {
 	/* used to check all rules and display them in div#messages */
 	checkRules: function() {
 		var rules = ruleManager.checkAll();
-		$("#message ul").empty();
+		var messageUl = f.messageDiv.find("ul");
+		messageUl.empty();
 		if (rules.numberFailedRules === 0) {
-			$("#message ul").append("<li>Der Belegungsplan ist gültig!</li>");
+			messageUl.append("<li>Der Belegungsplan ist gültig!</li>");
 			// animate to green
 			for (var rule = 0; rule < rules.length; rule += 1) {
 				var extra = '';
 				if (rules[rule].type === 'vertiefungsgebieteRule') {
 					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind gültig im Sinne der Studienordnung:';
-					extra += frontend.makeCombinationsTable(possibilities);
+					extra += f.makeCombinationsTable(possibilities);
 					extra += "</div>";
-					$("#message ul").append("<li>" + extra + "</li>");
+					messageUl.append("<li>" + extra + "</li>");
 				}
 			}
-			$("#message").animate({
+			f.messageDiv.animate({
 				backgroundColor: '#026400'
 			}, 350);
 		}
@@ -297,19 +300,19 @@ var frontend = {
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].combinations !== null) {
 					var possibilities = rules[rule].combinations;
 					extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind mit genug Leistungspunkten belegt, es fehlt aber noch eine Vorlesung:';
-					extra += frontend.makeCombinationsTable(possibilities);
+					extra += f.makeCombinationsTable(possibilities);
 					extra += "</div>";
 				}
 				else if (rules[rule].type === 'vertiefungsgebieteRule' && rules[rule].vertiefungen !== null) {
 					var vertiefungen = rules[rule].vertiefungen;
 					extra += '<div class="extra-inf">Folgende Vertiefungsgebiete sind bisher gewählt; dies erfüllt aber noch nicht alle Kriterien:';
-					extra += frontend.makeVertiefungsgebieteTable(vertiefungen);
+					extra += f.makeVertiefungsgebieteTable(vertiefungen);
 					extra += "</div>";
 				}
-				$("#message ul").append("<li>" + rules[rule].message + extra + "</li>");
+				messageUl.append("<li>" + rules[rule].message + extra + "</li>");
 			}
 			// animate to red
-			$("#message").animate({
+			f.messageDiv.animate({
 				backgroundColor: '#9F0606'
 			},
 			350);
@@ -317,18 +320,17 @@ var frontend = {
 
 	},
 	slideMessages: function() {
-		if (frontend.allMessagesVisible === true) {
-			$("#slide-messages").text("△");
-			var ulheight = $("#message li").length * 2;
-			$("#message").css("height", "auto");
+		if (f.allMessagesVisible === true) {
+			f.slideMessagesDiv.text("△");
+			f.messageDiv.css("height", "auto");
 		} else {
-			$("#slide-messages").text("▽");
-			$("#message").css("height", "2em");
+			f.slideMessagesDiv.text("▽");
+			f.messageDiv.css("height", "2em");
 		}
-		if ($("#message li").length > 1)
-			$("#slide-messages").css("visibility", "visible");
+		if (f.messageDiv.find("li").length > 1)
+			f.slideMessagesDiv.css("visibility", "visible");
 		else
-			$("#slide-messages").css("visibility", "hidden");
+			f.slideMessagesDiv.css("visibility", "hidden");
 	},
 	/* used to add more than six semesters */
 	addSemester: function(number) {
@@ -340,15 +342,15 @@ var frontend = {
 			var num = (semesterManager.numberDisplayed + 1);
 
 			var semesterTime = "<h2>" + num  + ". Semester<br><select id='selectSemester" + num + "' name='selectSemester" + num + "' size='1'></select></h2>";
-			$("#semester-time2 br:last").before(semesterTime);
+			$("#semester-time2").find("br").last().before(semesterTime);
 
 			var semesterView = "<ul id='semester" + num + "' class='chosen courses'></ul>";
-			$("#semester-view2 br:last").before(semesterView);
+			$("#semester-view2").find("br").last().before(semesterView);
 			
 			semesterManager.numberDisplayed += 1;
 		}
-		frontend.organizeSemesters();
-		frontend.initializeSortable();
+		f.organizeSemesters();
+		f.initializeSortable();
 	},
 	/* used to remove previously added semesters */
 	removeSemester: function(number) {
@@ -357,7 +359,7 @@ var frontend = {
 			if (semesterManager.numberDisplayed === 6)
 				return;
 			var num = semesterManager.numberDisplayed;
-			$("#semester" + num + " li").each(function() {
+			$("#semester" + num).find("li").each(function() {
 				var li = $(this);
 				// remove it from its current location ..
 				li.detach();
@@ -368,8 +370,8 @@ var frontend = {
 			$("#selectSemester" + num).parent().remove();
 			semesterManager.numberDisplayed -= 1;
 		}
-		frontend.sortPool();
-		frontend.organizeSemesters();
+		f.sortPool();
+		f.organizeSemesters();
 	},
 	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function() {
@@ -415,12 +417,12 @@ var frontend = {
 			// assume, that there are no breaks while studying and go on with the following semester
 			$("#selectSemester" + (i + 1).toString()).html(options);
 		}
-		$(".semester-time select").change(function(eventObject) {
+		$(".semester-time").find("select").change(function(eventObject) {
 			var select = $(this);
-			var id = $(this).attr("id");
+			var id = this.id;
 			id = parseInt(id[id.length - 1]);
 			semesterManager.updateSemester(id, this.value);
-			select.children(":selected").removeAttr("selected");
+			select.find(":selected").removeAttr("selected");
 			for (var i = 1; i <= semesterManager.shownSemesters.length; i += 1) {
 				$("#selectSemester" + i).children().each(function() {
 					if (this.value === semesterManager.shownSemesters[i - 1]) {
@@ -431,39 +433,40 @@ var frontend = {
 
 			// now we have to update the filter to display the correct filter options
 			// if a semester was changed, filter is reset
-			frontend.filterManager.possibleSemesters = semesterManager.shownSemesters;
-			frontend.filterManager.selectedSemesters = semesterManager.shownSemesters;
+			f.filterManager.possibleSemesters = semesterManager.shownSemesters;
+			f.filterManager.selectedSemesters = semesterManager.shownSemesters;
 
 			// now update gui
 			var semesterList = "";
-			for (var semester in frontend.filterManager.possibleSemesters) {
-				if (!frontend.filterManager.possibleSemesters.hasOwnProperty(semester)) continue;
-				semesterList += "<li class='selected'>" + frontend.filterManager.possibleSemesters[semester] + "</li>";
+			for (var semester in f.filterManager.possibleSemesters) {
+				if (!f.filterManager.possibleSemesters.hasOwnProperty(semester)) continue;
+				semesterList += "<li class='selected'>" + f.filterManager.possibleSemesters[semester] + "</li>";
 			}
 			$("#semester-filter").html(semesterList);
 
 	
 
-			if (frontend.checkPermanently === true) {
-				frontend.checkRules();
-				frontend.slideMessages();
+			if (f.checkPermanently === true) {
+				f.checkRules();
+				f.slideMessages();
 			}
-			frontend.filterManager.filter();
-			frontend.saveManager.save();
+			f.filterManager.filter();
+			f.saveManager.save();
 		});
 	},
 	/* returns the currently chosen semester for a given course */
 	getSemester: function(course) {
 		var parent = $("#course-" + course).parent();
-		if (parent.attr("id") === undefined) {
+		var id = parent.attr("id");
+		if (id === undefined) {
 			console.log(course);
 			console.log(parent);
 		}
-		if (parent.attr("id").substr(0, 5) === "extra") {
+		if (id.substr(0, 5) === "extra") {
 			return - 1;
 		}
-		else if (parent.attr("id").substr(0, 8) === "semester") {
-			return parseInt(parent.attr("id").substr(8, 1));
+		else if (id.substr(0, 8) === "semester") {
+			return parseInt(id.substr(8, 1));
 		}
 		console.error("Function getSemester returning invalid data!");
 		return -1;
@@ -478,7 +481,7 @@ var frontend = {
 		if (repetition !== undefined)
 			id = repetition;
 		var course = data[key];
-		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + frontend.displayArray(course['modul'], "Modul") + frontend.displayArray(course['dozent'], "Dozent") + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + frontend.displayArray(course['lehrform'], "Lehrform") + frontend.displayArray(course['vertiefung'], "Vertiefungsgebiet") + "</table>" + "</div>" + "</div>";
+		var courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + f.displayArray(course['modul'], "Modul") + f.displayArray(course['dozent'], "Dozent") + "<tr><td>Credit Points</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + f.displayArray(course['lehrform'], "Lehrform") + f.displayArray(course['vertiefung'], "Vertiefungsgebiet") + "</table>" + "</div>" + "</div>";
 
 		// if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
 		var classes = [];
@@ -491,7 +494,7 @@ var frontend = {
 		if (classes.length != 0)
 			cssclass = " class='" + classes.join(" ") + "'";
 
-		var character = frontend.copyCharacter;
+		var character = f.copyCharacter;
 		if (repetition !== undefined)
 			character = "x";
 
@@ -502,26 +505,26 @@ var frontend = {
 	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function() {
-		$(".courses li").knubtip("disable");
+		f.coursesUl.find("li").knubtip("disable");
 	},
 	/* used, when user finished drag'n'dropping courses */
 	endSorting: function() {
-		if (frontend.checkPermanently === true) {
-			frontend.checkRules();
-			frontend.slideMessages();
+		if (f.checkPermanently === true) {
+			f.checkRules();
+			f.slideMessages();
 		}
-		$(".courses li").knubtip("enable");
-		frontend.saveManager.save();
+		f.coursesUl.find("li").knubtip("enable");
+		f.saveManager.save();
 	},
 	/* called when user drag'n'dropped something */
 	update: function() {
-		frontend.sortPool();
-		frontend.filterManager.filter();
+		f.sortPool();
+		f.filterManager.filter();
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool: function() {
-		frontend.adjustPoolHeight();
-		var listitems = $("#courses-pool > ul li:not(.hidden)");
+		var listitems = f.coursesPoolUl.find("li:not(.hidden)");
+		f.adjustPoolHeight(listitems.length);
 
 		// There can be at most frontend.coursesPoolHeight items in one stack.
 		// The following to var's ensure this.
@@ -538,17 +541,16 @@ var frontend = {
 			// .. put it in the courses pool taking care of frontend.coursesPoolHeight
 			$("#extra" + currentPool).append(listitem);
 			coursesInCurrentPool += 1;
-			if (coursesInCurrentPool === frontend.coursesPoolHeight) {
+			if (coursesInCurrentPool === f.coursesPoolHeight) {
 				coursesInCurrentPool = 0;
 				currentPool += 1;
 			}
 		});
 	},
 	/* used to adjust the height of one stack in courses-pool */
-	adjustPoolHeight: function() {
+	adjustPoolHeight: function(shownCourses) {
 		// count all visible courses
-		var shownCourses = $("#courses-pool > ul li:not(.hidden)").length;
-		frontend.coursesPoolHeight = Math.ceil(shownCourses / 6);
+		f.coursesPoolHeight = Math.ceil(shownCourses / 6);
 	},
 	/* used to display informationen from an array in a nice way, used for tooltips */
 	displayArray: function(value, headline) {
@@ -562,60 +564,56 @@ var frontend = {
 	/* used to initialize jquery-sortable (drag'n'drop) */
 	initializeSortable: function () {
 		/* apply jquery drag'n'dropping */
-		$(frontend.coursesList).sortable({
-			connectWith: frontend.coursesList,		// specifies lists where li's can be dropped
-			placeholder: "placeholder-highlight",		// css class for placeholder when drag'n dropping
-			cancel: "." + frontend.disabledClass,		// elements matching this selector cannot be dropped
-			update: frontend.update,			// raised, when there was a change while sorting
-			start: frontend.startSorting,			// raised, when sorting starts
-			stop: frontend.endSorting			// raised, when sorting is finished
-		}).disableSelection();					// disableSelection makes text selection impossible
+		$(f.coursesList).sortable({
+			connectWith: f.coursesList,		// specifies lists where li's can be dropped
+			placeholder: "placeholder-highlight",	// css class for placeholder when drag'n dropping
+			cancel: "." + f.disabledClass,		// elements matching this selector cannot be dropped
+			update: f.update,			// raised, when there was a change while sorting
+			start: f.startSorting,			// raised, when sorting starts
+			stop: f.endSorting			// raised, when sorting is finished
+		}).disableSelection();				// disableSelection makes text selection impossible
 	},
 	/* used to initialize course pool filter with correct selectors */
 	initializeFilter: function() {
 		// build semester list
 		var semesterList = "<ul id='semester-filter'>";
-		for (var semester in frontend.filterManager.possibleSemesters) {
-			if (!frontend.filterManager.possibleSemesters.hasOwnProperty(semester)) continue;
-			var selected = frontend.filterManager.selectedSemesters.indexOf(frontend.filterManager.possibleSemesters[semester]) === - 1 ? "": " class='selected'";
-			semesterList += "<li" + selected + ">" + frontend.filterManager.possibleSemesters[semester] + "</li>";
+		for (var semester in f.filterManager.possibleSemesters) {
+			if (!f.filterManager.possibleSemesters.hasOwnProperty(semester)) continue;
+			var selected = f.filterManager.selectedSemesters.indexOf(f.filterManager.possibleSemesters[semester]) === - 1 ? "": " class='selected'";
+			semesterList += "<li" + selected + ">" + f.filterManager.possibleSemesters[semester] + "</li>";
 		}
 		semesterList += "</ul>";
-		semesterList = $(semesterList);
 
 		// build module list
 		var moduleList = "<ul id='module-filter'>";
-		for (var modul in frontend.filterManager.possibleModule) {
-			if (!frontend.filterManager.possibleModule.hasOwnProperty(modul)) continue;
-			var selected = frontend.filterManager.selectedModule.indexOf(frontend.filterManager.possibleModule[modul]) === - 1 ? "": " class='selected'";
-			moduleList += "<li" + selected + ">" + frontend.filterManager.possibleModule[modul] + "</li>";
+		for (var modul in f.filterManager.possibleModule) {
+			if (!f.filterManager.possibleModule.hasOwnProperty(modul)) continue;
+			var selected = f.filterManager.selectedModule.indexOf(f.filterManager.possibleModule[modul]) === - 1 ? "": " class='selected'";
+			moduleList += "<li" + selected + ">" + f.filterManager.possibleModule[modul] + "</li>";
 		}
 		moduleList += "</ul>";
-		moduleList = $(moduleList);
 
 		// build vertiefungsgebiete list
 		var vertiefungsgebieteList = "<ul id='vertiefungsgebiete-filter'>";
-		for (var vertiefungsgebiet in frontend.filterManager.possibleVertiefungsgebiete) {
-			if (!frontend.filterManager.possibleVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
-			var selected = frontend.filterManager.selectedVertiefungsgebiete.indexOf(frontend.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) === - 1 ? "": " class='selected'";
-			vertiefungsgebieteList += "<li" + selected + ">" + frontend.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet] + "</li>";
+		for (var vertiefungsgebiet in f.filterManager.possibleVertiefungsgebiete) {
+			if (!f.filterManager.possibleVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
+			var selected = f.filterManager.selectedVertiefungsgebiete.indexOf(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) === - 1 ? "": " class='selected'";
+			vertiefungsgebieteList += "<li" + selected + ">" + f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet] + "</li>";
 		}
 		vertiefungsgebieteList += "</ul>";
-		vertiefungsgebieteList = $(vertiefungsgebieteList);
 
 		// build wahlpflicht list
 		var wahlpflichtList = "<ul id='wahlpflicht-filter'>";
-		for (var wahlpflicht in frontend.filterManager.possibleWahlpflicht) {
-			if (!frontend.filterManager.possibleWahlpflicht.hasOwnProperty(wahlpflicht)) continue;
-			var selected = frontend.filterManager.selectedWahlpflicht.indexOf(frontend.filterManager.possibleWahlpflicht[wahlpflicht]) === - 1 ? "": " class='selected'";
-			wahlpflichtList += "<li" + selected + ">" + frontend.filterManager.possibleWahlpflicht[wahlpflicht] + "</li>";
+		for (var wahlpflicht in f.filterManager.possibleWahlpflicht) {
+			if (!f.filterManager.possibleWahlpflicht.hasOwnProperty(wahlpflicht)) continue;
+			var selected = f.filterManager.selectedWahlpflicht.indexOf(f.filterManager.possibleWahlpflicht[wahlpflicht]) === - 1 ? "": " class='selected'";
+			wahlpflichtList += "<li" + selected + ">" + f.filterManager.possibleWahlpflicht[wahlpflicht] + "</li>";
 		}
 		wahlpflichtList += "</ul>";
-		wahlpflichtList = $(wahlpflichtList);
 
-		// append built ul to correct div
-		$("#semester_wahlpflicht").append(semesterList).append(wahlpflichtList);
-		$("#module_vertiefungsgebiete").append(moduleList).append(vertiefungsgebieteList);
+		// append built uls to correct div
+		$("#semester_wahlpflicht").html(semesterList + wahlpflichtList);
+		$("#module_vertiefungsgebiete").html(moduleList + vertiefungsgebieteList);
 	},
 	/* selector for droppables */
 	coursesList: ".courses",
@@ -627,74 +625,88 @@ var frontend = {
 	checkPermanently: null,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8,
-	copyCharacter: "⎘"
+	copyCharacter: "⎘",
+	/* caching stuff */
+	messageDiv: null,
+	slideMessagesDiv: null,
+	coursesPoolUl: null,
+	coursesUl: null
 };
+
+// declare shorthand f for frontend
+var f = frontend;
 
 // note: $(function () ...) is the same as $(document).ready(function () ..)
 $(function() {
+	/* at first: do the caching stuff */
+	f.messageDiv = $("#message");
+	f.slideMessagesDiv = $("#slide-messages");
+	f.coursesPoolUl = $("#courses-pool > ul");
+	f.coursesUl = $(f.coursesList);
+
 	/* initialize rule manager with function, which returns the currently chosen semester for a specific course */
-	ruleManager.init(frontend.getSemester);
+	ruleManager.init(f.getSemester);
 
 	$("#last-update").html("Daten: WS10/11 bis einschließlich " + semesterManager.current);
 	/* initialize check permanently checkbox */
-	$("#checkbox-div ul").knubselect({
+	$("#checkbox-div").find("ul").knubselect({
 		// change is raised when the selection changed
 		change: function(selected, id) {
 			if (selected.length === 1) {
-				frontend.checkPermanently = true;
+				f.checkPermanently = true;
 				$("#button-div").fadeOut(100);
-				frontend.checkRules();
-				frontend.slideMessages();
+				f.checkRules();
+				f.slideMessages();
 			}
 			else {
-				frontend.checkPermanently = false;
+				f.checkPermanently = false;
 				$("#button-div").fadeIn(100);
 			}
-			frontend.saveManager.save();
+			f.saveManager.save();
 		}
 	});
 
 	/* apply check routine on button click */
-	$("button#check").click(function() {
-		frontend.checkRules();
-		frontend.slideMessages();
-		frontend.checkPermanently = true;
-		$("#permacheck li").attr("class", "selected");
+	$("#check").click(function() {
+		f.checkRules();
+		f.slideMessages();
+		f.checkPermanently = true;
+		$("#permacheck").find("li").attr("class", "selected");
 		$("#checkbox-div").css("visibility", "visible");
 		$("#button-div").css("visibility", "visible");
 		localStorage.alreadyChecked = true;
-		frontend.saveManager.save();
+		f.saveManager.save();
 	});
 
 	/* apply check routine on button click */
-	$("button#recheck").click(function() {
-		frontend.checkRules();
-		frontend.slideMessages();
-		frontend.saveManager.save();
+	$("#recheck").click(function() {
+		f.checkRules();
+		f.slideMessages();
+		f.saveManager.save();
 	});
 
 	/* add click handler for slide button to show messages */
-	$("#slide-messages").click(function() {
-		frontend.allMessagesVisible = ! frontend.allMessagesVisible;
-		frontend.slideMessages();
-		frontend.saveManager.save();
+	f.slideMessagesDiv.click(function() {
+		f.allMessagesVisible = ! f.allMessagesVisible;
+		f.slideMessages();
+		f.saveManager.save();
 	});
 
-	frontend.initializeSortable();
+	f.initializeSortable();
 
 
 	var filtering = false;
 	/* apply filter routine on filter-button-div click */
 	$("#filter-button").click(function() {
 		if (filtering) {
-			$(this).children("h2").text("Filter");
+			$(this).find("h2").text("Filter");
 			$("#filter").animate({
 				width: '0'
 			},
 			250);
 		}
 		else {
-			$(this).children("h2").text("Fertig");
+			$(this).find("h2").text("Fertig");
 			$("#filter").animate({
 				width: '100%'
 			},
@@ -704,45 +716,45 @@ $(function() {
 	});
 
 	if (localStorage.hasData === "true") {
-		frontend.checkPermanently = localStorage.checkPermanently === "true";
+		f.checkPermanently = localStorage.checkPermanently === "true";
 		if (localStorage.checkPermanently === "null")
-			frontend.checkPermanently = null;
-		frontend.allMessagesVisible = localStorage.allMessagesVisible === "true";
+			f.checkPermanently = null;
+		f.allMessagesVisible = localStorage.allMessagesVisible === "true";
 
 		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
 		// if there are more than six semester, we need a special row
 		if (semesterManager.shownSemesters.length > 6) {
-			frontend.addSemester(semesterManager.shownSemesters.length - 6);
+			f.addSemester(semesterManager.shownSemesters.length - 6);
 		}
 
-		frontend.filterManager = $.extend(frontend.filterManager, JSON.parse(localStorage.filterManager));
-		frontend.repetitionManager = $.extend(frontend.repetitionManager, JSON.parse(localStorage.repetitionManager));
-		if (frontend.checkPermanently !== false) $("#permacheck li").attr("class", "selected");
+		f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.filterManager));
+		f.repetitionManager = $.extend(f.repetitionManager, JSON.parse(localStorage.repetitionManager));
+		if (f.checkPermanently !== false) $("#permacheck").find("li").attr("class", "selected");
 		else $("#button-div").fadeIn(100);
 	}
 
 	/* initialize <select>'s with correct semesters from logic (see logic.js) */
-	frontend.organizeSemesters();
+	f.organizeSemesters();
 
 	/* initialize filter with correct settings */
-	frontend.initializeFilter();
+	f.initializeFilter();
 
 	/* initialize selectables for filter div */
-	$("#filter-options ul").knubselect({
+	$("#filter-options").find("ul").knubselect({
 		// change is raised when the selection changed
 		change: function(selected, id) {
 			// according to the ul, where the selection change happened, update selected
 			if (id === "semester-filter") {
-				frontend.filterManager.selectedSemesters = selected;
+				f.filterManager.selectedSemesters = selected;
 			} else if (id === "wahlpflicht-filter") {
-				frontend.filterManager.selectedWahlpflicht = selected;
+				f.filterManager.selectedWahlpflicht = selected;
 			} else if (id === "module-filter") {
-				frontend.filterManager.selectedModule = selected;
+				f.filterManager.selectedModule = selected;
 			} else if (id === "vertiefungsgebiete-filter") {
-				frontend.filterManager.selectedVertiefungsgebiete = selected;
+				f.filterManager.selectedVertiefungsgebiete = selected;
 			}
-			frontend.filterManager.filter();
-			frontend.saveManager.save();
+			f.filterManager.filter();
+			f.saveManager.save();
 		}
 	});
 	/*
@@ -751,13 +763,14 @@ $(function() {
 	 * It is an object containing all relevant informationen about courses.
 	 */
 
+	var coursesPoolItems = "";
 	// for each course in data
 	for (var key in data) {
 		if (!data.hasOwnProperty(key)) continue;
 		var course = data[key];
 
 		// build list item and associated .info for tooltip
-		var html = frontend.buildCourseData(key);
+		var html = f.buildCourseData(key);
 
 		// now the element has been created, decide where to put it on the page
 
@@ -765,7 +778,7 @@ $(function() {
 		// if this is the case, use this information
 		if (localStorage.courseToSemester !== undefined && localStorage.courseToSemester !== null) {
 			var semester = JSON.parse(localStorage.courseToSemester)[key];
-			if (semester === undefined || semester === - 1) $("#extra1").append(html);
+			if (semester === undefined || semester === - 1) coursesPoolItems += html;
 			else if (semester >= 0) $("#semester" + JSON.parse(localStorage.courseToSemester)[key]).append(html);
 		}
 		// else use standard behaviour
@@ -774,7 +787,7 @@ $(function() {
 			if (course['empfohlen'] === "") {
 				// .. put it in the courses pool
 				// for now, putting in the first ul is ok, because whole courses-pool will be rearranged afterwards
-				$("#extra1").append(html);
+				coursesPoolItems += html;
 			}
 			// if it is recommended for a specific semester ..
 			else {
@@ -783,65 +796,68 @@ $(function() {
 			}
 		}
 	}
+	$("#extra1").append(coursesPoolItems);
 	// until now, all courses are in the first ul. now adjust pool height and sort pool.
-	frontend.sortPool();
+	f.sortPool();
 
-	for (var repetition in frontend.repetitionManager.repetitions) {
-		if (!frontend.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
-		var courseRepetition = frontend.repetitionManager.repetitions[repetition];
-		frontend.repetitionManager.repetitions[repetition].list = courseRepetition.list.filter(function (value) {
+	for (var repetition in f.repetitionManager.repetitions) {
+		if (!f.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
+		var courseRepetition = f.repetitionManager.repetitions[repetition];
+		f.repetitionManager.repetitions[repetition].list = courseRepetition.list.filter(function (value) {
 			return value.semester !== -1;
 		});
 		if (courseRepetition.list.length === 0) {
-			delete frontend.repetitionManager.repetitions[repetition];
+			delete f.repetitionManager.repetitions[repetition];
 			continue;
 		}
 		for (var i = 0; i < courseRepetition.list.length; i += 1) {
 			var id = courseRepetition.list[i].id;
-			var key = frontend.repetitionManager.cloneIdToCourseId(id);
+			var key = f.repetitionManager.cloneIdToCourseId(id);
 
-			var html = frontend.buildCourseData(key, id);
+			var html = f.buildCourseData(key, id);
 			$("#semester" + courseRepetition.list[i].semester).append(html);
 			/* add rule */
 			ruleManager.rules.unshift(Object.create(cloneRule).init(id));
 		}
 	}
 	// data of repetitionManager has changed, so save changes
-	frontend.saveManager.save();
+	f.saveManager.save();
 
 	/* apply click routine for buttons which clone a course */
-	$(".courses li:not(.clone) button").click(function() {
-		frontend.repetitionManager.cloneNode(this.parentNode);
-		frontend.saveManager.save();
+	//f.coursesUl.find("li:not(.clone)").find("button").click(function() { // see next line, which is faster
+	f.coursesUl.find("li:not(.clone)").delegate("button", "click", function() {
+		f.repetitionManager.cloneNode(this.parentNode);
+		f.saveManager.save();
 	});
 	/* apply click routine for buttons to remove a cloned course */
-	$(".courses li.clone button").click(function() {
+	//f.coursesUl.find("li.clone").find("button").click(function() {
+	f.coursesUl.find("li.clone").delegate("button", "click", function() {
 		// substr(7) to crop leading "course-"
-		frontend.repetitionManager.deleteNode(this.parentNode, $(this.parentNode).attr("id").substr(7));
-		frontend.saveManager.save();
+		f.repetitionManager.deleteNode(this.parentNode, this.parentNode.id.substr(7));
+		f.saveManager.save();
 	});
 
 	/* initialize tooltips for all courses */
-	$(".courses li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
-	frontend.filterManager.filter();
+	f.coursesUl.find("li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
+	f.filterManager.filter();
 
 	if (localStorage.alreadyChecked === "true") {
-		frontend.checkRules();
-		frontend.slideMessages();
+		f.checkRules();
+		f.slideMessages();
 		$("#checkbox-div").css("visibility", "visible");
 		$("#button-div").css("visibility", "visible");
 	}
 
-	$("button#reset").click(function() {
+	$("#reset").click(function() {
 		localStorage.clear();
 		location.reload();
 	});
-	$("button#moresemester").click(function() {
-		frontend.addSemester(2);
-		frontend.saveManager.save();
+	$("#moresemester").click(function() {
+		f.addSemester(2);
+		f.saveManager.save();
 	});
-	$("button#lesssemester").click(function() {
-		frontend.removeSemester(2);
-		frontend.saveManager.save();
+	$("#lesssemester").click(function() {
+		f.removeSemester(2);
+		f.saveManager.save();
 	});
 });
