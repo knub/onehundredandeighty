@@ -111,26 +111,29 @@ div#message div.extra-inf {
 	background: #EEE;
 	border: 2px solid black;
 	color: black;
-	margin-left: 7em;
 	margin-right: 4em;
 	margin-top: 0.5em;
 	border-radius: 3px;
 	font-size: 0.8em;
+	text-indent: -0.5em;
+	padding-left: 2.5em;
 }
 div#message > ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
-	text-indent: 5em;
+	text-indent: -2em;
 }
 div#message > ul li {
 	margin-right: 70px;
+	padding-left: 6em;
 }
 div#message a {
 	color: black;
 }
 div#message table {
 	text-indent: 0;
+	padding-left: 0;
 	margin: 0;
 	padding: 0;
 	border-collapse: collapse;
@@ -141,8 +144,8 @@ div#message table td {
 	text-align: center;
 	border: 1px dotted #CCC;
 	margin: 0;
-	padding: 5px 10px;
-	line-height: 1em;
+	padding: 5px;
+	line-height: 1.35em;
 }
 div#message table.combinations tr:nth-child(even) td {
 	border-top: 2px solid black;
@@ -164,7 +167,7 @@ div#message table tr:first-child td {
 	color: white;
 	font-size: 1.1em;
 	line-height: 1.2em;
-	padding: 10px 30px;
+	padding: 10px 10px;
 }
 div#message table tr td[rowspan] {
 	background: #CCC;
@@ -175,6 +178,10 @@ div#message table ul {
 	list-style-type: square;
 	text-align: left;
 	margin-right: 2em;
+}
+div#message table ul li {
+	padding: 0;
+	margin: 0;
 }
 div#message .extra-inf p {
 	text-indent: 0;

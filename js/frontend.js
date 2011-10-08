@@ -175,7 +175,7 @@ var frontend = {
 	makeVertiefungsgebieteTable: function(vertiefungen) {
 		var cp = 0;
 		var table = "<table class='vertiefungen'>";
-		table += "<tr><td>Lehrveranstaltung</td><td>Leistungspunkte</td><td>Vertiefungsgebiet</td><td style='width: 300px'>Dozent</td></tr>";
+		table += "<tr><td>Lehr&shy;veranstaltung</td><td>Leistungs&shy;punkte</td><td>Vertiefungs&shy;gebiet</td><td style='width: 300px'>Dozent</td></tr>";
 		for (var i = 0; i < vertiefungen.length; i += 1) {
 			var course = data[vertiefungen[i]];
 			cp += course.cp;
@@ -185,8 +185,12 @@ var frontend = {
 				 "<td>" + course.dozent.join(", ") + "</td>" +
 				 "</tr>";
 		}
+		// if there are less than 24 creditpoints, show how much creditpoints there are
 		if (cp < 24)
 			table += "<tr><td></td><td class='sum'>" + cp + "</td><td></td><td></td></tr>";
+		// else insert empty row, because last row is visibility:hidden by default (a little bit hacky, i know)
+		else
+			table += "<tr><td></td></tr>";
 		table += "</table>";
 
 		if (vertiefungen.sbsCourses.length === 4) {
@@ -209,7 +213,7 @@ var frontend = {
 	/* used to display information about possible Vertiefungsgebiete */
 	makeCombinationsTable: function(possibilities) {
 		var table = "<table class='combinations'>";
-		table += "<tr><td></td><td>Vertiefungsgebiete</td><td>Lehrveranstaltungen</td><td>aktuell belegte<br />Leistungspunkte</td><td>Vorlesung/en<br />in diesem Gebiet</td></tr>";
+		table += "<tr><td></td><td>Vertiefungs&shy;gebiete</td><td>Lehr&shy;veranstaltungen</td><td>aktuell belegte<br />Leistungs&shy;punkte</td><td>Vorlesung<br />in diesem Ge&shy;biet</td></tr>";
 		for (var i = 0; i < possibilities.length; i += 1) {
 			var possibility = possibilities[i];
 
@@ -620,7 +624,7 @@ var frontend = {
 	/* true, when all error messages are visible in drop down list */
 	allMessagesVisible: false,
 	/* when true, rules are checked permanently */
-	checkPermanently: false,
+	checkPermanently: null,
 	/* number of list items in one list in unchosen lists */
 	coursesPoolHeight: 8,
 	copyCharacter: "⎘"
@@ -701,6 +705,8 @@ $(function() {
 
 	if (localStorage.hasData === "true") {
 		frontend.checkPermanently = localStorage.checkPermanently === "true";
+		if (localStorage.checkPermanently === "null")
+			frontend.checkPermanently = null;
 		frontend.allMessagesVisible = localStorage.allMessagesVisible === "true";
 
 		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
@@ -711,7 +717,7 @@ $(function() {
 
 		frontend.filterManager = $.extend(frontend.filterManager, JSON.parse(localStorage.filterManager));
 		frontend.repetitionManager = $.extend(frontend.repetitionManager, JSON.parse(localStorage.repetitionManager));
-		if (frontend.checkPermanently) $("#permacheck li").attr("class", "selected");
+		if (frontend.checkPermanently !== false) $("#permacheck li").attr("class", "selected");
 		else $("#button-div").fadeIn(100);
 	}
 

@@ -47,7 +47,7 @@ var data = {
 		cp: 3,
 		vorher: [],
 		dozent: ["Prof. Dr. Felix Naumann"],
-		nameLV: "Beauty is ou Business"
+		nameLV: "Beauty is our Business"
 	},
 	bs1: {
 		// check!
