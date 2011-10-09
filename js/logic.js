@@ -332,7 +332,7 @@ var vertiefungsgebieteRule = {
 		var sbsCourses = getSBSCourses();
 		var sbsNumber = sbsCourses.length;
 		if (sbsNumber === 5) {
-			alert("Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.");
+			//alert("Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.");
 		}
 
 		// At first, find all Vertiefung courses, which are currently chosen for a semester.
@@ -363,6 +363,30 @@ var vertiefungsgebieteRule = {
 		// Another is to interpret 'hci2' as 'SAMT' ... and so on.
 		// Of course this normally happens with more courses than two.
 		var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
+
+		if (sbsNumber === 5) {
+			// at first, calculate all 2-sized subsets of studyRegulations.softwarebasissysteme (simple nested for-loop)
+			var twoSBSCombinations = [];
+			for (var i = 0; i < studyRegulations.softwarebasissysteme.length; i += 1)
+				for (var j = 0; j < studyRegulations.softwarebasissysteme.length; j += 1)
+					if (i < j)
+						twoSBSCombinations.push([ {
+										key: studyRegulations.softwarebasissysteme[i],
+										vertiefung: data[studyRegulations.softwarebasissysteme[i]].vertiefung[0]
+									},
+									{
+										key: studyRegulations.softwarebasissysteme[j],
+										vertiefung: data[studyRegulations.softwarebasissysteme[j]].vertiefung[0]
+									}]);
+			var newPossibleCombinations = [];
+
+			for (var i = 0; i < twoSBSCombinations.length; i += 1)
+				for (var j = 0; j < possibleCombinations.length; j += 1)
+					newPossibleCombinations.push(twoSBSCombinations[i].concat(possibleCombinations[j]));
+
+			possibleCombinations = newPossibleCombinations;
+
+		}
 
 		// Now we all possible interpretations of the current plan.
 		// Now make a first, vague check for all interpretations:
