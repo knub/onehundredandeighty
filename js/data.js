@@ -5,7 +5,6 @@
  */
 var data = {
 	android: {
-		// check!
 		kurz: "Android",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -20,22 +19,20 @@ var data = {
 		nameLV: "Mobile Computing with Android"
 	},
 	aop: {
-		// check!
 		kurz: "AOP",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["SAMT"],
+		vertiefung: ["OSIS", "SAMT"],
 		cp: 3,
 		vorher: [],
-		dozent: ["Prof. Dr. Robert Hirschfeld", "Dr.-Ing. Michael Haupt", "Malte Appeltauer"],
+		dozent: ["Prof. Dr. Robert Hirschfeld", "Malte Appeltauer", "Marcel Taeumel"],
 		nameLV: "Aspektorientiertes Programmieren"
 	},
 	beauty: {
-		// check!
 		kurz: "Beauty is<br />our Business",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -45,16 +42,15 @@ var data = {
 		empfohlen: "",
 		vertiefung: ["OSIS"],
 		cp: 3,
-		vorher: [],
+		vorher: ["dbs1", "dbs2"],
 		dozent: ["Prof. Dr. Felix Naumann"],
 		nameLV: "Beauty is our Business"
 	},
 	bs1: {
-		// check!
 		kurz: "BS I",
 		lehrform: ["Vorlesung"],
 		modul: ["Softwarebasissysteme"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 3,
@@ -65,7 +61,6 @@ var data = {
 		nameLV: "Betriebssysteme"
 	},
 	bs2: {
-		// check!
 		kurz: "BS II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
@@ -80,7 +75,6 @@ var data = {
 		nameLV: "Betriebssysteme II"
 	},
 	cloud: {
-		// check!
 		kurz: "Cloud<br />Computing",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -95,7 +89,6 @@ var data = {
 		nameLV: "Industrieseminar Cloud Computing"
 	},
 	collaboration: {
-		// check!
 		kurz: "Collaboration<br />software",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
@@ -110,7 +103,6 @@ var data = {
 		nameLV: "User-centered development of collaboration software"
 	},
 	grafik1: {
-		// check!
 		kurz: "Computer-<br />grafik I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete", "Softwarebasissysteme"],
@@ -120,16 +112,15 @@ var data = {
 		empfohlen: "",
 		vertiefung: ["HCT"],
 		cp: 6,
-		vorher: [],
+		vorher: ["mathematik1", "pt1"],
 		dozent: ["Prof. Dr. Jürgen Döllner"],
 		nameLV: "3D-Computergrafik I"
 	},
 	grafik2: {
-		// check!
 		kurz: "Computer-<br />grafik II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
@@ -140,7 +131,6 @@ var data = {
 		nameLV: "Computergrafik II"
 	},
 	dbs1: {
-		// check!
 		kurz: "DBS I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
@@ -155,26 +145,24 @@ var data = {
 		nameLV: "Datenbanksysteme I"
 	},
 	dbs2: {
-		// check!
 		kurz: "DBS II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["OSIS"],
+		vertiefung: ["BPET", "OSIS"],
 		cp: 6,
 		vorher: ["dbs1"],
 		dozent: ["Prof. Dr. Felix Naumann"],
 		nameLV: "Datenbanksysteme II"
 	},
 	designthinkingeinfuehrung: {
-		// check!
 		kurz: "Einführung<br />Design Thinking",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Softskills"],
-		semester: ["SS11"],
+		semester: ["SS11", "WS11/12"],
 		benotet: false,
 		pflicht: false,
 		empfohlen: "",
@@ -185,11 +173,10 @@ var data = {
 		nameLV: "Einführung in das Design Thinking"
 	},
 	designthinkingbasic: {
-		// check!
-		kurz: "Design Thinking<br />Basic Track",
-		lehrform: ["Seminar"],
+		kurz: "D-School<br />Basic Track",
+		lehrform: ["Seminar", "Projekt"],
 		modul: ["Softskills"],
-		semester: ["SS11"],
+		semester: ["SS11", "WS11/12"],
 		benotet: false,
 		pflicht: false,
 		empfohlen: "",
@@ -197,10 +184,23 @@ var data = {
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Ulrich Weinberg", "Dr. Claudia Nicolai"],
-		nameLV: "Design Thinking Basic Track"
+		nameLV: "D-School Basic Track"
+	},
+	designthinkingadvanced: {
+		kurz: "D-School<br />Advanced Track",
+		lehrform: ["Seminar", "Projekt"],
+		modul: ["Softskills"],
+		semester: ["WS11/12"],
+		benotet: false,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [""],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Ulrich Weinberg", "Dr. Claudia Nicolai"],
+		nameLV: "D-School Advanced Track"
 	},
 	enterprise: {
-		// check!
 		kurz: "Enterprise<br />Software",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
@@ -215,7 +215,6 @@ var data = {
 		nameLV: "Basics of On-premise and On-demand Enterprise Software"
 	},
 	eworld: {
-		// check!
 		kurz: "eWorld",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
@@ -230,11 +229,10 @@ var data = {
 		nameLV: "eWorld-Open Source Verkehrssimulation-Tool"
 	},
 	fachenglisch1: {
-		// check!
 		kurz: "Fachenglisch<br />Level 1",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
-		semester: ["WS10/11", "SS11"],
+		semester: ["WS10/11", "SS11", "WS11/12"],
 		benotet: false,
 		pflicht: false,
 		empfohlen: "",
@@ -245,41 +243,38 @@ var data = {
 		nameLV: "Fachspezifisches Englisch (Level I)"
 	},
 	fachenglisch2: {
-		// check!
 		kurz: "Fachenglisch<br />Level 2",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
-		semester: ["WS10/11", "SS11"],
+		semester: ["WS10/11", "SS11", "WS11/12"],
 		benotet: false,
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
 		cp: 3,
-		vorher: ["fachenglisch1"],
+		vorher: [],
 		dozent: ["Wolfgang Lüer"],
 		nameLV: "Fachspezifisches Englisch (Level II)"
 	},
 	game: {
-		// check!
 		kurz: "Game<br />Programming",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["HCT"],
+		vertiefung: ["HCT", "OSIS", "SAMT"],
 		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Jürgen Döllner", "Jan Klimke"],
+		vorher: ["grafik1"],
+		dozent: ["Prof. Dr. Jürgen Döllner", "Jan Klimke", "Martin Beck", "Sebastian Pasewaldt", "Juri Engel", "Stefan Buschmann"],
 		nameLV: "Game Programming"
 	},
 	gds: {
-		// check!
 		kurz: "GdS",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Grundlagen IT-Systems Engineering"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 1,
@@ -290,7 +285,6 @@ var data = {
 		nameLV: "Grundlagen digitaler Systeme"
 	},
 	graphicslibraries: {
-		// check!
 		kurz: "Graphics<br />Libraries",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
@@ -300,16 +294,15 @@ var data = {
 		empfohlen: "",
 		vertiefung: ["HCT", "SAMT"],
 		cp: 6,
-		vorher: [],
+		vorher: ["mathematik1", "pt1"],
 		dozent: ["Prof. Dr. Jürgen Döllner", "Juri Engel", "Matthias Trapp", "Tassilo Glander", "Martin Beck"],
 		nameLV: "Multimedia/Graphics Library & System"
 	},
-	handsfeetdevices: {
-		// check!
-		kurz: "Hands, Feet<br />and Devices",
+	hciproject: {
+		kurz: "HCI Project<br />Seminar",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
@@ -317,10 +310,9 @@ var data = {
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Patrick Baudisch"],
-		nameLV: "Project Seminar Hands, Feet and Devices"
+		nameLV: "HCI Project Seminar mit wechselnden Themen"
 	},
 	hciundergrad: {
-		// check!
 		kurz: "HCI<br />Undergrad",
 		lehrform: ["Projekt"],
 		modul: ["Vertiefungsgebiete"],
@@ -335,11 +327,10 @@ var data = {
 		nameLV: "HCI Undergrad Project: 3D Games and Interactive Floors"
 	},
 	hci1: {
-		// check!
 		kurz: "HCI I",
 		lehrform: ["Vorlesung"],
 		modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
@@ -350,7 +341,6 @@ var data = {
 		nameLV: "HCI1: Designing Interactive Systems"
 	},
 	hci2: {
-		// check!
 		kurz: "HCI II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
@@ -365,7 +355,6 @@ var data = {
 		nameLV: "HCI: Building Interactive Devices and Computer Vision"
 	},
 	history: {
-		// check!
 		kurz: "History",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -380,22 +369,20 @@ var data = {
 		nameLV: "History of Programming Languages"
 	},
 	internetsecurity: {
-		// check!
 		kurz: "Internet-<br />Security",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["IST"],
+		vertiefung: ["IST", "OSIS"],
 		cp: 6,
-		vorher: ["www"],
+		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel"],
 		nameLV: "Internet-Security - Weaknesses and Targets"
 	},
 	klubsprecher: {
-		// check!
 		kurz: "Klubsprecher",
 		lehrform: [""],
 		modul: ["Softskills"],
@@ -410,11 +397,10 @@ var data = {
 		nameLV: "Klubsprechertätigkeit über mindestens zwei Semester"
 	},
 	mathematik1: {
-		// check!
 		kurz: "Mathematik I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Mathematische und theoretische Grundlagen"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 1,
@@ -425,7 +411,6 @@ var data = {
 		nameLV: "Mathematik I - Diskrete Strukturen und Logik"
 	},
 	mathematik2: {
-		// check!
 		kurz: "Mathematik II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Mathematische und theoretische Grundlagen"],
@@ -435,16 +420,15 @@ var data = {
 		empfohlen: 2,
 		vertiefung: [""],
 		cp: 6,
-		vorher: ["mathematik1"],
+		vorher: [],
 		dozent: ["Dr. habil. Ferdinand Börner"],
 		nameLV: "Mathematik II"
 	},
 	mod1: {
-		// check!
 		kurz: "MOD I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwaretechnik und Modellierung"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 1,
@@ -455,7 +439,6 @@ var data = {
 		nameLV: "Modellierung I"
 	},
 	mod2: {
-		// check!
 		kurz: "MOD II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwaretechnik und Modellierung"],
@@ -470,7 +453,6 @@ var data = {
 		nameLV: "Modellierung II"
 	},
 	modellgetriebenesoftwareentwicklung: {
-		// check!
 		kurz: "MDSD",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -480,12 +462,11 @@ var data = {
 		empfohlen: "",
 		vertiefung: ["SAMT"],
 		cp: 3,
-		vorher: [],
+		vorher: ["mod1", "mod2"],
 		dozent: ["Prof. Dr. Holger Giese", "Leen Lambers"],
 		nameLV: "Grundlagen der modellgetriebenen Softwareentwicklung"
 	},
 	multimediaanalyse: {
-		// check!
 		kurz: "Multimedia<br />Analyse",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -500,7 +481,6 @@ var data = {
 		nameLV: "Multimedia Analyse Technologien"
 	},
 	nosql: {
-		// check!
 		kurz: "NoSQL",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -510,12 +490,11 @@ var data = {
 		empfohlen: "",
 		vertiefung: ["OSIS"],
 		cp: 3,
-		vorher: [],
+		vorher: ["dbs1", "dbs2"],
 		dozent: ["Prof. Dr. Felix Naumann", "Johannes Lorey"],
 		nameLV: "NoSQL"
 	},
 	opensource: {
-		// check!
 		kurz: "Open-Source-<br />Projekte",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -530,11 +509,10 @@ var data = {
 		nameLV: "Entwicklungsprozesse in Open-Source-Projekten"
 	},
 	pem: {
-		// check!
 		kurz: "PEM",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
-		semester: ["WS10/11", "SS11"],
+		semester: ["WS10/11", "SS11", "WS11/12"],
 		benotet: false,
 		pflicht: true,
 		empfohlen: "",
@@ -544,12 +522,25 @@ var data = {
 		dozent: ["Dr. Michaela Schumacher", "Andrea Bassen", "Corinna Ruppel"],
 		nameLV: "Projektentwicklung und -management (PEM I und II)"
 	},
+	personalausweis: {
+		kurz: "Personalausweis",
+		lehrform: ["Seminar", "Projekt"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["WS11/12"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST"],
+		cp: 3,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Dr. Marian Margraf", "Maxim Schnjakin"],
+		nameLV: "Der neue Personalausweis: Konzept und Umsetzung"
+	},
 	pois1: {
-		// check!
 		kurz: "POIS I",
-		lehrform: ["Vorlesung", "Übung", "Projekt"],
+		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
@@ -560,7 +551,6 @@ var data = {
 		nameLV: "Prozessorientierte Informationssysteme I"
 	},
 	pois2: {
-		// check!
 		kurz: "POIS II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
@@ -574,8 +564,21 @@ var data = {
 		dozent: ["Prof. Dr. Mathias Weske", "Matthias Weidlich"],
 		nameLV: "Prozessorientierte Informationssysteme II"
 	},
+	praesentieren: {
+		kurz: "Überzeugend<br />Präsentieren",
+		lehrform: ["Blockseminar"],
+		modul: ["Softskills"],
+		semester: ["WS11/12"],
+		benotet: false,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [""],
+		cp: 3,
+		vorher: [],
+		dozent: ["René Borbonus"],
+		nameLV: "Überzeugend Präsentieren"
+	},
 	processapplications: {
-		// check!
 		kurz: "Process-<br />Based Apps",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
@@ -590,11 +593,10 @@ var data = {
 		nameLV: "Usability of Process-Based Applications"
 	},
 	pt1: {
-		// check!
 		kurz: "PT I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Grundlagen IT-Systems Engineering"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 1,
@@ -605,7 +607,6 @@ var data = {
 		nameLV: "Einführung in die Programmiertechnik I"
 	},
 	pt2: {
-		// check!
 		kurz: "PT II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Grundlagen IT-Systems Engineering"],
@@ -620,7 +621,6 @@ var data = {
 		nameLV: "Einführung in die Programmiertechnik II"
 	},
 	qualitaetssicherunginwebapps: {
-		// check!
 		kurz: "Qualität<br />in Web-Apps",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -635,7 +635,6 @@ var data = {
 		nameLV: "Qualitätssicherung in Web-Applikationen"
 	},
 	raeuberundgendarm: {
-		// check!
 		kurz: "Räuber und<br />Gendarm",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -650,7 +649,6 @@ var data = {
 		nameLV: '"Räuber und Gendarm" (CTF-Szenarien)'
 	},
 	recht1: {
-		// check!
 		kurz: "Recht I",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
@@ -665,22 +663,20 @@ var data = {
 		nameLV: "Recht für Ingenieure I"
 	},
 	recht2: {
-		// check!
 		kurz: "Recht II",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 3,
 		vertiefung: [""],
 		cp: 3,
-		vorher: ["recht1"],
+		vorher: [],
 		dozent: ["Dr. Timm Krohn"],
 		nameLV: "Recht für Ingenieure II"
 	},
 	rfid: {
-		// check!
 		kurz: "RFID",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -695,26 +691,24 @@ var data = {
 		nameLV: "Real-World Applications in RFID-Aided Supply Chains"
 	},
 	seo: {
-		// check!
 		kurz: "SEO",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["IST"],
+		vertiefung: ["IST", "OSIS"],
 		cp: 3,
 		vorher: [],
-		dozent: ["Prof. Dr. Christoph Meinel", "Maria Siebert", "Franka Moritz"],
+		dozent: ["Prof. Dr. Christoph Meinel", "Maria Siebert", "Haojin Yang"],
 		nameLV: "SEO - Search Engine Optimization"
 	},
 	studiumplus: {
-		// check!
 		kurz: "StudiumPlus",
 		lehrform: [""],
 		modul: ["Softskills"],
-		semester: ["WS10/11", "SS11"],
+		semester: ["WS10/11", "SS11", "WS11/12"],
 		benotet: false,
 		pflicht: false,
 		empfohlen: "",
@@ -725,22 +719,20 @@ var data = {
 		nameLV: "StudiumPlus"
 	},
 	swa: {
-		// check!
 		kurz: "SWA",
 		lehrform: ["Vorlesung", "Projekt"],
 		modul: ["Grundlagen IT-Systems Engineering"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 3,
 		vertiefung: [""],
 		cp: 6,
 		vorher: [],
-		dozent: ["Prof. Dr. Robert Hirschfeld", "Dr.-Ing. Michael Haupt", "M. Perscheid", "R. Krahn"],
+		dozent: ["Prof. Dr. Robert Hirschfeld", "Michael Perscheid", "Dr. Damien Cassou", "Dr. Jens Lincke", "Bastian Steinert"],
 		nameLV: "Softwarearchitektur"
 	},
 	swt1: {
-		// check!
 		kurz: "SWT I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwaretechnik und Modellierung"],
@@ -750,31 +742,29 @@ var data = {
 		empfohlen: 4,
 		vertiefung: [""],
 		cp: 6,
-		vorher: [],
+		vorher: ["swa"],
 		dozent: ["Prof. Dr. Robert Hirschfeld", "Michael Perscheid", "Robert Krahn", "Jens Lincke", "Bastian Steinert"],
 		nameLV: "Softwaretechnik I"
 	},
 	swt2: {
-		// check!
 		kurz: "SWT II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["SAMT"],
+		vertiefung: ["SAMT", "BPET", "OSIS"],
 		cp: 6,
 		vorher: ["swt1"],
-		dozent: ["Dr. Alexander Zeier", "Jürgen Müller"],
+		dozent: ["Dr. Alexander Zeier", "Thomas Kowark", "Stephan Müller", "Martin Lorenz"],
 		nameLV: "Softwaretechnik II"
 	},
 	ti1: {
-		// check!
 		kurz: "TI I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Mathematische und theoretische Grundlagen"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 3,
@@ -785,7 +775,6 @@ var data = {
 		nameLV: "Theoretische Informatik I"
 	},
 	ti2: {
-		// check!
 		kurz: "TI II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Mathematische und theoretische Grundlagen"],
@@ -800,7 +789,6 @@ var data = {
 		nameLV: "Theoretische Informatik II"
 	},
 	vhdl: {
-		// check!
 		kurz: "VHDL",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
@@ -814,8 +802,21 @@ var data = {
 		dozent: ["Dr.-Ing. Ralf Wollowski"],
 		nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
 	},
+	webzwonull: {
+		kurz: "Web 2.0",
+		lehrform: ["Seminar", "Projekt"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["WS11/12"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST", "BPET", "SAMT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Christian Willems", "Matthias Bauer", "Rafiee Hosnieh", "Tacio Santos"],
+		nameLV: "Web-Programmierung und Web 2.0-Technologien"
+	},
 	webservice: {
-		// check!
 		kurz: "Web<br />Services",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
@@ -830,22 +831,20 @@ var data = {
 		nameLV: "Web Service Technologien"
 	},
 	wirtschaft1: {
-		// check!
 		kurz: "Wirtschaft I",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
-		semester: ["WS10/11"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: true,
 		empfohlen: 1,
 		vertiefung: [""],
 		cp: 3,
 		vorher: [],
-		dozent: ["Prof. Dr. Jan Kratzer"],
+		dozent: ["Prof. Dr. Katharina Hölzle"],
 		nameLV: "Wirtschaftliche Grundlagen I"
 	},
 	wirtschaft2: {
-		// check!
 		kurz: "Wirtschaft II",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
@@ -855,12 +854,11 @@ var data = {
 		empfohlen: 2,
 		vertiefung: [""],
 		cp: 3,
-		vorher: ["wirtschaft1"],
+		vorher: [],
 		dozent: ["Prof. Dr. Jan Kratzer"],
 		nameLV: "Wirtschaftliche Grundlagen II"
 	},
 	workflow: {
-		// check!
 		kurz: "Workflow–<br />Anwendungen",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
@@ -875,7 +873,6 @@ var data = {
 		nameLV: "Entwicklung von Workflow-Anwendungen"
 	},
 	www: {
-		// check!
 		kurz: "WWW",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
@@ -890,7 +887,6 @@ var data = {
 		nameLV: "Internet- und WWW-Technologien"
 	},
 	wwwextra: {
-		// check!
 		kurz: "WWW –<br />weiterführend",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
