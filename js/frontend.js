@@ -212,6 +212,10 @@ var frontend = {
 		table += "<ul style='display:none;'><li></li></ul>";
 		return table;
 	},
+	/* adjusts short lv-string to be displayed in table */
+	adjustShortCourseName: function(course) {
+		return course.replace(/-<br \/>/g, "&shy;").replace(/<br \/>/g, " ");
+	},
 	/* used to display information about possible Vertiefungsgebiete */
 	makeCombinationsTable: function(possibilities) {
 		var table = "<table class='combinations'>";
@@ -227,20 +231,20 @@ var frontend = {
 			for (var j = 0; j < possibility.length; j += 1) {
 				var course = possibility[j];
 				if (course.vertiefung === possibility.vertiefungPair[0]) {
-					first.push(data[course.key].kurz.replace(/<br \/>/g, " "));
+					first.push(f.adjustShortCourseName(data[course.key].kurz));
 					firstCP += data[course.key].cp;
 				}
 				else if (course.vertiefung === possibility.vertiefungPair[1]) {
-					second.push(data[course.key].kurz.replace(/<br \/>/g, " "));
+					second.push(f.adjustShortCourseName(data[course.key].kurz));
 					secondCP += data[course.key].cp;
 				}
 			}
 			var firstLectures = [];
 			var secondLectures = [];
 			for (var j = 0; j < possibility.firstVertiefungLectures.length; j += 1)
-			firstLectures.push(possibility.firstVertiefungLectures[j].kurz); //.replace(/<br \/>/g, " "));
+			firstLectures.push(f.adjustShortCourseName(possibility.firstVertiefungLectures[j].kurz));
 			for (var j = 0; j < possibility.secondVertiefungLectures.length; j += 1)
-			secondLectures.push(possibility.secondVertiefungLectures[j].kurz); //.replace(/<br \/>/g, " "));
+			secondLectures.push(f.adjustShortCourseName(possibility.secondVertiefungLectures[j].kurz));
 
 			table += "<tr><td rowspan='2'>Variante " + (i + 1).toString() + "</td>";
 
