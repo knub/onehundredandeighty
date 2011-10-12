@@ -400,6 +400,10 @@ var vertiefungsgebieteRule = {
 			return creditpoints >= 24;
 		});
 
+		var combToStringArray = function (element, index) {
+			return element.key + element.vertiefung;
+		};
+
 		// If no courses are left, the plan is obviously not valid.
 		if (have24CreditPoints.length === 0) {
 			// Adjust message and let rule fail.
@@ -485,19 +489,23 @@ var vertiefungsgebieteRule = {
 			var alreadyIn = false;
 
 			var unique = true;
+
+			var combStrArray = combination.map(combToStringArray);
 			// Walk through all combinations and then decide, whether to save it in the array.
 			mergedCombinations.forEach(function(combinationOld, helpindex) {
+				var combOldStrArray = combinationOld.map(combToStringArray);
 				// if the Vertiefung pair is already in the array ..
 				if (combinationOld.vertiefungPair.join("") === vertiefungsstring) {
 					// decide whether it is worthy to override the old value
 					alreadyIn = true;
 					// it IS worthy, when it is longer than the old value and is a superset of it
-					if (combinationOld.length < combination.length && combinationOld.subsetOf(combination)) {
+					if (combinationOld.length < combination.length && combOldStrArray.subsetOf(combStrArray)) {
 						mergedCombinations[helpindex] = combination;
 						unique = false;
 					}
 					else {
-						if (combination.subsetOf(combinationOld) === true) unique = false;
+						if (combStrArray.subsetOf(combOldStrArray) === true)
+							unique = false;
 					}
 				}
 			});
@@ -547,6 +555,21 @@ var vertiefungsgebieteRule = {
 			// Both Vertiefungen must have a lecture to succeed.
 			return firstVertiefungLectures.length > 0 && secondVertiefungLectures.length > 0;
 		});
+
+		// remove duplicates at last
+		var noDuplicates = [];
+		for (var i = 0; i < haveLecture.length; i += 1) {
+			var dup = false;
+			for (var j = 0; j < noDuplicates.length; j += 1) {
+				if (haveLecture[i].map(combToStringArray).join("") === noDuplicates[j].map(combToStringArray).join("")) {
+					dup = true;
+					break;
+				}
+			}
+			if (dup === false)
+				noDuplicates.push(haveLecture[i]);
+		}
+		haveLecture = noDuplicates;
 
 		// Same procedure as above.
 		if (haveLecture.length === 0) {

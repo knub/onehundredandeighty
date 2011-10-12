@@ -275,7 +275,17 @@ var frontend = {
 	},
 	/* used to check all rules and display them in div#messages */
 	checkRules: function() {
+		/* performance check */
+		var start = new Date();
+
 		var rules = ruleManager.checkAll();
+
+		var ende = new Date();
+		var startK = start.getHours() * 60 * 60 * 1000 + start.getMinutes() * 60 * 1000 + start.getSeconds() * 1000 + start.getMilliseconds();
+		var endeK = ende.getHours() * 60 * 60 * 1000 + ende.getMinutes() * 60 * 1000 + ende.getSeconds() * 1000 + ende.getMilliseconds();
+		console.log(endeK-startK);
+
+
 		var messageUl = f.messageDiv.find("ul");
 		messageUl.empty();
 		if (rules.numberFailedRules === 0) {
