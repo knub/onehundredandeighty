@@ -480,7 +480,7 @@ var frontend = {
 			return - 1;
 		}
 		else if (id.substr(0, 8) === "semester") {
-			return parseInt(id.substr(8, 1));
+			return parseInt(id.substring(8));
 		}
 		console.error("Function getSemester returning invalid data!");
 		return -1;
