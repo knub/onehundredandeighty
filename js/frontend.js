@@ -138,6 +138,7 @@ var frontend = {
 				f.slideMessages();
 			}
 			f.coursesUl = $(f.coursesList);
+			f.adjustSemesterViewHeight();
 		},
 		cloneIdToCourseId: function(cloneId) {
 			var index = cloneId.indexOf("-");
