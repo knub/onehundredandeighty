@@ -523,17 +523,27 @@ var frontend = {
 	},
 	/* used, when user finished drag'n'dropping courses */
 	endSorting: function() {
+		f.coursesUl.find("li").knubtip("enable");
+	},
+	/* called when user drag'n'dropped something */
+	update: function() {
+		f.adjustSemesterViewHeight();
+		f.sortPool();
+		f.filterManager.filter();
 		if (f.checkPermanently === true) {
 			f.checkRules();
 			f.slideMessages();
 		}
-		f.coursesUl.find("li").knubtip("enable");
 		f.saveManager.save();
 	},
-	/* called when user drag'n'dropped something */
-	update: function() {
-		f.sortPool();
-		f.filterManager.filter();
+	/* adjust #semester-view1 ul's heights to fit to max-height */
+	adjustSemesterViewHeight: function () {
+		var max = 0;
+		$("#semester-view1").find("ul").css("height", "auto").css("min-height", "0").each(function (element) {
+			max = Math.max(max, $(this).height());
+		}).each(function (element) {
+			$(this).css("min-height", max + "px");
+		});
 	},
 	/* used to sort courses pool, ensures that each stack has the same height (frontend.coursesPoolHeight) */
 	sortPool: function() {
@@ -863,6 +873,9 @@ $(function() {
 	/* initialize tooltips for all courses */
 	f.coursesUl.find("li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
 	f.filterManager.filter();
+
+	/* adjust #semester-view1 height */
+	f.adjustSemesterViewHeight();
 
 	if (localStorage.alreadyChecked === "true") {
 		f.checkRules();
