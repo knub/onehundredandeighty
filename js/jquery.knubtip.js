@@ -32,17 +32,20 @@
 					var tooltipDivSelector = "knubtip" + i.toString();
 					info.addClass(tooltipDivSelector);
 					$(this).data("knubtip", { info: "." + tooltipDivSelector });
-					$(this).data("enabled", true);
+					$(this).data("knubtip-enabled", true);
 					i += 1;
 
-					$(this).mousemove(function () {
+					$(this).mousemove(function (event) {
 						// save references, because setTimeout forces context change (this refering to DOMWINDOW then)
 						// $this now refers to the jquerified-element (e. g. li element) for which the tooltip shall be displayed
 						var $this = $(this);
+						var that = this;
 						clearTimeout(timer);
 						timer = setTimeout(function () {
+							if (that !== event.target)
+								return;
 							// only display tooltip, if whole plugin is enabled
-							if($this.data('enabled') !== true)
+							if($this.data('knubtip-enabled') !== true)
 								return;
 							// only display tooltip, if element is not disabled (is this useful? - think about it)
 							if($this.hasClass("disabled"))
@@ -106,7 +109,6 @@
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 						}, settings['wait-time']);
-						return false;
 					}).mouseout(function () {
 						clearTimeout(timer);
 						var tooltipDivSelector = $(this).data('knubtip')['info'];
@@ -116,12 +118,12 @@
 			},
 			enable: function () {
 				this.each(function () {
-					$(this).data("enabled", true);
+					$(this).data("knubtip-enabled", true);
 				});
 			},
 			disable: function () {
 				this.each(function () {
-					$(this).data("enabled", false);
+					$(this).data("knubtip-enabled", false);
 				});
 			}
 		};
