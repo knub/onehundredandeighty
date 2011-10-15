@@ -2,6 +2,7 @@
  * NOTE: Please update semesterManager in js/logic.js as well, after updating this file
  *
  * This file must only be edited manually!
+ * Remember to update 'Klubsprecher'!
  */
 var data = {
 	android: {
@@ -386,7 +387,7 @@ var data = {
 		kurz: "Klubsprecher",
 		lehrform: [""],
 		modul: ["Softskills"],
-		semester: ["WS10/11", "SS11"],
+		semester: ["WS10/11", "SS11", "WS11/12"],
 		benotet: false,
 		pflicht: false,
 		empfohlen: "",

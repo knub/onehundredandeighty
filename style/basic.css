@@ -507,6 +507,7 @@ h3 {
 .info table {
 	border-collapse: collapse;
 	border: 1px solid #DDD;
+	width: 100%;
 }
 .info tr:nth-child(even) {
 	background: #F1F1F1;
