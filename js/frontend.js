@@ -214,7 +214,7 @@ var frontend = {
 	},
 	/* adjusts short lv-string to be displayed in table */
 	adjustShortCourseName: function(course) {
-		return course.replace(/-<br \/>/g, "&shy;").replace(/<br \/>/g, " ");
+		return course.replace(/–<br \/>/g, "–").replace(/-<br \/>/g, "&shy;").replace(/<br \/>/g, " ");
 	},
 	/* used to display information about possible Vertiefungsgebiete */
 	makeCombinationsTable: function(possibilities) {

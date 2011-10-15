@@ -369,7 +369,7 @@ var data = {
 		nameLV: "History of Programming Languages"
 	},
 	internetsecurity: {
-		kurz: "Internet-<br />Security",
+		kurz: "Internet–<br />Security",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
 		semester: ["WS10/11", "WS11/12"],
@@ -495,7 +495,7 @@ var data = {
 		nameLV: "NoSQL"
 	},
 	opensource: {
-		kurz: "Open-Source-<br />Projekte",
+		kurz: "Open-Source–<br />Projekte",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: ["SS11"],
@@ -579,7 +579,7 @@ var data = {
 		nameLV: "Überzeugend Präsentieren"
 	},
 	processapplications: {
-		kurz: "Process-<br />Based Apps",
+		kurz: "Process–<br />Based Apps",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
 		semester: ["WS10/11"],
@@ -887,7 +887,7 @@ var data = {
 		nameLV: "Internet- und WWW-Technologien"
 	},
 	wwwextra: {
-		kurz: "WWW –<br />weiterführend",
+		kurz: "WWW – <br />weiterführend",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: ["SS11"],
