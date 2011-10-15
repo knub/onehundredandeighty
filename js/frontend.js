@@ -516,7 +516,7 @@ var frontend = {
 		var repetitionString = "";
 		if (repetition !== undefined)
 			repetitionString = "<span>W<br />D<br />H</span>";
-		return "<li" + cssclass + " id='course-" + id + "'>" +repetitionString + course['kurz'] + "<button><!--⎗-->" + character + "</button>" + courseInfo + "</li>";
+		return "<li" + cssclass + " id='course-" + id + "'>" +repetitionString + course['kurz'] + "<button><div class='info clone-info'>Auf diesen Button klicken, um einen Kurs in einem anderen Semester noch einmal zu wiederholen.</div><!---->" + character + "</button>" + courseInfo + "</li>";
 	},
 	/* used, when user starts drag'n'dropping courses */
 	startSorting: function() {
@@ -873,6 +873,7 @@ $(function() {
 
 	/* initialize tooltips for all courses */
 	f.coursesUl.find("li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
+	f.coursesUl.find("li button").knubtip("init"); // activate tooltip for button elements (see jquery.knubtip.js)
 	f.filterManager.filter();
 
 	/* adjust #semester-view1 height */

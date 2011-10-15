@@ -1,13 +1,15 @@
 (function ($) {
 	"use strict";
+
+	// counter, counts tooltips so an unique id (for the div) can be built with this number
+	var i = 0;
+
 	$.fn.knubtip = function (method) {
 		var settings = {
 			'duration'	: 200,
 			'wait-time'	: 1000
 		};
 
-		// counter, counts tooltips so an unique id (for the div) can be built with this number
-		var i = 0;
 		// timer will save what setTimeout returns
 		var timer;
 
@@ -19,7 +21,7 @@
 				}
 				return this.each(function () {
 					// detach element from li's and append to body (needed for free absolute positioning)
-					var info = $(this).find(".info");
+					var info = $(this).find("> .info");
 					// if there is no info element, continue
 					if (info.length === 0)
 						// return true === continue in $.each-function
@@ -28,7 +30,7 @@
 					$("body").append(info);
 					// save, which div belonged to which li via css-class
 					var tooltipDivSelector = "knubtip" + i.toString();
-					info.attr("class", tooltipDivSelector + " info");
+					info.addClass(tooltipDivSelector);
 					$(this).data("knubtip", { info: "." + tooltipDivSelector });
 					$(this).data("enabled", true);
 					i += 1;
@@ -68,42 +70,43 @@
 								//      ^: calculate this left-offset
 								// the formula comes from the following main idea:
 								// li-left + li-width / 2 = div-left + div-width / 2 (the center of the li element is the same like the center of the div element)
-								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								var left = offset.left + ($this.width() - $(tooltipDivSelector).width()) / 2;
 								if (left <= $(window).scrollLeft()) left = $(window).scrollLeft();
-								else if (left > $(window).scrollLeft() + $(window).width() - $(".info").outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
+								else if (left > $(window).scrollLeft() + $(window).width() - $(tooltipDivSelector).outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 							// now we test, whether it can be displayed over the element
 							// same procedure as before, with slightly different logic
 							else if ($(window).scrollTop() < offset.top - 5 - $(tooltipDivSelector).outerHeight()) {
-								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								var left = offset.left + ($this.width() - $(tooltipDivSelector).width()) / 2;
 								if (left <= $(window).scrollLeft()) left = $(window).scrollLeft();
-								else if (left > $(window).scrollLeft() + $(window).width() - $(".info").outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
+								else if (left > $(window).scrollLeft() + $(window).width() - $(tooltipDivSelector).outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
 								$(tooltipDivSelector).css({ top: offset.top - 5 - $(tooltipDivSelector).outerHeight(), left: left }).fadeIn(settings['duration']);
 							}
 							// now we test, whether we can display it right next to the element
 							// logic is the same as in the first case, left replaced by top, and height replaced by width
 							else if (offset.left + $this.outerWidth() + 5 + $(tooltipDivSelector).outerWidth() < $(window).scrollLeft() + $(window).width()) {
-								var top = offset.top + ($this.outerHeight() - $(".info").outerHeight()) / 2;
+								var top = offset.top + ($this.outerHeight() - $(tooltipDivSelector).outerHeight()) / 2;
 								if (top <= $(window).scrollTop()) top = $(window).scrollTop();
-								else if (top > $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30) top = $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30;
+								else if (top > $(window).scrollTop() + $(window).height() - $(tooltipDivSelector).outerHeight() - 30) top = $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30;
 								$(tooltipDivSelector).css({ top: top, left: offset.left + $this.outerWidth() + 5}).fadeIn(settings['duration']);
 							}
 							// and finally test, whether it can be displayed on the element's left
 							else if ($(window).scrollLeft() < offset.left - 5 - $(tooltipDivSelector).outerWidth()) {
-								var top = offset.top + ($this.outerHeight() - $(".info").outerHeight()) / 2;
+								var top = offset.top + ($this.outerHeight() - $(tooltipDivSelector).outerHeight()) / 2;
 								if (top <= $(window).scrollTop()) top = $(window).scrollTop();
-								else if (top > $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30) top = $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30;
+								else if (top > $(window).scrollTop() + $(window).height() - $(tooltipDivSelector).outerHeight() - 30) top = $(window).scrollTop() + $(window).height() - $(".info").outerHeight() - 30;
 								$(tooltipDivSelector).css({ top: top, left: offset.left - 5 - $(tooltipDivSelector).outerWidth()}).fadeIn(settings['duration']);
 							}
 							else {
 								// else, display it below, as in the first case
-								var left = offset.left + ($this.width() - $(".info").width()) / 2;
+								var left = offset.left + ($this.width() - $(tooltipDivSelector).width()) / 2;
 								if (left <= $(window).scrollLeft()) left = $(window).scrollLeft();
-								else if (left > $(window).scrollLeft() + $(window).width() - $(".info").outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
+								else if (left > $(window).scrollLeft() + $(window).width() - $(tooltipDivSelector).outerWidth()) left = $(window).scrollLeft() + $(window).width() - $(".info").outerWidth();
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 						}, settings['wait-time']);
+						return false;
 					}).mouseout(function () {
 						clearTimeout(timer);
 						var tooltipDivSelector = $(this).data('knubtip')['info'];
