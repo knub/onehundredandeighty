@@ -471,8 +471,9 @@ h1 span {
 /* TODO: I think a complete redesign of tooltip is neccessary - does not like quite good right now. */
 .info {
 	display: none;
-	width: 500px;
-	min-height: 350px;
+	/*width: 500px;
+	min-height: 350px;*/
+	max-width: 500px;
 	z-index: 999;
 	position: absolute;
 	top: 0px;
