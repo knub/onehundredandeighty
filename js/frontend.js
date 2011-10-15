@@ -541,9 +541,18 @@ var frontend = {
 		f.adjustPoolHeight(listitems.length);
 
 		// There can be at most frontend.coursesPoolHeight items in one stack.
-		// The following to var's ensure this.
+		// The following two var's ensure this.
 		var currentPool = 1;
 		var coursesInCurrentPool = 0;
+
+		listitems = listitems.sort(function (a, b) {
+			if (a.innerHTML === b.innerHTML)
+				return 0;
+			else if (a.innerHTML < b.innerHTML)
+				return -1;
+			else
+				return +1;
+		});
 
 		// for each listitem
 		listitems.each(function(index, listitem) {
