@@ -7,7 +7,10 @@ section {
 	padding: 10px 100px;
 }
 a {
-	color: #333;
+	color: #9F0606;
+}
+a.back {
+	display: none;
 }
 h2 {
 	font-size: 2.5em;

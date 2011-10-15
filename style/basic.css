@@ -76,9 +76,6 @@ div#last-update {
 	font-size: 1.3em;
 }
 div#message {
-	background: #B56767; /* red */
-	background: #B2B567; /* yellow - to be improved! */
-	background: #7BB567; /* green */
 	background: #333;
 	/*border: 3px solid #333;*/
 	color: white;
