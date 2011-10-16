@@ -380,7 +380,7 @@ var data = {
 		vertiefung: ["IST", "OSIS"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Prof. Dr. Christoph Meinel"],
+		dozent: ["Prof. Dr. Christoph Meinel", "Dr. Christian Willems", "Dr. Feng Cheng"],
 		nameLV: "Internet-Security - Weaknesses and Targets"
 	},
 	klubsprecher: {
@@ -856,7 +856,7 @@ var data = {
 		vertiefung: [""],
 		cp: 3,
 		vorher: [],
-		dozent: ["Prof. Dr. Jan Kratzer"],
+		dozent: ["Prof. Dr. Katharina Hölzle"],
 		nameLV: "Wirtschaftliche Grundlagen II"
 	},
 	workflow: {
