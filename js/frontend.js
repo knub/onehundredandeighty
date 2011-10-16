@@ -133,11 +133,11 @@ var frontend = {
 					break;
 				}
 			}
+			f.coursesUl = $(f.coursesList);
 			if (f.checkPermanently === true) {
 				f.checkRules();
 				f.slideMessages();
 			}
-			f.coursesUl = $(f.coursesList);
 			f.adjustSemesterViewHeight();
 		},
 		cloneIdToCourseId: function(cloneId) {
@@ -896,6 +896,11 @@ $(function() {
 	});
 	$("#lesssemester").click(function() {
 		f.removeSemester(2);
+		f.coursesUl = $(f.coursesList);
+		if (f.checkPermanently === true) {
+			f.checkRules();
+			f.slideMessages();
+		}
 		f.saveManager.save();
 	});
 });
