@@ -1,0 +1,19 @@
+#message, #extrafunctions, #courses-pool, footer, #checkbox-div, #last-update {
+	display: none;
+}
+header {
+	border: none;
+}
+.courses li button {
+	display: none;
+}
+.semester-time {
+	width: 100%;
+	margin: 0;
+}
+.semester-time select {
+	border: none;
+}
+h1 img, h1 span {
+	display: none;
+}
