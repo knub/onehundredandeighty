@@ -188,6 +188,31 @@ var frontend = {
 				 "<td>" + course.dozent.join(", ") + "</td>" +
 				 "</tr>";
 		}
+		if (vertiefungen.sbsCourses.length === 4) {
+			cp += 6;
+			table += "<tr class='sbs-text'><td colspan='4'>Es wurden vier Softwarebasissysteme gewählt, sodass <strong>eines</strong> davon als Vertiefung gewertet wird (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>). Die vier gewählten Softwarebasissysteme sind:</td></tr>";
+			vertiefungen.sbsCourses.forEach(function (key) {
+				var course = data[key];
+				table += "<tr class='sbs-vertiefung'><td>" + course.nameLV + "</td>" +
+					 "<td>" + course.cp + "</td>" +
+					 "<td>" + course.vertiefung.join(", ") + "</td>" +
+					 "<td>" + course.dozent.join(", ") + "</td>" +
+					 "</tr>";
+			});
+		}
+
+		else if (vertiefungen.sbsCourses.length === 5) {
+			cp += 12;
+			table += "<tr class='sbs-text'><td colspan='4'>Es wurden fünf Softwarebasissysteme gewählt, sodass <strong>zwei</strong> davon als Vertiefung gewertet werden (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>). Die fünf gewählten Softwarebasissysteme sind:</td></tr>";
+			vertiefungen.sbsCourses.forEach(function (key) {
+				var course = data[key];
+				table += "<tr class='sbs-vertiefung'><td>" + course.nameLV + "</td>" +
+					 "<td>" + course.cp + "</td>" +
+					 "<td>" + course.vertiefung.join(", ") + "</td>" +
+					 "<td>" + course.dozent.join(", ") + "</td>" +
+					 "</tr>";
+			});
+		}
 		// if there are less than 24 creditpoints, show how much creditpoints there are
 		if (cp < 24)
 			table += "<tr><td></td><td class='sum'>" + cp + "</td><td></td><td></td></tr>";
@@ -195,17 +220,6 @@ var frontend = {
 		else
 			table += "<tr><td></td></tr>";
 		table += "</table>";
-
-		if (vertiefungen.sbsCourses.length === 4) {
-			table += "<p>Es wurden vier Softwarebasissysteme gewählt, sodass eines davon als Vertiefung gewertet wird (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>).<br />Damit ergeben sich nicht " + cp + " sondern " + (cp + 6).toString() + " Leistungspunkte. Die vier gewählten Softwarebasissysteme mit ihren Vertiefungsgebieten sind:<br /><ul>" + vertiefungen.sbsCourses.reduce(function(prev, current) {
-				return prev + "<li>" + data[current].nameLV + " (" + data[current].vertiefung[0] + ")</li>";
-			}, "") + "</ul></p>";
-		}
-		else if (vertiefungen.sbsCourses.length === 5) {
-			table += "<p>Es wurden fünf Softwarebasissysteme gewählt, sodass zwei davon als Vertiefung gewertet werden (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>).<br />Damit ergeben sich nicht " + cp + " sondern " + (cp + 12).toString() + " Leistungspunkte. Die fünf gewählten Softwarebasissysteme mit ihren Vertiefungsgebieten sind:<br /><ul>" + vertiefungen.sbsCourses.reduce(function(prev, current) {
-				return prev + "<li>" + data[current].nameLV + " (" + data[current].vertiefung[0] + ")</li>";
-			}, "") + "</ul></p>";
-		}
 
 		// and now there is a dirty little hack:
 		// the arrow on the left of the messages box is only displayed, if there is more than <li> in the box
