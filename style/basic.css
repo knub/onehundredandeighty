@@ -147,6 +147,16 @@ div#message table td {
 div#message table.combinations tr:nth-child(even) td {
 	border-top: 2px solid black;
 }
+div#message table.vertiefungen tr.sbs-text {
+	background: #CCC;
+}
+div#message table.vertiefungen tr.sbs-text td {
+	padding-left: 15%;
+	padding-right: 15%;
+}
+div#message table.vertiefungen tr.sbs-vertiefung {
+	background: #E4E4E4;
+}
 div#message table.vertiefungen tr:last-child {
 	visibility: hidden;
 }
