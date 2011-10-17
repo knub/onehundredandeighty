@@ -80,6 +80,7 @@ var ruleManager = {
  * 	- each rule must have a check method, which - given a special course to check - passes or fails
  *	- each rule must have a message property, which will be displayed, if the rule/test fails
  *	- there is one init-method, serving as constructor, which takes neccessary parameters and saves them, finally returning 'this'
+ *	- some rules assign special information to variables, which can be used in the frontend to e. g. display already chosen Vertiefungen
  *
  * Furthermore, most objects have some special properties needed for that special kind of rule
  */
