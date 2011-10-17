@@ -1,19 +1,26 @@
-#message, #extrafunctions, #courses-pool, footer, #checkbox-div, #last-update {
+@page {
+	size: landscape;
+}
+body {
+	font-size: 0.65em;
+}
+#message, #extrafunctions, #courses-pool, footer, #checkbox-div, #last-update, .courses li button, h1 img, h1 span {
 	display: none;
+}
+.courses {
+	padding-bottom: 0px;
+	padding-top: 0px;
 }
 header {
 	border: none;
 }
-.courses li button {
-	display: none;
+header h1 {
+	padding: 5px;
 }
-.semester-time {
-	width: 100%;
+.semester-time, .semester-view {
+	width: 100% !important;
 	margin: 0;
 }
 .semester-time select {
 	border: none;
-}
-h1 img, h1 span {
-	display: none;
 }
