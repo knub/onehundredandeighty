@@ -344,6 +344,7 @@ var vertiefungsgebieteRule = {
 		if (sbsNumber === 4) {
 			// so we add all of them to chosenVertiefungsgebiete
 			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for current study regulations).
+			// TODO: As of SS12, this is not correct anymore, as WWW now has 'IST' and 'HCT'
 			var addSBS = [];
 			for (var i = 0; i < sbsCourses.length; i += 1) {
 				addSBS.push({
@@ -389,7 +390,7 @@ var vertiefungsgebieteRule = {
 
 		}
 
-		// Now we all possible interpretations of the current plan.
+		// Now we have all possible interpretations of the current plan.
 		// Now make a first, vague check for all interpretations:
 		// Check if all Vertiefungsgebiete summed up make more than 24 creditpoints.
 		// Filter those, which do not make 24 creditpoints.
