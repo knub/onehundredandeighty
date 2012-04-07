@@ -93,7 +93,7 @@ var data = {
 		kurz: "BS II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["SS11"],
+		semester: ["SS11", "SS12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
