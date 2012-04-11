@@ -239,13 +239,15 @@ var timeRule = {
 		else {
 			// if the course is currently chosen for a summer semester
 			if (semesterTime.indexOf("SS") >= 0) {
-				// check if it was offered in the last summer semester
-				return data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
+				// check if it was explicitly allowed or offered in the last summer semester
+				return data[this.course].semester.indexOf(semesterTime) ||
+				       data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
 			}
 			// if the course is currently chosen for a winter semester
 			else if (semesterTime.indexOf("WS") >= 0) {
-				// check if it was offered in the last summer semester
-				return data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
+				// check if it was explicitly allowed or offered in the last winter semester
+				return data[this.course].semester.indexOf(semesterTime) ||
+				       data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
 			}
 			// else something went completly wrong
 			else {
