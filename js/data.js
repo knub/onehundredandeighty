@@ -63,6 +63,20 @@ var data = {
 		dozent: ["Prof. Dr. Felix Naumann", "Alexander Albrecht"],
 		nameLV: "Mobile Computing with Android"
 	},
+	angewandtelogik: {
+		kurz: "Angewandte <br />Logik",
+		lehrform: ["Vorlesung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["SS11", "SS12", "SS13"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["BPET", "HCT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Schaub"],
+		nameLV: "Angewandte Logik"
+	},
 	aop: {
 		kurz: "AOP",
 		lehrform: ["Seminar"],
@@ -454,6 +468,20 @@ var data = {
 		vorher: [],
 		dozent: [],
 		nameLV: "Klubsprechertätigkeit über mindestens zwei Semester"
+	},
+	kuenstlicheintelligenz: {
+		kurz: "KI",
+		lehrform: ["Vorlesung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["WS10/11", "WS11/12"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["OSIS", "IST", "BPET"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Schaub"],
+		nameLV: "Einführung in die Künstliche Intelligenz"
 	},
 	mainframe: {
 		kurz: "Mainframe<br />Computing",
