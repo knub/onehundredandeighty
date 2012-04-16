@@ -4,6 +4,22 @@
  * This file must only be edited manually!
  * Remember to update 'Klubsprecher' and 'Studium Plus'!
  */
+
+/*
+ * Data structure for a course:
+ *    kurz: Short text for the course. Make sure, it fits in the browser on the 1024px
+ *    lehrform: "Seminar" or "Projekt" or "Vorlesung"
+ *    modul: "Vertiefungsgebiete" is what you want in most cases here
+ *    semester: semester string: (WS|SS)[0-9]{2}, e.g. WS11
+ *    benotet: whether the you get a grade in this course which has effect
+ *    pflicht: whether this course must be taken
+ *    empfohlen: integer indicating in which course this semester is recommended
+ *    vertiefung: array containing strings for the vertiefungsgebiete, "BPET"/"HCT"/"IST"/"OSIS"/"SAMT" alphabetically!
+ *    cp: how much credit points you get for this course
+ *    vorher: identifier/key of the course/s which must be taken before the current one, e.g. 'advancedmodularity'
+ *    dozent: self explaining
+ *    nameLV: long name
+ */
 var data = {
 	advancedmodularity: {
 		kurz: "Advanced<br />Modularity",
