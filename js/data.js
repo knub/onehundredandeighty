@@ -64,7 +64,7 @@ var data = {
 		nameLV: "Mobile Computing with Android"
 	},
 	angewandtelogik: {
-		kurz: "Angewandte <br />Logik",
+		kurz: "Angewandte<br />Logik",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
 		semester: ["SS11", "SS12", "SS13"],
@@ -473,11 +473,11 @@ var data = {
 		kurz: "KI",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11", "WS11/12"],
+		semester: ["WS10", "WS11"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["OSIS", "IST", "BPET"],
+		vertiefung: ["BPET", "IST", "OSIS"],
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Schaub"],
