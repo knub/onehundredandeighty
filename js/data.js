@@ -609,6 +609,20 @@ var data = {
 		dozent: ["Dr. Martin von Löwis"],
 		nameLV: "Entwicklungsprozesse in Open-Source-Projekten"
 	},
+	parallelesrechnen: {
+		kurz: "Paralleles Rechnen",
+		lehrform: ["Vorlesung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["SS12"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["OSIS"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Bettina Schnor"],
+		nameLV: "Paralleles Rechnen"
+	},
 	pem: {
 		kurz: "PEM",
 		lehrform: ["Seminar"],
@@ -1001,6 +1015,20 @@ var data = {
 		dozent: ["Prof. Dr. Mathias Weske"],
 		nameLV: "Entwicklung von Workflow-Anwendungen"
 	},
+	wrv: {
+		kurz: "WRV",
+		lehrform: ["Vorlesung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["SS12"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["SAMT", "OSIS"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Torsten Schaub"],
+		nameLV: "Wissensrepräsentation und -verarbeitung"
+	},
 	www: {
 		kurz: "WWW",
 		lehrform: ["Vorlesung", "Übung"],
@@ -1030,7 +1058,7 @@ var data = {
 		nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
 	}
 };
-/* Debugging data, to be removed when life */
+/* Debugging data, to be removed when live */
 
 /*
 data['hci2'].empfohlen = 3;
