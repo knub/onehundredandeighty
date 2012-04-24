@@ -130,7 +130,11 @@ var mustDoRule = {
 	/* needed to save for what course the current rule applies */
 	course: ""
 };
-/* 3. Dependency-Rule: a certain course must be done before another */
+/*
+ * 3. Dependency-Rule: a certain course must be done before another
+ * As of 25.04.2012, this rule is no longer active,  because there are no real limitations.
+ * Nonetheless, the data is kept in data.js (maybe this can be used for some kind of note/hint in the future.
+ */
 var dependencyRule = {
 	/* type */
 	type: 'dependencyRule',
@@ -144,17 +148,8 @@ var dependencyRule = {
 	},
 	/* check method */
 	check: function(getSemester) {
-		var courseSemester = getSemester(this.course);
-		var dependencySemester = getSemester(this.dependency);
-		// if course, which has a dependency is not selected, test passes automatically
-		if (courseSemester === - 1) return true;
-		// course is chosen, but dependency not
-		else if (dependencySemester === - 1) return false;
-		// both are chosen, now check for semesters
-		else {
-			// check whether course was chosen before its dependency
-			return courseSemester > dependencySemester;
-		}
+		// always return true, because rule is no longer active
+		return true;
 	},
 	/* message */
 	message: "Eine Veranstaltung muss vor einer anderen belegt werden.",
