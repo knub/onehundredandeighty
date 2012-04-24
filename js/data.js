@@ -423,7 +423,7 @@ var data = {
 		empfohlen: "",
 		vertiefung: ["HCT", "SAMT", "OSIS"],
 		cp: 6,
-		vorher: ["hci1"],
+		vorher: [],
 		dozent: ["Prof. Dr. Patrick Baudisch"],
 		nameLV: "HCI: Building Interactive Devices and Computer Vision"
 	},
