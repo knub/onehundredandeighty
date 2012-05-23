@@ -651,6 +651,27 @@ var cloneRule = {
 	course: "",
 	cloneId: ""
 };
+/*
+ * 9. Wirtschaft-Rule: You must either select Wirtschaft I and Wirtschaft II or Wirtschaft I/II
+ */
+var wirtschaftRule = {
+	/* type */
+	type: 'wirtschaftRule',
+	/* constructor */
+	init: function() {
+		return this;
+	},
+	/* check method */
+	check: function(getSemester) {
+		var selectedWirtschaftI = getSemester('wirtschaft1') >= 1;
+		var selectedWirtschaftII = getSemester('wirtschaft2') >= 1;
+		var selectedWirtschaftI_II = getSemester('wirtschaftneu') >= 1;
+
+		return (selectedWirtschaftI && selectedWirtschaftII) || selectedWirtschaftI_II;
+	},
+	/* message */
+	message: "Die Vorlesung 'Wirtschaftliche Grundlagen' muss besucht werden.",
+};
 
 // ---
 // Rules created, now started adding them to rule manager
@@ -689,3 +710,8 @@ ruleManager.rules.push(softskillsRule);
 
 /* 7: create vertiefungsgebiete-rule, just push it to rules-array */
 ruleManager.rules.push(vertiefungsgebieteRule);
+
+/* 9: create wirtschaft-rule, just push it to rules-array */
+ruleManager.rules.push(wirtschaftRule);
+
+/* 8: clone rules are added at runtime when items are cloned */
