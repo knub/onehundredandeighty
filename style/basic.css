@@ -33,7 +33,7 @@ header {
 div#button-div {
 	position: absolute;
 	bottom: 0;
-	right: 28em;
+	right: 36em;
 	display: none;
 	visibility: hidden;
 }
@@ -44,7 +44,7 @@ div#checkbox-div {
 	position: absolute;
 	font-size: 1.2em;
 	bottom: -1px;
-	right: 3em;
+	right: 10em;
 	margin: 0;
 	padding: 12px 40px 10px 20px;
 	width: 15em;
