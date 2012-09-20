@@ -11,8 +11,8 @@
  *    lehrform: "Seminar" or "Projekt" or "Vorlesung"
  *    modul: "Vertiefungsgebiete" is what you want in most cases here
  *    semester: semester string: (WS|SS)[0-9]{2}, e.g. WS11
- *    benotet: whether the you get a grade in this course which has effect
- *    pflicht: whether this course must be taken
+ *    benotet: whether the grade you get in this course has effect
+ *    pflicht: whether this course must be chosen
  *    empfohlen: integer indicating in which course this semester is recommended
  *    vertiefung: array containing strings for the vertiefungsgebiete, "BPET"/"HCT"/"IST"/"OSIS"/"SAMT" alphabetically!
  *    cp: how much credit points you get for this course
@@ -1036,7 +1036,7 @@ var data = {
 		semester: ["WS10/11"],
 		benotet: true,
 		pflicht: true,
-		empfohlen: 1,
+		empfohlen: "",
 		vertiefung: [""],
 		cp: 3,
 		vorher: [],
@@ -1050,7 +1050,7 @@ var data = {
 		semester: ["SS11"],
 		benotet: true,
 		pflicht: true,
-		empfohlen: 2,
+		empfohlen: "",
 		vertiefung: [""],
 		cp: 3,
 		vorher: [],
