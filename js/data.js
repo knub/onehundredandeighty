@@ -487,7 +487,7 @@ var data = {
 		kurz: "KI",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11", "WS11/12"],
+		semester: ["WS10/11", "WS11/12", "WS12/13"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
