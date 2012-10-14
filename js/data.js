@@ -81,14 +81,14 @@ var data = {
 		kurz: "AOP",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: ["WS10/11", "WS11/12", "WS12/13"],
+		semester: ["WS10/11", "WS11/12"],
 		benotet: true,
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["OSIS", "SAMT"],
 		cp: 3,
 		vorher: [],
-		dozent: ["Prof. Dr. Robert Hirschfeld", "Marcel Taeumel"],
+		dozent: ["Prof. Dr. Robert Hirschfeld"],
 		nameLV: "Aspektorientiertes Programmieren"
 	},
 	beauty: {
@@ -539,20 +539,6 @@ var data = {
 		dozent: ["Dr. habil. Ferdinand Börner"],
 		nameLV: "Mathematik II"
 	},
-	mixingwebdata: {
-		kurz: "Mixing Web<br />Data",
-		lehrform: ["Seminar", "Projekt"],
-		modul: ["Vertiefungsgebiete"],
-		semester: ["WS12/13"],
-		benotet: true,
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["OSIS"],
-		cp: 6,
-		vorher: [],
-		dozent: ["Dr. Gjergji Kasneci", "Toni Grütze"],
-		nameLV: "Mixing Web Data"
-	},
 	mod1: {
 		kurz: "Mod I",
 		lehrform: ["Vorlesung", "Übung"],
@@ -608,6 +594,20 @@ var data = {
 		vorher: ["mod1", "mod2"],
 		dozent: ["Prof. Dr. Holger Giese", "Stephan Hildebrandt"],
 		nameLV: "Modellgetriebene Softwareentwicklung"
+	},
+	modularitaetskonzepte: {
+		kurz: "Modularitäts-<br />konzepte",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: ["WS12/13"],
+		benotet: true,
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["OSIS", "SAMT"],
+		cp: 3,
+		vorher: [],
+		dozent: ["Prof. Dr. Robert Hirschfeld"],
+		nameLV: "Erweiterte Modularitätskonzepte"
 	},
 	multimediaanalyse: {
 		kurz: "Multimedia<br />Analyse",
