@@ -24,3 +24,6 @@ header h1 {
 .semester-time select {
 	border: none;
 }
+#github-link {
+	display: none;
+}
