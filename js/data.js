@@ -214,7 +214,7 @@ var data = {
 		kurz: "DBS II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12],
+		semester: [ws10_11, ws11_12, ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["BPET", "OSIS"],
@@ -794,6 +794,19 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Alexander Zeier", "Martin Lorenz", "Matthieu Schapranow"],
 		nameLV: "Real-World Applications in RFID-Aided Supply Chains"
+	},
+	securecoding: {
+		kurz: "SecCoding",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST", "SAMT", "OSIS"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Sebastian Roschke"],
+		nameLV: "Secure Coding"
 	},
 	semanticmedia: {
 		kurz: "Media<br />Mining",
