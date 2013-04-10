@@ -7,15 +7,15 @@
 
 /*
  * Data structure for a course:
- *    kurz: Short text for the course. Make sure, it fits in the browser on the 1024px
+ *    kurz: Short text for the course. Make sure, it fits in the browser on 1024px
  *    lehrform: "Seminar" or "Projekt" or "Vorlesung"
  *    modul: "Vertiefungsgebiete" is what you want in most cases here
  *    semester: semester string: (WS|SS)[0-9]{2}, e.g. WS11
- *    pflicht: whether this course must be chosen
+ *    pflicht: whether this course must be chosen or not
  *    empfohlen: integer indicating in which course this semester is recommended
  *    vertiefung: array containing strings for the vertiefungsgebiete, "BPET"/"HCT"/"IST"/"OSIS"/"SAMT" alphabetically!
  *    cp: how much credit points you get for this course
- *    vorher: identifier/key of the course/s which must be taken before the current one, e.g. 'advancedmodularity'
+ *    vorher: identifier/key of the course/s which must be taken before the current one, e.g. 'mathematik1'
  *    dozent: self explaining
  *    nameLV: long name
  */
@@ -25,7 +25,8 @@ var ws10_11 = "WS10/11",
     ws11_12 = "WS11/12",
     ss12    = "SS12",
     ws12_13 = "WS12/13",
-    ss13    = "SS13";
+    ss13    = "SS13",
+    ws13_14 = "WS13/14";
 
 var data = {
 	advancedmodularity: {
@@ -165,7 +166,7 @@ var data = {
 		semester: [ss12, ss13],
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["IST", "OSIS"],
+		vertiefung: ["IST", "OSIS", "SAMT"],
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel", "Dr. Feng Cheng"],
@@ -175,7 +176,7 @@ var data = {
 		kurz: "Computer-<br />grafik I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete", "Softwarebasissysteme"],
-		semester: [ss11, ss12],
+		semester: [ss11, ss12, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["HCT"],
@@ -201,7 +202,7 @@ var data = {
 		kurz: "DBS I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
-		semester: [ss11, ss12],
+		semester: [ss11, ss12, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["OSIS"],
@@ -214,7 +215,7 @@ var data = {
 		kurz: "DBS II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws13_14],
+		semester: [ws10_11, ws11_12],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["BPET", "OSIS"],
@@ -253,7 +254,7 @@ var data = {
 		kurz: "D-School<br />Advanced Track",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Softskills"],
-		semester: [ws11_12, ss12, ws12_13],
+		semester: [ws11_12, ss12, ws12_13, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
@@ -275,6 +276,19 @@ var data = {
 		dozent: ["Dr. Alexander Zeier", "Oleksandr Panchenko", "Vadym Borovski"],
 		nameLV: "Basics of On-premise and On-demand Enterprise Software"
 	},
+	enterpriseapplications: {
+		kurz: "Enterprise<br />Apps",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["BPET"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Dr. Jürgen Müller", "Martin Lorenz"],
+		nameLV: "Enterprise Applications: Business Processes and Programming Model"
+	},
 	eworld: {
 		kurz: "eWorld",
 		lehrform: ["Seminar", "Projekt"],
@@ -292,7 +306,7 @@ var data = {
 		kurz: "Fachenglisch<br />Level 1",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
-		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13],
+		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
@@ -305,7 +319,7 @@ var data = {
 		kurz: "Fachenglisch<br />Level 2",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
-		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13],
+		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
@@ -448,7 +462,7 @@ var data = {
 		kurz: "Klubsprecher",
 		lehrform: [""],
 		modul: ["Softskills"],
-		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13],
+		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
@@ -532,7 +546,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: ["mod1"],
-		dozent: ["Prof. Dr. Holger Giese", "Stefan Neumann", "Dr. Christian Krause"],
+		dozent: ["Prof. Dr. Holger Giese", "Dr. Christian Krause"],
 		nameLV: "Modellierung II"
 	},
 	modellgetriebenesoftwareentwicklung: {
@@ -630,7 +644,7 @@ var data = {
 		kurz: "PEM",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
-		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13],
+		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13],
 		pflicht: true,
 		empfohlen: "",
 		vertiefung: [""],
@@ -682,7 +696,7 @@ var data = {
 		kurz: "Überzeugend<br />Präsentieren",
 		lehrform: ["Blockseminar"],
 		modul: ["Softskills"],
-		semester: [ws11_12, ss12, ws12_13],
+		semester: [ws11_12, ss12, ws12_13, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
@@ -773,7 +787,7 @@ var data = {
 		kurz: "Recht II",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
-		semester: [ws10_11, ws11_12, ws12_13, ws13_14],
+		semester: [ws10_11, ws11_12, ws12_13],
 		pflicht: true,
 		empfohlen: 3,
 		vertiefung: [""],
@@ -802,10 +816,10 @@ var data = {
 		semester: [ss13],
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["IST", "SAMT", "OSIS"],
+		vertiefung: ["IST", "OSIS", "SAMT"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Sebastian Roschke"],
+		dozent: ["Dr. Sebastian Roschke"],
 		nameLV: "Secure Coding"
 	},
 	semanticmedia: {
@@ -851,7 +865,7 @@ var data = {
 		kurz: "StudiumPlus",
 		lehrform: [""],
 		modul: ["Softskills"],
-		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13],
+		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
@@ -877,7 +891,7 @@ var data = {
 		kurz: "SWT I",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwaretechnik und Modellierung"],
-		semester: [ss11, ss12],
+		semester: [ss11, ss12, ss13],
 		pflicht: true,
 		empfohlen: 4,
 		vertiefung: [""],
@@ -916,7 +930,7 @@ var data = {
 		kurz: "TI II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Mathematische und theoretische Grundlagen"],
-		semester: [ss11, ss12],
+		semester: [ss11, ss12, ss13],
 		pflicht: true,
 		empfohlen: 4,
 		vertiefung: [""],
@@ -931,7 +945,7 @@ var data = {
 		modul: ["Vertiefungsgebiete"],
 		semester: [ss13],
 		pflicht: false,
-		empfohlen:,
+		empfohlen: "",
 		vertiefung: ["HCT", "IST", "OSIS"],
 		cp: 3,
 		vorher: [],
@@ -1059,56 +1073,27 @@ var data = {
 		kurz: "WWW",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
-		semester: [ss11, ss12, ss1e],
+		semester: [ss11, ss12, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["IST", "HCT"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Prof. Dr. Christoph Meinel", "Christian Willems"],
+		dozent: ["Prof. Dr. Christoph Meinel"],
 		nameLV: "Internet- und WWW-Technologien"
 	},
 	wwwextra: {
 		kurz: "WWW – <br />weiterführend",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ss11, ss12],
+		semester: [ss11, ss12, ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["IST", "OSIS", "SAMT"],
 		cp: 3,
 		vorher: [],
-		dozent: ["Prof. Dr. Christoph Meinel", "Christian Willems"],
+		dozent: ["Prof. Dr. Christoph Meinel", "Matthias Bauer"],
 		nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
 	}
 };
-/* Debugging data, to be removed when live */
 
-/*
-data['hci2'].empfohlen = 3;
-data['pois2'].empfohlen = 3;
-data['wwwextra'].empfohlen = 3;
-data['android'].empfohlen = 3;
-data['dbs2'].empfohlen = 3;
-*/
-
-/*
-data['fachenglisch1'].empfohlen = 1;
-data['pem'].empfohlen = 2;
-
-data['dbs1'].empfohlen = 2;
-data['www'].empfohlen = 4;
-data['hci1'].empfohlen = 3;
-
-data['dbs2'].empfohlen = 3; // 6 OSIS
-//data['internetsecurity'].empfohlen = 4;		// 6 IST
-data['wwwextra'].empfohlen = 4; // 3 IST
-data['beauty'].empfohlen = 4; // 3 OSIS
-data['collaboration'].empfohlen = 3; // 6 IST
-data['raeuberundgendarm'].empfohlen = 4; // 6 IST
-data['pois2'].empfohlen = 5;
-data['pois1'].empfohlen = 5;
-data['rfid'].empfohlen = 5;
-*/
-
-/* Studienbegleitendes Seminar?*/
