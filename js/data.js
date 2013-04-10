@@ -172,32 +172,6 @@ var data = {
 		dozent: ["Prof. Dr. Christoph Meinel", "Dr. Feng Cheng"],
 		nameLV: "Cops & Robbers"
 	},
-	grafik1: {
-		kurz: "Computer-<br />grafik I",
-		lehrform: ["Vorlesung", "Übung"],
-		modul: ["Vertiefungsgebiete", "Softwarebasissysteme"],
-		semester: [ss11, ss12, ss13],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["HCT"],
-		cp: 6,
-		vorher: ["mathematik1", "pt1"],
-		dozent: ["Prof. Dr. Jürgen Döllner"],
-		nameLV: "3D-Computergrafik I"
-	},
-	grafik2: {
-		kurz: "Computer-<br />grafik II",
-		lehrform: ["Vorlesung"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["HCT", "SAMT"],
-		cp: 6,
-		vorher: ["grafik1"],
-		dozent: ["Prof. Dr. Jürgen Döllner"],
-		nameLV: "Computergrafik II"
-	},
 	dbs1: {
 		kurz: "DBS I",
 		lehrform: ["Vorlesung", "Übung"],
@@ -354,6 +328,32 @@ var data = {
 		dozent: ["Dr. Ralf Wollowski"],
 		nameLV: "Grundlagen digitaler Systeme"
 	},
+	grafik1: {
+		kurz: "Computer-<br />grafik I",
+		lehrform: ["Vorlesung", "Übung"],
+		modul: ["Vertiefungsgebiete", "Softwarebasissysteme"],
+		semester: [ss11, ss12, ss13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["HCT"],
+		cp: 6,
+		vorher: ["mathematik1", "pt1"],
+		dozent: ["Prof. Dr. Jürgen Döllner"],
+		nameLV: "3D-Computergrafik I"
+	},
+	grafik2: {
+		kurz: "Computer-<br />grafik II",
+		lehrform: ["Vorlesung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws10_11, ws11_12, ws12_13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["HCT", "SAMT"],
+		cp: 6,
+		vorher: ["grafik1"],
+		dozent: ["Prof. Dr. Jürgen Döllner"],
+		nameLV: "Computergrafik II"
+	},
 	graphicslibraries: {
 		kurz: "Graphics<br />Libraries",
 		lehrform: ["Seminar", "Projekt"],
@@ -366,6 +366,19 @@ var data = {
 		vorher: ["mathematik1", "pt1"],
 		dozent: ["Prof. Dr. Jürgen Döllner", "Juri Engel", "Matthias Trapp", "Tassilo Glander", "Martin Beck"],
 		nameLV: "Multimedia/Graphics Library & System"
+	},
+	grafikprogrammierung: {
+		kurz: "Grafik-<br />Programmierung",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["HCT", "SAMT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Jürgen Döllner", "Daniel Limberger"],
+		nameLV: "Grafikprogrammierung mit OpenGL und C++"
 	},
 	hciproject: {
 		kurz: "HCI Project<br />Seminar",
