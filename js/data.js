@@ -553,7 +553,7 @@ var data = {
 		kurz: "Mod II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Softwaretechnik und Modellierung"],
-		semester: [ss11, ss12],
+		semester: [ss11, ss12, ss13],
 		pflicht: true,
 		empfohlen: 2,
 		vertiefung: [""],
