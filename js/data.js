@@ -189,7 +189,7 @@ var data = {
 		kurz: "DBS II",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12],
+		semester: [ws10_11, ws11_12, ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["BPET", "OSIS"],
