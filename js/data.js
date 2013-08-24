@@ -472,7 +472,7 @@ var data = {
 		nameLV: "Einführung in die Künstliche Intelligenz"
 	},
     lerntechniken: {
-		kurz: "KI",
+		kurz: "Professionalisierte Lerntechniken",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
 		semester: [ws13_14],
