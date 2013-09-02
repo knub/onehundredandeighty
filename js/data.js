@@ -198,7 +198,6 @@ var data = {
 		dozent: ["Prof. Dr. Jürgen Döllner"],
 		nameLV: "Computergrafik II"
 	},
->>>>>>> 932f9958fc60035ae662cdddc1d9b28159b242cf
 	dbs1: {
 		kurz: "DBS I",
 		lehrform: ["Vorlesung", "Übung"],
