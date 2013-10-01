@@ -107,6 +107,19 @@ var data = {
 		dozent: ["Prof. Dr. Felix Naumann"],
 		nameLV: "Beauty is our Business"
 	},
+	beautifuldata: {
+		kurz: "Beautiful<br />data"
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws13_14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["OSIS", "HCT"],
+		cp: 3,
+		vorher: ["dbs1"], 
+		dozent: ["Prof. Dr. Felix Naumann"],
+		nameLV: "Beautiful Data"
+	},
 	bs1: {
 		kurz: "BS I",
 		lehrform: ["Vorlesung"],
