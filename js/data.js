@@ -936,7 +936,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: [],
-		dozent: ["N.N."],
+		dozent: ["Prof. Dr. Jürgen Dassow"],
 		nameLV: "Theoretische Informatik I"
 	},
 	ti2: {
@@ -949,7 +949,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: ["ti1"],
-		dozent: ["Prof. Dr. Christoph Kreitz"],
+		dozent: ["N.N."],
 		nameLV: "Theoretische Informatik II"
 	},
 	telemedicine: {
