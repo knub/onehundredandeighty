@@ -107,6 +107,19 @@ var data = {
 		dozent: ["Prof. Dr. Felix Naumann"],
 		nameLV: "Beauty is our Business"
 	},
+	beautifuldata: {
+		kurz: "Beautiful<br />data"
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws13_14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["OSIS", "HCT"],
+		cp: 3,
+		vorher: ["dbs1"], 
+		dozent: ["Prof. Dr. Felix Naumann"],
+		nameLV: "Beautiful Data"
+	},
 	bs1: {
 		kurz: "BS I",
 		lehrform: ["Vorlesung"],
@@ -975,7 +988,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: [],
-		dozent: ["N.N."],
+		dozent: ["Prof. Dr. Jürgen Dassow"],
 		nameLV: "Theoretische Informatik I"
 	},
 	ti2: {
@@ -988,7 +1001,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: ["ti1"],
-		dozent: ["Prof. Dr. Christoph Kreitz"],
+		dozent: ["N.N."],
 		nameLV: "Theoretische Informatik II"
 	},
 	telemedicine: {
