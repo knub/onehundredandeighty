@@ -108,7 +108,7 @@ var data = {
 		nameLV: "Beauty is our Business"
 	},
 	beautifuldata: {
-		kurz: "Beautiful<br />data"
+		kurz: "Beautiful<br />data",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ws13_14],
