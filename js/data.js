@@ -852,7 +852,7 @@ var data = {
 		kurz: "Recht II",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
-		semester: [ws10_11, ws11_12, ws12_13],
+		semester: [ws10_11, ws11_12, ws12_13, ws13_14],
 		pflicht: true,
 		empfohlen: 3,
 		vertiefung: [""],
