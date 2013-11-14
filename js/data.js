@@ -44,7 +44,7 @@ var data = {
 		vertiefung: ["IST", "OSIS"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Dr. Harald Sack", "Christian Willems", "Thomas Staubitz", "Haojin Yang", "Jörg Waitelonis", "Magnus Knuth", "Christian Hentschel", "Bernhard Quehl"],
+		dozent: ["Dr. Harald Sack", "Christian Willems"],
 		nameLV: "Crowdsourcing Multimedia Annotations"
 	}
 	webappselearning: {
