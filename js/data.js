@@ -26,9 +26,53 @@ var ws10_11 = "WS10/11",
     ss12    = "SS12",
     ws12_13 = "WS12/13",
     ss13    = "SS13",
-    ws13_14 = "WS13/14";
+    ws13_14 = "WS13/14",
+    ss14	= "SS14",
+    ws14_15	= "WS14/15",
+    ss15	= "SS15",
+    ws15_16 = "WS15/16",
+    ss16	= "SS16";
 
 var data = {
+	multimediaannotations: {
+		kurz: "Multimedia<br />Annotations",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws12_13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST", "OSIS"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Dr. Harald Sack", "Christian Willems"],
+		nameLV: "Crowdsourcing Multimedia Annotations"
+	}
+	webappselearning: {
+		kurz: "Web Apps<br />eLearnig",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws12_13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST", "OSIS", "SAMT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Jan Renz", "Thomas Staubitz"],
+		nameLV: "Creating Interactibe Web-based apps in the Context of eLearning"
+	}
+	complexeventprocessing: {
+		kurz: "Complex Event<br />Processing",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws12_13],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["BPET", "OSIS", "SAMT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Mathias Weske", "Nico Herzberg", "Matthias Kunze"],
+		nameLV: "A Platform for Complex Event"
+	},
 	advancedmodularity: {
 		kurz: "Advanced<br />Modularity",
 		lehrform: ["Seminar"],
