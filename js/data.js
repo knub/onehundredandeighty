@@ -1,4 +1,4 @@
-/*
+mod/*
  * NOTE: Please update semesterManager in js/logic.js as well, after updating this file
  *
  * This file must only be edited manually!
@@ -38,7 +38,7 @@ var data = {
 		kurz: "Multimedia<br />Annotations",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws12_13],
+		semester: [ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["IST", "OSIS"],
@@ -51,7 +51,7 @@ var data = {
 		kurz: "Web Apps<br />eLearnig",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws12_13],
+		semester: [ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["IST", "OSIS", "SAMT"],
@@ -64,14 +64,14 @@ var data = {
 		kurz: "Complex Event<br />Processing",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws12_13],
+		semester: [ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["BPET", "OSIS", "SAMT"],
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Mathias Weske", "Nico Herzberg", "Matthias Kunze"],
-		nameLV: "A Platform for Complex Event"
+		nameLV: "A Platform for Complex Event Processing"
 	},
 	advancedmodularity: {
 		kurz: "Advanced<br />Modularity",
@@ -428,7 +428,7 @@ var data = {
 		kurz: "Computer-<br />grafik II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13],
+		semester: [ws10_11, ws11_12, ws12_13, ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["HCT", "SAMT"],
