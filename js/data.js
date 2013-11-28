@@ -34,45 +34,6 @@ var ws10_11 = "WS10/11",
     ss16	= "SS16";
 
 var data = {
-	multimediaannotations: {
-		kurz: "Multimedia<br />Annotations",
-		lehrform: ["Seminar"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ws12_13],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["IST", "OSIS"],
-		cp: 6,
-		vorher: [],
-		dozent: ["Dr. Harald Sack", "Christian Willems"],
-		nameLV: "Crowdsourcing Multimedia Annotations"
-	},
-	webappselearning: {
-		kurz: "Web Apps<br />eLearnig",
-		lehrform: ["Seminar"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ws12_13],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["IST", "OSIS", "SAMT"],
-		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Christoph Meinel", "Jan Renz", "Thomas Staubitz"],
-		nameLV: "Creating Interactibe Web-based apps in the Context of eLearning"
-	},
-	complexeventprocessing: {
-		kurz: "Complex Event<br />Processing",
-		lehrform: ["Seminar"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ws12_13],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["BPET", "OSIS", "SAMT"],
-		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Mathias Weske", "Nico Herzberg", "Matthias Kunze"],
-		nameLV: "A Platform for Complex Event"
-	},
 	advancedmodularity: {
 		kurz: "Advanced<br />Modularity",
 		lehrform: ["Seminar"],
@@ -215,6 +176,19 @@ var data = {
 		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel", "Raja Gumienny", "Christian Willems", "Matthias Quasthoff", "Lutz Gericke"],
 		nameLV: "User-centered development of collaboration software"
+	},
+	complexeventprocessing: {
+		kurz: "Complex Event<br />Processing",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws13_14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["BPET", "OSIS", "SAMT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Mathias Weske", "Nico Herzberg", "Matthias Kunze"],
+		nameLV: "A Platform for Complex Event Processing"
 	},
 	copsandrobbers: {
 		kurz: "Cops &<br />Robbers",
@@ -428,7 +402,7 @@ var data = {
 		kurz: "Computer-<br />grafik II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13],
+		semester: [ws10_11, ws11_12, ws12_13, ws13_14],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["HCT", "SAMT"],
@@ -709,6 +683,19 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. rer. nat. Harald Sack"],
 		nameLV: "Multimedia Analyse Technologien"
+	},
+	multimediaannotations: {
+		kurz: "Multimedia<br />Annotations",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws13_14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST", "OSIS"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Dr. Harald Sack", "Christian Willems"],
+		nameLV: "Crowdsourcing Multimedia Annotations"
 	},
 	nosql: {
 		kurz: "NoSQL",
@@ -1073,6 +1060,19 @@ var data = {
 		vorher: ["gds"],
 		dozent: ["Dr.-Ing. Ralf Wollowski"],
 		nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
+	},
+	webappselearning: {
+		kurz: "Web Apps<br />eLearning",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws13_14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["IST", "OSIS", "SAMT"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Jan Renz", "Thomas Staubitz"],
+		nameLV: "Creating Interactive Web-based Apps in the Context of eLearning"
 	},
 	webmobile: {
 		kurz: "Mobile<br />Web",
