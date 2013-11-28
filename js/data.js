@@ -1,4 +1,4 @@
-mod/*
+/*
  * NOTE: Please update semesterManager in js/logic.js as well, after updating this file
  *
  * This file must only be edited manually!
@@ -1062,7 +1062,7 @@ var data = {
 		nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
 	},
 	webappselearning: {
-		kurz: "Web Apps<br />eLearnig",
+		kurz: "Web Apps<br />eLearning",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ws13_14],
@@ -1072,7 +1072,7 @@ var data = {
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel", "Jan Renz", "Thomas Staubitz"],
-		nameLV: "Creating Interactibe Web-based apps in the Context of eLearning"
+		nameLV: "Creating Interactive Web-based Apps in the Context of eLearning"
 	},
 	webmobile: {
 		kurz: "Mobile<br />Web",
