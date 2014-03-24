@@ -166,13 +166,13 @@ var frontend = {
 				}
 			}
 			// SAVE data
-			localStorage.hasData = true;
-			localStorage.courseToSemester = JSON.stringify(courseToSemester);
-			localStorage.repetitionManager = JSON.stringify(f.repetitionManager);
-			localStorage.filterManager = JSON.stringify(f.filterManager);
-			localStorage.semesters = JSON.stringify(semesterManager.shownSemesters);
-			localStorage.checkPermanently = f.checkPermanently;
-			localStorage.allMessagesVisible = f.allMessagesVisible;
+			localStorage.onehundredandeighty_hasData = true;
+			localStorage.onehundredandeighty_courseToSemester = JSON.stringify(courseToSemester);
+			localStorage.onehundredandeighty_repetitionManager = JSON.stringify(f.repetitionManager);
+			localStorage.onehundredandeighty_filterManager = JSON.stringify(f.filterManager);
+			localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
+			localStorage.onehundredandeighty_checkPermanently = f.checkPermanently;
+			localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
 		}
 	},
 	makeVertiefungsgebieteTable: function(vertiefungen) {
@@ -722,7 +722,7 @@ $(function() {
 		$("#permacheck").find("li").attr("class", "selected");
 		$("#checkbox-div").css("visibility", "visible");
 		$("#button-div").css("visibility", "visible");
-		localStorage.alreadyChecked = true;
+		localStorage.onehundredandeighty_alreadyChecked = true;
 		f.saveManager.save();
 	});
 
@@ -763,20 +763,20 @@ $(function() {
 		filtering = ! filtering;
 	});
 
-	if (localStorage.hasData === "true") {
-		f.checkPermanently = localStorage.checkPermanently === "true";
-		if (localStorage.checkPermanently === "null")
+	if (localStorage.onehundredandeighty_hasData === "true") {
+		f.checkPermanently = localStorage.onehundredandeighty_checkPermanently === "true";
+		if (localStorage.onehundredandeighty_checkPermanently === "null")
 			f.checkPermanently = null;
-		f.allMessagesVisible = localStorage.allMessagesVisible === "true";
+		f.allMessagesVisible = localStorage.onehundredandeighty_allMessagesVisible === "true";
 
-		semesterManager.shownSemesters = JSON.parse(localStorage.semesters);
+		semesterManager.shownSemesters = JSON.parse(localStorage.onehundredandeighty_semesters);
 		// if there are more than six semester, we need a special row
 		if (semesterManager.shownSemesters.length > 6) {
 			f.addSemester(semesterManager.shownSemesters.length - 6);
 		}
 
-		f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.filterManager));
-		f.repetitionManager = $.extend(f.repetitionManager, JSON.parse(localStorage.repetitionManager));
+		f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.onehundredandeighty_filterManager));
+		f.repetitionManager = $.extend(f.repetitionManager, JSON.parse(localStorage.onehundredandeighty_repetitionManager));
 		if (f.checkPermanently !== false) $("#permacheck").find("li").attr("class", "selected");
 		else $("#button-div").fadeIn(100);
 	}
@@ -824,10 +824,10 @@ $(function() {
 
 		// lookup, if there is localStorage data for this semester
 		// if this is the case, use this information
-		if (localStorage.courseToSemester !== undefined && localStorage.courseToSemester !== null) {
-			var semester = JSON.parse(localStorage.courseToSemester)[key];
+		if (localStorage.onehundredandeighty_courseToSemester !== undefined && localStorage.onehundredandeighty_courseToSemester !== null) {
+			var semester = JSON.parse(localStorage.onehundredandeighty_courseToSemester)[key];
 			if (semester === undefined || semester === - 1) coursesPoolItems += html;
-			else if (semester >= 0) $("#semester" + JSON.parse(localStorage.courseToSemester)[key]).append(html);
+			else if (semester >= 0) $("#semester" + JSON.parse(localStorage.onehundredandeighty_courseToSemester)[key]).append(html);
 		}
 		// else use standard behaviour
 		else {
@@ -893,7 +893,7 @@ $(function() {
 	/* adjust #semester-view1 height */
 	f.adjustSemesterViewHeight();
 
-	if (localStorage.alreadyChecked === "true") {
+	if (localStorage.onehundredandeighty_alreadyChecked === "true") {
 		f.checkRules();
 		f.slideMessages();
 		$("#checkbox-div").css("visibility", "visible");
@@ -901,7 +901,14 @@ $(function() {
 	}
 
 	$("#reset").click(function() {
-		localStorage.clear();
+		/* localStorage.clear() may remove too much data, e.g. 120 data hosted on the same server */
+		localStorage.removeItem("onehundredandeighty_hasData");
+		localStorage.removeItem("onehundredandeighty_courseToSemester");
+		localStorage.removeItem("onehundredandeighty_repetitionManager");
+		localStorage.removeItem("onehundredandeighty_filterManager");
+		localStorage.removeItem("onehundredandeighty_semesters");
+		localStorage.removeItem("onehundredandeighty_checkPermanently");
+		localStorage.removeItem("onehundredandeighty_allMessagesVisible");
 		location.reload();
 	});
 	$("#moresemester").click(function() {
