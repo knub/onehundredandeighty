@@ -866,19 +866,6 @@ var data = {
 		dozent: ["Prof. Dr. Robert Hirschfeld", "Tim Felgentreff", "Tobia Pape"],
 		nameLV: "Programming Language Concepts"
 	},
-	prozessmodimp: {
-		kurz: "Prozess-<br />modellierung",
-		lehrform: ["Seminar"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ss14],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["BPET", "OSIS"],
-		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Matthias Weske", "Matthias Kunze"],
-		nameLV: "Prozessmodellierung- und implementierung"
-	},
 	pt1: {
 		kurz: "PT I",
 		lehrform: ["Vorlesung", "Übung"],
@@ -1104,7 +1091,7 @@ var data = {
 		kurz: "Telemedicine",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ss13, ss14],
+		semester: [ss13],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["HCT", "IST", "OSIS"],
