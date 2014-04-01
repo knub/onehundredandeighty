@@ -204,16 +204,16 @@ var data = {
 		nameLV: "Cops & Robbers"
 	},
 	crowdsourcingopenhpi: {
-		kurz: "Crowsdsourcing openHPI",
+		kurz: "Crowsdsourcing<br />openHPI",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ss14],
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["IST", "OSIS", "HCT"],
+		vertiefung: ["IST", "HCT", "OSIS"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Prof. Dr. Christoph Meinel", "Christian Willems", "Thomas Staubitz", "Jan Renz", "Hajin Yang"],
+		dozent: ["Prof. Dr. Christoph Meinel", "Christian Willems"],
 		nameLV: "Crowdsourcing openHPI"
 	},
 	grafik1: {
@@ -535,7 +535,7 @@ var data = {
 		semester: [ss14],
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: ["SAMT", "HCT"],
+		vertiefung: ["HCT", "SAMT"],
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Jürgen Döllner", "Dr. Matthias Trapp", "Amir Semmo"],
@@ -863,7 +863,7 @@ var data = {
 		vertiefung: ["SAMT"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Prof. Dr. Robert Hirschfeld", "Tim Felgentreff", "Tobia Pape"],
+		dozent: ["Prof. Dr. Robert Hirschfeld", "Tim Felgentreff", "Tobias Pape"],
 		nameLV: "Programming Language Concepts"
 	},
 	pt1: {
