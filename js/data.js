@@ -217,7 +217,7 @@ var data = {
 		nameLV: "Cops & Robbers"
 	},
 	crowdsourcingopenhpi: {
-		kurz: "Crowsdsourcing<br />openHPI",
+		kurz: "Crowdsourcing<br />openHPI",
 		lehrform: ["Seminar", "Projekt"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ss14],
@@ -356,7 +356,7 @@ var data = {
 		vertiefung: ["BPET", "OSIS"],
 		cp: 6,
 		vorher: [],
-		dozent: ["Dr. Matthias Ulfacker", "Dr. Jürgen Müller", "Arian Treffer", "Martin Lorenz"],
+		dozent: ["Dr. Matthias Uflacker", "Dr. Jürgen Müller"],
 		nameLV: "Enterprise Software Systems - Programming Concepts and Application Characteristics"
 	},
 	eworld: {
@@ -1045,7 +1045,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: [],
-		dozent: ["Prof. Dr. Robert Hirschfeld", "Dr.Michael Perscheid"],
+		dozent: ["Prof. Dr. Robert Hirschfeld", "Dr. Michael Perscheid"],
 		nameLV: "Softwarearchitektur"
 	},
 	swt1: {
