@@ -14,18 +14,16 @@ var studyRegulations = {
 var semesterManager = {
 	semesters: ["WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14", "WS14/15", "SS15", "WS15/16", "SS16", "WS16/17", "SS17", "WS17/18", "SS18"],
 	shownSemesters: [
-	/*
-		"WS10/11",
-		"SS11",
-		"WS11/12",
-		"SS12",
-		"WS12/13",
-		"SS13"
-		*/
+		"WS13/14",
+		"SS14",
+		"WS14/15",
+		"SS15",
+		"WS15/16",
+		"SS16"
 	],
 	numberDisplayed: 6,
-	current: "WS13/14",
-	lastSummerSemester: "SS13",
+	current: "SS14",
+	lastSummerSemester: "SS14",
 	lastWinterSemester: "WS13/14",
 	/* the semester that is the first semester when you first start the application */
 	startswith: "WS13/14",
