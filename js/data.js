@@ -113,7 +113,7 @@ var data = {
 		nameLV: "Beauty is our Business"
 	},
 	bpmninthecloud : {
-		kurz: "BPMN in the cloud:<br />tBPMN & effektif"
+		kurz: "BPMN in the cloud:<br />tBPMN & effektif",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ss14],
