@@ -320,6 +320,19 @@ var data = {
 		dozent: ["Prof. Ulrich Weinberg", "Dr. Claudia Nicolai"],
 		nameLV: "D-School Advanced Track"
 	},
+	dienstbasiertewebarchitekturen: {
+		kurz: "Dienstbasierte<br />Webarchitekturen",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["BPET", "IST", "OSIS"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Dr. Michael Menzel"],
+		nameLV: "Dienstbasierte Webarchitekturen mit HTML5 und REST"
+	},
 	enterprise: {
 		kurz: "Basics<br />Enterprise Software",
 		lehrform: ["Vorlesung", "Übung"],
