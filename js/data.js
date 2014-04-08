@@ -887,7 +887,7 @@ var data = {
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: ["SAMT"],
-		cp: 6,
+		cp: 3,
 		vorher: [],
 		dozent: ["Prof. Dr. Robert Hirschfeld", "Tim Felgentreff", "Tobias Pape"],
 		nameLV: "Programming Language Concepts"
