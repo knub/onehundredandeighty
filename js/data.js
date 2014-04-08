@@ -593,6 +593,19 @@ var data = {
 		dozent: ["Prof. Dr. Christoph Meinel", "Ahmad Alsa'deh"],
 		nameLV: "IPv6 Best Practices"
 	},
+	itimgesundheitswesen: {
+		kurz: "IT im<br />Gesundheitswesen",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss14],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["HCT", "IST", "OSIS"],
+		cp: 3,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Nuhad Shaabani"],
+		nameLV: "IT im Gesundheitswesen"
+	},
 	klubsprecher: {
 		kurz: "Klubsprecher",
 		lehrform: [""],
