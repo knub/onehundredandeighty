@@ -1331,7 +1331,7 @@ var data = {
 		kurz: "Wirtschaft I/II",
 		lehrform: ["Vorlesung"],
 		modul: ["Rechtliche und wirtschaftliche Grundlagen"],
-		semester: [ws11_12, ws12_13, ws13_14],
+		semester: [ws11_12, ws12_13, ws13_14, ws14_15],
 		pflicht: false,
 		empfohlen: 1,
 		vertiefung: [""],
