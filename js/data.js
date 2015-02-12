@@ -261,32 +261,6 @@ var data = {
 		dozent: ["Prof. Dr. Christoph Meinel", "Christian Willems"],
 		nameLV: "Crowdsourcing openHPI"
 	},
-	grafik1: {
-		kurz: "Computer-<br />grafik I",
-		lehrform: ["Vorlesung", "Übung"],
-		modul: ["Vertiefungsgebiete", "Softwarebasissysteme"],
-		semester: [ss11, ss12],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: [HCT],
-		cp: 6,
-		vorher: ["mathematik1", "pt1"],
-		dozent: ["Prof. Dr. Jürgen Döllner"],
-		nameLV: "3D-Computergrafik I"
-	},
-	grafik2: {
-		kurz: "Computer-<br />grafik II",
-		lehrform: ["Vorlesung"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13, ws13_14, ws14_15],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: [HCT, SAMT],
-		cp: 6,
-		vorher: ["grafik1"],
-		dozent: ["Prof. Dr. Jürgen Döllner"],
-		nameLV: "Computergrafik II"
-	},
 	dbs1: {
 		kurz: "DBS I",
 		lehrform: ["Vorlesung", "Übung"],
@@ -499,7 +473,7 @@ var data = {
 		kurz: "Computer-<br />grafik II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13, ws13_14],
+		semester: [ws10_11, ws11_12, ws12_13, ws13_14, ws14_15],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [HCT, SAMT],
