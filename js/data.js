@@ -499,7 +499,7 @@ var data = {
 		kurz: "Grafik-<br />Programmierung",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ss13, ss14],
+		semester: [ss13, ss14, ss15],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [HCT, SAMT],
@@ -1081,9 +1081,9 @@ var data = {
 		dozent: ["Dr. Sebastian Roschke"],
 		nameLV: "Secure Coding"
 	},
-  secureingcloudstorages:
+  privacypublicclouds:
   {
-    kurz: "Securing<br>Cloud Storages",
+    kurz: "Cloud<br>Privacy",
     lehrform: ["Seminar"],
     modul: ["Vertiefungsgebiete"],
     semester: [ss15],
