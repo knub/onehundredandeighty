@@ -2,7 +2,7 @@
 "use strict";
 
 /*
- * Holds all relevant information from the study regulations 
+ * Holds all relevant information from the study regulations
  * 'Fachspezifische Ordnung für das Bachelor- und Masterstudium im Fach IT-Systems Engineering an der Universität Potsdam'
  * (variable names in german, because 'Vertiefungsgebiete' is hard to translate and not really nice)
  */
@@ -22,7 +22,7 @@ var semesterManager = {
 		"SS17"
 	],
 	numberDisplayed: 6,
-	current: "WS14/15",
+	current: "SS15",
 	lastSummerSemester: "SS14",
 	lastWinterSemester: "WS14/15",
 	/* the semester that is the first semester when you first start the application */
