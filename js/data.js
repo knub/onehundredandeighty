@@ -629,7 +629,7 @@ var data = {
 		kurz: "Klubsprecher",
 		lehrform: [""],
 		modul: ["Softskills"],
-		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13, ws13_14, ss14, ss15],
+		semester: [ws10_11, ss11, ws11_12, ss12, ws12_13, ss13, ws13_14, ss14, ws14_15, ss15],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [""],
