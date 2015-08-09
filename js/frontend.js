@@ -541,7 +541,14 @@ var frontend = {
 		f.coursesUl.find("li").knubtip("enable");
 	},
 	/* called when user drag'n'dropped something */
-	update: function() {
+	update: function(event, ui) {
+		// catches the first of two duplicate calls to the update function
+		// after every drag and drop and returns, so that the rules are
+		// only checked once per change
+		// ui.sender is only defined for the second call
+		if (ui.sender === null) {
+			return;
+		}
 		f.adjustSemesterViewHeight();
 		f.sortPool();
 		f.filterManager.filter();
