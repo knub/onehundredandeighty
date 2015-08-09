@@ -488,6 +488,7 @@ var vertiefungsgebieteRule = {
 			var unique = true;
 
 			var combStrArray = combination.map(combToStringArray);
+			combStrArray.sort();
 
 			// cache data to improve performance
 			combination.vertiefungsstring = vertiefungsstring;
