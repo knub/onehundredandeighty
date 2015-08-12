@@ -57,11 +57,16 @@ Array.cartesianProduct = function () {
 };
 
 
-// Not the best implementation, because [1, 2, 1].subsetOf([1, 2, 3]) is true, but enough for what we need.
-Array.prototype.subsetOf = function (other) {
+// specifically for arrays sorted using the same order
+Array.prototype.subsetOfSorted = function (other) {
+	var j = 0;
 	for (var i = 0; i < this.length; i += 1) {
-		if (other.indexOf(this[i]) === -1)
-			return false;
+		while (this[i] !== other[j]) {
+			++j;
+			if (j >= other.length) {
+				return false
+			}
+		}
 	}
 	return true;
 };

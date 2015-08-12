@@ -488,20 +488,25 @@ var vertiefungsgebieteRule = {
 			var unique = true;
 
 			var combStrArray = combination.map(combToStringArray);
+			combStrArray.sort();
+
+			// cache data to improve performance
+			combination.vertiefungsstring = vertiefungsstring;
+			combination.strArray = combStrArray;
+
 			// Walk through all combinations and then decide, whether to save it in the array.
 			mergedCombinations.forEach(function(combinationOld, helpindex) {
-				var combOldStrArray = combinationOld.map(combToStringArray);
 				// if the Vertiefung pair is already in the array ..
-				if (combinationOld.vertiefungPair.join("") === vertiefungsstring) {
+				if (combinationOld.vertiefungsstring === vertiefungsstring) {
 					// decide whether it is worthy to override the old value
 					alreadyIn = true;
 					// it IS worthy, when it is longer than the old value and is a superset of it
-					if (combinationOld.length < combination.length && combOldStrArray.subsetOf(combStrArray)) {
+					if (combinationOld.length < combination.length && combinationOld.strArray.subsetOfSorted(combStrArray)) {
 						mergedCombinations[helpindex] = combination;
 						unique = false;
 					}
 					else {
-						if (combStrArray.subsetOf(combOldStrArray) === true)
+						if (combStrArray.subsetOfSorted(combinationOld.strArray) === true)
 							unique = false;
 					}
 				}
