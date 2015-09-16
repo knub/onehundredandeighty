@@ -361,7 +361,7 @@ var data = {
 		empfohlen: "",
 		vertiefung: [IST, OSIS, SAMT],
 		cp: 6,
-		vorher: [], //mathe1?
+		vorher: [],
 		dozent: ["Prof. Dr. Tobias Friedrich", "Dr. Pascal Lenzner"],
 		nameLV: "Einführung in die Algorithmik"
 	},
