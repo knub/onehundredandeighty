@@ -677,9 +677,8 @@ var data = {
 		dozent: [],
 		nameLV: "Klubsprechertätigkeit über mindestens zwei Semester"
 	},
-  knowledgemining:
-  {
-    kurz: "Knowledge<br>Mining",
+	knowledgemining: {
+		kurz: "Knowledge<br>Mining",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ss15],
@@ -1133,20 +1132,19 @@ var data = {
 		dozent: ["Dr. Sebastian Roschke"],
 		nameLV: "Secure Coding"
 	},
-  privacypublicclouds:
-  {
-    kurz: "Cloud<br>Privacy",
-    lehrform: ["Seminar"],
-    modul: ["Vertiefungsgebiete"],
-    semester: [ss15],
-    pflicht: false,
-    empfohlen: "",
-    vertiefung: [IST, OSIS, SAMT],
-    cp: 6,
-    vorher: [],
-    dozent: ["Prof. Dr. Christoph Meinel"],
-    nameLV: "Securing Cloud Storages"
-  },
+	privacypublicclouds: {
+		kurz: "Cloud<br>Privacy",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss15],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [IST, OSIS, SAMT],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel"],
+		nameLV: "Securing Cloud Storages"
+	},
 	semanticmedia: {
 		kurz: "Media<br />Mining",
 		lehrform: ["Seminar"],
@@ -1247,7 +1245,7 @@ var data = {
 		empfohlen: "",
 		vertiefung: [OSIS, SAMT],
 		cp: 6,
-		vorher: []
+		vorher: [],
 		dozent: ["Prof. Dr. Holger Giese"],
 		nameLV: "Softwarequalität"
 	},
@@ -1484,5 +1482,5 @@ var data = {
 		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel", "Matthias Bauer"],
 		nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
-  }
+	}
 };
