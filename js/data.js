@@ -1484,3 +1484,5 @@ var data = {
 		nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
 	}
 };
+
+module.exports = data;
