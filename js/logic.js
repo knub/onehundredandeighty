@@ -215,6 +215,7 @@ var timeRule = {
 	check: function(getSemester) {
 		// get the semester number (first, second, third ...) for the given course
 		var semesterNumber = getSemester(this.course);
+
 		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
 
 		if (semesterNumber === - 1) return true;
@@ -705,6 +706,7 @@ for (var course in data) {
 	/* 6: create time-rules for all courses saved in data */
 	ruleManager.rules.push(Object.create(timeRule).init(course));
 }
+
 /* 4: create sbs-rule, just push it to rules-array */
 ruleManager.rules.push(sbsRule);
 
@@ -718,3 +720,7 @@ ruleManager.rules.push(vertiefungsgebieteRule);
 ruleManager.rules.push(wirtschaftRule);
 
 /* 8: clone rules are added at runtime when items are cloned */
+
+module.exports = {
+	ruleManager: ruleManager
+};

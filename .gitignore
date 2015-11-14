@@ -4,3 +4,5 @@ twitter-bootstrap
 parser/data.js
 .swp
 post
+coverage
+Makefile
