@@ -7,8 +7,6 @@ var semesterManager = logic.semesterManager;
 
 var initDataWith = function(courses) {
 
-	semesterManager.shownSemesters = [ "WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13" ];
-
 	ruleManager.init(function getSemester(course) {
 		var semester = courses[course];
 		if (!semester)
@@ -22,6 +20,7 @@ var initDataWith = function(courses) {
 
 describe('integration', function() {
     it('works on Stefan\'s plan', function () {
+		semesterManager.shownSemesters = [ "WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13" ];
 		initDataWith({
 			"beauty":4,
 			"bs1":3,
@@ -51,6 +50,47 @@ describe('integration', function() {
 			"wirtschaft1":1,
 			"wirtschaft2":2,
 			"www":2,
+		});
+		var rules = logic.ruleManager.checkAll();
+
+		for (var rule = 0; rule < rules.length; rule += 1) {
+			if (rules[rule].success === true) continue;
+			console.log(rules[rule]);
+		}
+		assert(rules.numberFailedRules == 0);
+    });
+
+
+    it('works on Richard\'s plan', function () {
+		semesterManager.shownSemesters = [ "WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14" ];
+		initDataWith({
+			"bs1":3,
+			"bs2":6,
+			"dbs1":4,
+			"fachenglisch1":8,
+			"gds":1,
+			"grafik1":2,
+			"hci1":7,
+			"klubsprecher":8,
+			"mathematik1":1,
+			"mathematik2":2,
+			"mod1":1,
+			"mod2":2,
+			"modellgetriebenesoftwareentwicklungvorlesung":5,
+			"pem":5,
+			"pois1":3,
+			"pt1":1,
+			"pt2":2,
+			"recht1":2,
+			"recht2":3,
+			"studiumplus":3,
+			"swa":5,
+			"swt1":4,
+			"ti1":5,
+			"ti2":4,
+			"webappselearning":7,
+			"wirtschaftneu":3,
+			"www":8,
 		});
 		var rules = logic.ruleManager.checkAll();
 
