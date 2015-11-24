@@ -319,8 +319,7 @@ var frontend = {
 			f.messageDiv.animate({
 				backgroundColor: '#026400'
 			}, 350);
-		}
-		else {
+		} else {
 			for (var rule = 0; rule < rules.length; rule += 1) {
 				if (rules[rule].success === true) continue;
 				var extra = '';

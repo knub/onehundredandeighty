@@ -3,8 +3,12 @@ var logic = require('../js/logic.js');
 var foo = require('../js/helper.js');
 var assert = require('assert');
 var ruleManager = logic.ruleManager;
+var semesterManager = logic.semesterManager;
 
 var initDataWith = function(courses) {
+
+	semesterManager.shownSemesters = [ "WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13" ];
+
 	ruleManager.init(function getSemester(course) {
 		var semester = courses[course];
 		if (!semester)
@@ -12,6 +16,8 @@ var initDataWith = function(courses) {
 		else
 			return semester;
 	});
+	ruleManager.rules = [];
+	ruleManager.addAllRules();
 };
 
 describe('integration', function() {
@@ -47,6 +53,11 @@ describe('integration', function() {
 			"www":2,
 		});
 		var rules = logic.ruleManager.checkAll();
+
+		for (var rule = 0; rule < rules.length; rule += 1) {
+			if (rules[rule].success === true) continue;
+			console.log(rules[rule]);
+		}
 		assert(rules.numberFailedRules == 0);
     });
 });

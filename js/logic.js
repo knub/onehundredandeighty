@@ -680,47 +680,79 @@ var wirtschaftRule = {
 // ---
 // Rules created, now started adding them to rule manager
 // ---
-/* 1: create semester rule, just push it to rules array */
-ruleManager.rules.push(semesterRule);
 
-/* now walk through the array and add data-dependent rules */
-for (var course in data) {
-	if (!data.hasOwnProperty(course)) continue;
-	/* 2: create must-do-rules according to the information saved in data */
-	// if course must be done ..
-	if (data[course].pflicht) {
-		// .. add rule to rule manager
-		ruleManager.rules.push(Object.create(mustDoRule).init(course));
-	}
-
-	/* 3: create dependency-rules according to the information saved in data */
-	// if there are dependencies ..
-	if (data[course].vorher.length !== 0) {
-		// .. loop through all dependencies and ..
-		for (var i = 0; i < data[course].vorher.length; i++) {
+ruleManager.addSemesterRule = function() {
+	/* 1: create semester rule, just push it to rules array */
+	ruleManager.rules.push(semesterRule);
+};
+ruleManager.addMustDoRule = function() {
+	for (var course in data) {
+		if (!data.hasOwnProperty(course)) continue;
+		/* 2: create must-do-rules according to the information saved in data */
+		// if course must be done ..
+		if (data[course].pflicht) {
 			// .. add rule to rule manager
-			ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
+			ruleManager.rules.push(Object.create(mustDoRule).init(course));
 		}
 	}
+};
+ruleManager.addDependencyRule = function() {
+	for (var course in data) {
+		if (!data.hasOwnProperty(course)) continue;
+		/* 3: create dependency-rules according to the information saved in data */
+		// if there are dependencies ..
+		if (data[course].vorher.length !== 0) {
+			// .. loop through all dependencies and ..
+			for (var i = 0; i < data[course].vorher.length; i++) {
+				// .. add rule to rule manager
+				ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
+			}
+		}
+	}
+};
+ruleManager.addTimeRule = function() {
+	for (var course in data) {
+		if (!data.hasOwnProperty(course)) continue;
+		/* 6: create time-rules for all courses saved in data */
+		ruleManager.rules.push(Object.create(timeRule).init(course));
+	}
+};
 
-	/* 6: create time-rules for all courses saved in data */
-	ruleManager.rules.push(Object.create(timeRule).init(course));
+ruleManager.addSbsRule = function() {
+	/* 4: create sbs-rule, just push it to rules-array */
+	ruleManager.rules.push(sbsRule);
+};
+
+ruleManager.addSoftskillsRule = function() {
+	/* 5: create softskills-rule, just push it to rules-array */
+	ruleManager.rules.push(softskillsRule);
+};
+
+ruleManager.addVertiefungsgebieteRule = function() {
+	/* 7: create vertiefungsgebiete-rule, just push it to rules-array */
+	ruleManager.rules.push(vertiefungsgebieteRule);
+};
+
+ruleManager.addWirtschaftsRule = function() {
+	/* 9: create wirtschaft-rule, just push it to rules-array */
+	ruleManager.rules.push(wirtschaftRule);
 }
-
-/* 4: create sbs-rule, just push it to rules-array */
-ruleManager.rules.push(sbsRule);
-
-/* 5: create softskills-rule, just push it to rules-array */
-ruleManager.rules.push(softskillsRule);
-
-/* 7: create vertiefungsgebiete-rule, just push it to rules-array */
-ruleManager.rules.push(vertiefungsgebieteRule);
-
-/* 9: create wirtschaft-rule, just push it to rules-array */
-ruleManager.rules.push(wirtschaftRule);
 
 /* 8: clone rules are added at runtime when items are cloned */
 
+ruleManager.addAllRules = function() {
+	ruleManager.addSemesterRule();
+	ruleManager.addMustDoRule();
+	ruleManager.addDependencyRule();
+	ruleManager.addSbsRule();
+	ruleManager.addSoftskillsRule();
+	ruleManager.addTimeRule();
+	ruleManager.addVertiefungsgebieteRule();
+	ruleManager.addWirtschaftsRule();
+};
+ruleManager.addAllRules();
+
 module.exports = {
-	ruleManager: ruleManager
+	ruleManager: ruleManager,
+	semesterManager: semesterManager
 };
