@@ -1,24 +1,32 @@
-data = require('../js/data.js');
-var logic = require('../js/logic.js');
-var foo = require('../js/helper.js');
-var assert = require('assert');
-var ruleManager = logic.ruleManager;
-var semesterManager = logic.semesterManager;
-
-var initDataWith = function(courses) {
-
-	ruleManager.init(function getSemester(course) {
-		var semester = courses[course];
-		if (!semester)
-			return -1;
-		else
-			return semester;
-	});
-	ruleManager.rules = [];
-	ruleManager.addAllRules();
-};
-
 describe('integration', function() {
+
+	data = require('../js/data.js');
+	copyData = data
+	var logic = require('../js/logic.js');
+	var foo = require('../js/helper.js');
+	var assert = require('assert');
+	var ruleManager = logic.ruleManager;
+	var semesterManager = logic.semesterManager;
+
+
+	beforeEach(function() {
+		ruleManager.rules = [];
+		data = copyData;
+	});
+
+	var initDataWith = function(courses) {
+
+		ruleManager.init(function getSemester(course) {
+			var semester = courses[course];
+			if (!semester)
+				return -1;
+			else
+				return semester;
+		});
+		ruleManager.rules = [];
+		ruleManager.addAllRules();
+	};
+
     it('works on Stefan\'s plan', function () {
 		semesterManager.shownSemesters = [ "WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13" ];
 		initDataWith({
