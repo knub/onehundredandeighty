@@ -6,3 +6,6 @@ parser/data.js
 post
 coverage
 Makefile
+node_modules/
+reports/
+tmp/

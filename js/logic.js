@@ -263,7 +263,8 @@ var vertiefungsgebieteRule = {
 	init: function() {
 		return this;
 	},
-	/* check method */
+
+
 	check: function(getSemester) {
 		this.vertiefungen = null;
 		this.combinations = null;
@@ -281,6 +282,9 @@ var vertiefungsgebieteRule = {
 			}
 			return sbsCourses;
 		}
+		/**
+ 		* @excludeMutations
+ 		*/
 		var getCurrentlyChosenVertiefungen = function() {
 			var chosenVertiefungen = [];
 			for (var course in data) {
