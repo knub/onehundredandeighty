@@ -63,7 +63,6 @@ describe('integration', function() {
 
 		for (var rule = 0; rule < rules.length; rule += 1) {
 			if (rules[rule].success === true) continue;
-			console.log(rules[rule]);
 		}
 		assert(rules.numberFailedRules == 0);
     });
@@ -104,7 +103,6 @@ describe('integration', function() {
 
 		for (var rule = 0; rule < rules.length; rule += 1) {
 			if (rules[rule].success === true) continue;
-			console.log(rules[rule]);
 		}
 		assert(rules.numberFailedRules == 0);
     });
