@@ -599,6 +599,7 @@ var vertiefungsgebieteRule = {
 	combinations: null
 };
 /* 8. Clone-Rule: take care of clones (repetitions) of a specific course */
+// @excludeMutations
 var cloneRule = {
 	/* type */
 	type: "cloneRule",
