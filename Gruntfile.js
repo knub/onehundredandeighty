@@ -15,15 +15,15 @@ module.exports = function(grunt) {
 
 
     // configure jshint to validate js files -----------------------------------
-/*    jshint: {
+    jshint: {
       options: {
         reporter: require('jshint-stylish') // use jshint-stylish to make our errors look and read good
       },
 
       // when this task is run, lint the Gruntfile and all js files in src
-      build: ['Gruntfile.js', 'js/data.js']
-    }
-*/
+      build: ['Gruntfile.js', 'js/data.js', 'js/logic.js']
+    },
+
 
     mutationTest: {
       options: {
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           basePath: '.',
           code: 'js/*.js',
           specs: 'test/*.js',
-          mutate: 'js/logic.js',
+          mutate: ['js/logic.js'],
           reporters: {
               html: {
                   dir: 'reports/mutation-test',
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
   // we can only load these if they are in our package.json
   // make sure you have run npm install so our app can find these
   grunt.loadNpmTasks('grunt-mutation-testing');
- // grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
 };
 
