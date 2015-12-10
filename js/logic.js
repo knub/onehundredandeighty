@@ -332,9 +332,9 @@ var vertiefungsgebieteRule = {
 		}
 		var sbsCourses = getSBSCourses();
 		var sbsNumber = sbsCourses.length;
-		if (sbsNumber === 5) {
+	//	if (sbsNumber === 5) {
 			//alert("Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.");
-		}
+	//	}
 
 		// At first, find all Vertiefung courses, which are currently chosen for a semester.
 		var chosenVertiefungen = getCurrentlyChosenVertiefungen();
@@ -351,10 +351,10 @@ var vertiefungsgebieteRule = {
 					'key': sbsCourses[i],
 					'vertiefung': data[sbsCourses[i]].vertiefung[0]
 				});
-			}
+			};
 			// add at the beginning
 			chosenVertiefungsgebiete.unshift(addSBS);
-		}
+		};
 
 		// Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
 		// Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
