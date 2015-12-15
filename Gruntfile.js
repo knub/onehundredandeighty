@@ -18,7 +18,9 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         reporter: require('jshint-stylish'), // use jshint-stylish to make our errors look and read good
-        maxerr:100
+        maxerr:100,
+        globals: ['data'],
+        predef: [ 'data' ]
       },
 
       // when this task is run, lint the Gruntfile and all js files in src
