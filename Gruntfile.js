@@ -19,12 +19,12 @@ module.exports = function(grunt) {
       options: {
         reporter: require('jshint-stylish'), // use jshint-stylish to make our errors look and read good
         maxerr:100,
-        globals: ['data'],
-        predef: [ 'data' ]
+        globals: ['data', 'semesterManager', 'localStorage', '$', 'studyRegulations', 'location', 'cloneRule', 'console', 'ruleManager'],
+        predef: ['data', 'semesterManager', 'localStorage', '$', 'studyRegulations', 'location', 'cloneRule', 'console', 'ruleManager']
       },
 
       // when this task is run, lint the Gruntfile and all js files in src
-      build: ['Gruntfile.js', 'js/data.js', 'js/logic.js']
+      build: ['Gruntfile.js', 'js/data.js', 'js/logic.js', 'js/frontend.js', 'js/helper.js']
     },
 
 
