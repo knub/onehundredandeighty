@@ -22,6 +22,7 @@ var semesterManager = {
 		"SS17"
 	],
 	numberDisplayed: 6,
+	// current must be either lastSummerSemester or lastWinterSemester!
 	current: "WS15/16",
 	lastSummerSemester: "SS15",
 	lastWinterSemester: "WS15/16",
