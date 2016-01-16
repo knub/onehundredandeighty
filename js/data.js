@@ -131,19 +131,6 @@ var data = {
 		dozent: ["Prof. Dr. Felix Naumann"],
 		nameLV: "Beauty is our Business"
 	},
-	bpmninthecloud : {
-		kurz: "BPMN in the cloud:<br />tBPMN & effektif",
-		lehrform: ["Seminar"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ss14, ss15],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: ["OSIS", "BPET"],
-		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Mathias Weske", "Marcin Hewelt", "Luise Pufahl"],
-		nameLV: "BPMN in the cloud: tBPMN & effektif"
-	},
 	beautifuldata: {
 		kurz: "Beautiful<br />data",
 		lehrform: ["Seminar"],
@@ -156,6 +143,32 @@ var data = {
 		vorher: ["dbs1"],
 		dozent: ["Prof. Dr. Felix Naumann"],
 		nameLV: "Beautiful Data"
+	},
+	bigdata: {
+		kurz: "Big Data Analytics",
+		lehrform: ["Vorlesung", "Übung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws15_16],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [BPET, OSIS],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Emmanuel Müller"],
+		nameLV: "Big Data Analytics"
+	},
+	bpmninthecloud : {
+		kurz: "BPMN in the cloud:<br />tBPMN & effektif",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss14, ss15],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: ["OSIS", "BPET"],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Mathias Weske", "Marcin Hewelt", "Luise Pufahl"],
+		nameLV: "BPMN in the cloud: tBPMN & effektif"
 	},
 	bs1: {
 		kurz: "BS I",
