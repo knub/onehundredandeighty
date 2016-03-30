@@ -141,7 +141,7 @@ var data = {
 		vertiefung: [BPET, OSIS],
 		cp: 6,
 		vorher: [],
-		dozent: "Prof. Dr. Emmanuel Müller",
+		dozent: ["Prof. Dr. Emmanuel Müller"],
 		nameLV: "Big Data Analytics"
 	},
 	bpmninthecloud : {
