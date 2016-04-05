@@ -586,19 +586,6 @@ var data = {
 		dozent: ["Prof. Dr. Patrick Baudisch", "Christian Holz"],
 		nameLV: "HCI Project Seminar mit wechselnden Themen"
 	},
-	hcibuildinginteractivedevices: {
-		kurz: "HCI Interactive<br />Devices",
-		lehrform: ["Vorlesung"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ss16],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: [HCT, OSIS, SAMT],
-		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Patrick Baudisch"],
-		nameLV: "HCI: Building Interactive Devices and Computer Vision"
-	},
 	hciundergrad: {
 		kurz: "HCI<br />Undergrad",
 		lehrform: ["Projekt"],
