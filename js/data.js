@@ -21,17 +21,17 @@
  */
 
 var ws10_11 = "WS10/11",
-    ss11    = "SS11",
-    ws11_12 = "WS11/12",
-    ss12    = "SS12",
-    ws12_13 = "WS12/13",
-    ss13    = "SS13",
-    ws13_14 = "WS13/14",
-    ss14	= "SS14",
-    ws14_15	= "WS14/15",
-    ss15	= "SS15",
-    ws15_16 = "WS15/16",
-    ss16	= "SS16";
+	ss11	= "SS11",
+	ws11_12 = "WS11/12",
+	ss12	= "SS12",
+	ws12_13 = "WS12/13",
+	ss13	= "SS13",
+	ws13_14 = "WS13/14",
+	ss14	= "SS14",
+	ws14_15	= "WS14/15",
+	ss15	= "SS15",
+	ws15_16 = "WS15/16",
+	ss16	= "SS16";
 
 var OSIS = "OSIS",
 	SAMT = "SAMT",
@@ -247,6 +247,19 @@ var data = {
 		vorher: [],
 		dozent: ["Prof. Dr. Mathias Weske", "Nico Herzberg", "Matthias Kunze"],
 		nameLV: "A Platform for Complex Event Processing"
+	},
+	computationalintelligence: {
+		kurz: "CI",
+		lehrform: ["Vorlesung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ws10_11, ws11_12, ws12_13, ss16],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [BPET, IST, OSIS],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Schaub"],
+		nameLV: "Computational Intelligence"
 	},
 	copsandrobbers: {
 		kurz: "Cops &<br />Robbers",
@@ -689,21 +702,8 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Harald Sack"],
 		nameLV: "Knowledge Mining"
-  },
-	kuenstlicheintelligenz: {
-		kurz: "KI",
-		lehrform: ["Vorlesung"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: [BPET, IST, OSIS],
-		cp: 6,
-		vorher: [],
-		dozent: ["Prof. Dr. Schaub"],
-		nameLV: "Einführung in die Künstliche Intelligenz"
 	},
-  lerntechniken: {
+	lerntechniken: {
 		kurz: "Professionalisierte Lerntechniken",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
@@ -715,9 +715,9 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Rolf Specht"],
 		nameLV: "Professionalisierte Lerntechniken"
-  },
-  linkeddatamashup: {
-  	kurz: "Linked Data<br/>Mashup",
+	},
+	linkeddatamashup: {
+		kurz: "Linked Data<br/>Mashup",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ws14_15],
@@ -728,7 +728,7 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Harald Sack", "Magnus Knuth", "Jörg Waitelonis"],
 		nameLV: "Linked Data Mashup Programming"
-  },
+	},
 	mainframe: {
 		kurz: "Mainframe<br />Computing",
 		lehrform: ["Seminar"],
@@ -1305,7 +1305,7 @@ var data = {
 		kurz: "VHDL",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ss11, ss12, ss13, ss14],
+		semester: [ss11, ss12, ss13, ss14, ss15, ss16],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [OSIS, SAMT],
