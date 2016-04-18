@@ -21,17 +21,17 @@
  */
 
 var ws10_11 = "WS10/11",
-    ss11    = "SS11",
-    ws11_12 = "WS11/12",
-    ss12    = "SS12",
-    ws12_13 = "WS12/13",
-    ss13    = "SS13",
-    ws13_14 = "WS13/14",
-    ss14	= "SS14",
-    ws14_15	= "WS14/15",
-    ss15	= "SS15",
-    ws15_16 = "WS15/16",
-    ss16	= "SS16";
+	ss11    = "SS11",
+	ws11_12 = "WS11/12",
+	ss12    = "SS12",
+	ws12_13 = "WS12/13",
+	ss13    = "SS13",
+	ws13_14 = "WS13/14",
+	ss14	= "SS14",
+	ws14_15	= "WS14/15",
+	ss15	= "SS15",
+	ws15_16 = "WS15/16",
+	ss16	= "SS16";
 
 var OSIS = "OSIS",
 	SAMT = "SAMT",
@@ -754,7 +754,7 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Harald Sack"],
 		nameLV: "Knowledge Mining"
-  },
+	},
 	kuenstlicheintelligenz: {
 		kurz: "CI",
 		lehrform: ["Vorlesung"],
@@ -768,7 +768,7 @@ var data = {
 		dozent: ["Prof. Dr. Schaub"],
 		nameLV: "Computational intelligence"
 	},
-  lerntechniken: {
+	lerntechniken: {
 		kurz: "Professionalisierte Lerntechniken",
 		lehrform: ["Seminar"],
 		modul: ["Softskills"],
@@ -780,9 +780,9 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Rolf Specht"],
 		nameLV: "Professionalisierte Lerntechniken"
-  },
-  linkeddatamashup: {
-  	kurz: "Linked Data<br/>Mashup",
+	},
+	linkeddatamashup: {
+	kurz: "Linked Data<br/>Mashup",
 		lehrform: ["Seminar"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ws14_15],
@@ -793,7 +793,7 @@ var data = {
 		vorher: [],
 		dozent: ["Dr. Harald Sack", "Magnus Knuth", "Jörg Waitelonis"],
 		nameLV: "Linked Data Mashup Programming"
-  },
+	},
 	mainframe: {
 		kurz: "Mainframe<br />Computing",
 		lehrform: ["Seminar"],
