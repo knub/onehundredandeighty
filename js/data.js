@@ -756,17 +756,17 @@ var data = {
 		nameLV: "Knowledge Mining"
   },
 	kuenstlicheintelligenz: {
-		kurz: "KI",
+		kurz: "CI",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws10_11, ws11_12, ws12_13],
+		semester: [ws10_11, ws11_12, ws12_13, ss16],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [BPET, IST, OSIS],
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Schaub"],
-		nameLV: "Einführung in die Künstliche Intelligenz"
+		nameLV: "Computational intelligence"
 	},
   lerntechniken: {
 		kurz: "Professionalisierte Lerntechniken",
