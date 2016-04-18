@@ -27,7 +27,7 @@ var semesterManager = {
 	lastSummerSemester: "SS16",
 	lastWinterSemester: "WS15/16",
 	/* the semester that is the first semester when you first start the application */
-	startswith: "SS16",
+	startswith: "WS15/16",
 	updateSemester: function(semester_number, semester_string) {
 		var index = semester_number - 1;
 		if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {

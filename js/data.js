@@ -135,7 +135,7 @@ var data = {
 		kurz: "BD Analytics",
 		lehrform: ["Vorlesung", "Übung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ws15_16, ss16],
+		semester: [ws15_16],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [BPET, OSIS],
@@ -143,6 +143,19 @@ var data = {
 		vorher: [],
 		dozent: ["Prof. Dr. Emmanuel Müller", "Erik Scharwächter"],
 		nameLV: "Big Data Analytics"
+	},
+	bigdataanalyticslab: {
+		kurz: "BD Analytics Lab",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss16],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [BPET, OSIS],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Emmanuel Müller", "Erik Scharwächter"],
+		nameLV: "Big Data Analytics Lab"
 	},
 	bpmninthecloud : {
 		kurz: "BPMN in the cloud:<br />tBPMN & effektif",
@@ -159,12 +172,12 @@ var data = {
 	},
 	businesseventproc: {
 		kurz: "Business Event Processing",
-		lehrform: ["Seminar", "Übung"],
+		lehrform: ["Vorlesung", "Seminar", "Übung"],
 		modul: ["Vertiefungsgebiete"],
 		semester: [ss16],
 		pflicht: false,
 		empfohlen: "",
-		vertiefung: [BPET, OSIS],
+		vertiefung: [BPET, OSIS, SAMT],
 		cp: 6,
 		vorher: [],
 		dozent: ["Prof. Dr. Mathias Weske", "Kimon Batoulis", "Luise Pufahl"],
@@ -260,6 +273,19 @@ var data = {
 		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel", "Raja Gumienny", "Christian Willems", "Matthias Quasthoff", "Lutz Gericke"],
 		nameLV: "User-centered development of collaboration software"
+	},
+	compprogramming: {
+		kurz: "Competitive<br />Programming",
+		lehrform: ["Seminar", "Übung"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss16],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [IST, OSIS, SAMT],
+		cp: 3,
+		vorher: [],
+		dozent: ["Prof. Dr. Tobias Friedrich", "Dr. Pascal Lenzner"],
+		nameLV: "Competitive Programming"
 	},
 	complexeventprocessing: {
 		kurz: "Complex Event<br />Processing",
@@ -616,7 +642,7 @@ var data = {
 		kurz: "HCI II",
 		lehrform: ["Vorlesung"],
 		modul: ["Vertiefungsgebiete"],
-		semester: [ss11, ss12, ss13, ss14, ss15, ss16],
+		semester: [ss11, ss12, ss13, ss14, ss15],
 		pflicht: false,
 		empfohlen: "",
 		vertiefung: [HCT, SAMT, OSIS],
@@ -1184,6 +1210,19 @@ var data = {
 		dozent: ["Prof. Dr. Christoph Meinel"],
 		nameLV: "Securing Cloud Storages"
 	},
+	privacypubliccloudsHCT: {
+		kurz: "Privacy in<br>Clouds",
+		lehrform: ["Seminar"],
+		modul: ["Vertiefungsgebiete"],
+		semester: [ss16],
+		pflicht: false,
+		empfohlen: "",
+		vertiefung: [IST, OSIS, HCT],
+		cp: 6,
+		vorher: [],
+		dozent: ["Prof. Dr. Christoph Meinel", "Hendrik Graupner", "Kennedy Torkura"],
+		nameLV: "Privacy in Public Clouds"
+	},
 	semanticmedia: {
 		kurz: "Media<br />Mining",
 		lehrform: ["Seminar"],
@@ -1311,7 +1350,7 @@ var data = {
 		vertiefung: [""],
 		cp: 6,
 		vorher: ["ti1"],
-		dozent: ["Prof. Dr. Jürgen Dassow"],
+		dozent: ["Prof. Dr. Tobias Friedrich"],
 		nameLV: "Theoretische Informatik II"
 	},
 	telemedicine: {
@@ -1521,18 +1560,5 @@ var data = {
 		vorher: [],
 		dozent: ["Prof. Dr. Christoph Meinel", "Matthias Bauer"],
 		nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
-	},
-	compprogramming: {
-		kurz: "Competitive<br />Programming",
-		lehrform: ["Seminar", "Übung"],
-		modul: ["Vertiefungsgebiete"],
-		semester: [ss16],
-		pflicht: false,
-		empfohlen: "",
-		vertiefung: [IST, OSIS, SAMT],
-		cp: 3,
-		vorher: [],
-		dozent: ["Prof. Dr. Tobias Friedrich", "Dr. Pascal Lenzner"],
-		nameLV: "Competitive Programming"
 	},
 };
