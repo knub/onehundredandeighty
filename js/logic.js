@@ -23,8 +23,8 @@ var semesterManager = {
 	],
 	numberDisplayed: 6,
 	// current must be either lastSummerSemester or lastWinterSemester!
-	current: "WS15/16",
-	lastSummerSemester: "SS15",
+	current: "SS16",
+	lastSummerSemester: "SS16",
 	lastWinterSemester: "WS15/16",
 	/* the semester that is the first semester when you first start the application */
 	startswith: "WS15/16",
