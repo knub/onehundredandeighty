@@ -14,20 +14,20 @@ var studyRegulations = {
 var semesterManager = {
 	semesters: ["WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14", "WS14/15", "SS15", "WS15/16", "SS16", "WS16/17", "SS17", "WS17/18", "SS18"],
 	shownSemesters: [
-		"WS14/15",
-		"SS15",
 		"WS15/16",
 		"SS16",
 		"WS16/17",
-		"SS17"
+		"SS17",
+		"WS17/18",
+		"SS18"
 	],
 	numberDisplayed: 6,
 	// current must be either lastSummerSemester or lastWinterSemester!
-	current: "SS16",
+	current: "WS16/17",
 	lastSummerSemester: "SS16",
-	lastWinterSemester: "WS15/16",
+	lastWinterSemester: "WS16/17",
 	/* the semester that is the first semester when you first start the application */
-	startswith: "WS15/16",
+	startswith: "SS17",
 	updateSemester: function(semester_number, semester_string) {
 		var index = semester_number - 1;
 		if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {
