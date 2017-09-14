@@ -7,7 +7,7 @@
 	$.fn.knubtip = function (method) {
 		var settings = {
 			'duration'	: 200,
-			'wait-time'	: 1000
+			'wait-time'	: 300
 		};
 
 		// timer will save what setTimeout returns
