@@ -29,11 +29,48 @@ Array.prototype.haveIntersection = function (that) {
 		if (arguments.length > 1) {
 			throw new Error('Object.create implementation only accepts the first parameter.');
 		}
-		function F() {};
+		function F() {}
 		F.prototype = o;
 		return new F();
 	};
 })();
+
+
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function(searchElement /*, fromIndex*/) {
+    'use strict';
+    if (this === null) {
+      throw new TypeError('Array.prototype.includes called on null or undefined');
+    }
+
+    var O = Object(this);
+    var len = parseInt(O.length, 10) || 0;
+    if (len === 0) {
+      return false;
+    }
+    var n = parseInt(arguments[1], 10) || 0;
+    var k;
+    if (n >= 0) {
+      k = n;
+    } else {
+      k = len + n;
+      if (k < 0) {k = 0;}
+    }
+    var currentElement;
+    while (k < len) {
+      currentElement = O[k];
+      if (searchElement === currentElement ||
+         (searchElement !== searchElement && currentElement !== currentElement)) { // NaN !== NaN
+        return true;
+      }
+      k++;
+    }
+    return false;
+  };
+}
+
+
+
 /*
  * Given an arbitrary number of arrays, these function calculates the Cartesian Product
  * Taken from: http://gotochriswest.com/blog/2011/05/02/cartesian-product-of-multiple-arrays/
@@ -74,4 +111,4 @@ Array.prototype.subsetOfSorted = function (other) {
 /* returns an array's last element */
 Array.prototype.last = function () {
 	return this[this.length - 1];
-}
+};

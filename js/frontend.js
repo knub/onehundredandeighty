@@ -53,7 +53,7 @@ var frontend = {
 		checkVertiefungsgebiete: function(key) {
 			if (key.search("clone") >= 0)
 				key = f.repetitionManager.cloneIdToCourseId(key);
-			if (data[key].vertiefung[0] === "") return true;
+			if (data[key].vertiefung.length === 0) return true;
 			return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
 		},
 		/* see checkSemester for documentation, same procedure */
@@ -402,7 +402,7 @@ var frontend = {
 		f.sortPool();
 		f.organizeSemesters();
 	},
-	/* used when app is initializied to fill <select>s with semester-<option>s according to settings in logic.js */
+	/* used when app is initialized to fill <select>s with semester-<option>s according to settings in logic.js */
 	organizeSemesters: function() {
 		// if shownSemesters has not been initialized so far ..
 		if (semesterManager.shownSemesters.length === 0) {
@@ -520,7 +520,7 @@ var frontend = {
 		if (repetition !== undefined)
 			classes.push("clone");
 		var cssclass = "";
-		if (classes.length != 0)
+		if (classes.length !== 0)
 			cssclass = " class='" + classes.join(" ") + "'";
 
 		var character = f.copyCharacter;

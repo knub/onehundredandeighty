@@ -5,29 +5,53 @@
  * Holds all relevant information from the study regulations
  * 'Fachspezifische Ordnung für das Bachelor- und Masterstudium im Fach IT-Systems Engineering an der Universität Potsdam'
  * (variable names in german, because 'Vertiefungsgebiete' is hard to translate and not really nice)
+ * TODO: this might not be up to date
  */
 var studyRegulations = {
 	module: ["Grundlagen IT-Systems Engineering", "Mathematische und theoretische Grundlagen", "Softwaretechnik und Modellierung", "Rechtliche und wirtschaftliche Grundlagen", "Softwarebasissysteme", "Vertiefungsgebiete", "Softskills"],
-	vertiefungsgebiete: ["BPET", "HCT", "IST", "OSIS", "SAMT"],
-	softwarebasissysteme: ['dbs1', 'hci1', 'grafik1', 'pois1', 'www']
+	vertiefungsgebiete: ["BPET", "HCGT", "IST", "OSIS", "SAMT"],
+	softwarebasissysteme: ['dbs1', 'bdanalytics', 'cg1', 'pois', 'www'] //kein bs hier
 };
+
+/**
+ * keeps track, which table column (called semester number)
+ * represents which actual semester (WSdd/dd or SSdd)
+ */
 var semesterManager = {
-	semesters: ["WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14", "WS14/15", "SS15", "WS15/16", "SS16", "WS16/17", "SS17", "WS17/18", "SS18"],
-	shownSemesters: [
-		"WS14/15",
-		"SS15",
-		"WS15/16",
-		"SS16",
-		"WS16/17",
-		"SS17"
+    /**
+     * all semesters to choose from
+     */
+	semesters: [
+		"WS13/14", "SS14",
+		"WS14/15", "SS15",
+		"WS15/16", "SS16",
+		"WS16/17", "SS17",
+		"WS17/18", "SS18",
+		"WS18/19", "SS19",
+		"WS19/20", "SS20"
+	],
+
+    /**
+     * which semesters are currently displayed
+     */
+    shownSemesters: [
+		"WS15/16", "SS16",
+		"WS16/17", "SS17",
+		"WS17/18", "SS18"
 	],
 	numberDisplayed: 6,
 	// current must be either lastSummerSemester or lastWinterSemester!
-	current: "SS16",
-	lastSummerSemester: "SS16",
-	lastWinterSemester: "WS15/16",
+	current: "WS17/18",
+	lastSummerSemester: "SS17",
+	lastWinterSemester: "WS17/18",
 	/* the semester that is the first semester when you first start the application */
 	startswith: "WS15/16",
+
+    /**
+     * called whenever the user changes a semester in a dropDown
+     * @param semester_number which semester got changed
+     * @param semester_string to what it got changed
+     */
 	updateSemester: function(semester_number, semester_string) {
 		var index = semester_number - 1;
 		if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {
@@ -41,37 +65,49 @@ var semesterManager = {
 
 		this.shownSemesters[index] = semester_string;
 
-		for (var i = index + 1; i < this.shownSemesters.length; i += 1) {
+		for (var i = index + 1; i < this.shownSemesters.length; i++) {
 			var old_index = this.semesters.indexOf(this.shownSemesters[i]);
-			if (old_index + difference < this.semesters.length) this.shownSemesters[i] = this.semesters[old_index + difference];
-			else this.shownSemesters[i] = this.semesters.last();
+			if (old_index + difference < this.semesters.length)
+                this.shownSemesters[i] = this.semesters[old_index + difference];
+			else
+			    this.shownSemesters[i] = this.semesters.last();
 		}
 	}
 };
 
+/**
+ * keeps track of all the rules that need to be fulfilled
+ * for a "Belegung" to be valid
+ */
 var ruleManager = {
 	getSemester: null,
 	rules: [],
 	init: function(getSemester_Function) {
 		this.getSemester = getSemester_Function;
 	},
+
+    /**
+     * test all rules, and update their success property
+     * @returns all the rules as Array, including a numberFailedRules - property
+     */
 	checkAll: function() {
 		var numberFailedRules = 0;
 		var rules = [];
-		for (var rule = 0; rule < this.rules.length; rule += 1) {
-			this.rules[rule].success = true;
-			if (!this.rules[rule].check(this.getSemester)) {
-				numberFailedRules += 1;
-				this.rules[rule].success = false;
+		for (var r = 0; r < this.rules.length; r++) {
+		    var rule = this.rules[r];
+			rule.success = true;
+			if (!rule.check(this.getSemester)) {
+				numberFailedRules++;
+				rule.success = false;
 			}
-			rules.push(this.rules[rule]);
+			rules.push(rule);
 		}
 		rules.numberFailedRules = numberFailedRules;
 		return rules;
 	}
 };
 
-/*
+/**
  * Rule-objectes, each representing one special type of rule
  * These objects basically act as classes (will be 'cloned' by Object.create later
  * It's a kind of 'inheritance by convention', meaning:
@@ -121,8 +157,8 @@ var mustDoRule = {
 	/* check method */
 	check: function(getSemester) {
 		// if course is currently not selected for a certain semester, but put in courses-pool (indicated by -1), return false
-		if (getSemester(this.course) === - 1) return false;
-		return true;
+		return getSemester(this.course) !== -1;
+
 	},
 	/* message */
 	message: "Eine Veranstaltung muss belegt werden.",
@@ -170,7 +206,8 @@ var sbsRule = {
 		var sbs = studyRegulations.softwarebasissysteme;
 		var sbsNumber = 0;
 		for (var i = 0; i < sbs.length; i += 1) {
-			if (getSemester(sbs[i]) !== - 1) sbsNumber += 1;
+			if (getSemester(sbs[i]) !== - 1)
+			    sbsNumber++;
 		}
 		return sbsNumber >= 3;
 	},
@@ -178,7 +215,7 @@ var sbsRule = {
 	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
 };
 
-/* 5. Softskills-Rule: atleast six credit points in  Softskills module must be done */
+/* 5. Softskills-Rule: at least six credit points in  Softskills module must be done */
 var softskillsRule = {
 	/* type */
 	type: "softskillsRule",
@@ -218,7 +255,7 @@ var timeRule = {
 		var semesterNumber = getSemester(this.course);
 		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
 
-		if (semesterNumber === - 1) return true;
+		if (semesterNumber === -1) return true;
 		// now get the semester time (WS10/11, SS10, ...) for the given course
 		// important: subtract 1, because semester number starts at 1, while array starts at 0
 		var semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
@@ -228,26 +265,20 @@ var timeRule = {
 		// -	the semester is in the future
 		if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.current)) {
 			// past or present
-			return data[this.course].semester.indexOf(semesterTime) !== - 1;
-		}
-		else {
-			// if the course is currently chosen for a summer semester
+			return data[this.course].semester.indexOf(semesterTime) !== -1;
+
+		} else {
+		    var referenceSemester = undefined;
 			if (semesterTime.indexOf("SS") >= 0) {
-				// check if it was explicitly allowed or offered in the last summer semester
-				return data[this.course].semester.indexOf(semesterTime) !== -1 ||
-				       data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
+				referenceSemester = semesterManager.lastSummerSemester
+			} else if (semesterTime.indexOf("WS") >= 0) {
+				referenceSemester = semesterManager.lastWinterSemester
+			} else {
+				this.message = "Something is wrong with the semester-time. Check data!";
+				return false
 			}
-			// if the course is currently chosen for a winter semester
-			else if (semesterTime.indexOf("WS") >= 0) {
-				// check if it was explicitly allowed or offered in the last winter semester
-				return data[this.course].semester.indexOf(semesterTime) !== -1 ||
-				       data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
-			}
-			// else something went completly wrong
-			else {
-				console.error("Something is wrong with the semester-time. Check data!");
-			}
-			return true;
+			var semesters = data[this.course].semester;
+            return semesters.indexOf(semesterTime) !== -1 || semesters.indexOf(referenceSemester) !== -1
 		}
 	},
 	/* message */
@@ -265,117 +296,132 @@ var vertiefungsgebieteRule = {
 	},
 	/* check method */
 	check: function(getSemester) {
-		this.vertiefungen = null;
-		this.combinations = null;
-		/*
-		 * At first, define some helper functions, which will help writing the actual algorithm:
-		 * -	getSBSNumber: Returns the number of Softwarebasissysteme currently chosen.
-		 * -	getCurrentlyChosenVertiefungen: Returns an array of Vertiefungen, which are currently chosen.
-		 */
-		// At first, check how many Softwarebasissysteme there are. If there are more than three, one of them will be counted to Vertiefungsgebiete.
-		var getSBSCourses = function() {
-			var sbs = studyRegulations.softwarebasissysteme;
-			var sbsCourses = [];
-			for (var i = 0; i < sbs.length; i += 1) {
-				if (getSemester(sbs[i]) !== - 1) sbsCourses.push(sbs[i]);
-			}
-			return sbsCourses;
-		}
-		var getCurrentlyChosenVertiefungen = function() {
-			var chosenVertiefungen = [];
-			for (var course in data) {
-				if (!data.hasOwnProperty(course)) continue;
-				if (data[course].modul.indexOf("Vertiefungsgebiete") !== - 1 && data[course].modul.indexOf("Softwarebasissysteme") === - 1 && getSemester(course) >= 1) {
-					chosenVertiefungen.push(course);
-				}
-			}
-			return chosenVertiefungen;
-		}
-		/*
-		 * This function returns an array with all possible Vertiefungsgebiete interpretations one Vertiefung can have.
-		 * for example, if
-		 * chosenVertiefungen = [
-		 *	'hci2',		// which can be HCT or SAMT
-		 *	'pois2'		// which can be BPET or SAMT
-		 * ]
-		 * this function returns:
-		 * [
-		 * 	[
-		 *		{ key: 'hci2', vertiefung: 'HCT' },
-		 *		{ key: 'hci2', vertiefung: 'SAMT' }
-		 *	],
-		 * 	[
-		 *		{ key: 'pois2', vertiefung: 'BPET' },
-		 *		{ key: 'pois2', vertiefung: 'SAMT' }
-		 *	]
-		 * ]
-		 */
-		var getChosenVertiefungsgebiete = function(chosenVertiefungen) {
-			var chosenVertiefungsgebiete = [];
-			for (var i = 0; i < chosenVertiefungen.length; i += 1) {
-				var key = chosenVertiefungen[i];
-				var course = data[key];
-				var currentCourse = [];
-				for (var j = 0; j < course.vertiefung.length; j += 1) {
-					currentCourse.push({
-						'key': key,
-						'vertiefung': course.vertiefung[j]
-					});
-				}
-				chosenVertiefungsgebiete.push(currentCourse);
-			}
-			return chosenVertiefungsgebiete;
-		}
-		var sbsCourses = getSBSCourses();
-		var sbsNumber = sbsCourses.length;
-		if (sbsNumber === 5) {
-			//alert("Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.");
-		}
+        this.vertiefungen = null;
+        this.combinations = null;
+        /*
+         * At first, define some helper functions, which will help writing the actual algorithm:
+         * -	getSBSNumber: Returns the number of Softwarebasissysteme currently chosen.
+         * -	getCurrentlyChosenVertiefungen: Returns an array of Vertiefungen, which are currently chosen.
+         */
+        // At first, check how many Softwarebasissysteme there are. If there are more than three, one of them will be counted to Vertiefungsgebiete.
+        var getSBSCourses = function () {
+            var sbs = studyRegulations.softwarebasissysteme;
+            var sbsCourses = [];
+            for (var i = 0; i < sbs.length; i++) {
+                if (getSemester(sbs[i]) !== -1)
+                    sbsCourses.push(sbs[i]);
+            }
+            return sbsCourses;
+        };
+        var getCurrentlyChosenVertiefungen = function () {
+            var chosenVertiefungen = [];
+            for (var course in data) {
+                if (!data.hasOwnProperty(course)) continue;
+                var modules = data[course].modul;
+                if (modules.includes("Vertiefungsgebiete") && !modules.includes("Softwarebasissysteme") && getSemester(course) >= 1) {
+                    chosenVertiefungen.push(course);
+                }
+            }
+            return chosenVertiefungen;
+        };
+        /*
+         * This function returns an array with all possible Vertiefungsgebiete interpretations one Vertiefung can have.
+         * for example, if
+         * chosenVertiefungen = [
+         *	'hci2',		// which can be HCGT or SAMT
+         *	'pois2'		// which can be BPET or SAMT
+         * ]
+         * this function returns:
+         * [
+         * 	[
+         *		{ key: 'hci2', vertiefung: 'HCGT' },
+         *		{ key: 'hci2', vertiefung: 'SAMT' }
+         *	],
+         * 	[
+         *		{ key: 'pois2', vertiefung: 'BPET' },
+         *		{ key: 'pois2', vertiefung: 'SAMT' }
+         *	]
+         * ]
+         */
+        var getChosenVertiefungsgebiete = function (chosenVertiefungen) {
+            var chosenVertiefungsgebiete = [];
+            for (var i = 0; i < chosenVertiefungen.length; i++) {
+                var key = chosenVertiefungen[i];
+                var course = data[key];
+                var currentCourse = [];
+                for (var j = 0; j < course.vertiefung.length; j++) {
+                    currentCourse.push({
+                        'key': key,
+                        'vertiefung': course.vertiefung[j]
+                    });
+                }
+                chosenVertiefungsgebiete.push(currentCourse);
+            }
+            return chosenVertiefungsgebiete;
+        };
 
-		// At first, find all Vertiefung courses, which are currently chosen for a semester.
-		var chosenVertiefungen = getCurrentlyChosenVertiefungen();
-		// Then make it an array with all possible Vertiefungsgebiete (see getChosenVertiefungsgebiete definition for details)
-		var chosenVertiefungsgebiete = getChosenVertiefungsgebiete(chosenVertiefungen);
-		// if there are four Softwarebasissysteme, one of them must be treated like a Vertiefungsgebiet
-		if (sbsNumber === 4) {
-			// so we add all of them to chosenVertiefungsgebiete
-			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for current study regulations).
-			// TODO: As of SS12, this is not correct anymore, as WWW now has 'IST' and 'HCT'
-			var addSBS = [];
-			for (var i = 0; i < sbsCourses.length; i += 1) {
-				addSBS.push({
-					'key': sbsCourses[i],
-					'vertiefung': data[sbsCourses[i]].vertiefung[0]
-				});
-			}
-			// add at the beginning
-			chosenVertiefungsgebiete.unshift(addSBS);
-		}
+        var sbsCourses = getSBSCourses();
+        var sbsNumber = sbsCourses.length;
+        if (sbsNumber === 5) {
+            this.message = "Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.";
+            return false;
+        }
 
-		// Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
-		// Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
-		// As we have an array, which contains all parameters, we have to use cartesianProduct.apply
-		// So now we calculate all possibilites how the current plan could be interpreted.
-		// This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCT' and 'pois2' as 'BPET'.
-		// Another is to interpret 'hci2' as 'HCT' and 'pois2' as 'SAMT'
-		// Another is to interpret 'hci2' as 'SAMT' ... and so on.
-		// Of course this normally happens with more courses than two.
-		var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
+        // At first, find all Vertiefung courses, which are currently chosen for a semester.
+        var chosenVertiefungen = getCurrentlyChosenVertiefungen();
+        // Then make it an array with all possible Vertiefungsgebiete (see getChosenVertiefungsgebiete definition for details)
+        var chosenVertiefungsgebiete = getChosenVertiefungsgebiete(chosenVertiefungen);
+        // if there are four Softwarebasissysteme, one of them must be treated like a Vertiefungsgebiet
+        if (sbsNumber === 4) {
+            // so we add all of them to chosenVertiefungsgebiete
+            var addSBS = [];
+            for (var i = 0; i < sbsCourses.length; i++) {
+                course = sbsCourses[i];
+                for (var j = 0; j < data[course].vertiefung.length; j++) {
+                    addSBS.push({
+                        key: course,
+                        vertiefung: data[course].vertiefung[j]
+                    });
+                }
+            }
+            // add at the beginning
+            chosenVertiefungsgebiete.unshift(addSBS);
+        }
 
-		if (sbsNumber === 5) {
-			// at first, calculate all 2-sized subsets of studyRegulations.softwarebasissysteme (simple nested for-loop)
-			var twoSBSCombinations = [];
-			for (var i = 0; i < studyRegulations.softwarebasissysteme.length; i += 1)
-				for (var j = 0; j < studyRegulations.softwarebasissysteme.length; j += 1)
-					if (i < j)
-						twoSBSCombinations.push([ {
-										key: studyRegulations.softwarebasissysteme[i],
-										vertiefung: data[studyRegulations.softwarebasissysteme[i]].vertiefung[0]
-									},
-									{
-										key: studyRegulations.softwarebasissysteme[j],
-										vertiefung: data[studyRegulations.softwarebasissysteme[j]].vertiefung[0]
-									}]);
+        // Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
+        // Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
+        // As we have an array, which contains all parameters, we have to use cartesianProduct.apply
+        // So now we calculate all possibilites how the current plan could be interpreted.
+        // This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCGT' and 'pois2' as 'BPET'.
+        // Another is to interpret 'hci2' as 'HCGT' and 'pois2' as 'SAMT'
+        // Another is to interpret 'hci2' as 'SAMT' ... and so on.
+        // Of course this normally happens with more courses than two.
+        var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
+
+        if (sbsNumber === 5) {
+            // at first, calculate all 2-sized subsets of studyRegulations.softwarebasissysteme (simple nested for-loop)
+            var twoSBSCombinations = [];
+
+            for (var i = 0; i < studyRegulations.softwarebasissysteme.length; i++) {
+                 var sbs_i = studyRegulations.softwarebasissysteme[i];
+                 for (var j = i + 1; j < studyRegulations.softwarebasissysteme.length; j++) {
+                      var sbs_j = studyRegulations.softwarebasissysteme[j]
+
+                     for (var vi = 0; vi < sbs_i.vertiefung.length; vi++) {
+                         for (var vj = 0; vj < sbs_j.vertiefung.length; vj++) {
+                             twoSBSCombinations.push([{
+                                    key: sbs_i,
+                                    vertiefung: data[sbs_i].vertiefung[vi]
+                                 },
+                                 {
+                                     key: sbs_j,
+                                     vertiefung: data[sbs_j].vertiefung[vj]
+                                 }]);
+                        }
+                    }
+                }
+            }
+
 			var newPossibleCombinations = [];
 
 			for (var i = 0; i < twoSBSCombinations.length; i += 1)
@@ -398,9 +444,9 @@ var vertiefungsgebieteRule = {
 			return creditpoints >= 24;
 		});
 
-		var combToStringArray = function (element, index) {
+		function combToStringArray(element, index) {
 			return element.key + element.vertiefung;
-		};
+		}
 
 		// If no courses are left, the plan is obviously not valid.
 		if (have24CreditPoints.length === 0) {
@@ -418,7 +464,7 @@ var vertiefungsgebieteRule = {
 		var haveTwoVertiefungsgebiete = have24CreditPoints.filter(function(combination) {
 			// Count creditpoints for each Vertiefung
 			// This will be done in creditPointsPerVertiefung.
-			// The indices are determined by studyRegulations.vertiefungsgebiete, so 'BPET' is counted at index 0, 'HCT' at index 1 and so on
+			// The indices are determined by studyRegulations.vertiefungsgebiete, so 'BPET' is counted at index 0, 'HCGT' at index 1 and so on
 			var creditPointsPerVertiefung = [0, 0, 0, 0, 0];
 			combination.forEach(function(element) {
 				// calculate index as described above
@@ -454,7 +500,7 @@ var vertiefungsgebieteRule = {
 		// So now we have to do a lot of cleanup.
 		// At first we isolate the possibleVertiefungen which are currently saved as properties to different arrays to one clean array.
 		// And we remove those courses which are not neccessary for the chosen Vertiefungen
-		// So when we have ['BPET', 'HCT'] as Vertiefungen, courses which belong to the other three Vertiefungen are removed.
+		// So when we have ['BPET', 'HCGT'] as Vertiefungen, courses which belong to the other three Vertiefungen are removed.
 		var cleanedCombinations = [];
 		// For all combinations ..
 		haveTwoVertiefungsgebiete.forEach(function(combination, index) {
@@ -655,27 +701,6 @@ var cloneRule = {
 	course: "",
 	cloneId: ""
 };
-/*
- * 9. Wirtschaft-Rule: You must either select Wirtschaft I and Wirtschaft II or Wirtschaft I/II
- */
-var wirtschaftRule = {
-	/* type */
-	type: 'wirtschaftRule',
-	/* constructor */
-	init: function() {
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		var selectedWirtschaftI = getSemester('wirtschaft1') >= 1;
-		var selectedWirtschaftII = getSemester('wirtschaft2') >= 1;
-		var selectedWirtschaftI_II = getSemester('wirtschaftneu') >= 1;
-
-		return (selectedWirtschaftI && selectedWirtschaftII) || selectedWirtschaftI_II;
-	},
-	/* message */
-	message: "Die Vorlesung 'Wirtschaftliche Grundlagen' muss besucht werden.",
-};
 
 // ---
 // Rules created, now started adding them to rule manager
@@ -714,8 +739,5 @@ ruleManager.rules.push(softskillsRule);
 
 /* 7: create vertiefungsgebiete-rule, just push it to rules-array */
 ruleManager.rules.push(vertiefungsgebieteRule);
-
-/* 9: create wirtschaft-rule, just push it to rules-array */
-ruleManager.rules.push(wirtschaftRule);
 
 /* 8: clone rules are added at runtime when items are cloned */

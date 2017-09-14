@@ -4,7 +4,6 @@
 import re
 
 MaxLVIDLength = 50
-UnknownVertiefung = set()
 
 
 def getNameAndSemester(text):
@@ -28,7 +27,7 @@ def prettyPrintSemester(verboseName):
         print "Cannot prettify semester: " + verboseName
         return verboseName
 
-    ws_ss = semesterMatch.group(1)
+    ws_ss = semesterMatch.group(1).upper()
     shortNum = semesterMatch.group(2).split("/")[0][-2:]
 
     return ws_ss + shortNum
@@ -72,6 +71,8 @@ def getLehrform(text):
                     lehrform.append("Seminar")
                 elif char == 'K':
                     lehrform.append("Klubsprecher")
+                elif char == '/':
+                    pass  # ignore the separator
                 else:
                     lehrform.append(char)
                     print "Unknown LV type: " + char
@@ -108,7 +109,9 @@ def getVertiefungAndModules(text):
         moduleRegex = r"<li>(.+?)</li>"
         moduleMatches = re.finditer(moduleRegex, moduleBlock)
         for match in moduleMatches:
-            vertiefung.add(extractVertiefung(match.group(1)))
+            moduleName = match.group(1)
+            vertiefung.add(extractVertiefung(moduleName))
+            modules.add(extractModule(moduleName))
 
     vertiefung.discard("")
     modules.discard("")
@@ -131,15 +134,59 @@ def extractVertiefung(moduleName):
     if moduleName == "Business Process &amp; Enterprise Technologies":
         return "BPET"
 
-    UnknownVertiefung.add(moduleName)
+    return ""
+
+
+def extractModule(moduleName):
+    if extractVertiefung(moduleName) != "":
+        return "Vertiefungsgebiete"
+
+    if moduleName == "Rechtliche Grundlagen" or\
+       moduleName == "Wirtschaftliche Grundlagen" or\
+       moduleName == "Rechtliche und wirtschaftliche Grundlagen":
+        return "Rechtliche und wirtschaftliche Grundlagen"
+
+    if moduleName == "Softskills" or\
+       moduleName == "Design Thinking" or\
+       moduleName == "Klubsprecher" or\
+       moduleName == "Schlüsselkompetenzen" or\
+       moduleName == "Projektentwicklung und -management":
+        return "Softskills"
+
+    if moduleName.startswith("Mathematik") or \
+       moduleName.startswith("Theoretische Informatik"):
+        return "Mathematische und theoretische Grundlagen"
+
+    if moduleName == "Prozessorientierte Informationssysteme" or\
+       moduleName == "Web- und Internet-Technologien" or\
+       moduleName == "Betriebssysteme" or\
+       moduleName == "Datenbanksysteme" or\
+       moduleName == "Computergrafische Systeme" or\
+       moduleName == "Prozessorientierte Informationssysteme":
+        return "Softwarebasissysteme"
+
+    if moduleName.startswith("Programmiertechnik") or\
+       moduleName == "Software-Architektur" or\
+       moduleName == "Digitale Systeme":
+        return "Grundlagen IT-Systems Engineering"
+
+    if moduleName == "Softwaretechnik" or\
+       moduleName.startswith("Modellierung"):
+        return "Softwaretechnik und Modellierung"
+
     return ""
 
 
 def shortenName(longName):
     """take the name of a LV and return the shorter display-version of the name"""
     name = longName\
+        .replace("algorithmicproblemsolving", "AlgoRiddles")\
         .replace("Big Data", "BD")\
+        .replace("3D-Computergrafik", "CG")\
+        .replace("Bildverarbeitungsalgorithmen", "BVA")\
         .replace("Betriebssysteme", "BS")\
+        .replace("Internet-Security", "ISec")\
+        .replace("Entwurf und Implementierung digitaler Schaltungen mit VHDL", "VHDL")\
         .replace("Datenbanksysteme", "DBS")\
         .replace("Einführung in die Programmiertechnik", "PT")\
         .replace("Grundlagen digitaler Systeme", "GdS")\
@@ -153,6 +200,7 @@ def shortenName(longName):
         .replace("Prozessorientierte Informationssysteme", "POIS")\
         .replace("Projektentwicklung und- Management", "PEM")\
         .replace("Projektentwicklung und - management", "PEM")\
+        .replace("Projektentwicklung und -management", "PEM")\
         .replace("Qualitätssicherung", "Qualität")\
         .replace("Applikationen", "Apps")\
         .replace("Fachspezifisches ", "")\
@@ -165,11 +213,6 @@ def shortenName(longName):
         .replace("Programming", "")\
         .replace("development of ", "")\
         .replace("Industrieseminar", "")
-
-    bracketRegex = r"\((.+)\)"
-    bracketMatch = re.search(bracketRegex, name)
-    if bracketMatch is not None:
-        name = bracketMatch.group(1)
 
     name = name.split(":")[0]
     name = name.split(" - ")[0]
@@ -207,6 +250,9 @@ def shortNameToID(shortName):
         .replace("ä", "ae")\
         .replace("ö", "oe")\
         .replace(" ", "")
+
+    while lvID[0].isdigit():
+        lvID = lvID[1:]
     return lvID
 
 
@@ -225,3 +271,22 @@ def isPflicht(lv):
 def getVorher(lv):
     """return all the things you have to belegen before you belegen this lv"""
     return []
+
+def getEmpfohlen(lv):
+    """return the suggested semester number, or an empty string"""
+    return {
+        'gds': 1,
+        'mathematik1': 1,
+        'mod1': 1,
+        'pt1': 1,
+        'wirtschaft': 1,
+        'mathematik2': 2,
+        'mod2': 2,
+        'pt2': 2,
+        'recht1': 2,
+        'recht2': 3,
+        'swa': 3,
+        'ti1': 3,
+        'ti2': 4,
+        'swt1': 4
+    }.get(lv['id'], '');
