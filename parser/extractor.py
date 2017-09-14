@@ -3,8 +3,6 @@
 
 import re
 
-MaxLVIDLength = 50
-
 
 def getNameAndSemester(text):
     headerpattern = re.compile(r"(?<=\<h1\>)(.*)\((.*?\d{4})\)(?=\</h1\>)")
@@ -177,57 +175,94 @@ def extractModule(moduleName):
     return ""
 
 
+ShortenLV = [
+    ("Algorithmic Problem Solving", "AlgoRiddles"),
+    ("Recht für Ingenieure", "Recht"),
+    ("Big Data", "BD"),
+    ("3D-Computergrafik", "CG"),
+    ("Bildverarbeitungsalgorithmen", "BVA"),
+    ("Betriebssysteme 1", "BS"),
+    ("Betriebssysteme", "BS"),
+    ("Internet-Security", "ISec"),
+    ("Entwurf und Implementierung digitaler Schaltungen mit VHDL", "VHDL"),
+    ("Datenbanksysteme", "DBS"),
+    ("Einführung in die Programmiertechnik", "PT"),
+    ("Grundlagen digitaler Systeme", "GdS"),
+    ("Modellierung", "Mod"),
+    ("Internet- und WWW-Technologien", "WWW"),
+    ("Softwarearchitektur", "SWA"),
+    ("Softwaretechnik", "SWT"),
+    ("Softwarequalität", "SWQualität"),
+    ("Theoretische Informatik", "TI"),
+    ("Wirtschaftliche Grundlagen", "Wirtschaft"),
+    ("Prozessorientierte Informationssysteme", "POIS"),
+    ("Projektentwicklung und- Management", "PEM"),
+    ("Projektentwicklung und - management", "PEM"),
+    ("Projektentwicklung und -management", "PEM")
+]
+ShortenWords = {
+    ("Qualitätssicherung", "Qualität"),
+    ("Applikationen", "Apps"),
+    ("&quot;", "\""),
+}
+RemovableWords = {
+    "\\",
+    "Fachspezifisches ",
+    "Best Practices",
+    "Praktische Anwendung von",
+    "Entwicklung von",
+    "A Platform for",
+    "für ",
+    "Programming",
+    "development of ",
+    "Industrieseminar"
+}
+MaxLVIDLength = 50
+
+
 def shortenName(longName):
     """take the name of a LV and return the shorter display-version of the name"""
-    name = longName\
-        .replace("algorithmicproblemsolving", "AlgoRiddles")\
-        .replace("Big Data", "BD")\
-        .replace("3D-Computergrafik", "CG")\
-        .replace("Bildverarbeitungsalgorithmen", "BVA")\
-        .replace("Betriebssysteme", "BS")\
-        .replace("Internet-Security", "ISec")\
-        .replace("Entwurf und Implementierung digitaler Schaltungen mit VHDL", "VHDL")\
-        .replace("Datenbanksysteme", "DBS")\
-        .replace("Einführung in die Programmiertechnik", "PT")\
-        .replace("Grundlagen digitaler Systeme", "GdS")\
-        .replace("Modellierung", "Mod")\
-        .replace("Internet- und WWW-Technologien", "WWW")\
-        .replace("Softwarearchitektur", "SWA")\
-        .replace("Softwaretechnik", "SWT")\
-        .replace("Softwarequalität", "SWQualität")\
-        .replace("Theoretische Informatik", "TI")\
-        .replace("Wirtschaftliche Grundlagen", "Wirtschaft")\
-        .replace("Prozessorientierte Informationssysteme", "POIS")\
-        .replace("Projektentwicklung und- Management", "PEM")\
-        .replace("Projektentwicklung und - management", "PEM")\
-        .replace("Projektentwicklung und -management", "PEM")\
-        .replace("Qualitätssicherung", "Qualität")\
-        .replace("Applikationen", "Apps")\
-        .replace("Fachspezifisches ", "")\
-        .replace("Best Practices", "")\
-        .replace(" für Ingenieure", "")\
-        .replace("Praktische Anwendung von", "")\
-        .replace("Entwicklung von", "")\
-        .replace("A Platform for", "")\
-        .replace("für ", "")\
-        .replace("Programming", "")\
-        .replace("development of ", "")\
-        .replace("Industrieseminar", "")
+    name = longName
+
+    for toReplace, replacement in ShortenLV:
+        name = name.replace(toReplace, replacement)
+    for toReplace, replacement in ShortenWords:
+        name = name.replace(toReplace, replacement)
+    for toRemove in RemovableWords:
+        name = name.replace(toRemove, "")
 
     name = name.split(":")[0]
     name = name.split(" - ")[0]
     name = name.split(" mit ")[0]
     name = name.split(" with ")[0]
+    name = name.split(" for ")[0]
     name = name.strip()
 
-    if len(name) <= MaxLVIDLength:
-        return name
-    return name[:(MaxLVIDLength - 3)] + "..."
+    if len(name) > MaxLVIDLength:
+        name = name[:(MaxLVIDLength - 3)] + "..."
+
+    if len(name) > 25 and name.count(' ') > 0:
+        # add a br in the middlest space
+        middleIndex = len(name) / 2
+        middlestSpace = middleIndex
+        spaceStep = 0
+
+        while name[middlestSpace] != ' ':
+            spaceStep += 1
+            if name[middleIndex - spaceStep] == ' ':
+                middlestSpace = middleIndex - spaceStep
+            elif name[middleIndex + spaceStep] == ' ':
+                middlestSpace = middleIndex + spaceStep
+
+        name = name[:middlestSpace] + '<br />' + name[middlestSpace + 1:]
+
+    return name
 
 
 def shortNameToID(shortName):
     """take a short name and return an id string to use in json"""
     lvID = shortName\
+        .replace('<br />', ' ')\
         .replace("III", "3")\
         .replace("II", "2")\
         .replace("\"", "")\

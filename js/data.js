@@ -7,8 +7,8 @@
  *
  * Instead, adjust "extractor.py" to correctly modify
  * the data while parsing.
- *
- *
+ * 
+ * 
  * Also make sure to keep "/js/logic.js" up to date
  * (especially the semesterManager)
  */
@@ -45,7 +45,7 @@ var data = {
         nameLV: "Algorithmic Problem Solving"
     },
     aspektorientierteprogrammierung: {
-        kurz: "Aspektorientierte Programmierung",
+        kurz: "Aspektorientierte<br />Programmierung",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss15],
@@ -110,7 +110,7 @@ var data = {
         nameLV: "Beautiful Data"
     },
     bildundvideoprozessierung: {
-        kurz: "Bild- und Videoprozessierung",
+        kurz: "Bild- und<br />Videoprozessierung",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16],
@@ -123,7 +123,7 @@ var data = {
         nameLV: "Bild- und Videoprozessierung mit OpenGL ES für Mobile Geräte"
     },
     blockkursibmpowersystems: {
-        kurz: "Blockkurs \\&quot;IBM Power Systems\\&quot;",
+        kurz: "Blockkurs \"IBM<br />Power Systems\"",
         lehrform: ["Blockseminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws16_17],
@@ -152,27 +152,14 @@ var data = {
         kurz: "BS",
         lehrform: ["Vorlesung"],
         modul: ["Softwarebasissysteme"],
-        semester: [ws15_16, ws16_17],
+        semester: [ws15_16, ws17_18, ws16_17],
         pflicht: true,
         empfohlen: "",
         vertiefung: [],
         cp: 6,
         vorher: [],
-        dozent: ["Prof. Dr. Andreas Polze", "Daniel Richter", "Andreas Grapentin", "Dipl.-Inf. Bernhard Rabe"],
-        nameLV: "Betriebssysteme"
-    },
-    bs1: {
-        kurz: "BS 1",
-        lehrform: ["Vorlesung"],
-        modul: ["Softwarebasissysteme"],
-        semester: [ws17_18],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [],
-        cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Andreas Polze"],
-        nameLV: "Betriebssysteme 1"
+        nameLV: "Betriebssysteme"
     },
     bs2: {
         kurz: "BS II",
@@ -188,7 +175,7 @@ var data = {
         nameLV: "Betriebssysteme II"
     },
     buildinginteractivedevices: {
-        kurz: "Building Interactive Devices",
+        kurz: "Building<br />Interactive Devices",
         lehrform: ["Vorlesung"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18, ss17],
@@ -214,7 +201,7 @@ var data = {
         nameLV: "Business Event Processing"
     },
     businessprocesssimulation: {
-        kurz: "Business Process Simulation",
+        kurz: "Business Process<br />Simulation",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
@@ -266,7 +253,7 @@ var data = {
         nameLV: "3D-Computergrafik II"
     },
     clientseitigewebprogrammierung: {
-        kurz: "Clientseitige Webprogrammierung",
+        kurz: "Clientseitige<br />Webprogrammierung",
         lehrform: ["Seminar", "Projekt"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss17],
@@ -331,7 +318,7 @@ var data = {
         nameLV: "Datenbanksysteme II"
     },
     designinginteractivesystems: {
-        kurz: "Designing Interactive Systems",
+        kurz: "Designing<br />Interactive Systems",
         lehrform: ["Vorlesung"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16],
@@ -396,7 +383,7 @@ var data = {
         nameLV: "D-School First Track: Introduction to Design Thinking"
     },
     einfuehrungindiealgorithmik: {
-        kurz: "Einführung in die Algorithmik",
+        kurz: "Einführung in<br />die Algorithmik",
         lehrform: ["Vorlesung", "Übung"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16],
@@ -409,7 +396,7 @@ var data = {
         nameLV: "Einführung in die Algorithmik"
     },
     einfuehrunginformationsvisualisierung: {
-        kurz: "Einführung Informationsvisualisierung",
+        kurz: "Einführung<br />Informationsvisualisierung",
         lehrform: ["Seminar", "Projekt"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss17],
@@ -422,7 +409,7 @@ var data = {
         nameLV: "Einführung Informationsvisualisierung"
     },
     einfuehrunginvisualanalytics: {
-        kurz: "Einführung in Visual Analytics",
+        kurz: "Einführung in<br />Visual Analytics",
         lehrform: ["Seminar", "Projekt"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss16],
@@ -461,7 +448,7 @@ var data = {
         nameLV: "Fachspezifisches Englisch (Level 2)"
     },
     eventdrivencasemanagement: {
-        kurz: "Event-driven Case Management",
+        kurz: "Event-driven<br />Case Management",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss17],
@@ -513,7 +500,7 @@ var data = {
         nameLV: "Graphentheorie"
     },
     handsoncodingexercisesinlargescalelearni: {
-        kurz: "Hands-On Coding Exercises in Large Scale Learni...",
+        kurz: "Hands-On Coding Exercises<br />in Large Scale Learni...",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws16_17],
@@ -552,7 +539,7 @@ var data = {
         nameLV: "HCI Project Seminar: Building Interactive Systems based on Fabrication and Haptics"
     },
     hciprojectseminaraugmentrealityvirtualre: {
-        kurz: "HCI Project Seminar Augment Reality, Virtual Re...",
+        kurz: "HCI Project Seminar Augment<br />Reality, Virtual Re...",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss17],
@@ -565,7 +552,7 @@ var data = {
         nameLV: "HCI Project Seminar Augment Reality, Virtual Reality, and Personal Fabrication"
     },
     hciprojectseminaronbuildinginteractivesys: {
-        kurz: "HCI Project Seminar on Building Interactive Sys...",
+        kurz: "HCI Project Seminar on<br />Building Interactive Sys...",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss15],
@@ -578,7 +565,7 @@ var data = {
         nameLV: "HCI Project Seminar on Building Interactive Systems from 3D-Printers"
     },
     hciprojectseminarpersonalfabricationandha: {
-        kurz: "HCI Project Seminar Personal Fabrication and Ha...",
+        kurz: "HCI Project Seminar Personal<br />Fabrication and Ha...",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws16_17],
@@ -591,7 +578,7 @@ var data = {
         nameLV: "HCI Project Seminar Personal Fabrication and Haptics"
     },
     hciprojectseminarpersonalfabricationandin: {
-        kurz: "HCI Project Seminar Personal Fabrication and In...",
+        kurz: "HCI Project Seminar Personal<br />Fabrication and In...",
         lehrform: ["Seminar", "Projekt"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss16],
@@ -629,8 +616,8 @@ var data = {
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Identitätsmanagement"
     },
-    informationvisualisationtechniqueforindustr: {
-        kurz: "Information Visualisation Technique for Industr...",
+    informationvisualisationtechnique: {
+        kurz: "Information<br />Visualisation Technique",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
@@ -695,7 +682,7 @@ var data = {
         nameLV: "Programming Languages: Design and Implementation"
     },
     lerntechnikenundstrategienzurpruefungsvorbe: {
-        kurz: "Lerntechniken und Strategien zur Prüfungsvorbe...",
+        kurz: "Lerntechniken und Strategien<br />zur Prüfungsvorbe...",
         lehrform: ["Seminar"],
         modul: ["Softskills"],
         semester: [ws17_18, ws16_17, ss17],
@@ -707,8 +694,8 @@ var data = {
         dozent: ["Dr. Christiane Potzner"],
         nameLV: "Lerntechniken und Strategien zur Prüfungsvorbereitung"
     },
-    linuxforthemasses: {
-        kurz: "Linux for the Masses",
+    linux: {
+        kurz: "Linux",
         lehrform: ["Seminar", "Projekt"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss17],
@@ -838,7 +825,7 @@ var data = {
         nameLV: "Privacy in Public Clouds"
     },
     processesanddecisionsinthecloud: {
-        kurz: "Processes and Decisions in the Cloud",
+        kurz: "Processes and<br />Decisions in the Cloud",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss16],
@@ -851,7 +838,7 @@ var data = {
         nameLV: "Processes and Decisions in the Cloud"
     },
     professionalisiertelerntechniken: {
-        kurz: "Professionalisierte Lerntechniken",
+        kurz: "Professionalisierte<br />Lerntechniken",
         lehrform: ["Seminar"],
         modul: ["Softskills"],
         semester: [ws15_16, ss15, ss16],
@@ -864,7 +851,7 @@ var data = {
         nameLV: "Professionalisierte Lerntechniken"
     },
     programmierungcomputergrafischerverfahren: {
-        kurz: "Programmierung computergrafischer Verfahren",
+        kurz: "Programmierung<br />computergrafischer Verfahren",
         lehrform: ["Vorlesung", "Übung"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss15],
@@ -955,7 +942,7 @@ var data = {
         nameLV: "Semantic Media Mining"
     },
     seminarraeumlichedatenundraumzeitlichedaten: {
-        kurz: "Seminar Räumliche Daten und raumzeitliche Daten",
+        kurz: "Seminar Räumliche Daten<br />und raumzeitliche Daten",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16],
@@ -981,7 +968,7 @@ var data = {
         nameLV: "Softwaremodularität"
     },
     studienbegleitendesseminar: {
-        kurz: "Studienbegleitendes Seminar",
+        kurz: "Studienbegleitendes<br />Seminar",
         lehrform: ["Seminar"],
         modul: [],
         semester: [ws15_16, ws17_18, ws16_17],
@@ -1046,7 +1033,7 @@ var data = {
         nameLV: "Softwaretechnik II"
     },
     testdrivenlearningassignments: {
-        kurz: "Test-Driven Learning Assignments",
+        kurz: "Test-Driven Learning<br />Assignments",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
@@ -1137,7 +1124,7 @@ var data = {
         nameLV: "Wahrscheinlichkeitstheorie"
     },
     webprogrammierungundwebframeworks: {
-        kurz: "Web-Programmierung und Web-Frameworks",
+        kurz: "Web-Programmierung<br />und Web-Frameworks",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16, ws17_18, ws16_17],
@@ -1150,7 +1137,7 @@ var data = {
         nameLV: "Web-Programmierung und Web-Frameworks"
     },
     weiterfuehrendethemenzuwww: {
-        kurz: "Weiterführende Themen zu WWW",
+        kurz: "Weiterführende<br />Themen zu WWW",
         lehrform: ["Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss15, ss17, ss16],
@@ -1189,7 +1176,7 @@ var data = {
         nameLV: "Internet- und WWW-Technologien"
     },
     Überzeugendpraesentieren: {
-        kurz: "Überzeugend Präsentieren",
+        kurz: "Überzeugend<br />Präsentieren",
         lehrform: ["Blockseminar"],
         modul: ["Softskills"],
         semester: [ws15_16, ws17_18, ws16_17, ss15, ss17, ss16],

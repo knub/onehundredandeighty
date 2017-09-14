@@ -109,12 +109,12 @@ def listOfLVs(urls):
         print('.', end='')
         sys.stdout.flush()
 
-    print('|\n')
     # NOTE: looks like the hpi - website doesn't handle so many parallel request that good
     # run_parallel_in_threads(handleUrl, args)
     for arg in args:
         handleUrl(arg[0])
 
+    print('|\n')
     return lvs
 
 
