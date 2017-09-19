@@ -63,7 +63,7 @@ def mergeLV(newLV):
         if newSet != oldSet:
             merge(newLV, oldLV, listParameter, True)
     newSemesters = oldLV['semester'] + newLV['semester']
-    oldLV['semester'] = list(set(newSemesters))
+    oldLV['semester'] = sorted(list(set(newSemesters)))
 
 
 
@@ -88,7 +88,7 @@ include(parseSemester('now'), CURRENT_SEMESTER)
 
 
 
-vertiefungen = ['OSIS', 'SAMT', 'IST ', 'ISAE', 'HCGT', 'BPET']
+vertiefungen = ['OSIS', 'SAMT', 'ISAE', 'HCGT', 'BPET']
 wantedLVproperties = ['kurz', 'lehrform', 'modul', 'semester', 'pflicht', 'empfohlen', 'vertiefung', 'cp', 'vorher', 'dozent', 'nameLV']
 serilaizingReplacements = {}
 for vertiefung in vertiefungen:

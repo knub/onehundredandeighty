@@ -74,6 +74,7 @@ def getLehrform(text):
                 else:
                     lehrform.append(char)
                     print "Unknown LV type: " + char
+    lehrform.sort()
     return lehrform
 
 
@@ -93,6 +94,7 @@ def getDozenten(text):
                 result.append(dozentMatch.group().strip())
         else:
             result.append(subBlockStrip)
+    result.sort()
     return result
 
 
@@ -113,14 +115,17 @@ def getVertiefungAndModules(text):
 
     vertiefung.discard("")
     modules.discard("")
-    return list(vertiefung), list(modules)
+    return sorted(list(vertiefung)), sorted(list(modules))
 
 
 def extractVertiefung(moduleName):
     simpleAbbrevRegex = r"(.{3,4})-Vertiefung"
     simpleAbbrevMatch = re.search(simpleAbbrevRegex, moduleName)
     if simpleAbbrevMatch is not None:
-        return simpleAbbrevMatch.group(1)
+        result = simpleAbbrevMatch.group(1)
+        if result == "IST":
+            return "ISAE"
+        return result
     if moduleName == "Human Computer Interaction &amp; Computer Graphics Technology":
         return "HCGT"
     if moduleName == "Software Architecture &amp; Modeling Technology":
@@ -128,7 +133,7 @@ def extractVertiefung(moduleName):
     if moduleName == "Operating Systems &amp; Information Systems Technology":
         return "OSIS"
     if moduleName == "Internet &amp; Security Technology":
-        return "IST"
+        return "ISAE"
     if moduleName == "Business Process &amp; Enterprise Technologies":
         return "BPET"
 
@@ -176,26 +181,43 @@ def extractModule(moduleName):
 
 
 ShortenLV = [
-    ("Algorithmic Problem Solving", "AlgoRiddles"),
-    ("Recht für Ingenieure", "Recht"),
-    ("Big Data", "BD"),
-    ("3D-Computergrafik", "CG"),
-    ("Bildverarbeitungsalgorithmen", "BVA"),
-    ("Betriebssysteme 1", "BS"),
-    ("Betriebssysteme", "BS"),
-    ("Internet-Security", "ISec"),
-    ("Entwurf und Implementierung digitaler Schaltungen mit VHDL", "VHDL"),
-    ("Datenbanksysteme", "DBS"),
+    # Grundlagen IT-Systems Engineering
     ("Einführung in die Programmiertechnik", "PT"),
     ("Grundlagen digitaler Systeme", "GdS"),
-    ("Modellierung", "Mod"),
-    ("Internet- und WWW-Technologien", "WWW"),
     ("Softwarearchitektur", "SWA"),
+    # Softwaretechnik und Modellierung
+    ("Modellierung", "Mod"),
     ("Softwaretechnik", "SWT"),
-    ("Softwarequalität", "SWQualität"),
+    # Mathematische und TheoretischeGrundlagen
     ("Theoretische Informatik", "TI"),
-    ("Wirtschaftliche Grundlagen", "Wirtschaft"),
+    # Softwarebasissysteme
+    ("Betriebssysteme 1", "BS"),
+    ("Betriebssysteme", "BS"),
+    ("3D-Computergrafik", "CG"),
+    ("Datenbanksysteme", "DBS"),
     ("Prozessorientierte Informationssysteme", "POIS"),
+    ("Designing Interactive Systems", "HCI I"),
+    ("HCI: Building Interactive Devices and Computer Vision", "HCI II"),
+    ("Building Interactive Devices", "HCI II"),
+    ("Internet- und WWW-Technologien", "WWW"),
+    # Rechtliche und wirtschaftliche Grundlagen
+    ("Recht für Ingenieure", "Recht"),
+    ("Wirtschaftliche Grundlagen", "Wirtschaft"),
+    # Vertiefungsgebiete
+    ("Algorithmic Problem Solving", "AlgoRiddles"),
+    ("Competitive Programming", "ComProg"),
+    ("Big Data", "BD"),
+    ("Bildverarbeitungsalgorithmen", "BVA"),
+    ("Internet-Security", "ISec"),
+    ("Entwurf und Implementierung digitaler Schaltungen mit VHDL", "VHDL"),
+    ("Softwarequalität", "SWQualität"),
+
+    ("Studienbegleitendes Seminar", "StubS"),
+
+    ("HCI Project Seminar: ", "[HCI PS] "),
+    ("HCI Project Seminar on ", "[HCI PS] "),
+    ("HCI Project Seminar ", "[HCI PS] "),
+
     ("Projektentwicklung und- Management", "PEM"),
     ("Projektentwicklung und - management", "PEM"),
     ("Projektentwicklung und -management", "PEM")
@@ -207,13 +229,13 @@ ShortenWords = {
 }
 RemovableWords = {
     "\\",
+    "zur Prüfungsvorbereitung",
     "Fachspezifisches ",
     "Best Practices",
     "Praktische Anwendung von",
     "Entwicklung von",
     "A Platform for",
     "für ",
-    "Programming",
     "development of ",
     "Industrieseminar"
 }
@@ -269,6 +291,10 @@ def shortNameToID(shortName):
         .replace("&quot;", "")\
         .replace("(", "")\
         .replace(")", "")\
+        .replace("[", "")\
+        .replace("]", "")\
+        .replace("{", "")\
+        .replace("}", "")\
         .replace(".", "")\
         .replace(",", "")\
         .replace("\\", "")\
@@ -280,15 +306,17 @@ def shortNameToID(shortName):
         lvID = lvID[:-1] + "1"
 
     lvID = lvID\
-        .lower()\
         .replace("ü", "ue")\
         .replace("ä", "ae")\
         .replace("ö", "oe")\
+        .replace("Ü", "Ue")\
+        .replace("Ä", "Ae")\
+        .replace("Ö", "Oe")\
         .replace(" ", "")
 
     while lvID[0].isdigit():
         lvID = lvID[1:]
-    return lvID
+    return lvID.lower()
 
 
 def isPflicht(lv):
@@ -315,13 +343,17 @@ def getEmpfohlen(lv):
         'mod1': 1,
         'pt1': 1,
         'wirtschaft': 1,
+
         'mathematik2': 2,
         'mod2': 2,
         'pt2': 2,
         'recht1': 2,
+
         'recht2': 3,
         'swa': 3,
         'ti1': 3,
+        'bs': 3,
+
         'ti2': 4,
         'swt1': 4
-    }.get(lv['id'], '');
+    }.get(lv['id'], '')

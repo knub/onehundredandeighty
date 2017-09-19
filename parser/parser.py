@@ -14,7 +14,7 @@ LehrveranstaltungenIndexURL = "https://hpi.de/studium/lehrveranstaltungen/it-sys
 WSBaseUrl = "https://hpi.de/studium/lehrveranstaltungen/archiv/wintersemester-20"
 SSBaseUrl = "https://hpi.de/studium/lehrveranstaltungen/archiv/sommersemester-20"
 
-# TODO: Once the admins resolved the type, remove this String from the script
+# TODO: Once the admins resolved the typo, remove this String from the script
 SSBaseUrlTypo = "https://hpi.de/studium/lehrveranstaltungen/archiv/sommersemster-20"
 
 
