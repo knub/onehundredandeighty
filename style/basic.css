@@ -728,3 +728,6 @@ h3 {
 	color: #7F0000;
 	font-weight: bold;
 }
+.locksymbol {
+	cursor: pointer;
+}
