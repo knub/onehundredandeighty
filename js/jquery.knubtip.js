@@ -109,11 +109,15 @@
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 						}, settings['wait-time']);
-					}).mouseout(function () {
+					}).mouseout(fadeOutTooltip);
+					$("." + tooltipDivSelector).click(fadeOutTooltip);
+
+					var me = this;
+					function fadeOutTooltip() {
 						clearTimeout(timer);
-						var tooltipDivSelector = $(this).data('knubtip')['info'];
+						var tooltipDivSelector = $(me).data('knubtip')['info'];
 						$(tooltipDivSelector).fadeOut(settings['duration']);
-					});
+					}
 				});
 			},
 			enable: function () {
