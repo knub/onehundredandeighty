@@ -14,22 +14,22 @@
  */
 
 // semester name variables
-var ss15    = "SS15",
-    ws15_16 = "WS15/16",
-    ss16    = "SS16",
-    ws16_17 = "WS16/17",
-    ss17    = "SS17",
-    ws17_18 = "WS17/18";
+const ss15    = "SS15",
+      ws15_16 = "WS15/16",
+      ss16    = "SS16",
+      ws16_17 = "WS16/17",
+      ss17    = "SS17",
+      ws17_18 = "WS17/18";
 
 // Vertiefungsgebiet name variables
-var OSIS = "OSIS",
-    SAMT = "SAMT",
-    ISAE = "ISAE",
-    HCGT = "HCGT",
-    BPET = "BPET";
+const OSIS = "OSIS",
+      SAMT = "SAMT",
+      ISAE = "ISAE",
+      HCGT = "HCGT",
+      BPET = "BPET";
 
 // actual data object
-var data = {
+const data = {
     algoriddles: {
         kurz: "AlgoRiddles",
         lehrform: ["Vorlesung", "Übung"],

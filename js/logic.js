@@ -364,6 +364,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
     // multiple steps are necessary to filter out valid combinations
     // and to convert them to a meaningful format
+    // TODO: This is a mixture from old (allow multiple Vertiefungsgebiete) and new (grading scheme) Studienordung: Seperate them!
     const processingSteps = [
         {filter: threeSBS, errorMessage: "Da keine 3 Softwarebasissysteme gewählt wurden, können die Vertiefungsgebiete nicht zugeteilt werden."},
         {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
@@ -374,7 +375,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
-        {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."}
+        {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
+        {converter: calculateGrades}
     ];
     for (let s = 0; s < processingSteps.length; s++) {
         const step = processingSteps[s];
@@ -474,6 +476,34 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         });
         combination.firstVertiefungLectures = firstVertiefungLectures;
         combination.secondVertiefungLectures = secondVertiefungLectures;
+    }
+    function calculateGrades(combination) {
+        //calculate the final grade for these combinations
+        function isVertiefung(course) {
+            return combination.some(function(interpretation) {
+                return course === interpretation.key
+            });
+        }
+        function toGradeAndWeight(course) {
+            let weight = 1;
+            if (isVertiefung(course)) {
+                weight = 1.5;
+            }
+            return {
+                grade: gradeManager.get(course),
+                weight: weight
+            }
+        }
+        let total = 0;
+        function accumulate(acc, {grade, weight}) {
+            total += weight;
+            return acc + grade * weight;
+        }
+
+        combination.grade = allBelegteCourses(getSemester)
+            .map(toGradeAndWeight)
+            .reduce(accumulate, 0)
+            / total;
     }
 
 

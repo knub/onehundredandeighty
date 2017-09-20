@@ -729,3 +729,7 @@ h3 {
 .locksymbol {
 	cursor: pointer;
 }
+
+.finalGrade {
+	font-size: 2em;
+}
