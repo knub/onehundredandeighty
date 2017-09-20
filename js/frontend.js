@@ -301,7 +301,7 @@ const frontend = {
         const messageUl = f.messageDiv.find("ul");
         messageUl.empty();
         if (rules.length === 0) {
-            messageUl.append("<li>Der Belegungsplan wahrscheinlich ist gültig!</li>");
+            messageUl.append("<li>Der Belegungsplan ist gültig!</li>");
             // animate to green
             const possibilities = wahlpflichtManager.possibleCombinations;
             let extra = '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind wahrscheinlich gültig im Sinne der Studienordnung:';
@@ -309,7 +309,7 @@ const frontend = {
             extra += "</div>";
             messageUl.append("<li>" + extra + "</li>");
             f.messageDiv.animate({
-                backgroundColor: '#4a6400'
+                backgroundColor: '#316400'
             }, 350);
         } else {
             for (let r = 0; r < rules.length; r += 1) {
@@ -482,7 +482,22 @@ const frontend = {
      */
     buildCourseData(id) {
         const course = data[id];
-        const courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + f.displayArray(course['modul'], "Modul") + f.displayArray(course['dozent'], "Dozent") + "<tr><td>Leistungspunkte</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + f.displayArray(course['lehrform'], "Lehrform") + f.displayArray(course['vertiefung'], "Vertiefungsgebiet") + f.displayArray(course['semester'], "Angeboten im") + "</table>" + "</div>" + "</div>";
+        const courseInfo = "<div class='info'>" +
+            "<h3>" + course['nameLV'] + "</h3>" +
+            "<div>" +
+                "<table>" +
+                    f.displayArray(course['modul'], "Modul") +
+                    f.displayArray(course['dozent'], "Dozent") +
+                    "<tr>" +
+                        "<td>Leistungspunkte</td>" +
+                        "<td>" + course['cp'] + " Leistungspunkte</td>" +
+                    "</tr>" +
+                    f.displayArray(course['lehrform'], "Lehrform") +
+                    f.displayArray(course['vertiefung'], "Vertiefungsgebiet") +
+                    f.displayArray(course['semester'], "Angeboten im") +
+                "</table>" +
+            "</div>" +
+        "</div>";
 
         // if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
         const classes = [];
@@ -495,7 +510,14 @@ const frontend = {
 
         let character = f.gradeCharacter;
 
-        return "<li" + cssclass + " id='course-" + id + "'>" + course['kurz'] + "<button><div class='info grade-info'>Hier klicken, um deine Note für dieser Veranstaltung einzutragen.</div><!---->" + character + "</button>" + courseInfo + "</li>";
+        return "<li" + cssclass + " id='course-" + id + "'>" +
+                    "<span id='course-" + id + "-name'>" + course['kurz'] + "</span>" +
+                    "<input type='text' id='course-" +  id + "-gradeinput' class='courseGradeInput'/>" +
+                    "<button>" +
+                        "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>" +
+                        "<!---->" + character + "" +
+                    "</button>" + courseInfo +
+                "</li>";
     },
     /* used, when user starts drag'n'dropping courses */
     startSorting(event, ui) {
@@ -580,10 +602,10 @@ const frontend = {
     displayArray(value, headline) {
         if (value === undefined || !Array.isArray(value) || value.length === 0 || value[0] === "")
             return "";
-        let row = "<tr><td>" + headline + "</td><td>";
-        row += value.join(", ");
-        row += "</td></tr>";
-        return row;
+        return "<tr>" +
+                   "<td>" + headline + "</td>" +
+                   "<td>" + value.join(", ") + "</td>" +
+               "</tr>";
     },
     /* used to initialize jquery-sortable (drag'n'drop) */
     initializeSortable: function () {
@@ -591,7 +613,7 @@ const frontend = {
         $(f.coursesList).sortable({
             connectWith: f.coursesList,        // specifies lists where li's can be dropped
             placeholder: "placeholder-highlight",    // css class for placeholder when drag'n dropping
-            cancel: "." + f.disabledClass,        // elements matching this selector cannot be dropped
+            cancel: "." + f.disabledClass + ",.inGradeEditMode",        // elements matching this selector cannot be dropped
             update: f.update,            // raised, when there was a change while sorting
             start: f.startSorting,            // raised, when sorting starts
             stop: f.endSorting            // raised, when sorting is finished
@@ -717,15 +739,13 @@ $(function() {
             $(this).find("h2").text("Filter");
             $("#filter").animate({
                 width: '0'
-            },
-            250);
+            }, 250);
         }
         else {
             $(this).find("h2").text("Fertig");
             $("#filter").animate({
                 width: '100%'
-            },
-            250);
+            }, 250);
         }
         filtering = !filtering;
     });
@@ -815,6 +835,61 @@ $(function() {
     $("#extra1").append(coursesPoolItems);
     // until now, all courses are in the first ul. now adjust pool height and sort pool.
     f.sortPool();
+
+    /* the following functions define the grade-editing behaviour */
+    f.coursesUl.find("li").delegate("button", "click", function() {
+        const course = this.parentNode.id.substr(7);
+        $('#course-' + course).addClass('inGradeEditMode');
+        $('#course-' + course + '-name').css('display', 'none');
+        $('#course-' + course + '>button').css('display', 'none');
+        const inputBox = $('#course-' + course + '-gradeinput');
+        inputBox.val(gradeManager.getString(course));
+        inputBox.css('display', 'block');
+        inputBox.focus();
+    });
+    f.coursesUl.find("li").delegate("input", "input", function(event) {
+        if (this.value.length === 2 && !this.value.includes(".")) {
+            this.value = this.value[0] + "." + this.value[1];
+        }
+        if (this.value.length > 3) {
+            this.value = "" + this.value[0] + this.value[1] + this.value[this.value.length - 1];
+        }
+    });
+    function finishGradeEditing(course, grade) {
+        if (grade) {
+            gradeManager.setString(course, grade);
+        }
+        $('#course-' + course).removeClass('inGradeEditMode');
+        $('#course-' + course + '-name').css('display', 'block');
+        $('#course-' + course + '-gradeinput').css('display', 'none');
+        const button = $('#course-' + course + '>button');
+        button.css('display', 'block');
+        const newGrade = gradeManager.getString(course, true);
+        if (newGrade) {
+            button.html(newGrade);
+        } else {
+            button.html(f.gradeCharacter);
+        }
+    }
+    f.coursesUl.find("li").delegate("input", "keypress", function(event) {
+        const course = this.parentNode.id.substr(7);
+        if (event.which === 10 || event.which === 13) {
+            // Enter
+            finishGradeEditing(course, this.value);
+            this.value = "";
+        } else if (event.which === 8 || event.which === 46) {
+            //Delete or Backspace
+            if (this.value.length === 3 && this.value[1] === ".") {
+                this.value = "" + this.value[0] + ".";
+            }
+        }
+    });
+    f.coursesUl.find("li").delegate("input", "blur", function(event) {
+        const course = this.parentNode.id.substr(7);
+        finishGradeEditing(course, this.value);
+        this.value = "";
+    });
+
 
     /* initialize tooltips for all courses */
     f.coursesUl.find("li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)

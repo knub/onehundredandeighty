@@ -158,6 +158,31 @@ const wahlpflichtManager = {
     possibleCombinations: []
 };
 
+const gradeManager = {
+    grades: {},
+    set(course, grade) {
+        this.grades[course] = grade;
+    },
+    get(course) {
+        return this.grades[course];
+    },
+    setString(course, gradeString) {
+        this.set(course, parseFloat(gradeString));
+    },
+    getString(course, niceFormatOpt) {
+        const val = this.get(course);
+        if (isNaN(val)) {
+            return "";
+        } else {
+            const niceFormat = (niceFormatOpt !== undefined) ? niceFormatOpt : false;
+            if (niceFormat) {
+                return val.toFixed(1);
+            }
+            return "" + val;
+        }
+    }
+};
+
 
 /**
  * RULE SECTION
