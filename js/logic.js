@@ -12,7 +12,7 @@
  * keeps track, which table column (called semester number)
  * represents which actual semester (WSdd/dd or SSdd)
  */
-var semesterManager = {
+const semesterManager = {
     /**
      * all semesters to choose from
      */
@@ -44,11 +44,11 @@ var semesterManager = {
     startswith: "WS15/16",
 
     /** true, if the semester with given name lies in the future */
-    isFutureSemester: function(semesterName) {
+    isFutureSemester(semesterName) {
         return this.semesters.indexOf(semesterName) > this.semesters.indexOf(this.currentSemester)
     },
     /** returns a semester name not from the future, with same type (WS/SS) */
-    referenceSemesterFor: function(semesterName) {
+    referenceSemesterFor(semesterName) {
         if (semesterName.startsWith("SS")) {
             return this.lastSummerSemester
         } else if (semesterName.startsWith("WS")) {
@@ -56,15 +56,39 @@ var semesterManager = {
         }
     },
     /**
+     * @param course which course(id) to test
+     * @param semesterNumber which semester to test
+     * @return boolean - true if it was or will be offered in the given semester
+     */
+    courseOfferedInSemester(course, semesterNumber) {
+        const semesterName = this.shownSemesters[semesterNumber - 1];
+        const semesters = data[course].semester;
+        if (semesters.includes(semesterName)) {
+            return true
+        }
+        if (this.isFutureSemester(semesterName) &&
+            semesters.includes(this.referenceSemesterFor(semesterName))) {
+            return true
+        }
+        return false
+    },
+
+    /**
+     * get the current lock state for a semester
+     */
+    getSemesterLock(semesterNumber) {
+        while (this.semesterLock.length < semesterNumber) {
+            this.semesterLock.push(false);
+        }
+        return this.semesterLock[semesterNumber - 1];
+    },
+    /**
      * invert the lock state for a semester
      * @param semesterNumber the semester to alter
      * @returns {boolean} - the new lock status
      */
-    flipSemesterLock: function(semesterNumber) {
-        while (this.semesterLock.length < semesterNumber) {
-            this.semesterLock.push(false);
-        }
-        var newValue = !this.semesterLock[semesterNumber - 1];
+    flipSemesterLock(semesterNumber) {
+        const newValue = !this.getSemesterLock(semesterNumber);
         this.semesterLock[semesterNumber - 1] = newValue;
         return newValue;
     },
@@ -74,21 +98,21 @@ var semesterManager = {
      * @param semester_number which semester got changed
      * @param semester_string to what it got changed
      */
-    updateSemester: function(semester_number, semester_string) {
-        var index = semester_number - 1;
+    updateSemester(semester_number, semester_string) {
+        const index = semester_number - 1;
         if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {
             console.error("Mismatched semester string. Check data!");
             return;
         }
 
-        var old_chosen = this.semesters.indexOf(this.shownSemesters[index]);
-        var new_chosen = this.semesters.indexOf(semester_string);
-        var difference = new_chosen - old_chosen;
+        const old_chosen = this.semesters.indexOf(this.shownSemesters[index]);
+        const new_chosen = this.semesters.indexOf(semester_string);
+        const difference = new_chosen - old_chosen;
 
         this.shownSemesters[index] = semester_string;
 
-        for (var i = index + 1; i < this.shownSemesters.length; i++) {
-            var old_index = this.semesters.indexOf(this.shownSemesters[i]);
+        for (let i = index + 1; i < this.shownSemesters.length; i++) {
+            const old_index = this.semesters.indexOf(this.shownSemesters[i]);
             if (old_index + difference < this.semesters.length)
                 this.shownSemesters[i] = this.semesters[old_index + difference];
             else
@@ -101,10 +125,10 @@ var semesterManager = {
  * keeps track of all the rules that need to be fulfilled
  * for a "Belegung" to be valid
  */
-var ruleManager = {
+const ruleManager = {
     getSemester: null,
     rules: [],
-    init: function(getSemester_Function) {
+    init(getSemester_Function) {
         this.getSemester = getSemester_Function;
     },
 
@@ -112,11 +136,11 @@ var ruleManager = {
      * test all rules, and update their success property
      * @returns all the rules as Array, including a numberFailedRules - property
      */
-    checkAll: function() {
-        var failingRules = [];
-        for (var r = 0; r < this.rules.length; r++) {
-            var rule = this.rules[r];
-            var errors = rule(this.getSemester);
+    checkAll() {
+        let failingRules = [];
+        for (let r = 0; r < this.rules.length; r++) {
+            const rule = this.rules[r];
+            const errors = rule(this.getSemester);
             if (errors.length !== 0) {
                 failingRules = failingRules.concat(errors);
             }
@@ -129,7 +153,7 @@ var ruleManager = {
  * this Manager keeps track on which decisions regarding the Belegung were decided how.
  * Which Vertiefungsgebiete have I selected? How is everything weighted? ...
  */
-var wahlpflichtManager = {
+const wahlpflichtManager = {
     // vertiefungsgebiete combinations that are currently valid
     possibleCombinations: []
 };
@@ -148,13 +172,13 @@ var wahlpflichtManager = {
  */
 
 /* 8. Clone-Rule: take care of clones (repetitions) of a specific course */
-var cloneRule = {
+const cloneRule = {
     /* type */
     type: "cloneRule",
     /* constructor */
-    init: function(cloneId) {
+    init(cloneId) {
         this.cloneId = cloneId;
-        var index = cloneId.indexOf("-");
+        const index = cloneId.indexOf("-");
         this.course = cloneId.substr(0, index);
 
         this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
@@ -162,9 +186,9 @@ var cloneRule = {
         return this;
     },
     /* check method */
-    check: function(getSemester) {
+    check(getSemester) {
         // get the semester number (first, second, third ...) for the given course
-        var semesterNumber = getSemester(this.cloneId);
+        const semesterNumber = getSemester(this.cloneId);
         if (semesterNumber === -1)
             return true;
         if (semesterNumber <= getSemester(this.course) || getSemester(this.course) === -1) {
@@ -176,7 +200,7 @@ var cloneRule = {
         if (semesterNumber === - 1) return true;
         // now get the semester time (WS10/11, SS10, ...) for the given course
         // important: subtract 1, because semester number starts at 1, while array starts at 0
-        var semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
+        const semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
 
         // now we have to distinguish two cases:
         // -    the semester is in the past/present
@@ -212,8 +236,8 @@ var cloneRule = {
 
 //helper methods
 function courseList() {
-    var list = [];
-    for (var course in data) {
+    const list = [];
+    for (const course in data) {
         if (!data.hasOwnProperty(course)) continue;
         list.push(course)
     }
@@ -247,16 +271,7 @@ function courseToCP(id) {
 
 ruleManager.rules.push(function timeRule(getSemester) {
     function hasTimeProblem(id) {
-        var semesterName = semesterManager.shownSemesters[getSemester(id) - 1];
-        var semesters = data[id].semester;
-        if (semesters.includes(semesterName)) {
-            return false
-        }
-        if (semesterManager.isFutureSemester(semesterName) &&
-            semesters.includes(semesterManager.referenceSemesterFor(semesterName))) {
-            return false
-        }
-        return true
+        return !semesterManager.courseOfferedInSemester(id, getSemester(id));
     }
     function createErrorMessage(id) {
         return {
@@ -303,10 +318,10 @@ ruleManager.rules.push(function SBSRule(getSemester) {
 });
 
 ruleManager.rules.push(function semesterOrderRule(_) {
-    var errors = [];
-    for (var i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
-        var earlier_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i]);
-        var   later_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i + 1]);
+    const errors = [];
+    for (let i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
+        const earlier_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i]);
+        const   later_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i + 1]);
         if (earlier_index >= later_index) {
             errors.push({
                 type: "semesterRule",
@@ -319,7 +334,7 @@ ruleManager.rules.push(function semesterOrderRule(_) {
 
 ruleManager.rules.push(function softskillsRule(getSemester) {
 
-    var totalCP = allBelegteCourses(getSemester)
+    const totalCP = allBelegteCourses(getSemester)
         .filter(isModul("Softskills"))
         .map(courseToCP)
         .sumElements();
@@ -346,7 +361,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         }]
     }
 
-    var currentlyBelegteVertiefungen = allBelegteCourses(getSemester)
+    const currentlyBelegteVertiefungen = allBelegteCourses(getSemester)
         .filter(isModul("Vertiefungsgebiete"));
 
     /*
@@ -362,8 +377,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
      * SBS is treated equally to HCGT, OSIS, ...
      * eventually, only those options with exactly 3 SBS are used further
      */
-    var vertiefungenWithOptions = currentlyBelegteVertiefungen.map(function(course) {
-        var vertiefungen = data[course].vertiefung.slice(0);
+    const vertiefungenWithOptions = currentlyBelegteVertiefungen.map(function(course) {
+        const vertiefungen = data[course].vertiefung.slice(0);
         if (isModul("Softwarebasissysteme")(course)) {
             vertiefungen.push("SBS");
         }
@@ -387,15 +402,15 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // Another is to interpret 'hci2' as 'SAMT' ... and so on.
     // Of course this normally happens with more courses than two.
     // a combination is a list of key+vertiefung - objects (ech key only once), called interpretation
-    var possibleCombinations = Array.cartesianProduct.apply(undefined, vertiefungenWithOptions);
+    let possibleCombinations = Array.cartesianProduct.apply(undefined, vertiefungenWithOptions);
 
     // save the error message instead of instantly returning the error,
     // so that data transformation steps can still be performed
-    var currentError = undefined;
+    let currentError = undefined;
 
     // multiple steps are necessary to filter out valid combinations
     // and to convert them to a meaningful format
-    var processingSteps = [
+    const processingSteps = [
         {filter: threeSBS, errorMessage: "Da keine 3 Softwarebasissysteme gewählt wurden, können die Vertiefungsgebiete nicht zugeteilt werden."},
         {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
         {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
@@ -407,11 +422,11 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         {converter: classifyVertiefungen},
         {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."}
     ];
-    for (var s = 0; s < processingSteps.length; s++) {
-        var step = processingSteps[s];
+    for (let s = 0; s < processingSteps.length; s++) {
+        const step = processingSteps[s];
         if (step.filter != null) {
             if (currentError === undefined) {
-                var oldCombinations = possibleCombinations;
+                const oldCombinations = possibleCombinations;
                 possibleCombinations = oldCombinations.filter(step.filter);
                 if (possibleCombinations.length === 0) {
                     possibleCombinations = oldCombinations;
@@ -420,16 +435,16 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 }
             }
         } else if (step.cleaner != null) {
-            var cleaned = [];
-            var emit = function (combination) {
+            const cleaned = [];
+            const emit = function (combination) {
                 cleaned.push(combination);
             };
-            for (var c = 0; c < possibleCombinations.length; c++) {
+            for (let c = 0; c < possibleCombinations.length; c++) {
                 step.cleaner(possibleCombinations[c], emit, c, possibleCombinations);
             }
             possibleCombinations = cleaned;
         } else if (step.converter != null) {
-            for (var c = 0; c < possibleCombinations.length; c++) {
+            for (let c = 0; c < possibleCombinations.length; c++) {
                 step.converter(possibleCombinations[c]);
             }
         } else {
@@ -453,9 +468,9 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         return interpretation.key;
     }
     function getVertiefungenSet(combination) {
-        var vertiefungen = new Set();
-        for (var i = 0; i < combination.length; i++) {
-            var interpretation = combination[i];
+        const vertiefungen = new Set();
+        for (let i = 0; i < combination.length; i++) {
+            const interpretation = combination[i];
             vertiefungen.add(interpretation.vertiefung)
         }
         vertiefungen.delete("SBS");
@@ -466,12 +481,12 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     //converter methods
     function addVertiefungCombos(combination) {
         // "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen. In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule). Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden, die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
-        var vertiefungsgebiete = Array.from(getVertiefungenSet(combination));
-        var cpPerVertiefung = Array.from(new Array(vertiefungsgebiete.length), function(){ return 0 }); //array with same length, filled with zeros
+        const vertiefungsgebiete = Array.from(getVertiefungenSet(combination));
+        const cpPerVertiefung = Array.from(new Array(vertiefungsgebiete.length), function(){ return 0 }); //array with same length, filled with zeros
         combination.forEach(function(interpretation) {
             // calculate index as described above
             if (interpretation.vertiefung !== "SBS") {
-                var index = vertiefungsgebiete.indexOf(interpretation.vertiefung);
+                const index = vertiefungsgebiete.indexOf(interpretation.vertiefung);
                 cpPerVertiefung[index] += courseToCP(toCourse(interpretation));
             }
         });
@@ -479,10 +494,10 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         // Now test all possible pairs if they met the given criteria.
         // Found pairs are pushed to combination.possibleVertiefungen:
         combination.possibleVertiefungen = [];
-        for (var i = 0; i < cpPerVertiefung.length; i += 1) {
-            for (var j = i + 1; j < cpPerVertiefung.length; j += 1) {
+        for (let i = 0; i < cpPerVertiefung.length; i += 1) {
+            for (let j = i + 1; j < cpPerVertiefung.length; j += 1) {
                 if (cpPerVertiefung[i] >= 9 && cpPerVertiefung[j] >= 9 && cpPerVertiefung[i] + cpPerVertiefung[j] >= 24) {
-                    var newPossibleVertiefung = [vertiefungsgebiete[i], vertiefungsgebiete[j]];
+                    const newPossibleVertiefung = [vertiefungsgebiete[i], vertiefungsgebiete[j]];
                     combination.possibleVertiefungen.push(newPossibleVertiefung);
                 }
             }
@@ -490,8 +505,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     }
     function classifyVertiefungen(combination) {
         // Following variables will save, whether there is a lecture for the first/second Vertiefung
-        var firstVertiefungLectures = [];
-        var secondVertiefungLectures = [];
+        const firstVertiefungLectures = [];
+        const secondVertiefungLectures = [];
         combination.forEach(function(interpretation) {
             if (data[interpretation.key].lehrform.includes("Vorlesung")) {
                 // check where this Vorlesung belongs to
@@ -537,10 +552,10 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // expand combinations with multiple Vertiefungen-combos to single ones,
     // omitting all LVs which do not contribute to this combo
     function expandAndTruncateVertiefungen(combination, emit, _i, _allCombinations) {
-        var possible = combination.possibleVertiefungen;
+        const possible = combination.possibleVertiefungen;
         // For each combination, there are possible Vertiefungen-combos
         possible.forEach(function(possibleVertiefung) {
-            var cleanedCombination = [];
+            const cleanedCombination = [];
             // Walk through all courses ..
             combination.forEach(function(course) {
                 // add only those, which are important for the current Vertiefungen-combo
@@ -555,7 +570,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     }
     // remove all combinations, which are a subset of another one
     function removeSubsets(combination, emit, _i, allCombinations) {
-        var hasSuperCombination = allCombinations.some(function(superCombination) {
+        const hasSuperCombination = allCombinations.some(function(superCombination) {
             return combination.vertiefungCombo.equals(superCombination.vertiefungCombo)
                 && combination.length < superCombination.length
                 && combination.every(function(interpretation) {
@@ -571,7 +586,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     }
     // remove all doubles
     function removeDoubles(combination, emit, i, allCombinations) {
-        var hasDuplicate = allCombinations.some(function(otherCombination, o) {
+        const hasDuplicate = allCombinations.some(function(otherCombination, o) {
             return o > i
                 && combination.vertiefungCombo.equals(otherCombination.vertiefungCombo)
                 && combination.length === otherCombination.length
