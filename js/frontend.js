@@ -97,8 +97,6 @@ const frontend = {
          * True, when course should be displayed.
          */
         checkSemester(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             // key is the array index to one course in data
             const unlockedSemesters = [];
             for (let s = 0; s < semesterManager.shownSemesters.length; s++) {
@@ -121,21 +119,15 @@ const frontend = {
         },
         /* see checkSemester for documentation, same procedure */
         checkModule(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             return this.selectedModule.haveIntersection(data[key].modul);
         },
         /* see checkSemester for documentation, same procedure */
         checkVertiefungsgebiete(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             if (data[key].vertiefung.length === 0) return true;
             return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
         },
         /* see checkSemester for documentation, same procedure */
         checkWahlpflicht(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             // if both 'Wahl' and 'Pflicht' are in the array, its always true
             if (this.selectedWahlpflicht.indexOf("Wahl") !== - 1 && this.selectedWahlpflicht.indexOf("Pflicht") !== - 1) return true;
             // if its only 'Pflicht' return true, when the course is 'Pflicht'
@@ -161,68 +153,6 @@ const frontend = {
             f.sortPool();
         }
     },
-    repetitionManager: {
-        cloneNode(li) {
-            const key = li.id.substr(7);
-            const semester = f.getSemester(key);
-            let cloneId = "";
-            if (this.repetitions[key] !== undefined) {
-                cloneId = key + "-clone-" + (this.repetitions[key].count + 1).toString();
-                this.repetitions[key].list.push({ id: cloneId, semester: semester });
-            }
-            else {
-                cloneId = key + "-clone-1";
-                this.repetitions[key] = { count: 0, list: [{ id: cloneId, semester: semester }] };
-            }
-            this.repetitions[key].count += 1;
-
-            const clone = li.cloneNode(true);
-            const ul = li.parentNode;
-            const that = this;
-            $(clone).attr("id", "course-" + cloneId).prepend("<span>W<br />D<br />H</span>").addClass("clone").find("button").text("x").click(function () {
-                that.deleteNode(this.parentNode, cloneId);
-                f.saveManager.save();
-            });
-            $(ul).append(clone);
-            ruleManager.rules.unshift(Object.create(cloneRule).init(cloneId));
-            if (f.checkPermanently === true) {
-                f.checkRules();
-                f.slideMessages();
-            }
-            f.coursesUl = $(f.coursesList);
-        },
-        deleteNode(li, cloneId) {
-            const key = f.repetitionManager.cloneIdToCourseId(cloneId);
-            let index = -1;
-            this.repetitions[key].list.forEach(function(value, i) {
-                if (value.id === cloneId)
-                    index = i;
-            });
-            this.repetitions[key].list.splice(index, 1);
-            if (this.repetitions[key].list.length === 0)
-                delete this.repetitions[key];
-            $(li).remove();
-            for (let i = 0; i < ruleManager.rules.length; i += 1) {
-                const rule = ruleManager.rules[i];
-                if (rule.type === 'cloneRule' && rule.cloneId === cloneId) {
-                    ruleManager.rules.splice(i, 1);
-                    break;
-                }
-            }
-            f.coursesUl = $(f.coursesList);
-            if (f.checkPermanently === true) {
-                f.checkRules();
-                f.slideMessages();
-            }
-            f.adjustSemesterViewHeight();
-        },
-        cloneIdToCourseId(cloneId) {
-            const index = cloneId.indexOf("-");
-            const key = cloneId.substr(0, index);
-            return key;
-        },
-        repetitions: {}
-    },
     /* saveManager saves the current status via Web-Storage */
     saveManager: {
         save() {
@@ -232,19 +162,9 @@ const frontend = {
                 if (!data.hasOwnProperty(key)) continue;
                 courseToSemester[key] = f.getSemester(key);
             }
-            /* save repetitions */
-            for (const repetition in f.repetitionManager.repetitions) {
-                if (!f.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
-                const courseRepetition = f.repetitionManager.repetitions[repetition];
-                for (let i = 0; i < courseRepetition.list.length; i += 1) {
-                    const id = courseRepetition.list[i].id;
-                    courseRepetition.list[i].semester = f.getSemester(id);
-                }
-            }
             // SAVE data
             localStorage.onehundredandeighty_hasData = true;
             localStorage.onehundredandeighty_courseToSemester = JSON.stringify(courseToSemester);
-            localStorage.onehundredandeighty_repetitionManager = JSON.stringify(f.repetitionManager);
             localStorage.onehundredandeighty_filterManager = JSON.stringify(f.filterManager);
             localStorage.onehundredandeighty_semesterLocks = JSON.stringify(semesterManager.semesterLock);
             localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
@@ -559,11 +479,9 @@ const frontend = {
     /*
      * This functions builds a complete <li> element containing information about one course
      * key: The course's key to information in data.
-     * repetition: This has two meanings. On the one hand, it indicates that the course to build the <li> for is just a repetition and on the other hand, it holds the repetition's html-id
      */
-    buildCourseData(key, repetition) {
-        const id = (repetition !== undefined) ? repetition : key;
-        const course = data[key];
+    buildCourseData(id) {
+        const course = data[id];
         const courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + f.displayArray(course['modul'], "Modul") + f.displayArray(course['dozent'], "Dozent") + "<tr><td>Leistungspunkte</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + f.displayArray(course['lehrform'], "Lehrform") + f.displayArray(course['vertiefung'], "Vertiefungsgebiet") + f.displayArray(course['semester'], "Angeboten im") + "</table>" + "</div>" + "</div>";
 
         // if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
@@ -571,20 +489,13 @@ const frontend = {
         if (course['kurz'].indexOf("<br />") === - 1) {
             classes.push("oneliner");
         }
-        if (repetition !== undefined)
-            classes.push("clone");
         let cssclass = "";
         if (classes.length !== 0)
             cssclass = " class='" + classes.join(" ") + "'";
 
-        let character = f.copyCharacter;
-        if (repetition !== undefined)
-            character = "x";
+        let character = f.gradeCharacter;
 
-        let repetitionString = "";
-        if (repetition !== undefined)
-            repetitionString = "<span>W<br />D<br />H</span>";
-        return "<li" + cssclass + " id='course-" + id + "'>" +repetitionString + course['kurz'] + "<button><div class='info clone-info'>Auf diesen Button klicken, um einen Kurs in einem anderen Semester noch einmal zu wiederholen.</div><!---->" + character + "</button>" + courseInfo + "</li>";
+        return "<li" + cssclass + " id='course-" + id + "'>" + course['kurz'] + "<button><div class='info grade-info'>Hier klicken, um deine Note für dieser Veranstaltung einzutragen.</div><!---->" + character + "</button>" + courseInfo + "</li>";
     },
     /* used, when user starts drag'n'dropping courses */
     startSorting(event, ui) {
@@ -729,7 +640,7 @@ const frontend = {
     checkPermanently: null,
     /* number of list items in one list in unchosen lists */
     coursesPoolHeight: 8,
-    copyCharacter: "⎘",
+    gradeCharacter: "✓",
     /* caching stuff */
     messageDiv: null,
     slideMessagesDiv: null,
@@ -836,7 +747,6 @@ $(function() {
         }
 
         f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.onehundredandeighty_filterManager));
-        f.repetitionManager = $.extend(f.repetitionManager, JSON.parse(localStorage.onehundredandeighty_repetitionManager));
         if (f.checkPermanently !== false) $("#permacheck").find("li").attr("class", "selected");
         else $("#button-div").fadeIn(100);
     }
@@ -906,43 +816,6 @@ $(function() {
     // until now, all courses are in the first ul. now adjust pool height and sort pool.
     f.sortPool();
 
-    for (const repetition in f.repetitionManager.repetitions) {
-        if (!f.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
-        const courseRepetition = f.repetitionManager.repetitions[repetition];
-        f.repetitionManager.repetitions[repetition].list = courseRepetition.list.filter(function (value) {
-            return value.semester !== -1;
-        });
-        if (courseRepetition.list.length === 0) {
-            delete f.repetitionManager.repetitions[repetition];
-            continue;
-        }
-        for (let i = 0; i < courseRepetition.list.length; i += 1) {
-            const id = courseRepetition.list[i].id;
-            const key = f.repetitionManager.cloneIdToCourseId(id);
-
-            const html = f.buildCourseData(key, id);
-            $("#semester" + courseRepetition.list[i].semester).append(html);
-            /* add rule */
-            ruleManager.rules.unshift(Object.create(cloneRule).init(id));
-        }
-    }
-    // data of repetitionManager has changed, so save changes
-    f.saveManager.save();
-
-    /* apply click routine for buttons which clone a course */
-    //f.coursesUl.find("li:not(.clone)").find("button").click(function() { // see next line, which is faster
-    f.coursesUl.find("li:not(.clone)").delegate("button", "click", function() {
-        f.repetitionManager.cloneNode(this.parentNode);
-        f.saveManager.save();
-    });
-    /* apply click routine for buttons to remove a cloned course */
-    //f.coursesUl.find("li.clone").find("button").click(function() {
-    f.coursesUl.find("li.clone").delegate("button", "click", function() {
-        // substr(7) to crop leading "course-"
-        f.repetitionManager.deleteNode(this.parentNode, this.parentNode.id.substr(7));
-        f.saveManager.save();
-    });
-
     /* initialize tooltips for all courses */
     f.coursesUl.find("li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
     f.coursesUl.find("li button").knubtip("init"); // activate tooltip for button elements (see jquery.knubtip.js)
@@ -962,7 +835,6 @@ $(function() {
         /* localStorage.clear() may remove too much data, e.g. 120 data hosted on the same server */
         localStorage.removeItem("onehundredandeighty_hasData");
         localStorage.removeItem("onehundredandeighty_courseToSemester");
-        localStorage.removeItem("onehundredandeighty_repetitionManager");
         localStorage.removeItem("onehundredandeighty_filterManager");
         localStorage.removeItem("onehundredandeighty_semesterLocks");
         localStorage.removeItem("onehundredandeighty_semesters");

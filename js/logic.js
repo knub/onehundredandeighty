@@ -158,81 +158,10 @@ const wahlpflichtManager = {
     possibleCombinations: []
 };
 
+
 /**
- * Rule-objectes, each representing one special type of rule
- * These objects basically act as classes (will be 'cloned' by Object.create later
- * It's a kind of 'inheritance by convention', meaning:
- *    - each rule has a type, by which it can be identified
- *     - each rule must have a check method, which - given a special course to check - passes or fails
- *    - each rule must have a message property, which will be displayed, if the rule/test fails
- *    - there is one init-method, serving as constructor, which takes neccessary parameters and saves them, finally returning 'this'
- *    - some rules assign special information to variables, which can be used in the frontend to e. g. display already chosen Vertiefungen
- *
- * Furthermore, most objects have some special properties needed for that special kind of rule
+ * RULE SECTION
  */
-
-/* 8. Clone-Rule: take care of clones (repetitions) of a specific course */
-const cloneRule = {
-    /* type */
-    type: "cloneRule",
-    /* constructor */
-    init(cloneId) {
-        this.cloneId = cloneId;
-        const index = cloneId.indexOf("-");
-        this.course = cloneId.substr(0, index);
-
-        this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
-
-        return this;
-    },
-    /* check method */
-    check(getSemester) {
-        // get the semester number (first, second, third ...) for the given course
-        const semesterNumber = getSemester(this.cloneId);
-        if (semesterNumber === -1)
-            return true;
-        if (semesterNumber <= getSemester(this.course) || getSemester(this.course) === -1) {
-            this.message = "Die Wiederholung von '" + data[this.course].nameLV + "' muss nach dem ersten Belegen der Veranstaltung geschehen.";
-            return false;
-        }
-        this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
-
-        if (semesterNumber === - 1) return true;
-        // now get the semester time (WS10/11, SS10, ...) for the given course
-        // important: subtract 1, because semester number starts at 1, while array starts at 0
-        const semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
-
-        // now we have to distinguish two cases:
-        // -    the semester is in the past/present
-        // -    the semester is in the future
-        if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.currentSemester)) {
-            // past or present
-            return data[this.course].semester.indexOf(semesterTime) !== - 1;
-        }
-        else {
-            // if the course is currently chosen for a summer semester
-            if (semesterTime.indexOf("SS") >= 0) {
-                // check if it was offered in the last summer semester
-                return data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
-            }
-            // if the course is currently chosen for a winter semester
-            else if (semesterTime.indexOf("WS") >= 0) {
-                // check if it was offered in the last summer semester
-                return data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
-            }
-            // else something went completly wrong
-            else {
-                console.error("Something is wrong with the semester-time. Check data!");
-            }
-            return true;
-        }
-    },
-    /* message */
-    message: 'Der Kurs wird im gewählten Semester nicht angeboten.',
-    course: "",
-    cloneId: ""
-};
-
 
 //helper methods
 function courseList() {

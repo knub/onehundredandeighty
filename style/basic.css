@@ -430,18 +430,6 @@ h1 span {
 .courses li.disabled:hover {
 	cursor: auto;
 }
-.courses li.clone {
-	background: white;
-	border: 1px solid gray;
-}
-.courses li.clone span {
-	color: #AAA;
-	position: absolute;
-	left: 3px;
-	top: 0px;
-	font-size: 0.9em;
-	line-height: 1em;
-}
 .courses li.oneliner {
 	line-height: 2.7em;
 }
@@ -502,7 +490,7 @@ h1 span {
 	font-family: sans-serif;
 	font-size: 1.2em;
 }
-.clone-info {
+.grade-info {
 	border: 1px solid black;
 	background: black;
 	color: white;
