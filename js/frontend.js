@@ -197,26 +197,15 @@ const frontend = {
          * That means, there is at least one course selected the current course is/was offered in.
          * True, when course should be displayed.
          */
-        checkSemester(key) {
-            // key is the array index to one course in data
-            const unlockedSemesters = [];
-            for (let s = 0; s < semesterManager.shownSemesters.length; s++) {
-                if (!semesterManager.semesterLock[s]) {
-                    unlockedSemesters.push(semesterManager.shownSemesters[s]);
+        checkSemester(course) {
+            // course is the array index to one course in data
+            for (let s = 1; s <= semesterManager.shownSemesters.length; s++) {
+                if (!semesterManager.getSemesterLock(s) &&
+                    semesterManager.courseOfferedInSemester(course, s)) {
+                    return true;
                 }
             }
-            for (let i = 0; i < unlockedSemesters.length; i += 1) {
-                // if semester is in the future, reset it to the last winter/summer-semester
-                if (semesterManager.semesters.indexOf(unlockedSemesters[i]) > semesterManager.semesters.indexOf(semesterManager.currentSemester)) {
-                    if (unlockedSemesters[i].indexOf("SS") >= 0)
-                        unlockedSemesters[i] = semesterManager.lastSummerSemester;
-                    else if (unlockedSemesters[i].indexOf("WS") >= 0)
-                        unlockedSemesters[i] = semesterManager.lastWinterSemester;
-                    else
-                        console.error("Something is wrong with the semester-time. Check data!");
-                }
-            }
-            return unlockedSemesters.haveIntersection(data[key].semester);
+            return false;
         },
         /* see checkSemester for documentation, same procedure */
         checkModule(key) {

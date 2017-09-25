@@ -40,6 +40,8 @@ const semesterManager = {
     currentSemester: "WS17/18",
     lastSummerSemester: "SS17",
     lastWinterSemester: "WS17/18",
+    preLastSummerSemester: "SS16",
+    preLastWinterSemester: "WS16/17",
     /* the semester that is the first semester when you first start the application */
     startswith: "WS15/16",
 
@@ -55,6 +57,14 @@ const semesterManager = {
             return this.lastWinterSemester
         }
     },
+    /** returns a semester name not from the future, with same type (WS/SS) */
+    referenceSemester2For(semesterName) {
+        if (semesterName.startsWith("SS")) {
+            return this.preLastSummerSemester
+        } else if (semesterName.startsWith("WS")) {
+            return this.preLastWinterSemester
+        }
+    },
     /**
      * @param course which course(id) to test
      * @param semesterNumber which semester to test
@@ -66,8 +76,9 @@ const semesterManager = {
         if (semesters.includes(semesterName)) {
             return true
         }
-        if (this.isFutureSemester(semesterName) &&
-            semesters.includes(this.referenceSemesterFor(semesterName))) {
+        if (this.isFutureSemester(semesterName)
+            && semesters.includes(this.referenceSemesterFor(semesterName))
+            && semesters.includes(this.referenceSemester2For(semesterName))) {
             return true
         }
         return false
