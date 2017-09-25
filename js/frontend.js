@@ -348,7 +348,7 @@ const frontend = {
             "<td>aktuell belegte<br />Leistungs&shy;punkte</td>" +
             "<td>Vorlesung<br />in diesem Ge&shy;biet</td>" +
             "<td>Gesamt&shy;note</td></tr>";
-        for (let i = 0; i < possibilities.length; i += 1) {
+        for (let i = 0; i < possibilities.length && i < 10; i += 1) {
             const possibility = possibilities[i];
 
             // at first, do some calculation stuff, so collect all courses, creditpoints and lectures
@@ -419,6 +419,10 @@ const frontend = {
             table += "<td>" + secondLectures.join(", ") + "</td>";
 
             table += "</tr>";
+        }
+        if (possibilities.length > 10) {
+            // TODO: add a 'show all' button
+            table += '<tr><td colspan="6">' + (possibilities.length - 10) + ' weitere M&ouml;glichkeiten...</td></tr>';
         }
         table += "</table>";
         return table;
