@@ -144,7 +144,7 @@ div#message table td {
 	padding: 5px;
 	line-height: 1.35em;
 }
-div#message table.combinations tr:nth-child(even) td {
+div#message table.combinations tr:nth-child(3n - 1) td {
 	border-top: 2px solid black;
 }
 div#message table.vertiefungen tr.sbs-text {
@@ -732,4 +732,7 @@ h3 {
 
 .finalGrade {
 	font-size: 2em;
+}
+.finalGrade > sup {
+	font-size: 60%;
 }

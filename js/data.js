@@ -59,7 +59,7 @@ const data = {
     bdanalytics: {
         kurz: "BD Analytics",
         lehrform: ["Vorlesung", "Übung"],
-        modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
+        modul: ["SB2", "Vertiefungsgebiete"],
         semester: [ws15_16, ws16_17, ws17_18],
         pflicht: false,
         empfohlen: "",
@@ -84,7 +84,7 @@ const data = {
     },
     bdsecurityanalytics: {
         kurz: "BD Security Analytics",
-        lehrform: ["Seminar"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
         pflicht: false,
@@ -150,7 +150,7 @@ const data = {
     bs: {
         kurz: "BS",
         lehrform: ["Vorlesung"],
-        modul: ["Softwarebasissysteme"],
+        modul: ["BS"],
         semester: [ws15_16, ws16_17, ws17_18],
         pflicht: true,
         empfohlen: 3,
@@ -158,7 +158,7 @@ const data = {
         cp: 6,
         vorher: [],
         dozent: ["Prof. Dr. Andreas Polze"],
-        nameLV: "Betriebssysteme"
+        nameLV: "Betriebssysteme 1"
     },
     bs2: {
         kurz: "BS II",
@@ -215,7 +215,7 @@ const data = {
     cg1: {
         kurz: "CG I",
         lehrform: ["Vorlesung", "Übung"],
-        modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
+        modul: ["SB1", "Vertiefungsgebiete"],
         semester: [ss15, ws15_16, ws16_17, ws17_18],
         pflicht: false,
         empfohlen: "",
@@ -280,11 +280,11 @@ const data = {
     dataengineeringinderpraxis: {
         kurz: "Data Engineering<br />in der Praxis",
         lehrform: ["Vorlesung"],
-        modul: [],
+        modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
         pflicht: false,
         empfohlen: "",
-        vertiefung: [],
+        vertiefung: [BPET, OSIS],
         cp: 3,
         vorher: [],
         dozent: ["Dr. Matthias Uflacker", "Dr. Ralf Krestel", "Prof. Dr. Emmanuel Müller", "Prof. Dr. Felix Naumann"],
@@ -293,7 +293,7 @@ const data = {
     dbs1: {
         kurz: "DBS I",
         lehrform: ["Vorlesung", "Übung"],
-        modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
+        modul: ["SB2", "Vertiefungsgebiete"],
         semester: [ss15, ss16, ss17],
         pflicht: false,
         empfohlen: "",
@@ -366,7 +366,7 @@ const data = {
         cp: 3,
         vorher: [],
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "D-School First Track: Introduction to Design Thinking"
+        nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas"
     },
     einfuehrungindiealgorithmik: {
         kurz: "Einführung in<br />die Algorithmik",
@@ -501,7 +501,7 @@ const data = {
     hci1: {
         kurz: "HCI I",
         lehrform: ["Vorlesung"],
-        modul: ["Vertiefungsgebiete"],
+        modul: ["SB4", "Vertiefungsgebiete"],
         semester: [ws15_16],
         pflicht: false,
         empfohlen: "",
@@ -514,7 +514,7 @@ const data = {
     hci2: {
         kurz: "HCI II",
         lehrform: ["Vorlesung"],
-        modul: ["Vertiefungsgebiete"],
+        modul: ["SB4", "Vertiefungsgebiete"],
         semester: [ss15, ss17, ws17_18],
         pflicht: false,
         empfohlen: "",
@@ -522,7 +522,7 @@ const data = {
         cp: 6,
         vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI: Building Interactive Devices and Computer Vision"
+        nameLV: "Building Interactive Devices"
     },
     hcipsaugmentrealityvirtualrealityand: {
         kurz: "[HCI PS] Augment Reality,<br />Virtual Reality, and ...",
@@ -769,12 +769,12 @@ const data = {
         cp: 0,
         vorher: [],
         dozent: ["Peter Göttel"],
-        nameLV: "Projektentwicklung und- Management: Teamentwicklung"
+        nameLV: "Projektentwicklung und- Management: Teammanagement und Softskills in Projekten"
     },
     pois: {
         kurz: "POIS",
         lehrform: ["Vorlesung", "Übung"],
-        modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
+        modul: ["SB3", "Vertiefungsgebiete"],
         semester: [ws15_16, ws16_17, ws17_18],
         pflicht: false,
         empfohlen: "",
@@ -1029,7 +1029,7 @@ const data = {
         cp: 6,
         vorher: [],
         dozent: ["Dr. Matthias Uflacker"],
-        nameLV: "Softwaretechnik II"
+        nameLV: "Softwaretechnik II - Agile Software Development in Large Teams"
     },
     testdrivenlearningassignments: {
         kurz: "Test-Driven Learning<br />Assignments",
@@ -1177,7 +1177,7 @@ const data = {
     www: {
         kurz: "WWW",
         lehrform: ["Vorlesung", "Übung"],
-        modul: ["Softwarebasissysteme", "Vertiefungsgebiete"],
+        modul: ["SB5", "Vertiefungsgebiete"],
         semester: [ss15, ss16, ss17],
         pflicht: false,
         empfohlen: "",

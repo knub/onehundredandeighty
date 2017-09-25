@@ -271,17 +271,6 @@ ruleManager.rules.push(function mustDoRule(getSemester) {
        .map(createErrorMessage)
 });
 
-ruleManager.rules.push(function SBSRule(getSemester) {
-    if (allBelegteCourses(getSemester)
-            .filter(isModul("Softwarebasissysteme")).length < 4) {
-        return [{
-            type: "sbsRule",
-            message: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden."
-        }]
-    }
-    return []
-});
-
 ruleManager.rules.push(function semesterOrderRule(_) {
     const errors = [];
     for (let i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
@@ -339,14 +328,18 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
      * ]
      *
      * NOTE:
-     * SBS is treated equally to HCGT, OSIS, ...
+     * SB* is treated equally to HCGT, OSIS, ...
+     * NONE means that this LV is not used at all
      * eventually, only those options with exactly 3 SBS are used further
      */
     const vertiefungenWithOptions = currentlyBelegteVertiefungen.map(function(course) {
         const vertiefungen = data[course].vertiefung.slice(0);
-        if (isModul("Softwarebasissysteme")(course)) {
-            vertiefungen.push("SBS");
+        for (const sb of data[course].modul) {
+            if (sb.startsWith('SB')) {
+                vertiefungen.push(sb);
+            }
         }
+        vertiefungen.push("NONE");
         return vertiefungen.map(function(vertiefung) {
            return { key: course, vertiefung: vertiefung }
         });
@@ -367,6 +360,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // Another is to interpret 'hci2' as 'SAMT' ... and so on.
     // Of course this normally happens with more courses than two.
     // a combination is a list of key+vertiefung - objects (ech key only once), called interpretation
+    // TODO performance here (filter on combination creation)
     let possibleCombinations = Array.cartesianProduct.apply(undefined, vertiefungenWithOptions);
 
     // save the error message instead of instantly returning the error,
@@ -377,15 +371,18 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // and to convert them to a meaningful format
     // TODO: This is a mixture from old (allow multiple Vertiefungsgebiete) and new (grading scheme) Studienordung: Seperate them!
     const processingSteps = [
-        {filter: threeSBS, errorMessage: "Da keine 3 Softwarebasissysteme gewählt wurden, können die Vertiefungsgebiete nicht zugeteilt werden."},
+        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden."},
+        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden."},
         {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
         {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
         {converter: addVertiefungCombos},
         {filter: twoTimesNine, errorMessage: "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben."},
         {cleaner: expandAndTruncateVertiefungen},
+        {converter: addSBS},
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
+        {cleaner: removeNotEingebrachteLVs},
         {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
         {converter: calculateGrades}
     ];
@@ -429,18 +426,25 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
     //helpers
     function isSBS(interpretation) {
-        return interpretation.vertiefung === 'SBS';
+        return interpretation.vertiefung.startsWith('SB');
+    }
+    function isEingebracht(interpretation) {
+        return interpretation.vertiefung !== 'NONE';
     }
     function toCourse(interpretation) {
         return interpretation.key;
+    }
+    function toUsage(interpretation) {
+        return interpretation.vertiefung;
     }
     function getVertiefungenSet(combination) {
         const vertiefungen = new Set();
         for (let i = 0; i < combination.length; i++) {
             const interpretation = combination[i];
-            vertiefungen.add(interpretation.vertiefung)
+            if (!isSBS(interpretation) && isEingebracht(interpretation)) {
+                vertiefungen.add(interpretation.vertiefung);
+            }
         }
-        vertiefungen.delete("SBS");
         return vertiefungen;
     }
 
@@ -452,7 +456,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         const cpPerVertiefung = Array.from(new Array(vertiefungsgebiete.length), function(){ return 0 }); //array with same length, filled with zeros
         combination.forEach(function(interpretation) {
             // calculate index as described above
-            if (interpretation.vertiefung !== "SBS") {
+            if (!isSBS(interpretation)) {
                 const index = vertiefungsgebiete.indexOf(interpretation.vertiefung);
                 cpPerVertiefung[index] += courseToCP(toCourse(interpretation));
             }
@@ -490,31 +494,101 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     }
     function calculateGrades(combination) {
         //calculate the final grade for these combinations
-        function isVertiefung(course) {
-            return combination.some(function(interpretation) {
-                return course === interpretation.key
-            });
-        }
-        function toGradeAndWeight(course) {
-            let weight = 1;
-            if (isVertiefung(course)) {
-                weight = 1.5;
-            }
-            return {
-                grade: gradeManager.get(course),
-                weight: weight
-            }
-        }
+
         let total = 0;
         function accumulate(acc, {grade, weight}) {
             total += weight;
             return acc + grade * weight;
         }
 
-        combination.grade = allBelegteCourses(getSemester)
-            .map(toGradeAndWeight)
-            .reduce(accumulate, 0)
-            / total;
+        if (NEUE_STUDIENORDNUNG) {
+            const isVertiefung = function (course) {
+                return combination.some(function (interpretation) {
+                    return course === interpretation.key
+                });
+            };
+            const toGradeAndWeight = function (course) {
+                let weight = 1;
+                if (isVertiefung(course)) {
+                    weight = 1.5;
+                }
+                return {
+                    grade: gradeManager.get(course),
+                    weight: weight * data[course].cp
+                }
+            };
+
+            combination.grade = allBelegteCourses(getSemester)
+                    .map(toGradeAndWeight)
+                    .reduce(accumulate, 0)
+                / total;
+        } else {
+            const distributeWeights = function ({courses, weights}) {
+                weights.sort();
+                courses.sort(function (a, b) {
+                    return gradeManager.get(a) >= gradeManager.get(b);
+                });
+                let i = 0;
+                return courses.map(function (course) {
+                    return {
+                        grade: gradeManager.get(course),
+                        weight: weights[i++] * data[course].cp
+                    }
+                })
+            };
+
+            const gitse = {
+                courses: ['pt1', 'pt2', 'gds', 'swa'],
+                weights: [3, 3, 3, 0]
+            };
+            const sum = {
+                courses: ['mod1', 'mod2', 'swt1'],
+                weights: [3, 3, 1]
+            };
+            const mutg = {
+                courses: ['mathematik1', 'mathematik2', 'ti1', 'ti2'],
+                weights: [1, 1, 1, 0]
+            };
+            const sbs = {
+                courses: combination.filter(isSBS).map(toCourse),
+                weights: [3, 3, 3, 1]
+            };
+            let courseWeights = [gitse, sum, mutg, sbs].map(distributeWeights).reduce(function (accu, current) {
+                return accu.concat(current);
+            }, []);
+
+            // Wirtschaft or Recht?
+            const wirtschaftGrade = gradeManager.get('wirtschaft');
+            const rechtGrade = (gradeManager.get('recht1') + gradeManager.get('recht2')) / 2;
+            courseWeights.push({
+                grade: Math.min(wirtschaftGrade, rechtGrade),
+                weight: 1 * 6
+            });
+
+            // Vertiefungsgebiete
+            courseWeights = courseWeights.concat(combination
+                .filter(isEingebracht)
+                .filter(not(isSBS))
+                .map(function ({key}) {
+                    return {
+                        grade: gradeManager.get(key),
+                        weight: 3 * data[key].cp
+                    }
+                }));
+            courseWeights.push({
+                grade: gradeManager.get('bp'),
+                weight: 1 * 30
+            },{
+                grade: gradeManager.get('ba'),
+                weight: 3 * 12
+            });
+            combination.grade = courseWeights
+                    .reduce(accumulate, 0)
+                / total;
+        }
+    }
+    function addSBS(combination) {
+        combination.sbs = combination.filter(isSBS);
     }
 
 
@@ -522,15 +596,19 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     function threeSBS(combination) {
         return combination.filter(isSBS).length === 3;
     }
+    function onlyDifferentSBS(combination) {
+        return (new Set(combination.filter(isSBS).map(toUsage))).size === 3;
+    }
     function twoVertiefungen(combination) {
         return getVertiefungenSet(combination).size >= 2;
     }
     function totalOf24(combination) {
         return combination
             .filter(not(isSBS))
+            .filter(isEingebracht)
             .map(toCourse)
             .map(courseToCP)
-            .sumElements() >= 24;
+            .sumElements() === 24;
     }
     function twoTimesNine(combination) {
         // Filter this out, if no possible pairs were found.
@@ -554,7 +632,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             // Walk through all courses ..
             combination.forEach(function(course) {
                 // add only those, which are important for the current Vertiefungen-combo
-                if (possibleVertiefung.includes(course.vertiefung)) {
+                if (possibleVertiefung.includes(course.vertiefung) || isSBS(course)) {
                     cleanedCombination.push(course);
                 }
             });
@@ -595,5 +673,16 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         if (!hasDuplicate) {
             emit(combination);
         }
+    }
+
+    function removeNotEingebrachteLVs(combination, emit, _i, _allCombinations) {
+        for (let c = 0; c < combination.length; c++) {
+            const interpretation = combination[c];
+            if (!isEingebracht(interpretation)) {
+                combination.splice(c, 1);
+                c--;
+            }
+        }
+        emit(combination);
     }
 });

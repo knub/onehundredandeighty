@@ -54,10 +54,10 @@ def mergeLV(newLV):
     if oldLV is None:
         data[lvID] = newLV
         return
-    for parameter in ['benotet', 'cp']:
+    for parameter in ['benotet', 'cp', 'nameLV', 'kurz', 'pflicht']:
         if oldLV[parameter] != newLV[parameter]:
             merge(newLV, oldLV, parameter, False)
-    for listParameter in ['dozent', 'lehrform', 'vertiefung']:
+    for listParameter in ['dozent', 'lehrform', 'vertiefung', 'modul']:
         oldSet = set(oldLV[listParameter])
         newSet = set(newLV[listParameter])
         if newSet != oldSet:
@@ -129,7 +129,7 @@ for year in xrange(START_SEMESTER, END_SEMESTER + 1):
     f.write('ss' + str(year) + '    = ')
     f.write('"SS' + str(year) + '",\n')
 
-    f.write('    ws' + str(year) + '_' + str(year + 1) + ' = ')
+    f.write('      ws' + str(year) + '_' + str(year + 1) + ' = ')
     f.write('"WS' + str(year) + '/' + str(year + 1) + '"')
     if year == END_SEMESTER:
         f.write(';\n')

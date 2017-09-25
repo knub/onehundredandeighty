@@ -178,7 +178,24 @@ const Course = class {
 };
 const courseCache = {};
 
+const Bacherlorproject = class extends Course {
+    constructor() {
+        super("bp");
+        this.editGradeButton2 = $("#course-bp2>button");
+        this.updateGradeButton();
+    }
 
+    updateGradeButton() {
+        if (!this.editGradeButton2) return;
+        super.updateGradeButton();
+        const newGrade = this.getGradeString(true);
+        if (newGrade) {
+            this.editGradeButton2.html(newGrade);
+        } else {
+            this.editGradeButton2.html(f.gradeCharacter);
+        }
+    }
+};
 
 const frontend = {
     /* filterManager controls the possibility to filter the courses-pool */
@@ -362,8 +379,24 @@ const frontend = {
                 const number = possibility.grade.toFixed(3);
                 finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<sup>" + number.substr(3) + "</sup></span>";
             }
+            const sbsString = 'BS, &nbsp; ' + possibility.sbs.map(function({key}) {
+                return data[key].kurz;
+            }).join(', &nbsp; ');
 
-            table += "<tr><td rowspan='2'>Variante " + (i + 1).toString() + "</td>";
+
+            table += "<tr><td rowspan='3'>Variante " + (i + 1).toString() + "</td>";
+
+            table += '<td>SBS</td>' +
+                    '<td colspan="3">' +
+                        '<ul style="list-style-type: none">' +
+                            '<li>' + sbsString + '</li>' +
+                        '</ul>' +
+                    '</td>';
+
+            table += "<td rowspan='3'>" + finalGrade + "</td>";
+
+
+            table += "</tr><tr>";
 
             // now display first Vertiefungsgebiet
             table += "<td>" + possibility.vertiefungCombo[0] + "</td>";
@@ -373,8 +406,6 @@ const frontend = {
             "") + "</ul></td>";
             table += "<td>" + firstCP + "</td>";
             table += "<td>" + firstLectures.join(", ") + "</td>";
-
-            table += "<td rowspan='2'>" + finalGrade + "</td>"
 
             table += "</tr><tr>";
 
@@ -951,6 +982,9 @@ $(function() {
 
     /* initialize the Course class and all the instances */
     Course.initEvents();
+    courseCache.bp = new Bacherlorproject();
+    courseCache.bp2 = courseCache.bp;
+    Course.get('ba');
     Course.createAllInstances();
 
     /* initialize tooltips for all courses */
