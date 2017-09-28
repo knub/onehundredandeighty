@@ -26,7 +26,6 @@ body {
 }
 header {
 	background: #EEE;
-	border-top: 4px solid black;
 	border-bottom: 1px dashed black;
 	position: relative;
 }
@@ -80,7 +79,6 @@ div#message {
 	/*border: 3px solid #333;*/
 	color: white;
 	font-size: 1.8em;
-	height: 2em;
 	height: auto;
 	line-height: 2em;
 	padding: 10px 0;
@@ -108,14 +106,13 @@ div#message div.extra-inf {
 	background: #EEE;
 	border: 2px solid black;
 	color: black;
-	margin-top: 0.5em;
 	border-radius: 3px;
 	font-size: 0.8em;
 	text-indent: -0.5em;
 	padding-left: 2.5em;
 	padding-right: 2.5em;
 	width: calc(80% - 5em);
-	margin: 0 auto;
+	margin: 1em auto 0;
 }
 
 @media screen and (max-width: 1280px) {
@@ -144,7 +141,7 @@ div#message table {
 }
 div#message table td {
 	text-align: center;
-	border: 1px dotted #CCC;
+	border: 1px dotted #AAA;
 	margin: 0;
 	padding: 5px;
 	line-height: 1.35em;

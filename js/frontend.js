@@ -33,7 +33,7 @@ const Semester = class {
         f.filterManager.filter();
     }
     updateLockState(newState) {
-        const locked = (newState != undefined) ? newState : this.isLocked();//TODO
+        const locked = (newState !== undefined) ? newState : this.isLocked();
         let color;
         if (locked) {
             this.lockSpan.text("🔒");
@@ -53,7 +53,11 @@ const Semester = class {
         return semesterManager.shownSemesters[this.semesterNumber - 1];
     }
     highlightRed() {
-        if (!this.isLocked()) {
+        if (this.isLocked()) {
+            this.container.animate({
+                backgroundColor: '#d4c5c5'
+            }, 200);
+        } else {
             this.container.animate({
                 backgroundColor: '#fcc'
             }, 200);
@@ -337,7 +341,9 @@ const frontend = {
         return course.replace(/–<br \/>/g, "–").replace(/-<br \/>/g, "&shy;").replace(/<br \/>/g, " ");
     },
     /* used to display information about possible Vertiefungsgebiete */
-    makeCombinationsTable(possibilities) {
+    makeCombinationsTable(possibilities, showAllDetails) {
+        showAllDetails = (showAllDetails !== undefined) ? showAllDetails : false;
+        const tablePreviewSize = 4;
         possibilities.sort(function(a, b) {
             return a.grade - b.grade;
         });
@@ -348,7 +354,7 @@ const frontend = {
             "<td>aktuell belegte<br />Leistungs&shy;punkte</td>" +
             "<td>Vorlesung<br />in diesem Ge&shy;biet</td>" +
             "<td>Gesamt&shy;note</td></tr>";
-        for (let i = 0; i < possibilities.length && i < 10; i += 1) {
+        for (let i = 0; i < possibilities.length && (showAllDetails || i < tablePreviewSize); i += 1) {
             const possibility = possibilities[i];
 
             // at first, do some calculation stuff, so collect all courses, creditpoints and lectures
@@ -420,9 +426,8 @@ const frontend = {
 
             table += "</tr>";
         }
-        if (possibilities.length > 10) {
-            // TODO: add a 'show all' button
-            table += '<tr><td colspan="6">' + (possibilities.length - 10) + ' weitere M&ouml;glichkeiten...</td></tr>';
+        if (possibilities.length > tablePreviewSize && !showAllDetails) {
+            table += '<tr><td colspan="6"><a onclick="f.showFullCombinationTable()" style="cursor: pointer;">' + (possibilities.length - tablePreviewSize) + ' weitere M&ouml;glichkeiten...</a></td></tr>';
         }
         table += "</table>";
         return table;
@@ -434,7 +439,7 @@ const frontend = {
         }
     },
     /* used to check all rules and display them in div#messages */
-    checkRules() {
+    checkRules(showAllDetails) {
         /* performance check */
         const start = new Date();
 
@@ -461,8 +466,8 @@ const frontend = {
             } else {
                 messageUl.append("<li>Der Belegungsplan ist gültig!</li>");
             }
-            let extra = '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind wahrscheinlich gültig im Sinne der Studienordnung:';
-            extra += f.makeCombinationsTable(possibilities);
+            let extra = '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind gültig im Sinne der Studienordnung:';
+            extra += f.makeCombinationsTable(possibilities, showAllDetails);
             extra += "</div>";
             messageUl.append("<li>" + extra + "</li>");
             f.messageDiv.animate({
@@ -476,15 +481,6 @@ const frontend = {
                     extra = ' <a href="fragen.html#softwarebasissysteme">Was bedeutet das?</a>';
                 else if (rule.type === 'softskillsRule')
                     extra = ' <a href="fragen.html#softskills">Was bedeutet das?</a>';
-                else if (rule.type === 'vertiefungsgebieteRule') {
-                    const possibilities = wahlpflichtManager.possibleCombinations;
-                    extra += ' <a href="fragen.html#vertiefungsgebiete">Was bedeutet das?</a>';
-                    if (possibilities.length > 0) {
-                        extra += '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind in Aussicht, aber noch nicht gültig:';
-                        extra += f.makeCombinationsTable(possibilities);
-                        extra += "</div>";
-                    }
-                }
                 messageUl.append("<li>" + rule.message + extra + "</li>");
             }
             // animate to red
@@ -492,7 +488,9 @@ const frontend = {
                 backgroundColor: '#9F0606'
             }, 350);
         }
-
+    },
+    showFullCombinationTable() {
+        f.checkRules(true);
     },
     slideMessages() {
         if (f.allMessagesVisible === true) {
@@ -1031,4 +1029,7 @@ $(function() {
     for (let s = 1; s <= 6; s++) {
         semesterManager.shownSemesterObjects.push(new Semester(s));
     }
+    $('#changeStudienordnungLink')
+        .text(NEUE_STUDIENORDNUNG ? '2016' : '2010')
+        .click(switchStudienordnung);
 });

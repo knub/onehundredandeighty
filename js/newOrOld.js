@@ -10,19 +10,31 @@
  *
  */
 
+let switchStudienordnung;
+const NEUE_STUDIENORDNUNG = (function() {
+    const urlParams = window.location.search.slice(1).split('&');
 
-const urlParams = window.location.search.slice(1).split('&');
-
-
-let renewed = true;
-for (const urlParam of urlParams) {
-    const paramData = urlParam.split('=');
-    if (paramData[0] === 'neu') {
-        if (paramData[1] === 'false') {
-            renewed = false;
+    let renewed = true;
+    for (const urlParam of urlParams) {
+        const paramData = urlParam.split('=');
+        if (paramData[0] === 'neu') {
+            if (paramData[1] === 'false') {
+                renewed = false;
+            }
         }
     }
-}
 
+    switchStudienordnung = function() {
+        let search = [];
+        for (const urlParam of urlParams) {
+            if (urlParam.split('=')[0] !== 'neu') {
+                search.push(urlParam);
+            }
+        }
+        search.push('neu=' + !NEUE_STUDIENORDNUNG);
+        window.location.search = search.join('&');
 
-const NEUE_STUDIENORDNUNG = renewed;
+    };
+
+    return renewed;
+})();
