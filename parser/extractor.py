@@ -153,6 +153,7 @@ def extractModule(moduleName):
        moduleName == "Design Thinking" or\
        moduleName == "Klubsprecher" or\
        moduleName == "Schlüsselkompetenzen" or\
+       moduleName.startswith("Design Thinking") or\
        moduleName == "Projektentwicklung und -management":
         return "Softskills"
 
@@ -160,13 +161,19 @@ def extractModule(moduleName):
        moduleName.startswith("Theoretische Informatik"):
         return "Mathematische und theoretische Grundlagen"
 
-    if moduleName == "Prozessorientierte Informationssysteme" or\
-       moduleName == "Web- und Internet-Technologien" or\
-       moduleName == "Betriebssysteme" or\
-       moduleName == "Datenbanksysteme" or\
-       moduleName == "Computergrafische Systeme" or\
-       moduleName == "Prozessorientierte Informationssysteme":
-        return "Softwarebasissysteme"
+    if moduleName == "Betriebssysteme":
+        return "BS"
+    if moduleName == "Computergrafische Systeme":
+        return "SB1"
+    if moduleName == "Datenbanksysteme":
+        return "SB2"
+    if moduleName == "Prozessorientierte Informationssysteme":
+        return "SB3"
+    if moduleName == "Interactive Systeme" or\
+       moduleName == "User-Interface-Systeme":
+        return "SB4"
+    if moduleName == "Web- und Internet-Technologien":
+        return "SB5"
 
     if moduleName.startswith("Programmiertechnik") or\
        moduleName == "Software-Architektur" or\

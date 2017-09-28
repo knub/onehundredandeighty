@@ -106,11 +106,31 @@
 		<ul id="semester4" class="chosen courses">
 		</ul>
 		<ul id="semester5" class="chosen courses">
-			<li class="disabled oneliner double-time">Bachelorprojekt</li>
+			<li class="disabled oneliner double-time" id='course-bp'>
+				<span id='course-bp-name'>Bachelorprojekt</span>
+				<input type='text' id='course-bp-gradeinput' class='courseGradeInput'/>
+				<button>
+					<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>
+					✓
+				</button>
+			</li>
 		</ul>
-		<ul id="semester6" class="chosen courses">
-			<li class="disabled oneliner double-time">Bachelorarbeit</li>
-			<li class="disabled oneliner triple-time">Bachelorprojekt</li>
+		<ul id=semester6" class="chosen courses">
+			<li class="disabled oneliner double-time" id='course-ba'>
+				<span id='course-ba-name'>Bachelorarbeit</span>
+				<input type='text' id='course-ba-gradeinput' class='courseGradeInput'/>
+				<button>
+					<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>
+					✓
+				</button>
+			</li>
+			<li class="disabled oneliner triple-time" id='course-bp2'>
+				Bachelorprojekt
+				<button>
+					<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>
+					✓
+				</button>
+			</li>
 		</ul>
 		<br style="clear: both;" />
 	</section>
@@ -202,6 +222,7 @@
 	<script src="js/jquery.animate-colors-min.js"></script>
 	<script src="js/jquery.knubtip.js"></script>
 	<script src="js/jquery.knubselect.js"></script>
+	<script src="js/newOrOld.js"></script>
 	<script src="js/data.js"></script>
 	<script src="js/helper.js"></script>
 	<script src="js/logic.js"></script>

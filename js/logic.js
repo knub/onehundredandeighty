@@ -40,6 +40,8 @@ const semesterManager = {
     currentSemester: "WS17/18",
     lastSummerSemester: "SS17",
     lastWinterSemester: "WS17/18",
+    preLastSummerSemester: "SS16",
+    preLastWinterSemester: "WS16/17",
     /* the semester that is the first semester when you first start the application */
     startswith: "WS15/16",
 
@@ -55,6 +57,14 @@ const semesterManager = {
             return this.lastWinterSemester
         }
     },
+    /** returns a semester name not from the future, with same type (WS/SS) */
+    referenceSemester2For(semesterName) {
+        if (semesterName.startsWith("SS")) {
+            return this.preLastSummerSemester
+        } else if (semesterName.startsWith("WS")) {
+            return this.preLastWinterSemester
+        }
+    },
     /**
      * @param course which course(id) to test
      * @param semesterNumber which semester to test
@@ -66,8 +76,9 @@ const semesterManager = {
         if (semesters.includes(semesterName)) {
             return true
         }
-        if (this.isFutureSemester(semesterName) &&
-            semesters.includes(this.referenceSemesterFor(semesterName))) {
+        if (this.isFutureSemester(semesterName)
+            && semesters.includes(this.referenceSemesterFor(semesterName))
+            && semesters.includes(this.referenceSemester2For(semesterName))) {
             return true
         }
         return false
@@ -158,81 +169,35 @@ const wahlpflichtManager = {
     possibleCombinations: []
 };
 
-/**
- * Rule-objectes, each representing one special type of rule
- * These objects basically act as classes (will be 'cloned' by Object.create later
- * It's a kind of 'inheritance by convention', meaning:
- *    - each rule has a type, by which it can be identified
- *     - each rule must have a check method, which - given a special course to check - passes or fails
- *    - each rule must have a message property, which will be displayed, if the rule/test fails
- *    - there is one init-method, serving as constructor, which takes neccessary parameters and saves them, finally returning 'this'
- *    - some rules assign special information to variables, which can be used in the frontend to e. g. display already chosen Vertiefungen
- *
- * Furthermore, most objects have some special properties needed for that special kind of rule
- */
-
-/* 8. Clone-Rule: take care of clones (repetitions) of a specific course */
-const cloneRule = {
-    /* type */
-    type: "cloneRule",
-    /* constructor */
-    init(cloneId) {
-        this.cloneId = cloneId;
-        const index = cloneId.indexOf("-");
-        this.course = cloneId.substr(0, index);
-
-        this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
-
-        return this;
+const gradeManager = {
+    grades: {},
+    set(course, grade) {
+        this.grades[course] = grade;
     },
-    /* check method */
-    check(getSemester) {
-        // get the semester number (first, second, third ...) for the given course
-        const semesterNumber = getSemester(this.cloneId);
-        if (semesterNumber === -1)
-            return true;
-        if (semesterNumber <= getSemester(this.course) || getSemester(this.course) === -1) {
-            this.message = "Die Wiederholung von '" + data[this.course].nameLV + "' muss nach dem ersten Belegen der Veranstaltung geschehen.";
-            return false;
-        }
-        this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
-
-        if (semesterNumber === - 1) return true;
-        // now get the semester time (WS10/11, SS10, ...) for the given course
-        // important: subtract 1, because semester number starts at 1, while array starts at 0
-        const semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
-
-        // now we have to distinguish two cases:
-        // -    the semester is in the past/present
-        // -    the semester is in the future
-        if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.currentSemester)) {
-            // past or present
-            return data[this.course].semester.indexOf(semesterTime) !== - 1;
-        }
-        else {
-            // if the course is currently chosen for a summer semester
-            if (semesterTime.indexOf("SS") >= 0) {
-                // check if it was offered in the last summer semester
-                return data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
-            }
-            // if the course is currently chosen for a winter semester
-            else if (semesterTime.indexOf("WS") >= 0) {
-                // check if it was offered in the last summer semester
-                return data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
-            }
-            // else something went completly wrong
-            else {
-                console.error("Something is wrong with the semester-time. Check data!");
-            }
-            return true;
-        }
+    get(course) {
+        return this.grades[course];
     },
-    /* message */
-    message: 'Der Kurs wird im gewählten Semester nicht angeboten.',
-    course: "",
-    cloneId: ""
+    setString(course, gradeString) {
+        this.set(course, parseFloat(gradeString));
+    },
+    getString(course, niceFormatOpt) {
+        const val = this.get(course);
+        if (isNaN(val)) {
+            return "";
+        } else {
+            const niceFormat = (niceFormatOpt !== undefined) ? niceFormatOpt : false;
+            if (niceFormat) {
+                return val.toFixed(1);
+            }
+            return "" + val;
+        }
+    }
 };
 
+
+/**
+ * RULE SECTION
+ */
 
 //helper methods
 function courseList() {
@@ -306,17 +271,6 @@ ruleManager.rules.push(function mustDoRule(getSemester) {
        .map(createErrorMessage)
 });
 
-ruleManager.rules.push(function SBSRule(getSemester) {
-    if (allBelegteCourses(getSemester)
-            .filter(isModul("Softwarebasissysteme")).length < 4) {
-        return [{
-            type: "sbsRule",
-            message: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden."
-        }]
-    }
-    return []
-});
-
 ruleManager.rules.push(function semesterOrderRule(_) {
     const errors = [];
     for (let i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
@@ -374,14 +328,18 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
      * ]
      *
      * NOTE:
-     * SBS is treated equally to HCGT, OSIS, ...
+     * SB* is treated equally to HCGT, OSIS, ...
+     * NONE means that this LV is not used at all
      * eventually, only those options with exactly 3 SBS are used further
      */
     const vertiefungenWithOptions = currentlyBelegteVertiefungen.map(function(course) {
         const vertiefungen = data[course].vertiefung.slice(0);
-        if (isModul("Softwarebasissysteme")(course)) {
-            vertiefungen.push("SBS");
+        for (const sb of data[course].modul) {
+            if (sb.startsWith('SB')) {
+                vertiefungen.push(sb);
+            }
         }
+        vertiefungen.push("NONE");
         return vertiefungen.map(function(vertiefung) {
            return { key: course, vertiefung: vertiefung }
         });
@@ -402,6 +360,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // Another is to interpret 'hci2' as 'SAMT' ... and so on.
     // Of course this normally happens with more courses than two.
     // a combination is a list of key+vertiefung - objects (ech key only once), called interpretation
+    // TODO performance here (filter on combination creation)
     let possibleCombinations = Array.cartesianProduct.apply(undefined, vertiefungenWithOptions);
 
     // save the error message instead of instantly returning the error,
@@ -410,17 +369,22 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
     // multiple steps are necessary to filter out valid combinations
     // and to convert them to a meaningful format
+    // TODO: This is a mixture from old (allow multiple Vertiefungsgebiete) and new (grading scheme) Studienordung: Seperate them!
     const processingSteps = [
-        {filter: threeSBS, errorMessage: "Da keine 3 Softwarebasissysteme gewählt wurden, können die Vertiefungsgebiete nicht zugeteilt werden."},
+        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden."},
+        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden."},
         {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
         {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
         {converter: addVertiefungCombos},
         {filter: twoTimesNine, errorMessage: "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben."},
         {cleaner: expandAndTruncateVertiefungen},
+        {converter: addSBS},
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
-        {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."}
+        {cleaner: removeNotEingebrachteLVs},
+        {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
+        {converter: calculateGrades}
     ];
     for (let s = 0; s < processingSteps.length; s++) {
         const step = processingSteps[s];
@@ -462,18 +426,25 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
     //helpers
     function isSBS(interpretation) {
-        return interpretation.vertiefung === 'SBS';
+        return interpretation.vertiefung.startsWith('SB');
+    }
+    function isEingebracht(interpretation) {
+        return interpretation.vertiefung !== 'NONE';
     }
     function toCourse(interpretation) {
         return interpretation.key;
+    }
+    function toUsage(interpretation) {
+        return interpretation.vertiefung;
     }
     function getVertiefungenSet(combination) {
         const vertiefungen = new Set();
         for (let i = 0; i < combination.length; i++) {
             const interpretation = combination[i];
-            vertiefungen.add(interpretation.vertiefung)
+            if (!isSBS(interpretation) && isEingebracht(interpretation)) {
+                vertiefungen.add(interpretation.vertiefung);
+            }
         }
-        vertiefungen.delete("SBS");
         return vertiefungen;
     }
 
@@ -485,7 +456,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         const cpPerVertiefung = Array.from(new Array(vertiefungsgebiete.length), function(){ return 0 }); //array with same length, filled with zeros
         combination.forEach(function(interpretation) {
             // calculate index as described above
-            if (interpretation.vertiefung !== "SBS") {
+            if (!isSBS(interpretation)) {
                 const index = vertiefungsgebiete.indexOf(interpretation.vertiefung);
                 cpPerVertiefung[index] += courseToCP(toCourse(interpretation));
             }
@@ -521,11 +492,112 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         combination.firstVertiefungLectures = firstVertiefungLectures;
         combination.secondVertiefungLectures = secondVertiefungLectures;
     }
+    function calculateGrades(combination) {
+        //calculate the final grade for these combinations
+
+        let total = 0;
+        function accumulate(acc, {grade, weight}) {
+            total += weight;
+            return acc + grade * weight;
+        }
+
+        if (NEUE_STUDIENORDNUNG) {
+            const isVertiefung = function (course) {
+                return combination.some(function (interpretation) {
+                    return course === interpretation.key
+                });
+            };
+            const toGradeAndWeight = function (course) {
+                let weight = 1;
+                if (isVertiefung(course)) {
+                    weight = 1.5;
+                }
+                return {
+                    grade: gradeManager.get(course),
+                    weight: weight * data[course].cp
+                }
+            };
+
+            combination.grade = allBelegteCourses(getSemester)
+                    .map(toGradeAndWeight)
+                    .reduce(accumulate, 0)
+                / total;
+        } else {
+            const distributeWeights = function ({courses, weights}) {
+                weights.sort();
+                courses.sort(function (a, b) {
+                    return gradeManager.get(a) >= gradeManager.get(b);
+                });
+                let i = 0;
+                return courses.map(function (course) {
+                    return {
+                        grade: gradeManager.get(course),
+                        weight: weights[i++] * data[course].cp
+                    }
+                })
+            };
+
+            const gitse = {
+                courses: ['pt1', 'pt2', 'gds', 'swa'],
+                weights: [3, 3, 3, 0]
+            };
+            const sum = {
+                courses: ['mod1', 'mod2', 'swt1'],
+                weights: [3, 3, 1]
+            };
+            const mutg = {
+                courses: ['mathematik1', 'mathematik2', 'ti1', 'ti2'],
+                weights: [1, 1, 1, 0]
+            };
+            const sbs = {
+                courses: combination.filter(isSBS).map(toCourse),
+                weights: [3, 3, 3, 1]
+            };
+            let courseWeights = [gitse, sum, mutg, sbs].map(distributeWeights).reduce(function (accu, current) {
+                return accu.concat(current);
+            }, []);
+
+            // Wirtschaft or Recht?
+            const wirtschaftGrade = gradeManager.get('wirtschaft');
+            const rechtGrade = (gradeManager.get('recht1') + gradeManager.get('recht2')) / 2;
+            courseWeights.push({
+                grade: Math.min(wirtschaftGrade, rechtGrade),
+                weight: 1 * 6
+            });
+
+            // Vertiefungsgebiete
+            courseWeights = courseWeights.concat(combination
+                .filter(isEingebracht)
+                .filter(not(isSBS))
+                .map(function ({key}) {
+                    return {
+                        grade: gradeManager.get(key),
+                        weight: 3 * data[key].cp
+                    }
+                }));
+            courseWeights.push({
+                grade: gradeManager.get('bp'),
+                weight: 1 * 30
+            },{
+                grade: gradeManager.get('ba'),
+                weight: 3 * 12
+            });
+            combination.grade = courseWeights
+                    .reduce(accumulate, 0)
+                / total;
+        }
+    }
+    function addSBS(combination) {
+        combination.sbs = combination.filter(isSBS);
+    }
 
 
     //filter methods
     function threeSBS(combination) {
         return combination.filter(isSBS).length === 3;
+    }
+    function onlyDifferentSBS(combination) {
+        return (new Set(combination.filter(isSBS).map(toUsage))).size === 3;
     }
     function twoVertiefungen(combination) {
         return getVertiefungenSet(combination).size >= 2;
@@ -533,9 +605,10 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     function totalOf24(combination) {
         return combination
             .filter(not(isSBS))
+            .filter(isEingebracht)
             .map(toCourse)
             .map(courseToCP)
-            .sumElements() >= 24;
+            .sumElements() === 24;
     }
     function twoTimesNine(combination) {
         // Filter this out, if no possible pairs were found.
@@ -559,7 +632,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             // Walk through all courses ..
             combination.forEach(function(course) {
                 // add only those, which are important for the current Vertiefungen-combo
-                if (possibleVertiefung.includes(course.vertiefung)) {
+                if (possibleVertiefung.includes(course.vertiefung) || isSBS(course)) {
                     cleanedCombination.push(course);
                 }
             });
@@ -600,5 +673,16 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         if (!hasDuplicate) {
             emit(combination);
         }
+    }
+
+    function removeNotEingebrachteLVs(combination, emit, _i, _allCombinations) {
+        for (let c = 0; c < combination.length; c++) {
+            const interpretation = combination[c];
+            if (!isEingebracht(interpretation)) {
+                combination.splice(c, 1);
+                c--;
+            }
+        }
+        emit(combination);
     }
 });

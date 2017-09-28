@@ -76,8 +76,126 @@ const Semester = class {
 };
 semesterManager.shownSemesterObjects = [];
 
+// A Course represents one entry in the data dict
+const Course = class {
+    static get(id) {
+        if (id.startsWith('course-'))
+            id = id.substr(7);
 
+        const cached = courseCache[id];
+        if (cached !== undefined) return cached;
 
+        const course = new Course(id);
+        courseCache[id] = course;
+        return course;
+    }
+    constructor(id) {
+        this.id = id;
+        this.container =  $('#course-' + id);
+        this.nameText = $('#course-' + id + '-name');
+        this.gradeInput = $('#course-' + id + '-gradeinput');
+        this.editGradeButton = $('#course-' + id + '>button');
+        this.updateGradeButton();
+    }
+    data() {
+        return data[this.id];
+    }
+    getGradeString(format) {
+        return gradeManager.getString(this.id, format);
+    }
+    startEditGrade() {
+        this.container.addClass('inGradeEditMode'); //to prevent DragnDrop
+        this.nameText.css('display', 'none');
+        this.editGradeButton.css('display', 'none');
+        this.gradeInput.val(this.getGradeString());
+        this.gradeInput.css('display', 'block');
+        this.gradeInput.focus();
+    }
+    formatGradeInput() {
+        //bring the content if the input area back into a nice format
+        const content = this.gradeInput.val();
+        if (content.length === 2 && !content.includes(".")) {
+            this.gradeInput.val(content[0] + "." + content[1]);
+        }
+        if (content.length > 3) {
+            this.gradeInput.val("" + content[0] + content[1] + content[content.length - 1]);
+        }
+    }
+    onGradeEditDelete() {
+        const content = this.gradeInput.val();
+        if (content.length === 3 && content[1] === ".") {
+            this.gradeInput.val(content[0] + ".");
+        }
+    }
+    finishGradeEditing() {
+        const grade = this.gradeInput.val();
+        this.gradeInput.val("");
+        if (grade) {
+            gradeManager.setString(this.id, grade);
+            f.saveManager.save();
+            f.checkRulesIfWanted();
+        }
+        this.container.removeClass('inGradeEditMode');
+        this.nameText.css('display', 'block');
+        this.gradeInput.css('display', 'none');
+        this.editGradeButton.css('display', 'block');
+        this.updateGradeButton()
+    }
+    updateGradeButton() {
+        const newGrade = this.getGradeString(true);
+        if (newGrade) {
+            this.editGradeButton.html(newGrade);
+        } else {
+            this.editGradeButton.html(f.gradeCharacter);
+        }
+    }
+    static initEvents() {
+        /* the following functions define the grade-editing behaviour */
+        f.coursesUl.find("li").delegate("button", "click", function() {
+            Course.get(this.parentNode.id).startEditGrade();
+        });
+        f.coursesUl.find("li").delegate("input", "input", function(event) {
+            Course.get(this.parentNode.id).formatGradeInput();
+        });
+        f.coursesUl.find("li").delegate("input", "keypress", function(event) {
+            const course = Course.get(this.parentNode.id);
+            if (event.which === 10 || event.which === 13) { // Enter
+                course.finishGradeEditing();
+            } else if (event.which === 8 || event.which === 46) { //Delete or Backspace
+                course.onGradeEditDelete();
+            }
+        });
+        f.coursesUl.find("li").delegate("input", "blur", function(event) {
+            Course.get(this.parentNode.id).finishGradeEditing();
+        });
+    }
+    static createAllInstances() {
+        for (const key in data) {
+            if (!data.hasOwnProperty(key)) continue;
+            Course.get(key);
+        }
+    }
+};
+const courseCache = {};
+
+const Bacherlorproject = class extends Course {
+    constructor() {
+        super("bp");
+        this.editGradeButton2 = $("#course-bp2>button");
+        this.updateGradeButton();
+    }
+
+    updateGradeButton() {
+        if (!this.editGradeButton2) return;
+        super.updateGradeButton();
+        const newGrade = this.getGradeString(true);
+        if (newGrade) {
+            this.editGradeButton2.html(newGrade);
+        } else {
+            this.editGradeButton2.html(f.gradeCharacter);
+        }
+    }
+};
 
 const frontend = {
     /* filterManager controls the possibility to filter the courses-pool */
@@ -96,46 +214,27 @@ const frontend = {
          * That means, there is at least one course selected the current course is/was offered in.
          * True, when course should be displayed.
          */
-        checkSemester(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
-            // key is the array index to one course in data
-            const unlockedSemesters = [];
-            for (let s = 0; s < semesterManager.shownSemesters.length; s++) {
-                if (!semesterManager.semesterLock[s]) {
-                    unlockedSemesters.push(semesterManager.shownSemesters[s]);
+        checkSemester(course) {
+            // course is the array index to one course in data
+            for (let s = 1; s <= semesterManager.shownSemesters.length; s++) {
+                if (!semesterManager.getSemesterLock(s) &&
+                    semesterManager.courseOfferedInSemester(course, s)) {
+                    return true;
                 }
             }
-            for (let i = 0; i < unlockedSemesters.length; i += 1) {
-                // if semester is in the future, reset it to the last winter/summer-semester
-                if (semesterManager.semesters.indexOf(unlockedSemesters[i]) > semesterManager.semesters.indexOf(semesterManager.currentSemester)) {
-                    if (unlockedSemesters[i].indexOf("SS") >= 0)
-                        unlockedSemesters[i] = semesterManager.lastSummerSemester;
-                    else if (unlockedSemesters[i].indexOf("WS") >= 0)
-                        unlockedSemesters[i] = semesterManager.lastWinterSemester;
-                    else
-                        console.error("Something is wrong with the semester-time. Check data!");
-                }
-            }
-            return unlockedSemesters.haveIntersection(data[key].semester);
+            return false;
         },
         /* see checkSemester for documentation, same procedure */
         checkModule(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             return this.selectedModule.haveIntersection(data[key].modul);
         },
         /* see checkSemester for documentation, same procedure */
         checkVertiefungsgebiete(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             if (data[key].vertiefung.length === 0) return true;
             return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
         },
         /* see checkSemester for documentation, same procedure */
         checkWahlpflicht(key) {
-            if (key.search("clone") >= 0)
-                key = f.repetitionManager.cloneIdToCourseId(key);
             // if both 'Wahl' and 'Pflicht' are in the array, its always true
             if (this.selectedWahlpflicht.indexOf("Wahl") !== - 1 && this.selectedWahlpflicht.indexOf("Pflicht") !== - 1) return true;
             // if its only 'Pflicht' return true, when the course is 'Pflicht'
@@ -161,68 +260,6 @@ const frontend = {
             f.sortPool();
         }
     },
-    repetitionManager: {
-        cloneNode(li) {
-            const key = li.id.substr(7);
-            const semester = f.getSemester(key);
-            let cloneId = "";
-            if (this.repetitions[key] !== undefined) {
-                cloneId = key + "-clone-" + (this.repetitions[key].count + 1).toString();
-                this.repetitions[key].list.push({ id: cloneId, semester: semester });
-            }
-            else {
-                cloneId = key + "-clone-1";
-                this.repetitions[key] = { count: 0, list: [{ id: cloneId, semester: semester }] };
-            }
-            this.repetitions[key].count += 1;
-
-            const clone = li.cloneNode(true);
-            const ul = li.parentNode;
-            const that = this;
-            $(clone).attr("id", "course-" + cloneId).prepend("<span>W<br />D<br />H</span>").addClass("clone").find("button").text("x").click(function () {
-                that.deleteNode(this.parentNode, cloneId);
-                f.saveManager.save();
-            });
-            $(ul).append(clone);
-            ruleManager.rules.unshift(Object.create(cloneRule).init(cloneId));
-            if (f.checkPermanently === true) {
-                f.checkRules();
-                f.slideMessages();
-            }
-            f.coursesUl = $(f.coursesList);
-        },
-        deleteNode(li, cloneId) {
-            const key = f.repetitionManager.cloneIdToCourseId(cloneId);
-            let index = -1;
-            this.repetitions[key].list.forEach(function(value, i) {
-                if (value.id === cloneId)
-                    index = i;
-            });
-            this.repetitions[key].list.splice(index, 1);
-            if (this.repetitions[key].list.length === 0)
-                delete this.repetitions[key];
-            $(li).remove();
-            for (let i = 0; i < ruleManager.rules.length; i += 1) {
-                const rule = ruleManager.rules[i];
-                if (rule.type === 'cloneRule' && rule.cloneId === cloneId) {
-                    ruleManager.rules.splice(i, 1);
-                    break;
-                }
-            }
-            f.coursesUl = $(f.coursesList);
-            if (f.checkPermanently === true) {
-                f.checkRules();
-                f.slideMessages();
-            }
-            f.adjustSemesterViewHeight();
-        },
-        cloneIdToCourseId(cloneId) {
-            const index = cloneId.indexOf("-");
-            const key = cloneId.substr(0, index);
-            return key;
-        },
-        repetitions: {}
-    },
     /* saveManager saves the current status via Web-Storage */
     saveManager: {
         save() {
@@ -232,22 +269,13 @@ const frontend = {
                 if (!data.hasOwnProperty(key)) continue;
                 courseToSemester[key] = f.getSemester(key);
             }
-            /* save repetitions */
-            for (const repetition in f.repetitionManager.repetitions) {
-                if (!f.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
-                const courseRepetition = f.repetitionManager.repetitions[repetition];
-                for (let i = 0; i < courseRepetition.list.length; i += 1) {
-                    const id = courseRepetition.list[i].id;
-                    courseRepetition.list[i].semester = f.getSemester(id);
-                }
-            }
             // SAVE data
             localStorage.onehundredandeighty_hasData = true;
             localStorage.onehundredandeighty_courseToSemester = JSON.stringify(courseToSemester);
-            localStorage.onehundredandeighty_repetitionManager = JSON.stringify(f.repetitionManager);
             localStorage.onehundredandeighty_filterManager = JSON.stringify(f.filterManager);
             localStorage.onehundredandeighty_semesterLocks = JSON.stringify(semesterManager.semesterLock);
             localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
+            localStorage.onehundredandeighty_grades = JSON.stringify(gradeManager.grades);
             localStorage.onehundredandeighty_checkPermanently = f.checkPermanently;
             localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
         }
@@ -310,9 +338,17 @@ const frontend = {
     },
     /* used to display information about possible Vertiefungsgebiete */
     makeCombinationsTable(possibilities) {
+        possibilities.sort(function(a, b) {
+            return a.grade - b.grade;
+        });
         let table = "<table class='combinations'>";
-        table += "<tr><td></td><td>Vertiefungs&shy;gebiete</td><td>Lehr&shy;veranstaltungen</td><td>aktuell belegte<br />Leistungs&shy;punkte</td><td>Vorlesung<br />in diesem Ge&shy;biet</td></tr>";
-        for (let i = 0; i < possibilities.length; i += 1) {
+        table += "<tr><td></td>" +
+            "<td>Vertiefungs&shy;gebiete</td>" +
+            "<td>Lehr&shy;veranstaltungen</td>" +
+            "<td>aktuell belegte<br />Leistungs&shy;punkte</td>" +
+            "<td>Vorlesung<br />in diesem Ge&shy;biet</td>" +
+            "<td>Gesamt&shy;note</td></tr>";
+        for (let i = 0; i < possibilities.length && i < 10; i += 1) {
             const possibility = possibilities[i];
 
             // at first, do some calculation stuff, so collect all courses, creditpoints and lectures
@@ -338,7 +374,29 @@ const frontend = {
             for (let j = 0; j < possibility.secondVertiefungLectures.length; j += 1)
                 secondLectures.push(f.adjustShortCourseName(possibility.secondVertiefungLectures[j].kurz));
 
-            table += "<tr><td rowspan='2'>Variante " + (i + 1).toString() + "</td>";
+            let finalGrade = 'un&shy;bekannt';
+            if (!isNaN(possibility.grade)) {
+                const number = possibility.grade.toFixed(3);
+                finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<sup>" + number.substr(3) + "</sup></span>";
+            }
+            const sbsString = 'BS, &nbsp; ' + possibility.sbs.map(function({key}) {
+                return data[key].kurz;
+            }).join(', &nbsp; ');
+
+
+            table += "<tr><td rowspan='3'>Variante " + (i + 1).toString() + "</td>";
+
+            table += '<td>SBS</td>' +
+                    '<td colspan="3">' +
+                        '<ul style="list-style-type: none">' +
+                            '<li>' + sbsString + '</li>' +
+                        '</ul>' +
+                    '</td>';
+
+            table += "<td rowspan='3'>" + finalGrade + "</td>";
+
+
+            table += "</tr><tr>";
 
             // now display first Vertiefungsgebiet
             table += "<td>" + possibility.vertiefungCombo[0] + "</td>";
@@ -362,8 +420,18 @@ const frontend = {
 
             table += "</tr>";
         }
+        if (possibilities.length > 10) {
+            // TODO: add a 'show all' button
+            table += '<tr><td colspan="6">' + (possibilities.length - 10) + ' weitere M&ouml;glichkeiten...</td></tr>';
+        }
         table += "</table>";
         return table;
+    },
+    checkRulesIfWanted() {
+        if (f.checkPermanently === true) {
+            f.checkRules();
+            f.slideMessages();
+        }
     },
     /* used to check all rules and display them in div#messages */
     checkRules() {
@@ -381,15 +449,24 @@ const frontend = {
         const messageUl = f.messageDiv.find("ul");
         messageUl.empty();
         if (rules.length === 0) {
-            messageUl.append("<li>Der Belegungsplan wahrscheinlich ist gültig!</li>");
-            // animate to green
             const possibilities = wahlpflichtManager.possibleCombinations;
+            const bestGrade = possibilities.reduce(function(acc, curr) {
+                if (isNaN(curr.grade)) {
+                    return acc;
+                }
+                return Math.min(acc, curr.grade);
+            }, 10);
+            if (bestGrade < 10) {
+                messageUl.append("<li>Der Belegungsplan ist gültig! Deine beste Gesamtnote: " + bestGrade.toFixed(3) + "</li>");
+            } else {
+                messageUl.append("<li>Der Belegungsplan ist gültig!</li>");
+            }
             let extra = '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind wahrscheinlich gültig im Sinne der Studienordnung:';
             extra += f.makeCombinationsTable(possibilities);
             extra += "</div>";
             messageUl.append("<li>" + extra + "</li>");
             f.messageDiv.animate({
-                backgroundColor: '#4a6400'
+                backgroundColor: '#316400'
             }, 350);
         } else {
             for (let r = 0; r < rules.length; r += 1) {
@@ -532,10 +609,7 @@ const frontend = {
             }
 
 
-            if (f.checkPermanently === true) {
-                f.checkRules();
-                f.slideMessages();
-            }
+            f.checkRulesIfWanted();
             f.filterManager.filter();
             f.saveManager.save();
         });
@@ -559,32 +633,45 @@ const frontend = {
     /*
      * This functions builds a complete <li> element containing information about one course
      * key: The course's key to information in data.
-     * repetition: This has two meanings. On the one hand, it indicates that the course to build the <li> for is just a repetition and on the other hand, it holds the repetition's html-id
      */
-    buildCourseData(key, repetition) {
-        const id = (repetition !== undefined) ? repetition : key;
-        const course = data[key];
-        const courseInfo = "<div class='info'>" + "<h3>" + course['nameLV'] + "</h3>" + "<div>" + "<table>" + f.displayArray(course['modul'], "Modul") + f.displayArray(course['dozent'], "Dozent") + "<tr><td>Leistungspunkte</td><td>" + course['cp'] + " Leistungspunkte</td></tr>" + f.displayArray(course['lehrform'], "Lehrform") + f.displayArray(course['vertiefung'], "Vertiefungsgebiet") + f.displayArray(course['semester'], "Angeboten im") + "</table>" + "</div>" + "</div>";
+    buildCourseData(id) {
+        const course = data[id];
+        const courseInfo = "<div class='info'>" +
+            "<h3>" + course['nameLV'] + "</h3>" +
+            "<div>" +
+                "<table>" +
+                    f.displayArray(course['modul'], "Modul") +
+                    f.displayArray(course['dozent'], "Dozent") +
+                    "<tr>" +
+                        "<td>Leistungspunkte</td>" +
+                        "<td>" + course['cp'] + " Leistungspunkte</td>" +
+                    "</tr>" +
+                    f.displayArray(course['lehrform'], "Lehrform") +
+                    f.displayArray(course['vertiefung'], "Vertiefungsgebiet") +
+                    f.displayArray(course['semester'], "Angeboten im") +
+                "</table>" +
+            "</div>" +
+        "</div>";
 
         // if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
         const classes = [];
         if (course['kurz'].indexOf("<br />") === - 1) {
             classes.push("oneliner");
         }
-        if (repetition !== undefined)
-            classes.push("clone");
         let cssclass = "";
         if (classes.length !== 0)
             cssclass = " class='" + classes.join(" ") + "'";
 
-        let character = f.copyCharacter;
-        if (repetition !== undefined)
-            character = "x";
+        let character = f.gradeCharacter;
 
-        let repetitionString = "";
-        if (repetition !== undefined)
-            repetitionString = "<span>W<br />D<br />H</span>";
-        return "<li" + cssclass + " id='course-" + id + "'>" +repetitionString + course['kurz'] + "<button><div class='info clone-info'>Auf diesen Button klicken, um einen Kurs in einem anderen Semester noch einmal zu wiederholen.</div><!---->" + character + "</button>" + courseInfo + "</li>";
+        return "<li" + cssclass + " id='course-" + id + "'>" +
+                    "<span id='course-" + id + "-name'>" + course['kurz'] + "</span>" +
+                    "<input type='text' id='course-" +  id + "-gradeinput' class='courseGradeInput'/>" +
+                    "<button>" +
+                        "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>" +
+                        "<!---->" + character + "" +
+                    "</button>" + courseInfo +
+                "</li>";
     },
     /* used, when user starts drag'n'dropping courses */
     startSorting(event, ui) {
@@ -610,10 +697,7 @@ const frontend = {
         f.adjustSemesterViewHeight();
         f.sortPool();
         f.filterManager.filter();
-        if (f.checkPermanently === true) {
-            f.checkRules();
-            f.slideMessages();
-        }
+        f.checkRulesIfWanted();
         f.saveManager.save();
     },
     /* adjust #semester-view1 ul's heights to fit to max-height */
@@ -669,10 +753,10 @@ const frontend = {
     displayArray(value, headline) {
         if (value === undefined || !Array.isArray(value) || value.length === 0 || value[0] === "")
             return "";
-        let row = "<tr><td>" + headline + "</td><td>";
-        row += value.join(", ");
-        row += "</td></tr>";
-        return row;
+        return "<tr>" +
+                   "<td>" + headline + "</td>" +
+                   "<td>" + value.join(", ") + "</td>" +
+               "</tr>";
     },
     /* used to initialize jquery-sortable (drag'n'drop) */
     initializeSortable: function () {
@@ -680,7 +764,7 @@ const frontend = {
         $(f.coursesList).sortable({
             connectWith: f.coursesList,        // specifies lists where li's can be dropped
             placeholder: "placeholder-highlight",    // css class for placeholder when drag'n dropping
-            cancel: "." + f.disabledClass,        // elements matching this selector cannot be dropped
+            cancel: "." + f.disabledClass + ",.inGradeEditMode",        // elements matching this selector cannot be dropped
             update: f.update,            // raised, when there was a change while sorting
             start: f.startSorting,            // raised, when sorting starts
             stop: f.endSorting            // raised, when sorting is finished
@@ -729,7 +813,7 @@ const frontend = {
     checkPermanently: null,
     /* number of list items in one list in unchosen lists */
     coursesPoolHeight: 8,
-    copyCharacter: "⎘",
+    gradeCharacter: "✓",
     /* caching stuff */
     messageDiv: null,
     slideMessagesDiv: null,
@@ -759,8 +843,7 @@ $(function() {
             if (selected.length === 1) {
                 f.checkPermanently = true;
                 $("#button-div").fadeOut(100);
-                f.checkRules();
-                f.slideMessages();
+                f.checkRulesIfWanted();
             }
             else {
                 f.checkPermanently = false;
@@ -772,8 +855,7 @@ $(function() {
 
     /* apply check routine on button click */
     $("#check").click(function() {
-        f.checkRules();
-        f.slideMessages();
+        f.checkRulesIfWanted();
         f.checkPermanently = true;
         $("#permacheck").find("li").attr("class", "selected");
         $("#checkbox-div").css("visibility", "visible");
@@ -784,8 +866,7 @@ $(function() {
 
     /* apply check routine on button click */
     $("#recheck").click(function() {
-        f.checkRules();
-        f.slideMessages();
+        f.checkRulesIfWanted();
         f.saveManager.save();
     });
 
@@ -806,15 +887,13 @@ $(function() {
             $(this).find("h2").text("Filter");
             $("#filter").animate({
                 width: '0'
-            },
-            250);
+            }, 250);
         }
         else {
             $(this).find("h2").text("Fertig");
             $("#filter").animate({
                 width: '100%'
-            },
-            250);
+            }, 250);
         }
         filtering = !filtering;
     });
@@ -826,17 +905,16 @@ $(function() {
         f.allMessagesVisible = localStorage.onehundredandeighty_allMessagesVisible === "true";
 
         semesterManager.shownSemesters = JSON.parse(localStorage.onehundredandeighty_semesters);
-        const lockSave = localStorage.onehundredandeighty_semesterLocks;
-        if (lockSave) {
-            semesterManager.semesterLock = JSON.parse(lockSave);
-        }
+        if (localStorage.onehundredandeighty_grades)
+            gradeManager.grades = JSON.parse(localStorage.onehundredandeighty_grades);
+        if (localStorage.onehundredandeighty_semesterLocks)
+            semesterManager.semesterLock = JSON.parse(localStorage.onehundredandeighty_semesterLocks);
         // if there are more than six semester, we need a special row
         if (semesterManager.shownSemesters.length > 6) {
             f.addSemester(semesterManager.shownSemesters.length - 6);
         }
 
         f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.onehundredandeighty_filterManager));
-        f.repetitionManager = $.extend(f.repetitionManager, JSON.parse(localStorage.onehundredandeighty_repetitionManager));
         if (f.checkPermanently !== false) $("#permacheck").find("li").attr("class", "selected");
         else $("#button-div").fadeIn(100);
     }
@@ -906,42 +984,12 @@ $(function() {
     // until now, all courses are in the first ul. now adjust pool height and sort pool.
     f.sortPool();
 
-    for (const repetition in f.repetitionManager.repetitions) {
-        if (!f.repetitionManager.repetitions.hasOwnProperty(repetition)) continue;
-        const courseRepetition = f.repetitionManager.repetitions[repetition];
-        f.repetitionManager.repetitions[repetition].list = courseRepetition.list.filter(function (value) {
-            return value.semester !== -1;
-        });
-        if (courseRepetition.list.length === 0) {
-            delete f.repetitionManager.repetitions[repetition];
-            continue;
-        }
-        for (let i = 0; i < courseRepetition.list.length; i += 1) {
-            const id = courseRepetition.list[i].id;
-            const key = f.repetitionManager.cloneIdToCourseId(id);
-
-            const html = f.buildCourseData(key, id);
-            $("#semester" + courseRepetition.list[i].semester).append(html);
-            /* add rule */
-            ruleManager.rules.unshift(Object.create(cloneRule).init(id));
-        }
-    }
-    // data of repetitionManager has changed, so save changes
-    f.saveManager.save();
-
-    /* apply click routine for buttons which clone a course */
-    //f.coursesUl.find("li:not(.clone)").find("button").click(function() { // see next line, which is faster
-    f.coursesUl.find("li:not(.clone)").delegate("button", "click", function() {
-        f.repetitionManager.cloneNode(this.parentNode);
-        f.saveManager.save();
-    });
-    /* apply click routine for buttons to remove a cloned course */
-    //f.coursesUl.find("li.clone").find("button").click(function() {
-    f.coursesUl.find("li.clone").delegate("button", "click", function() {
-        // substr(7) to crop leading "course-"
-        f.repetitionManager.deleteNode(this.parentNode, this.parentNode.id.substr(7));
-        f.saveManager.save();
-    });
+    /* initialize the Course class and all the instances */
+    Course.initEvents();
+    courseCache.bp = new Bacherlorproject();
+    courseCache.bp2 = courseCache.bp;
+    Course.get('ba');
+    Course.createAllInstances();
 
     /* initialize tooltips for all courses */
     f.coursesUl.find("li").knubtip("init"); // activate tooltip for li elements (see jquery.knubtip.js)
@@ -952,8 +1000,7 @@ $(function() {
     f.adjustSemesterViewHeight();
 
     if (localStorage.onehundredandeighty_alreadyChecked === "true") {
-        f.checkRules();
-        f.slideMessages();
+        f.checkRulesIfWanted();
         $("#checkbox-div").css("visibility", "visible");
         $("#button-div").css("visibility", "visible");
     }
@@ -962,10 +1009,10 @@ $(function() {
         /* localStorage.clear() may remove too much data, e.g. 120 data hosted on the same server */
         localStorage.removeItem("onehundredandeighty_hasData");
         localStorage.removeItem("onehundredandeighty_courseToSemester");
-        localStorage.removeItem("onehundredandeighty_repetitionManager");
         localStorage.removeItem("onehundredandeighty_filterManager");
         localStorage.removeItem("onehundredandeighty_semesterLocks");
         localStorage.removeItem("onehundredandeighty_semesters");
+        localStorage.removeItem("onehundredandeighty_grades");
         localStorage.removeItem("onehundredandeighty_checkPermanently");
         localStorage.removeItem("onehundredandeighty_allMessagesVisible");
         location.reload();
@@ -977,10 +1024,7 @@ $(function() {
     $("#lesssemester").click(function() {
         f.removeSemester(2);
         f.coursesUl = $(f.coursesList);
-        if (f.checkPermanently === true) {
-            f.checkRules();
-            f.slideMessages();
-        }
+        f.checkRulesIfWanted();
         f.saveManager.save();
     });
     //addling lock-handlers to the existing 6 semesters

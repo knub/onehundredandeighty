@@ -54,10 +54,10 @@ def mergeLV(newLV):
     if oldLV is None:
         data[lvID] = newLV
         return
-    for parameter in ['benotet', 'cp']:
+    for parameter in ['benotet', 'cp', 'nameLV', 'kurz', 'pflicht']:
         if oldLV[parameter] != newLV[parameter]:
             merge(newLV, oldLV, parameter, False)
-    for listParameter in ['dozent', 'lehrform', 'vertiefung']:
+    for listParameter in ['dozent', 'lehrform', 'vertiefung', 'modul']:
         oldSet = set(oldLV[listParameter])
         newSet = set(newLV[listParameter])
         if newSet != oldSet:
@@ -123,13 +123,13 @@ f.write('\
 f.write('// semester name variables\n')
 for year in xrange(START_SEMESTER, END_SEMESTER + 1):
     if year == START_SEMESTER:
-        f.write('var ')
+        f.write('const ')
     else:
-        f.write('    ')
+        f.write('      ')
     f.write('ss' + str(year) + '    = ')
     f.write('"SS' + str(year) + '",\n')
 
-    f.write('    ws' + str(year) + '_' + str(year + 1) + ' = ')
+    f.write('      ws' + str(year) + '_' + str(year + 1) + ' = ')
     f.write('"WS' + str(year) + '/' + str(year + 1) + '"')
     if year == END_SEMESTER:
         f.write(';\n')
@@ -140,9 +140,9 @@ f.write('// Vertiefungsgebiet name variables\n')
 
 for vertiefung in vertiefungen:
     if vertiefung == vertiefungen[0]:
-        f.write('var ')
+        f.write('const ')
     else:
-        f.write('    ')
+        f.write('      ')
     f.write(vertiefung + ' = "' + vertiefung.strip() + '"')
     if vertiefung == vertiefungen[len(vertiefungen) - 1]:
         f.write(';\n')
@@ -150,7 +150,7 @@ for vertiefung in vertiefungen:
         f.write(',\n')
 f.write('\n')
 f.write('// actual data object\n')
-f.write('var data = {\n')
+f.write('const data = {\n')
 for lvID in sorted(data.iterkeys()):
     lv = data[lvID]
     f.write('    ' + lvID + ': {\n')

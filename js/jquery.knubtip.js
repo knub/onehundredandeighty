@@ -35,7 +35,11 @@
 					$(this).data("knubtip-enabled", true);
 					i += 1;
 
-					$(this).mousemove(function (event) {
+					$(this).mousemove(fadeInTooltip).mouseout(fadeOutTooltip);
+					$("." + tooltipDivSelector).click(fadeOutTooltip);
+
+					var me = this;
+					function fadeInTooltip(event) {
 						// save references, because setTimeout forces context change (this refering to DOMWINDOW then)
 						// $this now refers to the jquerified-element (e. g. li element) for which the tooltip shall be displayed
 						var $this = $(this);
@@ -109,10 +113,7 @@
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 						}, settings['wait-time']);
-					}).mouseout(fadeOutTooltip);
-					$("." + tooltipDivSelector).click(fadeOutTooltip);
-
-					var me = this;
+					}
 					function fadeOutTooltip() {
 						clearTimeout(timer);
 						var tooltipDivSelector = $(me).data('knubtip')['info'];
