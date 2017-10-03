@@ -3,15 +3,14 @@
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
 
-/*
- * Only used by the filter system
- */
+// Only used by the filter system
 const studyRegulations = {
     module: ["Grundlagen IT-Systems Engineering", "Mathematische und theoretische Grundlagen", "Softwaretechnik und Modellierung", "Rechtliche und wirtschaftliche Grundlagen", "Softwarebasissysteme", "Vertiefungsgebiete", "Softskills"],
     vertiefungsgebiete: ["BPET", "HCGT", "ISAE", "OSIS", "SAMT"]
 };
 
 function toOldModulNames(modulName) {
+    // take a module name, and convert it to its display name if needed
     if (NEUE_STUDIENORDNUNG) {
         return modulName;
     }
@@ -191,6 +190,7 @@ const Course = class {
 };
 const courseCache = {};
 
+// The BP needs special handling, because it is displayed two times
 const Bacherlorproject = class extends Course {
     constructor() {
         super("bp");
@@ -617,14 +617,12 @@ const frontend = {
         if (classes.length !== 0)
             cssclass = " class='" + classes.join(" ") + "'";
 
-        let character = f.gradeCharacter;
-
         return "<li" + cssclass + " id='course-" + id + "'>" +
                     "<span id='course-" + id + "-name'>" + course['kurz'] + "</span>" +
                     "<input type='text' id='course-" +  id + "-gradeinput' class='courseGradeInput'/>" +
                     "<button>" +
                         "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>" +
-                        "<!---->" + character + "" +
+                        f.gradeCharacter +
                     "</button>" + courseInfo +
                 "</li>";
     },
@@ -982,7 +980,7 @@ $(function() {
         f.checkRulesIfWanted();
         f.saveManager.save();
     });
-    //addling lock-handlers to the existing 6 semesters
+    //addling logic to the existing 6 semesters
     for (let s = 1; s <= 6; s++) {
         semesterManager.shownSemesterObjects.push(new Semester(s));
     }

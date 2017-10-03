@@ -369,7 +369,6 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
     // multiple steps are necessary to filter out valid combinations
     // and to convert them to a meaningful format
-    // TODO: This is a mixture from old (allow multiple Vertiefungsgebiete) and new (grading scheme) Studienordung: Seperate them!
     const processingSteps = [
         {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden."},
         {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden."},
@@ -382,23 +381,22 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
-        {cleaner: removeNotEingebrachteLVs},
+        {converter: removeNotEingebrachteLVs},
         {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
         {converter: calculateGrades}
     ];
     for (let s = 0; s < processingSteps.length; s++) {
         const step = processingSteps[s];
-        if (step.filter != null) {
+        if (step.filter !== undefined) {
             if (currentError === undefined) {
                 const oldCombinations = possibleCombinations;
                 possibleCombinations = oldCombinations.filter(step.filter);
                 if (possibleCombinations.length === 0) {
                     possibleCombinations = oldCombinations;
                     currentError = step.errorMessage;
-                    //return error(oldCombinations, step.errorMessage);
                 }
             }
-        } else if (step.cleaner != null) {
+        } else if (step.cleaner !== undefined) {
             const cleaned = [];
             const emit = function (combination) {
                 cleaned.push(combination);
@@ -407,7 +405,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 step.cleaner(possibleCombinations[c], emit, c, possibleCombinations);
             }
             possibleCombinations = cleaned;
-        } else if (step.converter != null) {
+        } else if (step.converter !== undefined) {
             for (let c = 0; c < possibleCombinations.length; c++) {
                 step.converter(possibleCombinations[c]);
             }
@@ -647,6 +645,15 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     function addSBS(combination) {
         combination.sbs = combination.filter(isSBS);
     }
+    function removeNotEingebrachteLVs(combination) {
+        for (let c = 0; c < combination.length; c++) {
+            const interpretation = combination[c];
+            if (!isEingebracht(interpretation)) {
+                combination.splice(c, 1);
+                c--;
+            }
+        }
+    }
 
 
     //filter methods
@@ -678,10 +685,9 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     }
 
     // clean up methods:
-
-    // expand combinations with multiple Vertiefungen-combos to single ones,
-    // omitting all LVs which do not contribute to this combo
     function expandAndTruncateVertiefungen(combination, emit, _i, _allCombinations) {
+        // expand combinations with multiple Vertiefungen-combos to single ones,
+        // omitting all LVs which do not contribute to this combo
         const possible = combination.possibleVertiefungen;
         // For each combination, there are possible Vertiefungen-combos
         possible.forEach(function(possibleVertiefung) {
@@ -698,8 +704,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             emit(cleanedCombination);
         });
     }
-    // remove all combinations, which are a subset of another one
     function removeSubsets(combination, emit, _i, allCombinations) {
+        // remove all combinations, which are a subset of another one
         const hasSuperCombination = allCombinations.some(function(superCombination) {
             return combination.vertiefungCombo.equals(superCombination.vertiefungCombo)
                 && combination.length < superCombination.length
@@ -714,8 +720,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             emit(combination);
         }
     }
-    // remove all doubles
     function removeDoubles(combination, emit, i, allCombinations) {
+        // remove all doubles
         const hasDuplicate = allCombinations.some(function(otherCombination, o) {
             return o > i
                 && combination.vertiefungCombo.equals(otherCombination.vertiefungCombo)
@@ -730,16 +736,5 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         if (!hasDuplicate) {
             emit(combination);
         }
-    }
-
-    function removeNotEingebrachteLVs(combination, emit, _i, _allCombinations) {
-        for (let c = 0; c < combination.length; c++) {
-            const interpretation = combination[c];
-            if (!isEingebracht(interpretation)) {
-                combination.splice(c, 1);
-                c--;
-            }
-        }
-        emit(combination);
     }
 });
