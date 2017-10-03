@@ -284,58 +284,6 @@ const frontend = {
             localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
         }
     },
-    makeVertiefungsgebieteTable(vertiefungen) {
-        let cp = 0;
-        let table = "<table class='vertiefungen'>";
-        table += "<tr><td>Lehr&shy;veranstaltung</td><td>Leistungs&shy;punkte</td><td>Vertiefungs&shy;gebiet</td><td style='width: 300px'>Dozent</td></tr>";
-        for (let i = 0; i < vertiefungen.length; i += 1) {
-            const course = data[vertiefungen[i]];
-            cp += course.cp;
-            table += "<tr><td>" + course.nameLV + "</td>" +
-                     "<td>" + course.cp + "</td>" +
-                 "<td>" + course.vertiefung.join(", ") + "</td>" +
-                 "<td>" + course.dozent.join(", ") + "</td>" +
-                 "</tr>";
-        }
-        if (vertiefungen.sbsCourses.length === 4) {
-            cp += 6;
-            table += "<tr class='sbs-text'><td colspan='4'>Es wurden vier Softwarebasissysteme gewählt, sodass <strong>eines</strong> davon als Vertiefung gewertet wird (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>). Die vier gewählten Softwarebasissysteme sind:</td></tr>";
-            vertiefungen.sbsCourses.forEach(function (key) {
-                const course = data[key];
-                table += "<tr class='sbs-vertiefung'><td>" + course.nameLV + "</td>" +
-                     "<td>" + course.cp + "</td>" +
-                     "<td>" + course.vertiefung.join(", ") + "</td>" +
-                     "<td>" + course.dozent.join(", ") + "</td>" +
-                     "</tr>";
-            });
-        }
-
-        else if (vertiefungen.sbsCourses.length === 5) {
-            cp += 12;
-            table += "<tr class='sbs-text'><td colspan='4'>Es wurden fünf Softwarebasissysteme gewählt, sodass <strong>zwei</strong> davon als Vertiefung gewertet werden (siehe auch <a href='fragen.html#mehrsoftwarebasissysteme'>Was passiert, wenn ich mehr als drei Softwarebasissysteme belege?</a>). Die fünf gewählten Softwarebasissysteme sind:</td></tr>";
-            vertiefungen.sbsCourses.forEach(function (key) {
-                const course = data[key];
-                table += "<tr class='sbs-vertiefung'><td>" + course.nameLV + "</td>" +
-                     "<td>" + course.cp + "</td>" +
-                     "<td>" + course.vertiefung.join(", ") + "</td>" +
-                     "<td>" + course.dozent.join(", ") + "</td>" +
-                     "</tr>";
-            });
-        }
-        // if there are less than 24 creditpoints, show how much creditpoints there are
-        if (cp < 24)
-            table += "<tr><td></td><td class='sum'>" + cp + "</td><td></td><td></td></tr>";
-        // else insert empty row, because last row is visibility:hidden by default (a little bit hacky, i know)
-        else
-            table += "<tr><td></td></tr>";
-        table += "</table>";
-
-        // and now there is a dirty little hack:
-        // the arrow on the left of the messages box is only displayed, if there is more than <li> in the box
-        // as we want to have the arrow here, because the table is quite big, we add a <li> here
-        table += "<ul style='display:none;'><li></li></ul>";
-        return table;
-    },
     /* adjusts short lv-string to be displayed in table */
     adjustShortCourseName(course) {
         return course.replace(/–<br \/>/g, "–").replace(/-<br \/>/g, "&shy;").replace(/<br \/>/g, " ");

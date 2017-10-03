@@ -366,19 +366,6 @@ const data = {
         cp: 3,
         vorher: [],
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas"
-    },
-    einfuehrungindesignthinking: {
-        kurz: "Einführung in<br />Design Thinking",
-        lehrform: ["Projekt", "Seminar"],
-        modul: ["Softskills"],
-        semester: [ws17_18],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [],
-        cp: 3,
-        vorher: [],
-        dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
         nameLV: "Einführung in Design Thinking: From Inspirations to Ideas"
     },
     einfuehrungindiealgorithmik: {
