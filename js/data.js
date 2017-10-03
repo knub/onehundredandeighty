@@ -368,6 +368,19 @@ const data = {
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
         nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas"
     },
+    einfuehrungindesignthinking: {
+        kurz: "Einführung in<br />Design Thinking",
+        lehrform: ["Projekt", "Seminar"],
+        modul: ["Softskills"],
+        semester: [ws17_18],
+        pflicht: false,
+        empfohlen: "",
+        vertiefung: [],
+        cp: 3,
+        vorher: [],
+        dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
+        nameLV: "Einführung in Design Thinking: From Inspirations to Ideas"
+    },
     einfuehrungindiealgorithmik: {
         kurz: "Einführung in<br />die Algorithmik",
         lehrform: ["Vorlesung", "Übung"],
@@ -589,6 +602,19 @@ const data = {
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar Personal Fabrication and Interaction"
     },
+    hcipsroboticscodeand3dprinting: {
+        kurz: "[HCI PS] Robotics,<br />Code, and 3D Printing",
+        lehrform: ["Projekt", "Seminar"],
+        modul: ["Vertiefungsgebiete"],
+        semester: [ws17_18],
+        pflicht: false,
+        empfohlen: "",
+        vertiefung: [HCGT, SAMT],
+        cp: 6,
+        vorher: [],
+        dozent: ["Prof. Dr. Patrick Baudisch"],
+        nameLV: "HCI Project Seminar on Robotics, Code, and 3D Printing"
+    },
     historyofprogramminglanguages: {
         kurz: "History of<br />Programming Languages",
         lehrform: ["Seminar"],
@@ -615,8 +641,8 @@ const data = {
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Identitätsmanagement"
     },
-    informationvisualisationtechnique: {
-        kurz: "Information<br />Visualisation Technique",
+    informationvisualisationtechniques: {
+        kurz: "Information<br />Visualisation Techniques",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
@@ -626,7 +652,7 @@ const data = {
         cp: 6,
         vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "Information Visualisation Technique for Industrie 4.0"
+        nameLV: "Information Visualisation Techniques for Industrie 4.0"
     },
     isec: {
         kurz: "ISec",
@@ -729,7 +755,7 @@ const data = {
         vertiefung: [],
         cp: 6,
         vorher: [],
-        dozent: ["Prof. Dr. Holger Giese"],
+        dozent: ["Joachim Hänsel", "Maria Maximova", "Prof. Dr. Holger Giese"],
         nameLV: "Modellierung I"
     },
     mod2: {
@@ -859,7 +885,7 @@ const data = {
         vertiefung: [OSIS, SAMT],
         cp: 6,
         vorher: [],
-        dozent: ["Johannes Henning", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Toni Mattis"],
+        dozent: ["Johannes Henning", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Toni Mattis"],
         nameLV: "Programming Languages: Design and Implementation"
     },
     pt1: {
@@ -911,8 +937,8 @@ const data = {
         vertiefung: [],
         cp: 3,
         vorher: [],
-        dozent: ["Dr. Timm Krohn"],
-        nameLV: "Recht für Ingenieure II"
+        dozent: ["Dr. Timm Krohn", "Prof. Dr. Jan Eickelberg"],
+        nameLV: "Recht für Ingenieure II - Rechtsfragen der Digitalisierung im Geschäftsverkehr"
     },
     securecoding: {
         kurz: "Secure Coding",

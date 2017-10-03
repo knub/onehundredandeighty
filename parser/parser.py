@@ -133,7 +133,6 @@ def parseLVPage(url):
     # Here happens the information extraction
     nameofLV, semester = extractor.getNameAndSemester(wholeFile)
     cp = extractor.getCP(wholeFile)
-    benotet = extractor.getBenotet(wholeFile)
     lehrform = extractor.getLehrform(wholeFile)
     dozents = extractor.getDozenten(wholeFile)
     vertiefung, modules = extractor.getVertiefungAndModules(wholeFile)
@@ -148,8 +147,6 @@ def parseLVPage(url):
         'cp': cp,
         'dozent': dozents,
         'nameLV': nameofLV,
-
-        'benotet': benotet,
         'id': lvID
     }
     lv['empfohlen'] = extractor.getEmpfohlen(lv)

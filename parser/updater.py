@@ -54,7 +54,7 @@ def mergeLV(newLV):
     if oldLV is None:
         data[lvID] = newLV
         return
-    for parameter in ['benotet', 'cp', 'nameLV', 'kurz', 'pflicht']:
+    for parameter in ['cp', 'nameLV', 'kurz', 'pflicht']:
         if oldLV[parameter] != newLV[parameter]:
             merge(newLV, oldLV, parameter, False)
     for listParameter in ['dozent', 'lehrform', 'vertiefung', 'modul']:

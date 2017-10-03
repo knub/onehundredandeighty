@@ -32,23 +32,15 @@ def prettyPrintSemester(verboseName):
 
 
 def getCP(text):
-    ectsRegex = r"<li>ECTS ?: ?(\d+)</li>"
+    ectsRegex = r"<li>(?:Credits|ECTS) ?: ?(\d+)</li>"
     ectsMatch = re.search(ectsRegex, text)
     if ectsMatch is None:
         return 0
     return int(ectsMatch.group(1))
 
 
-def getBenotet(text):
-    benotetRegex = r"(?is)<li>Benotet ?: ?(.*?)</li>"
-    benotetMatch = re.search(benotetRegex, text)
-    if benotetMatch is not None:
-        benotetText = benotetMatch.group(1).strip().lower()
-        return benotetText == "ja" or benotetText == "benotet"
-
-
 def getLehrform(text):
-    lehrformRegex = r"(?is)<li>Lehrform ?: ?(.*?)</li>"
+    lehrformRegex = r"(?is)<li>(?:Teaching Form|Lehrform) ?: ?(.*?)</li>"
     lehrformMatch = re.search(lehrformRegex, text)
     lehrform = []
     if lehrformMatch is not None:
@@ -79,7 +71,7 @@ def getLehrform(text):
 
 
 def getDozenten(text):
-    dataBlockRegex = re.compile(r"(?s)Dozent: (.*?)<br")
+    dataBlockRegex = re.compile(r"(?s)(?:Dozent|Lecturer): (.*?)<br")
     dataBlockMatch = re.search(dataBlockRegex, text)
     dataBlock = dataBlockMatch.group(1)
     subBlocks = dataBlock.split(", ")
@@ -100,7 +92,7 @@ def getDozenten(text):
 
 def getVertiefungAndModules(text):
     # Module extrahieren - ergibt zB die Vertiefungsgebiete
-    moduleBlockRegex = r"(?is)<h2>Module</h2>(.+?)</ul>"
+    moduleBlockRegex = r"(?is)<h2>Modules?</h2>(.+?)</ul>"
     moduleBlockMatch = re.search(moduleBlockRegex, text)
     vertiefung = set()
     modules = set()
@@ -370,3 +362,4 @@ def cleanUp(lv):
     """take a finished lv-object and perform additional cleanup steps if needed"""
     if lv['id'] == 'pem':
         lv['modul'] = ['PEM']
+        lv['cp'] = 6
