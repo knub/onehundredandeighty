@@ -382,7 +382,7 @@ const frontend = {
 
             let finalGrade = 'un&shy;bekannt';
             if (!isNaN(possibility.grade)) {
-                const number = possibility.grade.toFixed(3);
+                const number = (Math.floor(possibility.grade*1000)/1000).toFixed(3);
                 finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<sup>" + number.substr(3) + "</sup></span>";
             }
             const sbsString = 'BS, &nbsp; ' + possibility.sbs.map(function({key}) {
@@ -427,7 +427,7 @@ const frontend = {
             table += "</tr>";
         }
         if (possibilities.length > tablePreviewSize && !showAllDetails) {
-            table += '<tr><td colspan="6"><a onclick="f.showFullCombinationTable()" style="cursor: pointer;">' + (possibilities.length - tablePreviewSize) + ' weitere M&ouml;glichkeiten...</a></td></tr>';
+            table += '<tr><td colspan="6"><a onclick="f.showFullCombinationTable()" style="text-decoration:underline;cursor:pointer">' + (possibilities.length - tablePreviewSize) + ' weitere M&ouml;glichkeiten...</a></td></tr>';
         }
         table += "</table>";
         return table;
@@ -462,7 +462,7 @@ const frontend = {
                 return Math.min(acc, curr.grade);
             }, 10);
             if (bestGrade < 10) {
-                messageUl.append("<li>Der Belegungsplan ist gültig! Deine beste Gesamtnote: " + bestGrade.toFixed(3) + "</li>");
+                messageUl.append("<li>Der Belegungsplan ist gültig! Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3) + "</li>");
             } else {
                 messageUl.append("<li>Der Belegungsplan ist gültig!</li>");
             }

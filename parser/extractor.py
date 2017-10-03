@@ -364,3 +364,9 @@ def getEmpfohlen(lv):
         'ti2': 4,
         'swt1': 4
     }.get(lv['id'], '')
+
+
+def cleanUp(lv):
+    """take a finished lv-object and perform additional cleanup steps if needed"""
+    if lv['id'] == 'pem':
+        lv['modul'] = ['PEM']

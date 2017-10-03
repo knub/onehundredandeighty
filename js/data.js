@@ -761,12 +761,12 @@ const data = {
     pem: {
         kurz: "PEM",
         lehrform: ["Projekt", "Seminar"],
-        modul: ["Softskills"],
+        modul: ["PEM"],
         semester: [ss15, ss16, ss17, ws15_16, ws16_17, ws17_18],
         pflicht: true,
         empfohlen: "",
         vertiefung: [],
-        cp: 0,
+        cp: 6,
         vorher: [],
         dozent: ["Peter Göttel"],
         nameLV: "Projektentwicklung und- Management: Teammanagement und Softskills in Projekten"
