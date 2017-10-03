@@ -505,11 +505,6 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         }
 
         if (NEUE_STUDIENORDNUNG) {
-            const isVertiefung = function (course) {
-                return combination.some(function (interpretation) {
-                    return course === interpretation.key
-                });
-            };
             const toGradeAndWeight = function (weight) {
                 return function(course) {
                     return {
