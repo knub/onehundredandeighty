@@ -9,15 +9,22 @@ const studyRegulations = {
     vertiefungsgebiete: ["BPET", "HCGT", "ISAE", "OSIS", "SAMT"]
 };
 
-function toOldModulNames(modulName) {
+function toOldVertiefungsgebietNames(vertiefung) {
     // take a module name, and convert it to its display name if needed
     if (NEUE_STUDIENORDNUNG) {
-        return modulName;
+        return vertiefung;
     }
-    if (modulName === 'ISAE') {
+    if (vertiefung === 'ISAE') {
         return 'IST';
-    } else if (modulName === 'HCGT') {
+    } else if (vertiefung === 'HCGT') {
         return 'HCT';
+    }
+    return vertiefung;
+}
+
+function toModulDisplayName(modulName) {
+    if (modulName === 'PEM') {
+        return 'Softskills';
     }
     return modulName;
 }
@@ -239,7 +246,7 @@ const frontend = {
         },
         /* see checkSemester for documentation, same procedure */
         checkModule(key) {
-            return this.selectedModule.haveIntersection(data[key].modul);
+            return this.selectedModule.haveIntersection(data[key].modul.map(toModulDisplayName));
         },
         /* see checkSemester for documentation, same procedure */
         checkVertiefungsgebiete(key) {
@@ -602,7 +609,7 @@ const frontend = {
                         "<td>" + course['cp'] + " Leistungspunkte</td>" +
                     "</tr>" +
                     f.displayArray(course['lehrform'], "Lehrform") +
-                    f.displayArray(course['vertiefung'].map(toOldModulNames), "Vertiefungsgebiet") +
+                    f.displayArray(course['vertiefung'].map(toOldVertiefungsgebietNames), "Vertiefungsgebiet") +
                     f.displayArray(course['semester'], "Angeboten im") +
                 "</table>" +
             "</div>" +
@@ -739,7 +746,7 @@ const frontend = {
         for (const vertiefungsgebiet in f.filterManager.possibleVertiefungsgebiete) {
             if (!f.filterManager.possibleVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
             const selected = f.filterManager.selectedVertiefungsgebiete.indexOf(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) === - 1 ? "": " class='selected'";
-            vertiefungsgebieteList += "<li" + selected + ">" + toOldModulNames(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) + "</li>";
+            vertiefungsgebieteList += "<li" + selected + ">" + toOldVertiefungsgebietNames(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) + "</li>";
         }
         vertiefungsgebieteList += ' <a href="fragen.html#vertiefungsgebiete">Wofür stehen die Abkürzungen?</a></ul>';
 
