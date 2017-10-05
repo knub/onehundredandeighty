@@ -26,6 +26,9 @@ function toModulDisplayName(modulName) {
     if (modulName === 'PEM') {
         return 'Softskills';
     }
+    if (modulName.startsWith("SB")){
+        return 'Softwarebasissysteme';
+    }
     return modulName;
 }
 
@@ -264,6 +267,23 @@ const frontend = {
             // if nothing is selected, return false
             return false;
         },
+        selectByRule(modul){
+            this.selectedModule = [modul];
+            this.filter();
+            this.updateFilterSelection();
+            document.getElementById('courses-pool').scrollIntoView();
+        },
+        updateFilterSelection(){
+            let manager = this;
+            $("#module-filter").find("li").each(function(index, elem) {
+                if (manager.selectedModule.includes(elem.innerHTML)) {
+                    $(elem).addClass("selected");
+                }
+                else {
+                    $(elem).removeClass("selected");
+                }
+            });
+        },
         filter() {
             f.coursesPoolUl.find("li").each(function() {
                 // .slice(7) to remove foregoing "course-" from id
@@ -445,6 +465,17 @@ const frontend = {
                     extra = ' <a href="fragen.html#softwarebasissysteme">Was bedeutet das?</a>';
                 else if (rule.type === 'softskillsRule')
                     extra = ' <a href="fragen.html#softskills">Was bedeutet das?</a>';
+                switch(rule.type) {
+                    case 'sbsRule':
+                        extra += '<button onClick="f.filterManager.selectByRule(\'Softwarebasissysteme\')" class="btn action1" style="margin-left: 15px">Filter anpassen</button>';
+                        break;
+                    case 'softskillsRule':
+                        extra += '<button onClick="f.filterManager.selectByRule(\'Softskills\')" class="btn action1" style="margin-left: 15px">Filter anpassen</button>';
+                        break;
+                    case 'vertiefungsgebieteRule':
+                        extra += '<button onClick="f.filterManager.selectByRule(\'Vertiefungsgebiete\')" class="btn action1" style="margin-left: 15px">Filter anpassen</button>';
+                        break;
+                }
                 messageUl.append("<li>" + rule.message + extra + "</li>");
             }
             // animate to red
@@ -789,6 +820,7 @@ $(function() {
     /* at first: do the caching stuff */
     f.messageDiv = $("#message");
     f.slideMessagesDiv = $("#slide-messages");
+    f.filterOptions = $("#filter-options");
     f.coursesPoolUl = $("#courses-pool > ul");
     f.coursesUl = $(f.coursesList);
 

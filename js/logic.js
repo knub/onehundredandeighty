@@ -304,13 +304,13 @@ ruleManager.rules.push(function softskillsRule(getSemester) {
 });
 
 ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
-    function returnValue(data, errorMessage) {
+    function returnValue(data, errorMessage, type) {
         wahlpflichtManager.possibleCombinations = data;
         if (errorMessage === undefined) {
             return [];
         }
         return [{
-            type: "vertiefungsgebieteRule",
+            type: type,
             message: errorMessage
         }]
     }
@@ -366,12 +366,13 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // save the error message instead of instantly returning the error,
     // so that data transformation steps can still be performed
     let currentError = undefined;
+    let currentType = undefined;
 
     // multiple steps are necessary to filter out valid combinations
     // and to convert them to a meaningful format
     const processingSteps = [
-        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden."},
-        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden."},
+        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden.", type: "sbsRule"},
+        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden.", type: "other"},
         {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
         {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
         {converter: addVertiefungCombos},
@@ -394,6 +395,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 if (possibleCombinations.length === 0) {
                     possibleCombinations = oldCombinations;
                     currentError = step.errorMessage;
+                    currentType = step.type || "vertiefungsgebieteRule";
                 }
             }
         } else if (step.cleaner !== undefined) {
@@ -417,7 +419,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     if (currentError === undefined) {
         return returnValue(possibleCombinations); // valid!
     } else {
-        return returnValue(possibleCombinations, currentError); // error occurred in progress
+        return returnValue(possibleCombinations, currentError, currentType); // error occurred in progress
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
