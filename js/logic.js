@@ -304,7 +304,7 @@ ruleManager.rules.push(function softskillsRule(getSemester) {
 });
 
 ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
-    function returnValue(data, errorMessage, type) {
+    function returnValue(data, errorMessage, type = "vertiefungsgebieteRule") {
         wahlpflichtManager.possibleCombinations = data;
         if (errorMessage === undefined) {
             return [];
@@ -344,10 +344,6 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
            return { key: course, vertiefung: vertiefung }
         });
     });
-
-    if (vertiefungenWithOptions.length === 0) {
-        return returnValue([], "Keine Vertiefungsgebiete ausgewählt!");
-    }
 
 
     // Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
@@ -395,7 +391,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 if (possibleCombinations.length === 0) {
                     possibleCombinations = oldCombinations;
                     currentError = step.errorMessage;
-                    currentType = step.type || "vertiefungsgebieteRule";
+                    currentType = step.type;
                 }
             }
         } else if (step.cleaner !== undefined) {

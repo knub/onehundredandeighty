@@ -223,8 +223,6 @@ const Bacherlorproject = class extends Course {
 const frontend = {
     /* filterManager controls the possibility to filter the courses-pool */
     filterManager: {
-        /* saves all possibly selectable semesters */
-        possibleSemesters: semesterManager.shownSemesters,
         /* rest accordingly .. */
         possibleModule: studyRegulations.module,
         selectedModule: studyRegulations.module,
@@ -283,6 +281,7 @@ const frontend = {
                     $(elem).removeClass("selected");
                 }
             });
+            f.saveManager.save();
         },
         filter() {
             f.coursesPoolUl.find("li").each(function() {
@@ -298,6 +297,13 @@ const frontend = {
                 }
             });
             f.sortPool();
+        },
+        resetFilter() {
+            this.selectedModule = this.possibleModule;
+            this.selectedVertiefungsgebiete = this.possibleVertiefungsgebiete;
+            this.selectedWahlpflicht = this.possibleWahlpflicht;
+            this.updateFilterSelection();
+            this.filter();
         }
     },
     /* saveManager saves the current status via Web-Storage */
@@ -888,6 +894,9 @@ $(function() {
             }, 250);
         }
         filtering = !filtering;
+    });
+    $('#filter-reset-button').click(function() {
+        f.filterManager.resetFilter();
     });
 
     if (localStorage.onehundredandeighty_hasData === "true") {
