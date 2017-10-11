@@ -182,7 +182,7 @@ const gradeManager = {
     },
     getString(course, niceFormatOpt) {
         const val = this.get(course);
-        if (isNaN(val)) {
+        if (!val) {
             return "";
         } else {
             const niceFormat = (niceFormatOpt !== undefined) ? niceFormatOpt : false;
