@@ -151,12 +151,10 @@ const Course = class {
     }
     finishGradeEditing() {
         const grade = this.gradeInput.val();
-        this.gradeInput.val("");
-        if (grade) {
-            gradeManager.setString(this.id, grade);
-            f.saveManager.save();
-            f.checkRulesIfWanted();
-        }
+        //this.gradeInput.val("");
+        gradeManager.setString(this.id, grade);
+        f.saveManager.save();
+        f.checkRulesIfWanted();
         this.container.removeClass('inGradeEditMode');
         this.nameText.css('display', 'block');
         this.gradeInput.css('display', 'none');

@@ -178,7 +178,14 @@ const gradeManager = {
         return this.grades[course];
     },
     setString(course, gradeString) {
-        this.set(course, parseFloat(gradeString));
+        const float = parseFloat(gradeString);
+        if (float < 1 || float > 5) {
+            return;
+        }
+        if (gradeString.length > 2 && !['0', '3', '7'].includes(gradeString[2])) {
+            return;
+        }
+        this.set(course, float);
     },
     getString(course, niceFormatOpt) {
         const val = this.get(course);
