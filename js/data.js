@@ -92,7 +92,7 @@ const data = {
         vertiefung: [ISAE, OSIS],
         cp: 6,
         vorher: [],
-        dozent: ["Dr. Feng Cheng"],
+        dozent: ["Dr. Feng Cheng", "Prof. Dr. Christoph Meinel"],
         nameLV: "Big Data Security Analytics"
     },
     beautifuldata: {
@@ -366,7 +366,7 @@ const data = {
         cp: 3,
         vorher: [],
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "Einführung in Design Thinking: From Inspirations to Ideas"
+        nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas"
     },
     einfuehrungindiealgorithmik: {
         kurz: "Einführung in<br />die Algorithmik",
