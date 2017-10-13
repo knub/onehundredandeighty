@@ -251,8 +251,8 @@ const data = {
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Clientseitige Webprogrammierung"
     },
-    comprog: {
-        kurz: "ComProg",
+    compprog: {
+        kurz: "CompProg",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss16, ss17],

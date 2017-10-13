@@ -208,7 +208,7 @@ ShortenLV = [
     ("Wirtschaftliche Grundlagen", "Wirtschaft"),
     # Vertiefungsgebiete
     ("Algorithmic Problem Solving", "AlgoRiddles"),
-    ("Competitive Programming", "ComProg"),
+    ("Competitive Programming", "CompProg"),
     ("Big Data", "BD"),
     ("Bildverarbeitungsalgorithmen", "BVA"),
     ("Internet-Security", "ISec"),
