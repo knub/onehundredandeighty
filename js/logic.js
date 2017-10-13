@@ -81,6 +81,11 @@ const semesterManager = {
             && semesters.includes(this.referenceSemester2For(semesterName))) {
             return true
         }
+        if (data[course].kurz === 'VHDL') {
+            const ws_ss = semesterName.substr(0, 2);
+            const num = parseInt(semesterName.substr(2, 2));
+            return (ws_ss === 'SS') && (num % 2 === 0)
+        }
         return false
     },
 
