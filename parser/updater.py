@@ -16,7 +16,7 @@ CURRENT_SEMESTER = 'WS17'
 
 
 confirm = raw_input("\n\nWARNING: This script completely replaces the content of ../js/data.js\n"
-                    "It is currently configured to parse from SS" + str(START_SEMESTER) + " to WS" + str(END_SEMESTER) + "/" + str(END_SEMESTER + 1) + ".\n"
+                    "It is currently configured to parse from SS" + str(START_SEMESTER) + " to WS" + str(END_SEMESTER) + ".\n"
                     "The current Semester is set to " + CURRENT_SEMESTER + ".\n"
                     "(this defines, which semester gets represented by the Lehrveranstaltungen index-page)\n"
                     "\n"
