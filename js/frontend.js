@@ -154,7 +154,7 @@ const Course = class {
         //this.gradeInput.val("");
         gradeManager.setString(this.id, grade);
         f.saveManager.save();
-        f.checkRulesIfWanted();
+        f.checkRules();
         this.container.removeClass('inGradeEditMode');
         this.nameText.css('display', 'block');
         this.gradeInput.css('display', 'none');
@@ -320,7 +320,6 @@ const frontend = {
             localStorage.onehundredandeighty_semesterLocks = JSON.stringify(semesterManager.semesterLock);
             localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
             localStorage.onehundredandeighty_grades = JSON.stringify(gradeManager.grades);
-            localStorage.onehundredandeighty_checkPermanently = f.checkPermanently;
             localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
         }
     },
@@ -420,12 +419,6 @@ const frontend = {
         table += "</table>";
         return table;
     },
-    checkRulesIfWanted() {
-        if (f.checkPermanently === true) {
-            f.checkRules();
-            f.slideMessages();
-        }
-    },
     /* used to check all rules and display them in div#messages */
     checkRules(showAllDetails) {
         /* performance check */
@@ -487,6 +480,7 @@ const frontend = {
                 backgroundColor: '#9F0606'
             }, 350);
         }
+        f.slideMessages();
     },
     showFullCombinationTable() {
         f.checkRules(true);
@@ -606,7 +600,7 @@ const frontend = {
             }
 
 
-            f.checkRulesIfWanted();
+            f.checkRules();
             f.filterManager.filter();
             f.saveManager.save();
         });
@@ -692,7 +686,7 @@ const frontend = {
         f.adjustSemesterViewHeight();
         f.sortPool();
         f.filterManager.filter();
-        f.checkRulesIfWanted();
+        f.checkRules();
         f.saveManager.save();
     },
     /* adjust #semester-view1 ul's heights to fit to max-height */
@@ -839,7 +833,7 @@ $(function() {
             if (selected.length === 1) {
                 f.checkPermanently = true;
                 $("#button-div").fadeOut(100);
-                f.checkRulesIfWanted();
+                f.checkRules();
             }
             else {
                 f.checkPermanently = false;
@@ -849,22 +843,7 @@ $(function() {
         }
     });
 
-    /* apply check routine on button click */
-    $("#check").click(function() {
-        f.checkRulesIfWanted();
-        f.checkPermanently = true;
-        $("#permacheck").find("li").attr("class", "selected");
-        $("#checkbox-div").css("visibility", "visible");
-        $("#button-div").css("visibility", "visible");
-        localStorage.onehundredandeighty_alreadyChecked = true;
-        f.saveManager.save();
-    });
 
-    /* apply check routine on button click */
-    $("#recheck").click(function() {
-        f.checkRulesIfWanted();
-        f.saveManager.save();
-    });
 
     /* add click handler for slide button to show messages */
     f.slideMessagesDiv.click(function() {
@@ -898,9 +877,6 @@ $(function() {
     });
 
     if (localStorage.onehundredandeighty_hasData === "true") {
-        f.checkPermanently = localStorage.onehundredandeighty_checkPermanently === "true";
-        if (localStorage.onehundredandeighty_checkPermanently === "null")
-            f.checkPermanently = null;
         f.allMessagesVisible = localStorage.onehundredandeighty_allMessagesVisible === "true";
 
         semesterManager.shownSemesters = JSON.parse(localStorage.onehundredandeighty_semesters);
@@ -914,8 +890,6 @@ $(function() {
         }
 
         f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.onehundredandeighty_filterManager));
-        if (f.checkPermanently !== false) $("#permacheck").find("li").attr("class", "selected");
-        else $("#button-div").fadeIn(100);
     }
 
     /* initialize <select>'s with correct semesters from logic (see logic.js) */
@@ -998,12 +972,6 @@ $(function() {
     /* adjust #semester-view1 height */
     f.adjustSemesterViewHeight();
 
-    if (localStorage.onehundredandeighty_alreadyChecked === "true") {
-        f.checkRulesIfWanted();
-        $("#checkbox-div").css("visibility", "visible");
-        $("#button-div").css("visibility", "visible");
-    }
-
     $("#reset").click(function() {
         /* localStorage.clear() may remove too much data, e.g. 120 data hosted on the same server */
         localStorage.removeItem("onehundredandeighty_hasData");
@@ -1012,7 +980,6 @@ $(function() {
         localStorage.removeItem("onehundredandeighty_semesterLocks");
         localStorage.removeItem("onehundredandeighty_semesters");
         localStorage.removeItem("onehundredandeighty_grades");
-        localStorage.removeItem("onehundredandeighty_checkPermanently");
         localStorage.removeItem("onehundredandeighty_allMessagesVisible");
         location.reload();
     });
@@ -1023,7 +990,7 @@ $(function() {
     $("#lesssemester").click(function() {
         f.removeSemester(2);
         f.coursesUl = $(f.coursesList);
-        f.checkRulesIfWanted();
+        f.checkRules();
         f.saveManager.save();
     });
     //addling logic to the existing 6 semesters
@@ -1033,4 +1000,5 @@ $(function() {
     $('#changeStudienordnungLink')
         .text(NEUE_STUDIENORDNUNG ? '2016' : '2010')
         .click(switchStudienordnung);
+    f.checkRules();
 });
