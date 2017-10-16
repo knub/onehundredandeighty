@@ -8,4 +8,4 @@ Organize your courses in HPI with onehundredandeighty.
 3. Pull-request me.
 
 ### Issues? / Change requests?
-Just drop me a line.
+Write me (erik.brendel\[at\]student.hpi.de) or create an Issue here on GitHub.
