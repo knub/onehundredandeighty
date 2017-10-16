@@ -319,9 +319,16 @@ const frontend = {
             localStorage.onehundredandeighty_filterManager = JSON.stringify(f.filterManager);
             localStorage.onehundredandeighty_semesterLocks = JSON.stringify(semesterManager.semesterLock);
             localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
+            localStorage.onehundredandeighty_exceptions = JSON.stringify(semesterManager.exceptions);
             localStorage.onehundredandeighty_grades = JSON.stringify(gradeManager.grades);
             localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
         }
+    },
+
+    addTimeException(course) {
+        semesterManager.addTimeException(course, f.getSemester(course));
+        f.checkRules();
+        f.saveManager.save();
     },
     /* adjusts short lv-string to be displayed in table */
     adjustShortCourseName(course) {
@@ -442,17 +449,33 @@ const frontend = {
                 }
                 return Math.min(acc, curr.grade);
             }, 10);
+            let resultColor = '#316400';
+            let topMessage = "Der Belegungsplan ist gültig!";
             if (bestGrade < 10) {
-                messageUl.append("<li>Der Belegungsplan ist gültig! Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3) + "</li>");
-            } else {
-                messageUl.append("<li>Der Belegungsplan ist gültig!</li>");
+                topMessage += "Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3)
             }
+            messageUl.append("<li>" + topMessage + "</li>");
+
+            const exceptionCourses = [];
+            for (const course in semesterManager.exceptions) {
+                if (semesterManager.exceptions[course]) {
+                    exceptionCourses.push(course);
+                }
+            }
+            if (exceptionCourses.length > 0) {
+                resultColor = '#c27100';
+                let exceptionMessage = "Die Verfügbarkeit von folgenden Veranstaltungen ist nicht gesichert: ";
+                exceptionMessage += exceptionCourses.map(function(course) {return data[course].kurz}).join(', ');
+                messageUl.append("<li>" + exceptionMessage + "</li>");
+            }
+
+
             let extra = '<div class="extra-inf">Folgende Kombinationen von Vertiefungsgebieten sind gültig im Sinne der Studienordnung:';
             extra += f.makeCombinationsTable(possibilities, showAllDetails);
             extra += "</div>";
             messageUl.append("<li>" + extra + "</li>");
             f.messageDiv.animate({
-                backgroundColor: '#316400'
+                backgroundColor: resultColor
             }, 350);
         } else {
             for (let r = 0; r < rules.length; r += 1) {
@@ -463,6 +486,9 @@ const frontend = {
                 else if (rule.type === 'softskillsRule')
                     extra = ' <a href="fragen.html#softskills">Was bedeutet das?</a>';
                 switch(rule.type) {
+                    case 'timeRule':
+                        extra += '<button onClick="f.addTimeException(\'' + rule.course + '\')" class="btn action1" style="margin-left: 15px">Doch!</button>';
+                        break;
                     case 'sbsRule':
                         extra += '<button onClick="f.filterManager.selectByRule(\'Softwarebasissysteme\')" class="btn action1" style="margin-left: 15px">Filter anpassen</button>';
                         break;
@@ -672,7 +698,13 @@ const frontend = {
     /* used, when user finished drag'n'dropping courses */
     endSorting(event, ui) {
         f.coursesUl.find("li").knubtip("enable");
+        const itemID = ui.item[0].id;
+        const courseName = itemID.substr(7); // remove 'course-' from the id
+        semesterManager.removeTimeExceptionIfAble(courseName, f.getSemester(courseName));
         Semester.hideDragDropHints();
+        f.filterManager.filter();
+        f.checkRules();
+        f.saveManager.save();
     },
     /* called when user drag'n'dropped something */
     update(event, ui) {
@@ -685,9 +717,6 @@ const frontend = {
         }
         f.adjustSemesterViewHeight();
         f.sortPool();
-        f.filterManager.filter();
-        f.checkRules();
-        f.saveManager.save();
     },
     /* adjust #semester-view1 ul's heights to fit to max-height */
     adjustSemesterViewHeight: function () {
@@ -884,6 +913,8 @@ $(function() {
             gradeManager.grades = JSON.parse(localStorage.onehundredandeighty_grades);
         if (localStorage.onehundredandeighty_semesterLocks)
             semesterManager.semesterLock = JSON.parse(localStorage.onehundredandeighty_semesterLocks);
+        if (localStorage.onehundredandeighty_exceptions)
+            semesterManager.exceptions = JSON.parse(localStorage.onehundredandeighty_exceptions);
         // if there are more than six semester, we need a special row
         if (semesterManager.shownSemesters.length > 6) {
             f.addSemester(semesterManager.shownSemesters.length - 6);

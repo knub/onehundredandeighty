@@ -684,7 +684,7 @@ const data = {
         kurz: "Lerntechniken<br />und Strategien",
         lehrform: ["Seminar"],
         modul: ["Softskills"],
-        semester: [ss17, ws16_17, ws17_18],
+        semester: [ss15, ss16, ss17, ws15_16, ws16_17, ws17_18],
         pflicht: false,
         empfohlen: "",
         vertiefung: [],
@@ -835,19 +835,6 @@ const data = {
         vorher: [],
         dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
         nameLV: "Processes and Decisions in the Cloud"
-    },
-    professionalisiertelerntechniken: {
-        kurz: "Professionalisierte<br />Lerntechniken",
-        lehrform: ["Seminar"],
-        modul: ["Softskills"],
-        semester: [ss15, ss16, ws15_16],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [],
-        cp: 3,
-        vorher: [],
-        dozent: ["Dr. Rolf Specht"],
-        nameLV: "Professionalisierte Lerntechniken"
     },
     programmierungcomputergrafischerverfahren: {
         kurz: "Programmierung<br />computergrafischer Verfahren",

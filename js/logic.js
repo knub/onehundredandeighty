@@ -45,6 +45,18 @@ const semesterManager = {
     /* the semester that is the first semester when you first start the application */
     startswith: "WS15/16",
 
+    /* saves for each course an extra semester where it is offered */
+    exceptions: {},
+    addTimeException(course, semesterNumber) {
+        this.exceptions[course] = this.shownSemesters[semesterNumber - 1];
+        this.removeTimeExceptionIfAble(course, semesterNumber);
+    },
+    removeTimeExceptionIfAble(course, semesterNumber) {
+        if (this.courseOfferedInSemester(course, semesterNumber, false)) {
+            this.exceptions[course] = undefined;
+        }
+    },
+
     /** true, if the semester with given name lies in the future */
     isFutureSemester(semesterName) {
         return this.semesters.indexOf(semesterName) > this.semesters.indexOf(this.currentSemester)
@@ -68,9 +80,14 @@ const semesterManager = {
     /**
      * @param course which course(id) to test
      * @param semesterNumber which semester to test
+     * @param allowExceptions true to also
      * @return boolean - true if it was or will be offered in the given semester
      */
-    courseOfferedInSemester(course, semesterNumber) {
+    courseOfferedInSemester(course, semesterNumber, allowExceptions = true) {
+        if (allowExceptions && this.shownSemesters[semesterNumber - 1] === this.exceptions[course]) {
+            return true;
+        }
+
         const semesterName = this.shownSemesters[semesterNumber - 1];
         const semesters = data[course].semester;
         if (semesters.includes(semesterName)) {
@@ -252,6 +269,7 @@ ruleManager.rules.push(function timeRule(getSemester) {
     }
     function createErrorMessage(id) {
         return {
+            course: id,
             type: "timeRule",
             message: "Die Veranstaltung '" + data[id].nameLV + "' wird im gewählten " + getSemester(id) + ". Semester nicht angeboten."
         };

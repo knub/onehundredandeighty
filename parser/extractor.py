@@ -180,8 +180,9 @@ def extractModule(moduleName):
 
 
 ShortenLV = [
-    # renaming of weird LV names
+    # renaming of old LV names
     ("Einführung in Design Thinking", "D-School First Track"),
+    ("Professionalisierte Lerntechniken", "Lerntechniken und Strategien zur Prüfungsvorbereitung"),
 
 
     # Grundlagen IT-Systems Engineering
