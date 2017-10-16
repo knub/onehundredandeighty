@@ -335,10 +335,6 @@ def isPflicht(lv):
            lv['kurz'].startswith("Recht")
 
 
-def getVorher(lv):
-    """return all the things you have to belegen before you belegen this lv"""
-    return []
-
 def getEmpfohlen(lv):
     """return the suggested semester number, or an empty string"""
     return {

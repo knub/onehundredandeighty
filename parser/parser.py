@@ -151,7 +151,6 @@ def parseLVPage(url):
     }
     lv['empfohlen'] = extractor.getEmpfohlen(lv)
     lv['pflicht'] = extractor.isPflicht(lv)
-    lv['vorher'] = extractor.getVorher(lv)
     extractor.cleanUp(lv)
     return lv
 
