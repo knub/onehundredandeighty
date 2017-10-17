@@ -123,6 +123,30 @@ const Semester = class {
             this.container.append(obj);
         }
     }
+    sortContent() {
+        //move bp/ba to top
+        const courseObjects = this.container.find('li');
+
+        const objectList = [];
+        courseObjects.each(function() {
+            const courseObject = $(this);//courseObjects[i];
+            objectList.push(courseObject);
+            courseObject.detach();
+        });
+        function courseWeight(course) {
+            if (course.startsWith('bp')) {
+                return 1;
+            } else if (course === 'ba') {
+                return 2;
+            } else {
+                return 3;
+            }
+        }
+        objectList.sort(function(a, b) { return courseWeight(a[0].id.substr(7)) - courseWeight(b[0].id.substr(7)) });
+        for (let c = 0; c < objectList.length; c++) {
+            this.container.append(objectList[c]);
+        }
+    }
     static showDragDropHintsFor(course) {
         for (const s in semesterCache) {
             const semesterObject = semesterCache[s];
@@ -141,6 +165,13 @@ const Semester = class {
         for (const s in semesterCache) {
             const semesterObject = semesterCache[s];
             semesterObject.updateLPState();
+        }
+    }
+    static sortContent() {
+        //move bp/ba to top in all semester objects
+        for (const s in semesterCache) {
+            const semesterObject = semesterCache[s];
+            semesterObject.sortContent();
         }
     }
     static createAllInstances() {
@@ -653,7 +684,7 @@ const frontend = {
 
             const lineNumber = Math.floor((num - 1) / 6) + 1;
 
-            const semesterTime = "<h2>" + num  + ". Semester<span id='semester" + num + "-lock' class='locksymbol'>🔓</span>  " +
+            const semesterTime = "<h2>" + num  + ". Semester  <span id='semester" + num + "-lock' class='locksymbol'>🔓</span>  " +
                 "<span id='semester" + num + "-lps'>0</span>LP<br>" +
                 "<select id='selectSemester" + num + "' name='selectSemester" + num + "' size='1'></select></h2>";
             $("#semester-time" + lineNumber).find("br").last().before(semesterTime);
@@ -844,6 +875,7 @@ const frontend = {
         f.filterManager.filter();
         f.checkRules();
         Course.get(courseName).onDragEnd();
+        Semester.sortContent();
         f.adjustSemesterViewHeight();
         f.saveManager.save();
     },
@@ -1078,7 +1110,7 @@ $(function() {
 
 
     //add BP/BA objects
-    const bp = "<li class=\"oneliner double-time\" id='course-bp'>\n" +
+    const bp = "<li class=\"oneliner double-time bp_ba\" id='course-bp'>\n" +
         "<span id='course-bp-name'>Bachelorprojekt</span>\n" +
         "<input type='text' id='course-bp-gradeinput' class='courseGradeInput'/>\n" +
         "<button>\n" +
@@ -1087,7 +1119,7 @@ $(function() {
         "</button>\n" +
         "</li>";
     $("#semester5").append(bp);
-    const bp2 = "<li class=\"oneliner triple-time\" id='course-bp2'>\n" +
+    const bp2 = "<li class=\"oneliner triple-time bp_ba\" id='course-bp2'>\n" +
         "<span id='course-bp2-name'>Bachelorprojekt</span>\n" +
         "<input type='text' id='course-bp2-gradeinput' class='courseGradeInput'/>\n" +
         "<button>\n" +
@@ -1096,7 +1128,7 @@ $(function() {
         "</button>\n" +
         "</li>";
     $("#semester6").append(bp2);
-    const ba = "<li class=\"oneliner double-time\" id='course-ba'>\n" +
+    const ba = "<li class=\"oneliner double-time bp_ba\" id='course-ba'>\n" +
         "<span id='course-ba-name'>Bachelorarbeit</span>\n" +
         "<input type='text' id='course-ba-gradeinput' class='courseGradeInput'/>\n" +
         "<button>\n" +
@@ -1170,6 +1202,7 @@ $(function() {
 
     Semester.createAllInstances();
     Semester.updateLPStates();
+    Semester.sortContent();
 
     $("#reset").click(function() {
         /* localStorage.clear() may remove too much data, e.g. 120 data hosted on the same server */

@@ -428,6 +428,9 @@ h1 span {
 	background: linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* W3C */
 }
 
+.courses li.bp_ba {
+	border: 1px solid #acb3bc;
+}
 .courses li.disabled {
 	background: #DDD;
 	border: 1px solid gray;
