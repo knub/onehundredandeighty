@@ -197,7 +197,11 @@ const gradeManager = {
         this.grades[course] = grade;
     },
     get(course) {
-        return this.grades[course];
+        const val = this.grades[course];
+        if (val) {
+            return val;
+        }
+        return NaN;
     },
     setString(course, gradeString) {
         const float = parseFloat(gradeString);
@@ -560,7 +564,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             //find the best 6cp of softskills
             let ssks = allBelegteCourses(getSemester).filter(isSSK);
             ssks.sort(function (a, b) {
-                return gradeManager.get(a) <= gradeManager.get(b);
+                return gradeManager.get(a) >= gradeManager.get(b);
             });
             let best6cp;
             let best31, best32;
@@ -576,25 +580,21 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             }
             if (best6cp === undefined) {
                 courseGradeWeights.push({
-                    grade: gradeManager.get(best31),
-                    weight: 3
-                }, {
-                    grade: gradeManager.get(best32),
-                    weight: 3
+                    grade: (gradeManager.get(best31) + gradeManager.get(best32))/2,
+                    weight: 6
+                });
+            } else if (best32 === undefined || best31 === undefined){
+                courseGradeWeights.push({
+                    grade: gradeManager.get(best6cp),
+                    weight: 6
                 });
             } else {
-                if (best32 === undefined || best31 === undefined){
-                    courseGradeWeights.push({
-                        grade: gradeManager.get(best6cp),
-                        weight: 6
-                    });
-                } else {
-                    courseGradeWeights.push({
-                        grade: Math.min(gradeManager.get(best6cp), (gradeManager.get(best31) + gradeManager.get(best32))/2),
-                        weight: 6
-                    });
-                }
+                courseGradeWeights.push({
+                    grade: Math.min(gradeManager.get(best6cp), (gradeManager.get(best31) + gradeManager.get(best32))/2),
+                    weight: 6
+                });
             }
+
 
             //now the Vertiefungsgebiete
             for (let i = 0; i < combination.length; i++) {
