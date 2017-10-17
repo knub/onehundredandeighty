@@ -4,3 +4,6 @@ twitter-bootstrap
 parser/data.js
 .swp
 post
+
+.idea/
+**/*.pyc
