@@ -34,21 +34,55 @@ function toModulDisplayName(modulName) {
 
 // A Semester is one column in the Stundenplan
 const Semester = class {
+    static get(num) {
+        const cached = semesterCache[num];
+        if (cached !== undefined) return cached;
+
+        const semester = new Semester(num);
+        semesterCache[num] = semester;
+        return semester;
+    }
     constructor(semesterNumber) {
         this.semesterNumber = semesterNumber;
-        this.container = $("#semester" + semesterNumber);
         this.lockSpan = $("#semester" + semesterNumber + "-lock");
+        this.numLPs = $("#semester" + semesterNumber + "-lps");
+        this.isVisible();
         this.updateLockState();
         this.addSemesterLockHandler(semesterNumber);
     }
+    isVisible() {
+        this.container = $("#semester" + this.semesterNumber);
+        return this.container.length > 0;
+    }
     isLocked() {
         return semesterManager.getSemesterLock(this.semesterNumber);
+    }
+    getLP() {
+        let courseSum = allBelegteCoursesInSemester(f.getSemester, this.semesterNumber)
+            .map(courseToCP)
+            .sumElements();
+
+        if (f.getSemester('bp') === this.semesterNumber) {
+            courseSum += 12;
+        }
+        if (f.getSemester('bp2') === this.semesterNumber) {
+            courseSum += 18;
+        }
+        if (f.getSemester('ba') === this.semesterNumber) {
+            courseSum += 12;
+        }
+
+        return courseSum;
     }
     switchLock() {
         const nowLocked = semesterManager.flipSemesterLock(this.semesterNumber);
         this.updateLockState(nowLocked);
         f.saveManager.save();
         f.filterManager.filter();
+    }
+    updateLPState(newState) {
+        const lp = (newState !== undefined) ? newState : this.getLP();
+        this.numLPs.text(lp+"");
     }
     updateLockState(newState) {
         const locked = (newState !== undefined) ? newState : this.isLocked();
@@ -81,22 +115,41 @@ const Semester = class {
             }, 200);
         }
     }
+    take(course) {
+        //move a course to this semester
+        if (this.isVisible()) {
+            const obj = $('#course-' + course);
+            obj.detach();
+            this.container.append(obj);
+        }
+    }
     static showDragDropHintsFor(course) {
-        for (let s = 0; s < semesterManager.shownSemesterObjects.length; s++) {
-            const semesterObject = semesterManager.shownSemesterObjects[s];
-            if (!semesterManager.courseOfferedInSemester(course, semesterObject.semesterNumber)) {
+        for (const s in semesterCache) {
+            const semesterObject = semesterCache[s];
+            if (!Course.get(course).offeredInSemester(semesterObject.semesterNumber)) {
                 semesterObject.highlightRed();
             }
         }
     }
     static hideDragDropHints() {
-        for (let s = 0; s < semesterManager.shownSemesterObjects.length; s++) {
-            const semesterObject = semesterManager.shownSemesterObjects[s];
+        for (const s in semesterCache) {
+            const semesterObject = semesterCache[s];
             semesterObject.updateLockState();
         }
     }
+    static updateLPStates() {
+        for (const s in semesterCache) {
+            const semesterObject = semesterCache[s];
+            semesterObject.updateLPState();
+        }
+    }
+    static createAllInstances() {
+        for (let s = 0; s < semesterManager.shownSemesters.length; s++) {
+            Semester.get(s + 1);
+        }
+    }
 };
-semesterManager.shownSemesterObjects = [];
+const semesterCache = {};
 
 // A Course represents one entry in the data dict
 const Course = class {
@@ -119,11 +172,17 @@ const Course = class {
         this.editGradeButton = $('#course-' + id + '>button');
         this.updateGradeButton();
     }
+    offeredInSemester(semesterNumber) {
+        return semesterManager.courseOfferedInSemester(this.id, semesterNumber)
+    }
     data() {
         return data[this.id];
     }
     getGradeString(format) {
         return gradeManager.getString(this.id, format);
+    }
+    isGradeEditing() {
+        return this.container.hasClass('inGradeEditMode');
     }
     startEditGrade() {
         this.container.addClass('inGradeEditMode'); //to prevent DragnDrop
@@ -169,6 +228,8 @@ const Course = class {
             this.editGradeButton.html(f.gradeCharacter);
         }
     }
+    onDragStart() {}
+    onDragEnd() {}
     static initEvents() {
         /* the following functions define the grade-editing behaviour */
         f.coursesUl.find("li").delegate("button", "click", function() {
@@ -199,7 +260,7 @@ const Course = class {
 const courseCache = {};
 
 // The BP needs special handling, because it is displayed two times
-const Bacherlorproject = class extends Course {
+const Bachelorproject = class extends Course {
     constructor() {
         super("bp");
         this.editGradeButton2 = $("#course-bp2>button");
@@ -215,6 +276,64 @@ const Bacherlorproject = class extends Course {
         } else {
             this.editGradeButton2.html(f.gradeCharacter);
         }
+    }
+    onDragStart() {
+        $('#course-bp2').addClass(f.disabledClass);
+        $('#course-ba').addClass(f.disabledClass);
+    }
+    onDragEnd() {
+        $('#course-bp2').removeClass(f.disabledClass);
+        $('#course-ba').removeClass(f.disabledClass);
+        const mySemester = f.getSemester(this.id);
+        Semester.get(mySemester + 1).take('bp2');
+        Semester.get(mySemester + 1).take('ba');
+    }
+};
+const Bachelorproject2 = class extends Course {
+    constructor(bp) {
+        super("bp2");
+        this.bp = bp;
+        this.updateGradeButton();
+    }
+    updateGradeButton() {
+        if (!this.bp) return;
+        this.bp.updateGradeButton();
+    }
+    startEditGrade() {
+        this.bp.startEditGrade();
+    }
+    finishGradeEditing() {
+        this.bp.finishGradeEditing();
+    }
+    onDragStart() {
+        if (this.bp.isGradeEditing()) {
+            this.bp.finishGradeEditing();
+        }
+        $('#course-bp').addClass(f.disabledClass);
+        $('#course-ba').addClass(f.disabledClass);
+    }
+    onDragEnd() {
+        $('#course-bp').removeClass(f.disabledClass);
+        $('#course-ba').removeClass(f.disabledClass);
+        const mySemester = f.getSemester(this.id);
+        Semester.get(mySemester - 1).take('bp');
+        Semester.get(mySemester).take('ba');
+    }
+};
+const Bachelorarbeit = class extends Course {
+    constructor() {
+        super("ba");
+    }
+    onDragStart() {
+        $('#course-bp').addClass(f.disabledClass);
+        $('#course-bp2').addClass(f.disabledClass);
+    }
+    onDragEnd() {
+        $('#course-bp').removeClass(f.disabledClass);
+        $('#course-bp2').removeClass(f.disabledClass);
+        const mySemester = f.getSemester(this.id);
+        Semester.get(mySemester - 1).take('bp');
+        Semester.get(mySemester).take('bp2');
     }
 };
 
@@ -525,21 +644,22 @@ const frontend = {
             f.slideMessagesDiv.css("visibility", "hidden");
     },
     /* used to add more than six semesters */
-    addSemester(number) {
-        if (number === undefined) number = 1;
+    addSemester(number = 1) {
         for (let i = 0; i < number; i+= 1) {
             if (semesterManager.numberDisplayed === 12)
                 return;
 
             const num = (semesterManager.numberDisplayed + 1);
 
-            const semesterTime = "<h2>" + num  + ". Semester<span id='semester" + num + "-lock' class='locksymbol'>🔓</span><br><select id='selectSemester" + num + "' name='selectSemester" + num + "' size='1'></select></h2>";
-            $("#semester-time2").find("br").last().before(semesterTime);
+            const lineNumber = Math.floor((num - 1) / 6) + 1;
+
+            const semesterTime = "<h2>" + num  + ". Semester<span id='semester" + num + "-lock' class='locksymbol'>🔓</span>  " +
+                "<span id='semester" + num + "-lps'>0</span>LP<br>" +
+                "<select id='selectSemester" + num + "' name='selectSemester" + num + "' size='1'></select></h2>";
+            $("#semester-time" + lineNumber).find("br").last().before(semesterTime);
 
             const semesterView = "<ul id='semester" + num + "' class='chosen courses'></ul>";
-            $("#semester-view2").find("br").last().before(semesterView);
-
-            semesterManager.shownSemesterObjects.push(new Semester(num));
+            $("#semester-view" + lineNumber).find("br").last().before(semesterView);
             
             semesterManager.numberDisplayed += 1;
         }
@@ -547,12 +667,17 @@ const frontend = {
         f.initializeSortable();
     },
     /* used to remove previously added semesters */
-    removeSemester(number) {
-        if (number === undefined) number = 1;
+    removeSemester(number = 1) {
         for (let i = 0; i < number; i += 1) {
-            if (semesterManager.numberDisplayed === 6)
+            if (semesterManager.numberDisplayed === 4)
                 return;
             const num = semesterManager.numberDisplayed;
+            //abort, if the bp/ba are part of this semester
+            if (['bp', 'bp2', 'ba'].some(function(c) {
+                    return f.getSemester(c) === num
+                })) {
+                return;
+            }
             $("#semester" + num).find("li").each(function() {
                 const li = $(this);
                 // remove it from its current location ..
@@ -688,11 +813,24 @@ const frontend = {
                     "</button>" + courseInfo +
                 "</li>";
     },
+    /* used to initialize jquery-sortable (drag'n'drop) */
+    initializeSortable: function () {
+        /* apply jquery drag'n'dropping */
+        $(f.coursesList).sortable({
+            connectWith: f.coursesList,        // specifies lists where li's can be dropped
+            placeholder: "placeholder-highlight",    // css class for placeholder when drag'n dropping
+            cancel: "." + f.disabledClass + ",.inGradeEditMode",        // elements matching this selector cannot be dropped
+            update: f.update,            // raised, when there was a change while sorting
+            start: f.startSorting,            // raised, when sorting starts
+            stop: f.endSorting            // raised, when sorting is finished
+        }).disableSelection();                // disableSelection makes text selection impossible
+    },
     /* used, when user starts drag'n'dropping courses */
     startSorting(event, ui) {
         f.coursesUl.find("li").knubtip("disable");
         const itemID = ui.item[0].id;
         const courseName = itemID.substr(7); // remove 'course-' from the id
+        Course.get(courseName).onDragStart();
         Semester.showDragDropHintsFor(courseName);
     },
     /* used, when user finished drag'n'dropping courses */
@@ -702,8 +840,11 @@ const frontend = {
         const courseName = itemID.substr(7); // remove 'course-' from the id
         semesterManager.removeTimeExceptionIfAble(courseName, f.getSemester(courseName));
         Semester.hideDragDropHints();
+        Semester.updateLPStates();
         f.filterManager.filter();
         f.checkRules();
+        Course.get(courseName).onDragEnd();
+        f.adjustSemesterViewHeight();
         f.saveManager.save();
     },
     /* called when user drag'n'dropped something */
@@ -776,18 +917,6 @@ const frontend = {
                    "<td>" + value.join(", ") + "</td>" +
                "</tr>";
     },
-    /* used to initialize jquery-sortable (drag'n'drop) */
-    initializeSortable: function () {
-        /* apply jquery drag'n'dropping */
-        $(f.coursesList).sortable({
-            connectWith: f.coursesList,        // specifies lists where li's can be dropped
-            placeholder: "placeholder-highlight",    // css class for placeholder when drag'n dropping
-            cancel: "." + f.disabledClass + ",.inGradeEditMode",        // elements matching this selector cannot be dropped
-            update: f.update,            // raised, when there was a change while sorting
-            start: f.startSorting,            // raised, when sorting starts
-            stop: f.endSorting            // raised, when sorting is finished
-        }).disableSelection();                // disableSelection makes text selection impossible
-    },
     /* used to initialize course pool filter with correct selectors */
     initializeFilter() {
         // build module list
@@ -845,6 +974,7 @@ const f = frontend;
 // note: $(function () ...) is the same as $(document).ready(function () ..)
 $(function() {
     /* at first: do the caching stuff */
+    f.addSemester(6);
     f.messageDiv = $("#message");
     f.slideMessagesDiv = $("#slide-messages");
     f.filterOptions = $("#filter-options");
@@ -880,8 +1010,6 @@ $(function() {
         f.slideMessages();
         f.saveManager.save();
     });
-
-    f.initializeSortable();
 
 
     let filtering = false;
@@ -945,12 +1073,45 @@ $(function() {
             f.saveManager.save();
         }
     });
+
+
+
+
+    //add BP/BA objects
+    const bp = "<li class=\"oneliner double-time\" id='course-bp'>\n" +
+        "<span id='course-bp-name'>Bachelorprojekt</span>\n" +
+        "<input type='text' id='course-bp-gradeinput' class='courseGradeInput'/>\n" +
+        "<button>\n" +
+        "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>\n" +
+        "✓\n" +
+        "</button>\n" +
+        "</li>";
+    $("#semester5").append(bp);
+    const bp2 = "<li class=\"oneliner triple-time\" id='course-bp2'>\n" +
+        "<span id='course-bp2-name'>Bachelorprojekt</span>\n" +
+        "<input type='text' id='course-bp2-gradeinput' class='courseGradeInput'/>\n" +
+        "<button>\n" +
+        "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>\n" +
+        "✓\n" +
+        "</button>\n" +
+        "</li>";
+    $("#semester6").append(bp2);
+    const ba = "<li class=\"oneliner double-time\" id='course-ba'>\n" +
+        "<span id='course-ba-name'>Bachelorarbeit</span>\n" +
+        "<input type='text' id='course-ba-gradeinput' class='courseGradeInput'/>\n" +
+        "<button>\n" +
+        "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>\n" +
+        "✓\n" +
+        "</button>\n" +
+        "</li>";
+    $("#semester6").append(ba);
+
+
     /*
      * Information:
      * var data is imported from data.js
      * It is an object containing all relevant informationen about courses.
      */
-
     let coursesPoolItems = "";
     // for each course in data
     for (const key in data) {
@@ -988,11 +1149,14 @@ $(function() {
     // until now, all courses are in the first ul. now adjust pool height and sort pool.
     f.sortPool();
 
+    f.initializeSortable();
+
+
     /* initialize the Course class and all the instances */
     Course.initEvents();
-    courseCache.bp = new Bacherlorproject();
-    courseCache.bp2 = courseCache.bp;
-    Course.get('ba');
+    courseCache.bp = new Bachelorproject();
+    courseCache.bp2 = new Bachelorproject2(courseCache.bp);
+    courseCache.ba = new Bachelorarbeit();
     Course.createAllInstances();
 
     /* initialize tooltips for all courses */
@@ -1002,6 +1166,10 @@ $(function() {
 
     /* adjust #semester-view1 height */
     f.adjustSemesterViewHeight();
+
+
+    Semester.createAllInstances();
+    Semester.updateLPStates();
 
     $("#reset").click(function() {
         /* localStorage.clear() may remove too much data, e.g. 120 data hosted on the same server */
@@ -1015,19 +1183,15 @@ $(function() {
         location.reload();
     });
     $("#moresemester").click(function() {
-        f.addSemester(2);
+        f.addSemester();
         f.saveManager.save();
     });
     $("#lesssemester").click(function() {
-        f.removeSemester(2);
+        f.removeSemester();
         f.coursesUl = $(f.coursesList);
         f.checkRules();
         f.saveManager.save();
     });
-    //addling logic to the existing 6 semesters
-    for (let s = 1; s <= 6; s++) {
-        semesterManager.shownSemesterObjects.push(new Semester(s));
-    }
     $('#changeStudienordnungLink')
         .text(NEUE_STUDIENORDNUNG ? '2016' : '2010')
         .click(switchStudienordnung);

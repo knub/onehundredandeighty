@@ -34,8 +34,8 @@ const semesterManager = {
         "WS16/17", "SS17",
         "WS17/18", "SS18"
     ],
-    numberDisplayed: 6,
-    semesterLock: [false, false, false, false, false, false],
+    numberDisplayed: 0,
+    semesterLock: [],
     // current must be either lastSummerSemester or lastWinterSemester!
     currentSemester: "WS17/18",
     lastSummerSemester: "SS17",
@@ -86,6 +86,16 @@ const semesterManager = {
     courseOfferedInSemester(course, semesterNumber, allowExceptions = true) {
         if (allowExceptions && this.shownSemesters[semesterNumber - 1] === this.exceptions[course]) {
             return true;
+        }
+
+        if (course.startsWith('bp')) {
+            if (course === 'bp') {
+                return this.shownSemesters[semesterNumber - 1].startsWith("WS");
+            } else { //'bp2'
+                return this.shownSemesters[semesterNumber - 1].startsWith("SS");
+            }
+        } else if (course === 'ba') {
+            return this.shownSemesters[semesterNumber - 1].startsWith("SS");
         }
 
         const semesterName = this.shownSemesters[semesterNumber - 1];
@@ -244,6 +254,11 @@ function courseList() {
 function allBelegteCourses(getSemester) {
     return courseList().filter(function(id) {
         return getSemester(id) !== -1
+    });
+}
+function allBelegteCoursesInSemester(getSemester, semesterID) {
+    return courseList().filter(function(id) {
+        return getSemester(id) === semesterID
     });
 }
 function isModul(type) {
