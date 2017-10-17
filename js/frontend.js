@@ -255,8 +255,10 @@ const Course = class {
         const newGrade = this.getGradeString(true);
         if (newGrade) {
             this.editGradeButton.html(newGrade);
+            this.editGradeButton.removeClass('bold');
         } else {
             this.editGradeButton.html(f.gradeCharacter);
+            this.editGradeButton.addClass('bold');
         }
     }
     onDragStart() {}
@@ -570,8 +572,20 @@ const frontend = {
 
             table += "</tr>";
         }
-        if (possibilities.length > tablePreviewSize && !showAllDetails) {
-            table += '<tr><td colspan="6"><a onclick="f.showFullCombinationTable()" style="text-decoration:underline;cursor:pointer">' + (possibilities.length - tablePreviewSize) + ' weitere M&ouml;glichkeiten...</a></td></tr>';
+        if (possibilities.length > tablePreviewSize) {
+            table += '<tr><td colspan="6"><a onclick="';
+            if (showAllDetails) {
+                table += 'f.showShortCombinationTable()'
+            } else {
+                table += 'f.showFullCombinationTable()';
+            }
+            table += '" style="text-decoration:underline;cursor:pointer">';
+            if (showAllDetails) {
+                table += 'Nur die besten ' + (tablePreviewSize) + ' Ergebnisse anzeigen';
+            } else {
+                table += (possibilities.length - tablePreviewSize) + ' weitere M&ouml;glichkeiten...';
+            }
+            table += '</a></td></tr>';
         }
         table += "</table>";
         return table;
@@ -660,6 +674,9 @@ const frontend = {
     },
     showFullCombinationTable() {
         f.checkRules(true);
+    },
+    showShortCombinationTable() {
+        f.checkRules(false);
     },
     slideMessages() {
         if (f.allMessagesVisible === true) {
@@ -838,7 +855,7 @@ const frontend = {
         return "<li" + cssclass + " id='course-" + id + "'>" +
                     "<span id='course-" + id + "-name'>" + course['kurz'] + "</span>" +
                     "<input type='text' id='course-" +  id + "-gradeinput' class='courseGradeInput'/>" +
-                    "<button>" +
+                    "<button class='bold'>" +
                         "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>" +
                         f.gradeCharacter +
                     "</button>" + courseInfo +

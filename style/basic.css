@@ -468,6 +468,9 @@ h1 span {
 	text-align: center;
 	font-size: 0.9em;
 }
+.courses li button.bold {
+	font-size: 1.2em;
+}
 .courses li button:hover {
 	background: black;
 	color: white;
