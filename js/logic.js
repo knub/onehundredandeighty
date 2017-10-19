@@ -424,12 +424,14 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         {converter: addVertiefungCombos},
         {filter: twoTimesNine, errorMessage: "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben."},
         {cleaner: expandAndTruncateVertiefungen},
+        {converter: removeNotEingebrachteLVs},
         {converter: addSBS},
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
         {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
-        {converter: removeNotEingebrachteLVs},
+        {converter: createVertiefungComboList},
+        {cleaner: mergeOnlyDifferentVertiefungsgebiete},
         {converter: calculateGrades}
     ];
     for (let s = 0; s < processingSteps.length; s++) {
@@ -540,6 +542,10 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         });
         combination.firstVertiefungLectures = firstVertiefungLectures;
         combination.secondVertiefungLectures = secondVertiefungLectures;
+    }
+    function createVertiefungComboList(combination) {
+        const combo1 = combination.vertiefungCombo;
+        combination.vertiefungCombo = [combo1];
     }
     function calculateGrades(combination) {
         //calculate the final grade for these combinations
@@ -778,6 +784,32 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 });
         });
         if (!hasDuplicate) {
+            emit(combination);
+        }
+    }
+    function mergeOnlyDifferentVertiefungsgebiete(combination, emit, i, allCombinations) {
+        //merge together these combinations, that only differ in the Vertiefungsgebiete selected
+        const merged = allCombinations.some(function(otherCombination, o) {
+            if (o > i
+                    && combination.length === otherCombination.length
+                    && combination.every(function (interpretation) {
+                        return otherCombination.some(function(otherInterpretation) {
+                            return otherInterpretation.key === interpretation.key
+                        })
+                    })
+                    //&& false
+                    && new Set(combination.firstVertiefungLectures).equals(new Set(otherCombination.firstVertiefungLectures))
+                    && new Set(combination.secondVertiefungLectures).equals(new Set(otherCombination.secondVertiefungLectures))) {
+                const newCombos = combination.vertiefungCombo;
+                for (let c = 0; c < newCombos.length; c++) {
+                    otherCombination.vertiefungCombo.push(newCombos[c]);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        });
+        if (!merged) {
             emit(combination);
         }
     }

@@ -510,13 +510,16 @@ const frontend = {
             const second = [];
             let firstCP = 0,
             secondCP = 0;
+            const vertiefungCombo0 = Array.from(new Set(possibility.vertiefungCombo.map((v)=>v[0]))).sort();
+            const vertiefungCombo1 = Array.from(new Set(possibility.vertiefungCombo.map((v)=>v[1]))).sort();
             for (let j = 0; j < possibility.length; j += 1) {
                 const course = possibility[j];
-                if (course.vertiefung === possibility.vertiefungCombo[0]) {
+
+                if (vertiefungCombo0.includes(course.vertiefung)) {
                     first.push(f.adjustShortCourseName(data[course.key].kurz));
                     firstCP += data[course.key].cp;
                 }
-                else if (course.vertiefung === possibility.vertiefungCombo[1]) {
+                else if (vertiefungCombo1.includes(course.vertiefung)) {
                     second.push(f.adjustShortCourseName(data[course.key].kurz));
                     secondCP += data[course.key].cp;
                 }
@@ -553,7 +556,7 @@ const frontend = {
             table += "</tr><tr>";
 
             // now display first Vertiefungsgebiet
-            table += "<td>" + possibility.vertiefungCombo[0] + "</td>";
+            table += "<td>" + vertiefungCombo0.join(' / ') + "</td>";
             table += "<td><ul>" + first.reduce(function(prev, current) {
                 return prev + "<li>" + current + "</li>";
             },
@@ -564,7 +567,7 @@ const frontend = {
             table += "</tr><tr>";
 
             // now display second Vertiefungsgebiet
-            table += "<td>" + possibility.vertiefungCombo[1] + "</td>";
+            table += "<td>" + vertiefungCombo1.join(' / ') + "</td>";
             table += "<td><ul>" + second.reduce(function(prev, current) {
                 return prev + "<li>" + current + "</li>";
             },
@@ -610,7 +613,7 @@ const frontend = {
             let resultColor = '#316400';
             let topMessage = "Der Belegungsplan ist gültig!";
             if (bestGrade < 10) {
-                topMessage += "Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3)
+                topMessage += " Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3)
             }
             messageUl.append("<li>" + topMessage + "</li>");
 
