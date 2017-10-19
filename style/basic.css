@@ -18,732 +18,733 @@
 }
 
 body {
-	margin: 0;
-	width: 100%;
-	min-width: 960px;
-	font-family: ProcionoRegular;
-	font-size: 0.8em;
+    margin: 0;
+    width: 100%;
+    min-width: 960px;
+    font-family: ProcionoRegular;
+    font-size: 0.8em;
 }
 header {
-	background: #EEE;
-	border-bottom: 1px dashed black;
-	position: relative;
+    background: #EEE;
+    border-bottom: 1px dashed black;
+    position: relative;
 }
 div#button-div {
-	position: absolute;
-	bottom: 0;
-	right: 36em;
-	display: none;
-	visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    right: 36em;
+    display: none;
+    visibility: hidden;
 }
 div#checkbox-div {
-	border-radius: 10px 10px 0 0;
-	border: 1px solid black;
-	border-bottom: none;
-	position: absolute;
-	font-size: 1.2em;
-	bottom: -1px;
-	right: 10em;
-	margin: 0;
-	padding: 12px 40px 10px 20px;
-	width: 15em;
-	background: #333;
-	color: white;
-	visibility: hidden;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid black;
+    border-bottom: none;
+    position: absolute;
+    font-size: 1.2em;
+    bottom: -1px;
+    right: 10em;
+    margin: 0;
+    padding: 12px 40px 10px 20px;
+    width: 15em;
+    background: #333;
+    color: white;
+    visibility: hidden;
 }
 div#checkbox-div ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 div#checkbox-div li {
-	display: block;
-	cursor: pointer;
+    display: block;
+    cursor: pointer;
 }
 div#checkbox-div li:before {
-	content: '☐';
-	padding-right: 30px;
+    content: '☐';
+    padding-right: 30px;
 }
 div#checkbox-div li.selected:before {
-	content: '☑';
+    content: '☑';
 }
 div#last-update {
-	position: absolute;
-	bottom: 0;
-	left: 100px;
-	color: #555;
-	font-size: 1.3em;
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    color: #555;
+    font-size: 1.3em;
 }
 div#message {
-	background: #333;
-	/*border: 3px solid #333;*/
-	color: white;
-	font-size: 1.8em;
-	height: auto;
-	line-height: 2em;
-	padding: 10px 0;
-	overflow: hidden;
+    background: #333;
+    /*border: 3px solid #333;*/
+    color: white;
+    font-size: 1.8em;
+    height: auto;
+    line-height: 2em;
+    padding: 10px 0;
+    overflow: hidden;
 }
 div#message div#button {
-	position: absolute;
-	right: 40px;
-	height: 1em;
-	font-size: 1.5em;
-	margin: 0;
-	padding: 0;
+    position: absolute;
+    right: 40px;
+    height: 1em;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
 }
 div#message div#button button {
-	vertical-align: top;
-	font-size: 1em;
-	padding: 0;
-	margin: 0;
-	border: none;
-	background: none;
-	color: white;
-	visibility: hidden;
+    vertical-align: top;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    color: white;
+    visibility: hidden;
 }
 div#message div.extra-inf {
-	background: #EEE;
-	border: 2px solid black;
-	color: black;
-	border-radius: 3px;
-	font-size: 0.8em;
-	text-indent: -0.5em;
-	padding-left: 2.5em;
-	padding-right: 2.5em;
-	width: calc(80% - 5em);
-	margin: 1em auto 0;
+    background: #EEE;
+    border: 2px solid black;
+    color: black;
+    border-radius: 3px;
+    font-size: 0.8em;
+    text-indent: -0.5em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    width: calc(80% - 5em);
+    margin: 1em auto 0;
 }
 
 @media screen and (max-width: 1280px) {
-	div#message div.extra-inf {
-		width: 100% !important;
-		padding: 0;
-		text-indent: 5%;
-	}
+    div#message div.extra-inf {
+        width: 100% !important;
+        padding: 0;
+        text-indent: 5%;
+    }
 }
 
 div#message > ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 div#message > ul li {
-	text-indent: 5%;
+    text-indent: 5%;
 }
 div#message a {
-	color: black;
+    color: black;
 }
 div#message table {
-	width: 100%;
-	text-indent: 0;
-	border-collapse: collapse;
+    width: 100%;
+    text-indent: 0;
+    border-collapse: collapse;
 }
 div#message table td {
-	text-align: center;
-	border: 1px dotted #AAA;
-	margin: 0;
-	padding: 5px;
-	line-height: 1.35em;
+    text-align: center;
+    border: 1px dotted #AAA;
+    margin: 0;
+    padding: 5px;
+    line-height: 1.35em;
 }
 div#message table.combinations tr:nth-child(3n - 1) td {
-	border-top: 2px solid black;
+    border-top: 2px solid black;
 }
 div#message table.vertiefungen tr.sbs-text {
-	background: #CCC;
+    background: #CCC;
 }
 div#message table.vertiefungen tr.sbs-text td {
-	padding-left: 15%;
-	padding-right: 15%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 div#message table.vertiefungen tr.sbs-vertiefung {
-	background: #E4E4E4;
+    background: #E4E4E4;
 }
 div#message table.vertiefungen tr:last-child {
-	visibility: hidden;
+    visibility: hidden;
 }
 div#message tr td.sum {
-	visibility: visible;
-	background: #DDD;
-	border: 1px solid #DDD;
-	border-top: 3px double black;
+    visibility: visible;
+    background: #DDD;
+    border: 1px solid #DDD;
+    border-top: 3px double black;
 }
 div#message table tr:first-child td {
-	background: #444;
-	border: 1px solid #222;
-	border-left: 1px solid #444;
-	border-right: 1px solid #444;
-	color: white;
-	font-size: 1.1em;
-	line-height: 1.2em;
-	padding: 10px 10px;
+    background: #444;
+    border: 1px solid #222;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+    color: white;
+    font-size: 1.1em;
+    line-height: 1.2em;
+    padding: 10px 10px;
 }
 div#message table tr td[rowspan] {
-	background: #CCC;
-	border: 1px solid #444;
-	border-top: 2px solid black;
+    background: #CCC;
+    border: 1px solid #444;
+    border-top: 2px solid black;
 }
 div#message table ul {
-	list-style-type: square;
-	text-align: left;
-	margin-right: 2em;
+    list-style-type: square;
+    text-align: left;
+    margin-right: 2em;
 }
 div#message table ul li {
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
 }
 div#message .extra-inf p {
-	text-indent: 0;
-	line-height: 1.6em;
-	margin: 5px auto;
+    text-indent: 0;
+    line-height: 1.6em;
+    margin: 5px auto;
 }
 div#message p ~ ul {
-	line-height: 1.2em;
-	list-style-type: square;
-	text-indent: 2em;
+    line-height: 1.2em;
+    list-style-type: square;
+    text-indent: 2em;
 }
 
 .teaser {
-	font-variant: small-caps;
-	text-align: center;
-	text-indent: 0;
+    font-variant: small-caps;
+    text-align: center;
+    text-indent: 0;
 }
 section {
-	font-size: 1.2em;
+    font-size: 1.2em;
 }
 section.semester-time {
-	width: 80%;
-	margin: 0 auto;
+    width: 80%;
+    margin: 0 auto;
 }
 @media screen and (max-width: 1280px) {
-	section.semester-time {
-		width: 100%;
-	}
-	.semester-view {
-		width: 100% !important;
-	}
-	#courses-pool > ul {
-		width: 14.5% !important; /* 100% (chosen list box-width) * 14.5% (width of one list) */
-	}
-	#courses-pool > ul:first-child {
-		margin-left: 7% !important;
-	}
+    section.semester-time {
+        width: 100%;
+    }
+    .semester-view {
+        width: 100% !important;
+    }
+    #courses-pool > ul {
+        width: 14.5% !important; /* 100% (chosen list box-width) * 14.5% (width of one list) */
+    }
+    #courses-pool > ul:first-child {
+        margin-left: 7% !important;
+    }
 } 
 .semester-view {
-	margin: 0 auto;
-	width: 80%;
+    margin: 0 auto;
+    width: 80%;
 }
 section#courses-pool {
-	padding: 1px 0%;
-	/* multiple backgrounds - css3, yeah! */
-	background-image: url(../images/placeholder.png), url(../images/shadow.png), url(../images/shadow_reverse.png), url(../images/bg_pattern.png);
-	background-repeat: no-repeat, repeat-x, repeat-x, repeat;
-	background-position: center left, top left, bottom left, center left;
-	border: 1px dotted black;
-	position: relative; /* needed to be able to position filter absolute */
-	min-height: 500px;
-	min-height: 27em;
+    padding: 1px 0%;
+    /* multiple backgrounds - css3, yeah! */
+    background-image: url(../images/placeholder.png), url(../images/shadow.png), url(../images/shadow_reverse.png), url(../images/bg_pattern.png);
+    background-repeat: no-repeat, repeat-x, repeat-x, repeat;
+    background-position: center left, top left, bottom left, center left;
+    border: 1px dotted black;
+    position: relative; /* needed to be able to position filter absolute */
+    min-height: 500px;
+    min-height: 27em;
 }
 div#filter-control {
-	position: absolute;
-	top: 20px;
-	width: 50px;
+    position: absolute;
+    top: 20px;
+    width: 50px;
 }
 div.filter-control-button {
-	left: 0px;
-	height: 160px;
-	background:#ccc;
-	border-radius: 0px 10px 10px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	cursor: pointer;
-	margin-top: 5px;
+    left: 0px;
+    height: 160px;
+    background:#ccc;
+    border-radius: 0px 10px 10px 0px;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5px;
 }
 
 /* text-shadow-effect taken from --> http://www.onlinecasinodemar.com/webdesign/xhtml-css/beeindruckende-effekte-mit-der-css-eigenschaft-text-shadow/ <-- */
 div.filter-control-button h2 {
-	-webkit-transform: rotate(90deg) translate(50%, 5px);
-	-moz-transform: rotate(90deg) translate(50%, 5px);
-	-ms-transform: rotate(90deg) translate(50%, 5px);
-	-o-transform: rotate(90deg) translate(50%, 5px);
-	transform: rotate(90deg) translate(50%, 5px);
-	margin: 0;
-	font-size: 1.9em;
-	color:#505050;
-	text-shadow: 1px 1px 0px #fff;
-	letter-spacing: 5px;
+    -webkit-transform: rotate(90deg) translate(50%, 5px);
+    -moz-transform: rotate(90deg) translate(50%, 5px);
+    -ms-transform: rotate(90deg) translate(50%, 5px);
+    -o-transform: rotate(90deg) translate(50%, 5px);
+    transform: rotate(90deg) translate(50%, 5px);
+    margin: 0;
+    font-size: 1.9em;
+    color:#505050;
+    text-shadow: 1px 1px 0px #fff;
+    letter-spacing: 5px;
 }
 div#filter {
-	width: 90%;
-	height: 100%;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 0%;
-	overflow: hidden;
-	background: rgba(0, 0, 0, 0.8);
+    width: 90%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.8);
 }
 div#filter a {
-	color: white;
-	text-align: center;
-	display: block;
+    color: white;
+    text-align: center;
+    display: block;
 }
 div#filter-options {
-	position: absolute;
-	background: rgba(0, 0, 0, 0.65);
-	top: 15px;
-	bottom: 15px;
-	left: 90px;
-	right: 25px;
-	border-radius: 10px;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.65);
+    top: 15px;
+    bottom: 15px;
+    left: 90px;
+    right: 25px;
+    border-radius: 10px;
 }
 div#filter-options ul {
-	list-style-type: none;
-	padding: 0;
-	margin: 10px;
-	color: white;
-	background: black;
-	border: 3px solid #444;
-	border-radius: 3px;
+    list-style-type: none;
+    padding: 0;
+    margin: 10px;
+    color: white;
+    background: black;
+    border: 3px solid #444;
+    border-radius: 3px;
 }
 #semester_wahlpflicht {
-	float: left;
-	width: 250px;
+    float: left;
+    width: 250px;
 }
 #module_vertiefungsgebiete {
-	width: 580px;
-	float: left;
+    width: 580px;
+    float: left;
 }
 #module_vertiefungsgebiete ul {
-	float: left;
+    float: left;
 }
 div#filter-options ul li {
-	display: block;
-	cursor: pointer;
-	background: white;
-	border: 2px solid black;
-	color: black;
-	max-width: 250px;
-	padding: 9px;
+    display: block;
+    cursor: pointer;
+    background: white;
+    border: 2px solid black;
+    color: black;
+    max-width: 250px;
+    padding: 9px;
 }
 div#filter-options #semester_wahlpflicht ul:last-child {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 div#filter-options #module_vertiefungsgebiete ul:first-child li {
-	padding: 8px 10px;
+    padding: 8px 10px;
 }
 div#filter-options ul li:before {
-	content: '☐';
-	padding-right: 30px;
+    content: '☐';
+    padding-right: 30px;
 }
 div#filter-options ul li.selected:before {
-	content: '☑';
-	content: '☒';
+    content: '☑';
+    content: '☒';
 }
 footer {
-	background: black;
-	color: white;
-	border-bottom: 4px solid black;
-	width: 100%;
-	font-size: 1.4em;
-	line-height: 2.5em;
-	text-align: center;
+    background: black;
+    color: white;
+    border-bottom: 4px solid black;
+    width: 100%;
+    font-size: 1.4em;
+    line-height: 2.5em;
+    text-align: center;
 }
 footer a {
-	color: white;
+    color: white;
 }
 h1 {
-	margin: 0;
-	padding: 50px 50px;
-	font-size: 2.5em;
-	font-weight: normal;
-	color: #111;
+    margin: 0;
+    padding: 50px 50px;
+    font-size: 2.5em;
+    font-weight: normal;
+    color: #111;
 }
 h1 img {
-	height: 1.5em;
-	margin-left: 20px;
-	position: relative;
-	top: 15px;
+    height: 1.5em;
+    margin-left: 20px;
+    position: relative;
+    top: 15px;
 }
 h1 span {
-	color: #555;
-	margin-left: 20px;
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 0.5em;
+    color: #555;
+    margin-left: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.5em;
 }
 .semester-time h2 {
-	float: left;
-	width: 14.5%;
-	margin: 15px 0px;
-	font-weight: normal;
-	padding: 0px 1%;
-	text-align: center;
+    float: left;
+    width: 14.5%;
+    margin: 15px 0px;
+    font-weight: normal;
+    padding: 0px 1%;
+    text-align: center;
 }
 
 .semester-time select {
-	width: 100%;
-	background: white;
-	font-size: 1em;
-	border: 1px solid gray;
-	font-family: ProcionoRegular;
-	text-align: center;
+    width: 100%;
+    background: white;
+    font-size: 1em;
+    border: 1px solid gray;
+    font-family: ProcionoRegular;
+    text-align: center;
 }
 
 .courses {
-	list-style-type: none;
-	width: 14.5%;
-	border-top: 1px dotted gray;
+    list-style-type: none;
+    width: 14.5%;
+    border-top: 1px dotted gray;
 }
 .courses li {
-	font-size: 1.1em;
-	height: 2.7em;
-	cursor: move;
-	border: 1px solid black;
-	text-align: center;
-	margin: 0.75em 0;
-	border-radius: 5px;
-	position: relative;
-	overflow: hidden;
+    font-size: 1.1em;
+    height: 2.7em;
+    cursor: move;
+    border: 1px solid black;
+    text-align: center;
+    margin: 0.75em 0;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
 
-	/* gradients created by: --> http://www.colorzilla.com/gradient-editor/ <--. Thanks! */
-	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera11.10+ */
-	background: -ms-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
-	background: linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
+    /* gradients created by: --> http://www.colorzilla.com/gradient-editor/ <--. Thanks! */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
 }
 
 .courses li:active {
-	background: #ededed; /* Old browsers */
-	background: -moz-linear-gradient(top, #ededed 0%, #f6f6f6 53%, #ffffff 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(53%,#f6f6f6), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* Opera11.10+ */
-	background: -ms-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-	background: linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* W3C */
+    background: #ededed; /* Old browsers */
+    background: -moz-linear-gradient(top, #ededed 0%, #f6f6f6 53%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(53%,#f6f6f6), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #ededed 0%,#f6f6f6 53%,#ffffff 100%); /* W3C */
 }
 
 .courses li.bp_ba {
-	border: 1px solid #acb3bc;
+    border: 1px solid #acb3bc;
 }
 .courses li.disabled {
-	background: #DDD;
-	border: 1px solid gray;
+    background: #DDD;
+    border: 1px solid gray;
 }
 .courses li.disabled:hover {
-	cursor: auto;
+    cursor: auto;
 }
 .courses li.oneliner {
-	line-height: 2.7em;
+    line-height: 2.7em;
 }
 .courses li.double-time {
-	height: 6.2em;
-	line-height: 6.2em;
+    height: 6.2em;
+    line-height: 6.2em;
 }
 .courses li.triple-time {
-	height: 9.75em;
-	line-height: 9.75em;
+    height: 9.75em;
+    line-height: 9.75em;
 }
 
 .courses li button {
-	font-family: "ProcionoRegular", serif;
-	margin: 0;
-	padding: 0;
-	border: none;
-	background: none;
-	color: black;
-	text-decoration: none;
-	position: absolute;
-	top: 2px;
-	right: 5px;
-	width: 20px;
-	height: 20px;
-	line-height: 20px;
-	vertical-align: middle;
-	text-align: center;
-	font-size: 0.9em;
+    font-family: "ProcionoRegular", serif;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 0.9em;
 }
 .courses li button.bold {
-	font-size: 1.2em;
+    font-size: 1.2em;
 }
 .courses li button:hover {
-	background: black;
-	color: white;
-	cursor: pointer;
+    background: black;
+    color: white;
+    cursor: pointer;
 }
 
 /* TODO: I think a complete redesign of tooltip is neccessary - does not like quite good right now. */
 .info {
-	display: none;
-	/*width: 500px;
-	min-height: 350px;*/
-	max-width: 500px;
-	z-index: 999;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	padding: 0;
+    display: none;
+    /*width: 500px;
+    min-height: 350px;*/
+    max-width: 500px;
+    z-index: 999;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 0;
 
-	background: rgba(0, 0, 0, 0.92);
-	border: 10px solid black;
-	color: white;
-	border-radius: 10px;
+    background: rgba(0, 0, 0, 0.92);
+    border: 10px solid black;
+    color: white;
+    border-radius: 10px;
 
-	background: white;
-	border: 6px solid #333;
-	color: #444;
-	border-radius: 5px;
-	font-family: sans-serif;
-	font-size: 1.2em;
+    background: white;
+    border: 6px solid #333;
+    color: #444;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 1.2em;
 }
 .grade-info {
-	border: 1px solid black;
-	background: black;
-	color: white;
-	padding: 4px;
-	font-family: PriocionoRegular;
-	text-align: center;
-	width: 200px;
+    border: 1px solid black;
+    background: black;
+    color: white;
+    padding: 4px;
+    font-family: PriocionoRegular;
+    text-align: center;
+    width: 200px;
 }
 .courseGradeInput {
-	display: none;
-	position: absolute;
-	left: 0;
-	top: 0;
-	border-width: 0;
-	width: 100%;
-	height: 100%;
-	font-size: 1.4em;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-width: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 1.4em;
 }
 .info div {
-	padding: 1em 1.5em;
-	line-height: 1.6em;
+    padding: 1em 1.5em;
+    line-height: 1.6em;
 }
 h3 {
-	color: black;
-	background: #DDD;
-	margin: 0;
-	padding: 15px 15px 10px 30px;
-	border-bottom: 1px solid #CCC;
-	margin-bottom: 10px;
+    color: black;
+    background: #DDD;
+    margin: 0;
+    padding: 15px 15px 10px 30px;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 10px;
 }
 .info table {
-	border-collapse: collapse;
-	border: 1px solid #DDD;
-	width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #DDD;
+    width: 100%;
 }
 .info tr:nth-child(even) {
-	background: #F1F1F1;
+    background: #F1F1F1;
 }
 .info tr:nth-child(odd) {
-	background: #F9F9F9;
+    background: #F9F9F9;
 }
 .info tr td:first-child {
-	border-right: 1px dotted gray;
-	padding: 0px 10px;
-	font-weight: bold;
+    border-right: 1px dotted gray;
+    padding: 0px 10px;
+    font-weight: bold;
 }
 .info td {
-	padding: 14px;
+    padding: 14px;
 }
 /*
 .info:before {
-	content: "";
-	position: absolute;
-	top: 0;
-	right: 0;
-	border-width: 0 30px 30px 0;
-	border-style: solid;
-	border-color: #DDCA21 white;
-	display: block;
-	width: 0;
-	-webkit-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
-	-moz-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
-	box-shadow: 0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
-	border-width: 15px;
-	border-color: #FFF #FFF transparent transparent;
-	border-radius: 0 0 0 2px;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-width: 0 30px 30px 0;
+    border-style: solid;
+    border-color: #DDCA21 white;
+    display: block;
+    width: 0;
+    -webkit-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+    -moz-box-shadow:0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 3px rgba(0,0,0,0.3), -3px 3px 3px rgba(0,0,0,0.2);
+    border-width: 15px;
+    border-color: #FFF #FFF transparent transparent;
+    border-radius: 0 0 0 2px;
 }*/
 
 .chosen {
-	margin: 0;
-	padding: 15px 1%;
-	float: left;
-	min-height: 21em;
-	border-right: 1px dotted gray;
+    margin: 0;
+    padding: 15px 1%;
+    float: left;
+    min-height: 21em;
+    border-right: 1px dotted gray;
 }
 .chosen:first-child {
-	border-left: 1px dotted gray;
+    border-left: 1px dotted gray;
 }
 #semester-view2 .chosen {
-	min-height: 10em;
+    min-height: 10em;
 }
 #courses-pool > ul {
-	float: left;
-	padding: 0;
-	width: 11.6%; /* 80% (chosen list box-width) * 14.5% (width of one list) */
-	min-height: 10em;
+    float: left;
+    padding: 0;
+    width: 11.6%; /* 80% (chosen list box-width) * 14.5% (width of one list) */
+    min-height: 10em;
 }
 #courses-pool > ul:first-child {
-	margin-left: 10%;
+    margin-left: 10%;
 }
 #courses-pool > ul li {
-	margin: 4px;
+    margin: 4px;
 }
 #courses-pool .hidden {
-	display: none;
+    display: none;
 }
 
 .placeholder-highlight {
-	height: 1.5em;
-	background: #FAFAFA !important;
-	height: 2.0em;
-	border: 1px dashed #666 !important;
+    height: 1.5em;
+    background: #FAFAFA !important;
+    height: 2.0em;
+    border: 1px dashed #666 !important;
 }
 #extrafunctions {
-	background: #EEE;
-	border-top: 4px solid #333;
-	border-bottom: 4px solid #333;
+    background: #EEE;
+    border-top: 4px solid #333;
+    border-bottom: 4px solid #333;
 }
 #extrafunctions div {
-	width: 29%;
-	line-height: 45px;
-	float: left;
-	text-align: center;
-	background: #EEE;
+    width: 29%;
+    line-height: 45px;
+    float: left;
+    text-align: center;
+    background: #EEE;
 }
 #extrafunctions span {
-	margin-right: 15px;
+    margin-right: 15px;
 }
 #extrafunctions button {
-	width: 180px;
+    width: 180px;
 }
 #extrafunctions div:first-child {
-	background: black url(../images/arrow.png) no-repeat right;
-	color: white;
-	width: 13%;
+    background: black url(../images/arrow.png) no-repeat right;
+    color: white;
+    width: 13%;
 }
 /* Following styles are taken from --> http://twitter.github.com/bootstrap/ <---. Thanks! */
 .btn {
-	font-family: "Ubuntu", "Arial";
-	font-size: 16px;
-	line-height: 18px;
-	display: inline-block;
-	padding: 9px 14px 9px;
-	border-radius: 6px;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-	cursor: pointer;
+    font-family: "Ubuntu", "Arial";
+    font-size: 16px;
+    line-height: 18px;
+    display: inline-block;
+    padding: 9px 14px 9px;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
 }
 .btn:hover {
-	background-position: 0 -15px;
-	text-decoration: none;
+    background-position: 0 -15px;
+    text-decoration: none;
 }
 .go {
-	color: #ffffff;
-	background-color: #57a957;
-	background-repeat: repeat-x;
-	background-image: -khtml-gradient(linear, left top, left bottom, from(#62c462), to(#57a957));
-	background-image: -moz-linear-gradient(top, #62c462, #57a957);
-	background-image: -ms-linear-gradient(top, #62c462, #57a957);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #62c462), color-stop(100%, #57a957));
-	background-image: -webkit-linear-gradient(top, #62c462, #57a957);
-	background-image: -o-linear-gradient(top, #62c462, #57a957);
-	background-image: linear-gradient(top, #62c462, #57a957);
-	border: 1px solid #ccc;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
- 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    background-color: #57a957;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#62c462), to(#57a957));
+    background-image: -moz-linear-gradient(top, #62c462, #57a957);
+    background-image: -ms-linear-gradient(top, #62c462, #57a957);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #62c462), color-stop(100%, #57a957));
+    background-image: -webkit-linear-gradient(top, #62c462, #57a957);
+    background-image: -o-linear-gradient(top, #62c462, #57a957);
+    background-image: linear-gradient(top, #62c462, #57a957);
+    border: 1px solid #ccc;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 .go:active {
-	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .action1 {
-	color: #333;
-	background-color: #E6E6E6;
-	background-repeat: no-repeat;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
-	background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
-	background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
-	background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
-	background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
-	background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
-	border: 1px solid #CCC;
-	border-radius: 4px;
-	border-bottom-color: #BBB;
-	display: inline-block;
-	padding: 5px 14px;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-	cursor: pointer;
-	font-size: 16px;
-	line-height: 18px;
+    color: #333;
+    background-color: #E6E6E6;
+    background-repeat: no-repeat;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    border-bottom-color: #BBB;
+    display: inline-block;
+    padding: 5px 14px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 18px;
 }
 .action1:hover {
-	color: #333;
+    color: #333;
 }
 .action1:active {
-	box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .action2 {
-	background-color: #0064cd;
-	background-repeat: repeat-x;
-	background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
-	background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
-	background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
-	background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
-	background-image: -o-linear-gradient(top, #049cdb, #0064cd);
-	background-image: linear-gradient(top, #049cdb, #0064cd);
-	color: #fff;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	border: 1px solid #004b9a;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	border-bottom-color: #003f81;
+    background-color: #0064cd;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+    background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+    background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+    background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+    background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+    background-image: linear-gradient(top, #049cdb, #0064cd);
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid #004b9a;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-bottom-color: #003f81;
 }
 .action2:hover {
-	color: #fff;
+    color: #fff;
 }
 .danger {
-	color: #ffffff;
-	background-color: #c43c35;
-	background-repeat: repeat-x;
-	background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
-	background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
-	background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: linear-gradient(top, #ee5f5b, #c43c35);
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	border: 1px solid #CCC;
-	border-bottom-color: #BBB;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    background-color: #c43c35;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+    background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
+    background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: linear-gradient(top, #ee5f5b, #c43c35);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid #CCC;
+    border-bottom-color: #BBB;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 .danger:active {
-	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 #successor-search {
-	background: white;
-	font-size: 1.9em;
-	padding: 10px 200px;
-	color: black;
+    background: white;
+    font-size: 1.9em;
+    padding: 10px 200px;
+    color: black;
 }
 #successor-search a {
-	color: #7F0000;
-	font-weight: bold;
+    color: #7F0000;
+    font-weight: bold;
 }
 .locksymbol {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .finalGrade {
-	font-size: 2em;
+    font-size: 2em;
 }
-.finalGrade > sup {
-	font-size: 60%;
+.finalGrade > .grade-unimportant-part {
+    color: #555;
+    font-size: 80%;
 }

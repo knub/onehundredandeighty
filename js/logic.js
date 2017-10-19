@@ -52,6 +52,7 @@ const semesterManager = {
         this.removeTimeExceptionIfAble(course, semesterNumber);
     },
     removeTimeExceptionIfAble(course, semesterNumber) {
+        if (semesterNumber < 0) return;
         if (this.courseOfferedInSemester(course, semesterNumber, false)) {
             this.exceptions[course] = undefined;
         }
@@ -417,9 +418,9 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // and to convert them to a meaningful format
     const processingSteps = [
         {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden.", type: "sbsRule"},
-        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden.", type: "other"},
-        {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
         {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
+        {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
+        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden.", type: "other"},
         {converter: addVertiefungCombos},
         {filter: twoTimesNine, errorMessage: "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben."},
         {cleaner: expandAndTruncateVertiefungen},
@@ -427,8 +428,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
-        {converter: removeNotEingebrachteLVs},
         {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
+        {converter: removeNotEingebrachteLVs},
         {converter: calculateGrades}
     ];
     for (let s = 0; s < processingSteps.length; s++) {

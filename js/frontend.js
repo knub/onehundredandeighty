@@ -459,21 +459,23 @@ const frontend = {
     /* saveManager saves the current status via Web-Storage */
     saveManager: {
         save() {
-            const courseToSemester = {};
-            /* save courses */
-            for (const key in data) {
-                if (!data.hasOwnProperty(key)) continue;
-                courseToSemester[key] = f.getSemester(key);
-            }
-            // SAVE data
-            localStorage.onehundredandeighty_hasData = true;
-            localStorage.onehundredandeighty_courseToSemester = JSON.stringify(courseToSemester);
-            localStorage.onehundredandeighty_filterManager = JSON.stringify(f.filterManager);
-            localStorage.onehundredandeighty_semesterLocks = JSON.stringify(semesterManager.semesterLock);
-            localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
-            localStorage.onehundredandeighty_exceptions = JSON.stringify(semesterManager.exceptions);
-            localStorage.onehundredandeighty_grades = JSON.stringify(gradeManager.grades);
-            localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
+            setTimeout(function() {
+                const courseToSemester = {};
+                /* save courses */
+                for (const key in data) {
+                    if (!data.hasOwnProperty(key)) continue;
+                    courseToSemester[key] = f.getSemester(key);
+                }
+                // SAVE data
+                localStorage.onehundredandeighty_hasData = true;
+                localStorage.onehundredandeighty_courseToSemester = JSON.stringify(courseToSemester);
+                localStorage.onehundredandeighty_filterManager = JSON.stringify(f.filterManager);
+                localStorage.onehundredandeighty_semesterLocks = JSON.stringify(semesterManager.semesterLock);
+                localStorage.onehundredandeighty_semesters = JSON.stringify(semesterManager.shownSemesters);
+                localStorage.onehundredandeighty_exceptions = JSON.stringify(semesterManager.exceptions);
+                localStorage.onehundredandeighty_grades = JSON.stringify(gradeManager.grades);
+                localStorage.onehundredandeighty_allMessagesVisible = f.allMessagesVisible;
+            }, 0);
         }
     },
 
@@ -529,7 +531,7 @@ const frontend = {
             let finalGrade = 'un&shy;bekannt';
             if (!isNaN(possibility.grade)) {
                 const number = (Math.floor(possibility.grade*1000)/1000).toFixed(3);
-                finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<sup>" + number.substr(3) + "</sup></span>";
+                finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<span class='grade-unimportant-part'>" + number.substr(3) + "</span></span>";
             }
             const sbsString = 'BS, &nbsp; ' + possibility.sbs.map(function({key}) {
                 return data[key].kurz;
@@ -592,16 +594,8 @@ const frontend = {
     },
     /* used to check all rules and display them in div#messages */
     checkRules(showAllDetails) {
-        /* performance check */
-        const start = new Date();
 
         const rules = ruleManager.checkAll();
-
-        const ende = new Date();
-        const startK = start.getHours() * 60 * 60 * 1000 + start.getMinutes() * 60 * 1000 + start.getSeconds() * 1000 + start.getMilliseconds();
-        const endeK = ende.getHours() * 60 * 60 * 1000 + ende.getMinutes() * 60 * 1000 + ende.getSeconds() * 1000 + ende.getMilliseconds();
-        console.log(endeK-startK);
-
 
         const messageUl = f.messageDiv.find("ul");
         messageUl.empty();
@@ -870,7 +864,8 @@ const frontend = {
             cancel: "." + f.disabledClass + ",.inGradeEditMode",        // elements matching this selector cannot be dropped
             update: f.update,            // raised, when there was a change while sorting
             start: f.startSorting,            // raised, when sorting starts
-            stop: f.endSorting            // raised, when sorting is finished
+            stop: f.endSorting,            // raised, when sorting is finished
+            beforeStop: f.beforeSortStop
         }).disableSelection();                // disableSelection makes text selection impossible
     },
     /* used, when user starts drag'n'dropping courses */
@@ -883,18 +878,20 @@ const frontend = {
     },
     /* used, when user finished drag'n'dropping courses */
     endSorting(event, ui) {
-        f.coursesUl.find("li").knubtip("enable");
         const itemID = ui.item[0].id;
         const courseName = itemID.substr(7); // remove 'course-' from the id
-        semesterManager.removeTimeExceptionIfAble(courseName, f.getSemester(courseName));
-        Semester.hideDragDropHints();
-        Semester.updateLPStates();
-        f.filterManager.filter();
-        f.checkRules();
         Course.get(courseName).onDragEnd();
+        f.filterManager.filter();
         Semester.sortContent();
         f.adjustSemesterViewHeight();
-        f.saveManager.save();
+        semesterManager.removeTimeExceptionIfAble(courseName, f.getSemester(courseName));
+        setTimeout(function() {
+            f.checkRules();
+            Semester.hideDragDropHints();
+            Semester.updateLPStates();
+            f.coursesUl.find("li").knubtip("enable");
+            f.saveManager.save();
+        }, 0);
     },
     /* called when user drag'n'dropped something */
     update(event, ui) {
@@ -907,6 +904,22 @@ const frontend = {
         }
         f.adjustSemesterViewHeight();
         f.sortPool();
+
+    },
+    beforeSortStop(event, ui) {
+        const itemID = ui.item[0].id;
+        const courseName = itemID.substr(7); // remove 'course-' from the id
+        const isBA_BP = (courseName === 'ba') || (courseName === 'bp') || (courseName === 'bp2');
+
+        if (isBA_BP) {
+            const dropID = $(ui.placeholder).parent().attr('id');
+            const droppedToList = dropID.startsWith('extra');
+            if (droppedToList) {
+                $(this).sortable('cancel');
+                f.endSorting(event, ui);
+            }
+        }
+
     },
     /* adjust #semester-view1 ul's heights to fit to max-height */
     adjustSemesterViewHeight: function () {
