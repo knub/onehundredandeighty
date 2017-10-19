@@ -139,7 +139,11 @@ const Semester = class {
             } else if (course === 'ba') {
                 return 2;
             } else {
-                return 3;
+                if (data[course].modul.includes('Softskills')) {
+                    return 4;
+                } else {
+                    return 3;
+                }
             }
         }
         objectList.sort(function(a, b) { return courseWeight(a[0].id.substr(7)) - courseWeight(b[0].id.substr(7)) });

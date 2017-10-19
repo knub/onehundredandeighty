@@ -654,6 +654,19 @@ const data = {
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Internet-Security - Weaknesses and Targets"
     },
+    klubsprecher: {
+        kurz: "Klubsprecher",
+        lehrform: [],
+        modul: ["Softskills"],
+        semester: [ss15, ss16, ss17, ws15_16, ws16_17, ws17_18],
+        pflicht: "",
+        empfohlen: "",
+        vertiefung: [],
+        cp: 3,
+        vorher: "",
+        dozent: [],
+        nameLV: "Klubsprächertätigkeit über 2 Semester"
+    },
     knowledgediscovery: {
         kurz: "Knowledge Discovery",
         lehrform: ["Seminar"],
