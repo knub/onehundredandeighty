@@ -531,7 +531,7 @@ const frontend = {
             for (let j = 0; j < possibility.secondVertiefungLectures.length; j += 1)
                 secondLectures.push(f.adjustShortCourseName(possibility.secondVertiefungLectures[j].kurz));
 
-            let finalGrade = 'un&shy;bekannt';
+            let finalGrade = '<span onclick="f.showUngradedCourses()" class="link">un&shy;bekannt</span>';
             if (!isNaN(possibility.grade)) {
                 const number = (Math.floor(possibility.grade*1000)/1000).toFixed(3);
                 finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<span class='grade-unimportant-part'>" + number.substr(3) + "</span></span>";
@@ -594,6 +594,32 @@ const frontend = {
         }
         table += "</table>";
         return table;
+    },
+    showUngradedCourses() {
+        //highlight everything that is not graded yet
+        function hasNoGrade(course) {
+            return isNaN(gradeManager.get(course));
+        }
+        function courseToSelector(course) {
+            if (course === 'bp')
+                return '#course-bp,#course-bp2';
+            return '#course-' + course;
+        }
+        const courses = allBelegteCourses(f.getSemester);
+        courses.push('bp', 'ba');
+        const selector = courses
+            .filter(hasNoGrade)
+            .map(courseToSelector)
+            .join(',');
+
+        const noGradeCourses = $(selector);
+
+        noGradeCourses.addClass('highlight');
+        document.getElementById('semester-time1').scrollIntoView();
+
+        setTimeout(function() {
+            noGradeCourses.removeClass('highlight');
+        }, 2000)
     },
     /* used to check all rules and display them in div#messages */
     checkRules(showAllDetails) {

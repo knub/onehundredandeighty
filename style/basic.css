@@ -740,6 +740,10 @@ h3 {
 .locksymbol {
     cursor: pointer;
 }
+.link {
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 .finalGrade {
     font-size: 2em;
@@ -747,4 +751,7 @@ h3 {
 .finalGrade > .grade-unimportant-part {
     color: #555;
     font-size: 80%;
+}
+.highlight {
+    background: #ffea00 !important;
 }
