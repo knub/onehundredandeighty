@@ -604,6 +604,9 @@ const frontend = {
         function hasNoGrade(course) {
             return isNaN(gradeManager.get(course));
         }
+        function needsGrade(course) {
+            return NEUE_STUDIENORDNUNG || !data[course].modul.includes('Softskills')
+        }
         function courseToSelector(course) {
             if (course === 'bp')
                 return '#course-bp,#course-bp2';
@@ -613,6 +616,7 @@ const frontend = {
         courses.push('bp', 'ba');
         const selector = courses
             .filter(hasNoGrade)
+            .filter(needsGrade)
             .map(courseToSelector)
             .join(',');
 
@@ -641,9 +645,11 @@ const frontend = {
                 return Math.min(acc, curr.grade);
             }, 10);
             let resultColor = '#316400';
-            let topMessage = "Der Belegungsplan ist gültig!";
+            let topMessage = "Der Belegungsplan ist gültig! ";
             if (bestGrade < 10) {
-                topMessage += " Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3)
+                topMessage += "Deine beste Gesamtnote: " + (Math.floor(bestGrade*1000)/1000).toFixed(3)
+            } else {
+                topMessage += '<span onclick="f.showUngradedCourses()" class="link">Es fehlen noch Eingaben für die Notenberechnung</span>.'
             }
             messageUl.append("<li>" + topMessage + "</li>");
 
