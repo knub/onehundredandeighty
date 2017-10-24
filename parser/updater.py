@@ -64,7 +64,7 @@ def mergeLV(newLV):
         lv[parameter] = newLV[parameter]
 
     lv['specific'][newLV['semester'][0]] = {}
-    for parameter in ['kurz', 'nameLV', 'dozent', 'lehrform', 'cp']:
+    for parameter in ['kurz', 'nameLV', 'dozent', 'lehrform', 'cp', 'page']:
         lv['specific'][newLV['semester'][0]][parameter] = newLV[parameter]
         lv[parameter] = newLV[parameter]
 
@@ -103,6 +103,7 @@ data['klubsprecher'] = {
     'nameLV': 'Klubsprächertätigkeit über 2 Semester',
     'semester': data['englischlevel1']['semester'],
     'vertiefung': [],
+    'page': '',
     'specific': {}
 }
 
@@ -135,7 +136,7 @@ for lvKey in data:
 
 
 vertiefungen = ['OSIS', 'SAMT', 'ISAE', 'HCGT', 'BPET']
-wantedLVproperties = ['kurz', 'lehrform', 'modul', 'semester', 'pflicht', 'empfohlen', 'vertiefung', 'cp', 'dozent', 'nameLV']
+wantedLVproperties = ['kurz', 'lehrform', 'modul', 'semester', 'pflicht', 'empfohlen', 'vertiefung', 'cp', 'dozent', 'nameLV', 'page']
 serilaizingReplacements = {}
 for vertiefung in vertiefungen:
     serilaizingReplacements['"' + vertiefung.strip() + '"'] = vertiefung.strip()

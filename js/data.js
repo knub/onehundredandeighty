@@ -41,7 +41,12 @@ const data = {
         cp: 3,
         dozent: ["Dr. Pascal Lenzner", "Dr. Timo Kötzing", "Prof. Dr. Tobias Friedrich"],
         nameLV: "Algorithmic Problem Solving",
-        specific: {}
+        page: "0/wintersemester-20172018-algorithmic-problem-solving.html",
+        specific: {
+            WS16: {
+                page: "2016/wintersemester-20162017-algorithmic-problem-solving.html",
+            },
+        }
     },
     aspektorientierteprogrammierung: {
         kurz: "Aspektorientierte<br />Programmierung",
@@ -54,6 +59,7 @@ const data = {
         cp: 3,
         dozent: ["Prof. Dr. Robert Hirschfeld"],
         nameLV: "Aspektorientierte Programmierung",
+        page: "2015/sommersemester-2015-aspektorientierte-programmierung.html",
         specific: {}
     },
     bdanalytics: {
@@ -67,7 +73,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Emmanuel Müller"],
         nameLV: "Big Data Analytics",
-        specific: {}
+        page: "0/wintersemester-20172018-big-data-analytics.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-big-data-analytics.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-big-data-analytics.html",
+            },
+        }
     },
     bdanalyticslab: {
         kurz: "BD Analytics Lab",
@@ -80,9 +94,11 @@ const data = {
         cp: 6,
         dozent: ["Erik Scharwächter", "Fabian Geier", "Prof. Dr. Emmanuel Müller"],
         nameLV: "Big Data Analytics Lab",
+        page: "0/sommersemester-2017-big-data-analytics-lab.html",
         specific: {
             SS16: {
                 dozent: ["Prof. Dr. Emmanuel Müller"],
+                page: "2016/sommersemester-2016-big-data-analytics-lab.html",
             },
         }
     },
@@ -97,6 +113,7 @@ const data = {
         cp: 6,
         dozent: ["Dr. Feng Cheng", "Prof. Dr. Christoph Meinel"],
         nameLV: "Big Data Security Analytics",
+        page: "0/wintersemester-20172018-big-data-security-analytics.html",
         specific: {}
     },
     bildundvideoprozessierung: {
@@ -110,6 +127,7 @@ const data = {
         cp: 6,
         dozent: ["Dr. Matthias Trapp"],
         nameLV: "Bild- und Videoprozessierung mit OpenGL ES für Mobile Geräte",
+        page: "2015/wintersemester-20152016-bild-und-videoprozessierung-mit-opengl-es-fuer-mobile-geraete.html",
         specific: {}
     },
     blockkursibmpowersystems: {
@@ -123,6 +141,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Andreas Polze"],
         nameLV: "Blockkurs \\&quot;IBM Power Systems\\&quot;",
+        page: "2016/wintersemester-20162017-blockkurs-ibm-power-systems.html",
         specific: {}
     },
     bpminthecloud: {
@@ -136,6 +155,7 @@ const data = {
         cp: 6,
         dozent: ["Adriatik Nikaj", "Marcin Hewelt", "Prof. Dr. Mathias Weske"],
         nameLV: "BPM in the Cloud: From t.BPM and App development",
+        page: "2015/sommersemester-2015-bpm-in-the-cloud-from-tbpm-and-app-development.html",
         specific: {}
     },
     bs: {
@@ -149,13 +169,16 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Andreas Polze"],
         nameLV: "Betriebssysteme 1",
+        page: "0/wintersemester-20172018-betriebssysteme-1.html",
         specific: {
             WS15: {
                 dozent: ["Dipl.-Inf. Bernhard Rabe", "Prof. Dr. Andreas Polze"],
+                page: "2015/wintersemester-20152016-betriebssysteme.html",
                 nameLV: "Betriebssysteme",
             },
             WS16: {
                 dozent: ["Andreas Grapentin", "Daniel Richter", "Dipl.-Inf. Bernhard Rabe", "Prof. Dr. Andreas Polze"],
+                page: "2016/wintersemester-20162017-betriebssysteme.html",
                 nameLV: "Betriebssysteme",
             },
         }
@@ -171,12 +194,15 @@ const data = {
         cp: 6,
         dozent: ["Andreas Grapentin", "Frank Feinbube", "Prof. Dr. Andreas Polze"],
         nameLV: "Betriebssysteme II",
+        page: "0/sommersemester-2017-betriebssysteme-ii.html",
         specific: {
             SS15: {
                 dozent: ["Prof. Dr. Andreas Polze"],
+                page: "2015/sommersemester-2015-betriebssysteme-ii.html",
             },
             SS16: {
                 dozent: ["Christian Neuhaus", "Frank Feinbube", "Prof. Dr. Andreas Polze"],
+                page: "2016/sommersemester-2016-betriebssysteme-ii.html",
             },
         }
     },
@@ -191,9 +217,11 @@ const data = {
         cp: 6,
         dozent: ["Kimon Batoulis", "Luise Pufahl", "Prof. Dr. Dimka Karastoyanova"],
         nameLV: "Business Event Processing",
+        page: "0/sommersemester-2017-business-event-processing.html",
         specific: {
             SS16: {
                 dozent: ["Kimon Batoulis", "Luise Pufahl", "Prof. Dr. Mathias Weske"],
+                page: "2016/sommersemester-2016-business-event-processing.html",
             },
         }
     },
@@ -208,6 +236,7 @@ const data = {
         cp: 6,
         dozent: ["Luise Pufahl", "Prof. Dr. Mathias Weske"],
         nameLV: "Business Process Simulation",
+        page: "0/wintersemester-20172018-business-process-simulation.html",
         specific: {}
     },
     bva: {
@@ -221,6 +250,7 @@ const data = {
         cp: 6,
         dozent: ["Dr. Matthias Trapp"],
         nameLV: "Bildverarbeitungsalgorithmen",
+        page: "2016/wintersemester-20162017-bildverarbeitungsalgorithmen.html",
         specific: {}
     },
     cg1: {
@@ -234,15 +264,19 @@ const data = {
         cp: 6,
         dozent: ["Dr. Matthias Trapp"],
         nameLV: "3D-Computergrafik I",
+        page: "0/wintersemester-20172018-3d-computergrafik-i.html",
         specific: {
             WS15: {
                 dozent: ["Prof. Dr. Jürgen Döllner"],
+                page: "2015/wintersemester-20152016-3d-computergrafik-i.html",
             },
             WS16: {
                 dozent: ["Prof. Dr. Jürgen Döllner"],
+                page: "2016/wintersemester-20162017-3d-computergrafik-i.html",
             },
             SS15: {
                 dozent: ["Prof. Dr. Jürgen Döllner"],
+                page: "2015/sommersemester-2015-3d-computergrafik-i.html",
             },
         }
     },
@@ -257,7 +291,12 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "3D-Computergrafik II",
-        specific: {}
+        page: "0/sommersemester-2017-3d-computergrafik-ii.html",
+        specific: {
+            SS16: {
+                page: "2016/sommersemester-2016-3d-computergrafik-ii.html",
+            },
+        }
     },
     clientseitigewebprogrammierung: {
         kurz: "Clientseitige<br />Webprogrammierung",
@@ -270,6 +309,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Clientseitige Webprogrammierung",
+        page: "0/sommersemester-2017-clientseitige-webprogrammierung.html",
         specific: {}
     },
     compprog: {
@@ -283,9 +323,11 @@ const data = {
         cp: 6,
         dozent: ["Dr. Pascal Lenzner", "Prof. Dr. Tobias Friedrich"],
         nameLV: "Competitive Programming",
+        page: "0/sommersemester-2017-competitive-programming.html",
         specific: {
             SS16: {
                 cp: 3,
+                page: "2016/sommersemester-2016-competitive-programming.html",
             },
         }
     },
@@ -300,7 +342,15 @@ const data = {
         cp: 6,
         dozent: ["Dr. Feng Cheng", "Prof. Dr. Christoph Meinel"],
         nameLV: "Cops and Robbers",
-        specific: {}
+        page: "0/sommersemester-2017-cops-and-robbers.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-cops-and-robbers.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-cops-and-robbers.html",
+            },
+        }
     },
     dataengineeringinderpraxis: {
         kurz: "Data Engineering<br />in der Praxis",
@@ -313,6 +363,7 @@ const data = {
         cp: 3,
         dozent: ["Dr. Matthias Uflacker", "Dr. Ralf Krestel", "Prof. Dr. Emmanuel Müller", "Prof. Dr. Felix Naumann"],
         nameLV: "Data Engineering in der Praxis - Ringvorlesung",
+        page: "0/wintersemester-20172018-data-engineering-in-der-praxis-ringvorlesung-1.html",
         specific: {}
     },
     dbs1: {
@@ -326,12 +377,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Felix Naumann", "Thorsten Papenbrock"],
         nameLV: "Datenbanksysteme I",
+        page: "0/sommersemester-2017-datenbanksysteme-i.html",
         specific: {
             SS15: {
                 dozent: ["Prof. Dr. Felix Naumann"],
+                page: "2015/sommersemester-2015-datenbanksysteme-i.html",
             },
             SS16: {
                 dozent: ["Dr. Ralf Krestel"],
+                page: "2016/sommersemester-2016-datenbanksysteme-i.html",
             },
         }
     },
@@ -346,7 +400,12 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Felix Naumann"],
         nameLV: "Datenbanksysteme II",
-        specific: {}
+        page: "0/wintersemester-20172018-datenbanksysteme-ii.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-datenbanksysteme-ii.html",
+            },
+        }
     },
     diskretestrukturen: {
         kurz: "Diskrete Strukturen",
@@ -359,6 +418,7 @@ const data = {
         cp: 3,
         dozent: ["Dr. Timo Kötzing", "Prof. Dr. Tobias Friedrich"],
         nameLV: "Diskrete Strukturen",
+        page: "2016/wintersemester-20162017-diskrete-strukturen.html",
         specific: {}
     },
     dschooladvancedtrack: {
@@ -372,7 +432,21 @@ const data = {
         cp: 9,
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
         nameLV: "D-School Advanced Track",
-        specific: {}
+        page: "2015/wintersemester-20172018-d-school-advanced-track.html",
+        specific: {
+            WS16: {
+                page: "2016/wintersemester-20162017-d-school-advanced-track.html",
+            },
+            SS15: {
+                page: "2015/sommersemester-2015-d-school-advanced-track.html",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-d-school-advanced-track.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-d-school-advanced-track.html",
+            },
+        }
     },
     dschoolbasictrack: {
         kurz: "D-School Basic Track",
@@ -385,7 +459,24 @@ const data = {
         cp: 9,
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
         nameLV: "D-School Basic Track",
-        specific: {}
+        page: "0/wintersemester-20172018-d-school-basic-track.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-d-school-basic-track.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-d-school-basic-track.html",
+            },
+            SS15: {
+                page: "2015/sommersemester-2015-d-school-basic-track.html",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-d-school-basic-track.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-d-school-basic-track.html",
+            },
+        }
     },
     dschoolfirsttrack: {
         kurz: "D-School First Track",
@@ -398,21 +489,27 @@ const data = {
         cp: 3,
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
         nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas",
+        page: "0/wintersemester-20172018-d-school-first-track-introduction-to-design-thinking-from-inspiration-to.html",
         specific: {
             WS15: {
+                page: "2015/wintersemester-20152016-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
             WS16: {
+                page: "2016/wintersemester-20162017-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
             SS15: {
+                page: "2015/sommersemester-2015-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
             SS17: {
                 dozent: ["Dr. Claudia Nicolai", "Jeremias Schmitt", "Prof. Ulrich Weinberg"],
+                page: "0/sommersemester-2017-d-school-first-track-introduction-to-design-thinking-bring-ideas-to-life.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking. Bring Ideas to Life",
             },
             SS16: {
+                page: "2016/sommersemester-2016-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
         }
@@ -428,6 +525,7 @@ const data = {
         cp: 6,
         dozent: ["Dr. Pascal Lenzner", "Prof. Dr. Tobias Friedrich"],
         nameLV: "Einführung in die Algorithmik",
+        page: "2015/wintersemester-20152016-einfuehrung-in-die-algorithmik.html",
         specific: {}
     },
     einfuehrunginformationsvisualisierung: {
@@ -441,6 +539,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "Einführung Informationsvisualisierung",
+        page: "0/sommersemester-2017-einfuehrung-informationsvisualisierung.html",
         specific: {}
     },
     einfuehrunginvisualanalytics: {
@@ -454,6 +553,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "Einführung in Visual Analytics",
+        page: "2016/sommersemester-2016-einfuehrung-in-visual-analytics.html",
         specific: {}
     },
     englischlevel1: {
@@ -467,7 +567,24 @@ const data = {
         cp: 3,
         dozent: ["David Meier"],
         nameLV: "Fachspezifisches Englisch (Level 1)",
-        specific: {}
+        page: "0/wintersemester-20172018-fachspezifisches-englisch-level-1.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-fachspezifisches-englisch-level-1.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-fachspezifisches-englisch-level-1.html",
+            },
+            SS15: {
+                page: "2015/sommersemester-2015-fachspezifisches-englisch-level-1.html",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-fachspezifisches-englisch-level-1.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-fachspezifisches-englisch-level-1.html",
+            },
+        }
     },
     englischlevel2: {
         kurz: "Englisch (Level 2)",
@@ -480,7 +597,24 @@ const data = {
         cp: 3,
         dozent: ["David Meier"],
         nameLV: "Fachspezifisches Englisch (Level 2)",
-        specific: {}
+        page: "0/wintersemester-20172018-fachspezifisches-englisch-level-2.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-fachspezifisches-englisch-level-2.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-fachspezifisches-englisch-level-2.html",
+            },
+            SS15: {
+                page: "2015/sommersemester-2015-fachspezifisches-englisch-level-2.html",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-fachspezifisches-englisch-level-2.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-fachspezifisches-englisch-level-2.html",
+            },
+        }
     },
     eventdrivencasemanagement: {
         kurz: "Event-driven<br />Case Management",
@@ -493,6 +627,7 @@ const data = {
         cp: 6,
         dozent: ["Marcin Hewelt", "Prof. Dr. Matthias Weidlich"],
         nameLV: "Event-driven Case Management",
+        page: "0/sommersemester-2017-event-driven-case-management.html",
         specific: {}
     },
     gds: {
@@ -506,7 +641,15 @@ const data = {
         cp: 6,
         dozent: ["Dr.-Ing. Ralf Wollowski"],
         nameLV: "Grundlagen digitaler Systeme",
-        specific: {}
+        page: "0/wintersemester-20172018-grundlagen-digitaler-systeme.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-grundlagen-digitaler-systeme.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-grundlagen-digitaler-systeme.html",
+            },
+        }
     },
     grafikprogramming: {
         kurz: "Grafikprogramming",
@@ -519,6 +662,7 @@ const data = {
         cp: 6,
         dozent: ["Daniel Limberger", "Prof. Dr. Jürgen Döllner", "Stefan Buschmann"],
         nameLV: "Grafikprogramming mit OpenGL und C++",
+        page: "0/wintersemester-20172018-grafikprogramming-mit-opengl-und-c.html",
         specific: {}
     },
     graphentheorie: {
@@ -532,6 +676,7 @@ const data = {
         cp: 3,
         dozent: ["Prof. Dr. Tobias Friedrich"],
         nameLV: "Graphentheorie",
+        page: "0/wintersemester-20172018-graphentheorie.html",
         specific: {}
     },
     handsoncodingexercisesinlargescalelearni: {
@@ -545,6 +690,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Hands-On Coding Exercises in Large Scale Learning Environments",
+        page: "2016/wintersemester-20162017-hands-on-coding-exercises-in-large-scale-learning-environments.html",
         specific: {}
     },
     hci1: {
@@ -558,6 +704,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "Designing Interactive Systems",
+        page: "2015/wintersemester-20152016-designing-interactive-systems.html",
         specific: {}
     },
     hci2: {
@@ -571,9 +718,14 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "Building Interactive Devices",
+        page: "0/wintersemester-20172018-building-interactive-devices.html",
         specific: {
             SS15: {
+                page: "2015/sommersemester-2015-hci-building-interactive-devices-and-computer-vision.html",
                 nameLV: "HCI: Building Interactive Devices and Computer Vision",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-building-interactive-devices-1.html",
             },
         }
     },
@@ -588,6 +740,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar Augment Reality, Virtual Reality, and Personal Fabrication",
+        page: "0/sommersemester-2017-hci-project-seminar-augment-reality-virtual-reality-and-personal-fabrication.html",
         specific: {}
     },
     hcipsbuildinginteractivesystemsbasedon: {
@@ -601,6 +754,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar: Building Interactive Systems based on Fabrication and Haptics",
+        page: "2015/wintersemester-20152016-hci-project-seminar-building-interactive-systems-based-on-fabrication-and.html",
         specific: {}
     },
     hcipsbuildinginteractivesystemsfrom3dp: {
@@ -614,6 +768,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar on Building Interactive Systems from 3D-Printers",
+        page: "2015/sommersemester-2015-hci-project-seminar-on-building-interactive-systems-from-3d-printers.html",
         specific: {}
     },
     hcipspersonalfabricationandhaptics: {
@@ -627,6 +782,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar Personal Fabrication and Haptics",
+        page: "2016/wintersemester-20162017-hci-project-seminar-personal-fabrication-and-haptics.html",
         specific: {}
     },
     hcipspersonalfabricationandinteraction: {
@@ -640,6 +796,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar Personal Fabrication and Interaction",
+        page: "2016/sommersemester-2016-hci-project-seminar-personal-fabrication-and-interaction.html",
         specific: {}
     },
     hcipsroboticscodeand3dprinting: {
@@ -653,6 +810,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "HCI Project Seminar on Robotics, Code, and 3D Printing",
+        page: "0/wintersemester-20172018-hci-project-seminar-on-robotics-code-and-3d-printing.html",
         specific: {}
     },
     historyofprogramminglanguages: {
@@ -666,6 +824,7 @@ const data = {
         cp: 3,
         dozent: ["Johannes Henning", "Marcel Taeumel", "Prof. Dr. Robert Hirschfeld", "Toni Mattis"],
         nameLV: "History of Programming Languages",
+        page: "2016/sommersemester-2016-history-of-programming-languages.html",
         specific: {}
     },
     identitaetsmanagement: {
@@ -679,9 +838,14 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Identitätsmanagement",
+        page: "0/wintersemester-20172018-identitaetsmanagement.html",
         specific: {
             WS15: {
                 dozent: ["Konrad-Felix Krentz", "M.Sc. Christian Tietz", "Prof. Dr. Christoph Meinel"],
+                page: "2015/wintersemester-20152016-identitaetsmanagement.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-identitaetsmanagement.html",
             },
         }
     },
@@ -696,6 +860,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "Information Visualisation Techniques for Industrie 4.0",
+        page: "0/wintersemester-20172018-information-visualisation-techniques-for-industrie-40.html",
         specific: {}
     },
     isec: {
@@ -709,7 +874,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Internet-Security - Weaknesses and Targets",
-        specific: {}
+        page: "0/wintersemester-20172018-internet-security-weaknesses-and-targets.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-internet-security-weaknesses-and-targets.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-internet-security-weaknesses-and-targets.html",
+            },
+        }
     },
     klubsprecher: {
         kurz: "Klubsprecher",
@@ -722,6 +895,7 @@ const data = {
         cp: 3,
         dozent: [],
         nameLV: "Klubsprächertätigkeit über 2 Semester",
+        page: "",
         specific: {}
     },
     knowledgediscovery: {
@@ -735,6 +909,7 @@ const data = {
         cp: 6,
         dozent: ["Dr. rer. nat. Harald Sack"],
         nameLV: "Knowledge Discovery with Linked Data",
+        page: "2016/wintersemester-20162017-knowledge-discovery-with-linked-data.html",
         specific: {}
     },
     knowledgemining: {
@@ -748,7 +923,12 @@ const data = {
         cp: 6,
         dozent: ["Dr. rer. nat. Harald Sack"],
         nameLV: "Knowledge Mining",
-        specific: {}
+        page: "2016/sommersemester-2016-knowledge-mining.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-knowledge-mining.html",
+            },
+        }
     },
     lerntechnikenundstrategien: {
         kurz: "Lerntechniken<br />und Strategien",
@@ -761,20 +941,30 @@ const data = {
         cp: 3,
         dozent: ["Dr. Christiane Potzner"],
         nameLV: "Lerntechniken und Strategien zur Prüfungsvorbereitung",
+        page: "0/wintersemester-20172018-lerntechniken-und-strategien-zur-pruefungsvorbereitung.html",
         specific: {
             WS15: {
-                kurz: "Professionalisierte<br />Lerntechniken",
                 dozent: ["Dr. Rolf Specht"],
+                kurz: "Professionalisierte<br />Lerntechniken",
+                page: "2015/wintersemester-20152016-professionalisierte-lerntechniken.html",
                 nameLV: "Professionalisierte Lerntechniken",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-lerntechniken-und-strategien-zur-pruefungsvorbereitung.html",
             },
             SS15: {
-                kurz: "Professionalisierte<br />Lerntechniken",
                 dozent: ["Dr. Rolf Specht"],
+                kurz: "Professionalisierte<br />Lerntechniken",
+                page: "2015/sommersemester-2015-professionalisierte-lerntechniken.html",
                 nameLV: "Professionalisierte Lerntechniken",
             },
+            SS17: {
+                page: "0/sommersemester-2017-lerntechniken-und-strategien-zur-pruefungsvorbereitung.html",
+            },
             SS16: {
-                kurz: "Professionalisierte<br />Lerntechniken",
                 dozent: ["Dr. Rolf Specht"],
+                kurz: "Professionalisierte<br />Lerntechniken",
+                page: "2016/sommersemester-2016-professionalisierte-lerntechniken.html",
                 nameLV: "Professionalisierte Lerntechniken",
             },
         }
@@ -790,6 +980,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Linux for the Masses",
+        page: "0/sommersemester-2017-linux-for-the-masses.html",
         specific: {}
     },
     mathematik1: {
@@ -803,7 +994,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Mathematik I - Diskrete Strukturen und Logik",
-        specific: {}
+        page: "0/wintersemester-20172018-mathematik-i-diskrete-strukturen-und-logik.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-mathematik-i-diskrete-strukturen-und-logik.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-mathematik-i-diskrete-strukturen-und-logik.html",
+            },
+        }
     },
     mathematik2: {
         kurz: "Mathematik II",
@@ -816,7 +1015,15 @@ const data = {
         cp: 6,
         dozent: ["Dr. habil. Ferdinand Börner"],
         nameLV: "Mathematik II",
-        specific: {}
+        page: "0/sommersemester-2017-mathematik-ii.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-mathematik-ii.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-mathematik-ii.html",
+            },
+        }
     },
     mod1: {
         kurz: "Mod I",
@@ -829,12 +1036,15 @@ const data = {
         cp: 6,
         dozent: ["Joachim Hänsel", "Maria Maximova", "Prof. Dr. Holger Giese"],
         nameLV: "Modellierung I",
+        page: "0/wintersemester-20172018-modellierung-i.html",
         specific: {
             WS15: {
                 dozent: ["Prof. Dr. Holger Giese", "Thomas Vogel"],
+                page: "2015/wintersemester-20152016-modellierung-i.html",
             },
             WS16: {
                 dozent: ["Prof. Dr. Mathias Weske"],
+                page: "2016/wintersemester-20162017-modellierung-i.html",
             },
         }
     },
@@ -849,9 +1059,14 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Holger Giese"],
         nameLV: "Modellierung II",
+        page: "0/sommersemester-2017-modellierung-ii.html",
         specific: {
             SS15: {
                 dozent: ["Joachim Hänsel", "Prof. Dr. Holger Giese"],
+                page: "2015/sommersemester-2015-modellierung-ii.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-modellierung-ii.html",
             },
         }
     },
@@ -866,6 +1081,7 @@ const data = {
         cp: 6,
         dozent: ["Jan Renz", "Prof. Dr. Christoph Meinel", "Thomas Staubitz"],
         nameLV: "openHPI: Web Accessibility - Opening up web applacations for everyone",
+        page: "2015/wintersemester-20152016-openhpi-web-accessibility-opening-up-web-applacations-for-everyone.html",
         specific: {}
     },
     pem: {
@@ -879,10 +1095,24 @@ const data = {
         cp: 6,
         dozent: ["Peter Göttel"],
         nameLV: "Projektentwicklung und- Management: Teammanagement und Softskills in Projekten",
+        page: "0/wintersemester-20172018-projektentwicklung-und-management-teammanagement-und-softskills-in-projek.html",
         specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-projektentwicklung-und-management-teammanagement-und-softskills-in-projek.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-projektentwicklung-und-management-teammanagement-und-softskills-in-projek.html",
+            },
             SS15: {
                 dozent: ["Dr. Michaela A.C. Schumacher"],
+                page: "2015/sommersemester-2015-projektentwicklung-und-management-teamentwicklung.html",
                 nameLV: "Projektentwicklung und- Management: Teamentwicklung",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-projektentwicklung-und-management-teammanagement-und-softskills-in-projekten.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-projektentwicklung-und-management-teammanagement-und-softskills-in-projekten.html",
             },
         }
     },
@@ -897,9 +1127,14 @@ const data = {
         cp: 6,
         dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
         nameLV: "Prozessorientierte Informationssysteme",
+        page: "0/wintersemester-20172018-prozessorientierte-informationssysteme-1.html",
         specific: {
             WS15: {
                 dozent: ["Prof. Dr. Mathias Weske"],
+                page: "2015/wintersemester-20152016-prozessorientierte-informationssysteme.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-prozessorientierte-informationssysteme.html",
             },
         }
     },
@@ -914,6 +1149,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Mathias Weske"],
         nameLV: "Prozessorientierte Informationssysteme II",
+        page: "2015/sommersemester-2015-prozessorientierte-informationssysteme-ii.html",
         specific: {}
     },
     privacyinpublicclouds: {
@@ -927,7 +1163,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Privacy in Public Clouds",
-        specific: {}
+        page: "0/sommersemester-2017-privacy-in-public-clouds.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-privacy-in-public-clouds.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-privacy-in-public-clouds.html",
+            },
+        }
     },
     processesanddecisionsinthecloud: {
         kurz: "Processes and<br />Decisions in the Cloud",
@@ -940,6 +1184,7 @@ const data = {
         cp: 6,
         dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
         nameLV: "Processes and Decisions in the Cloud",
+        page: "2016/sommersemester-2016-processes-and-decisions-in-the-cloud.html",
         specific: {}
     },
     programmierungcomputergrafischerverfahren: {
@@ -953,6 +1198,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "Programmierung computergrafischer Verfahren mit C++und OpenGL",
+        page: "2015/sommersemester-2015-programmierung-computergrafischer-verfahren-mit-c-und-opengl.html",
         specific: {}
     },
     programminglanguages: {
@@ -966,6 +1212,7 @@ const data = {
         cp: 6,
         dozent: ["Johannes Henning", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Toni Mattis"],
         nameLV: "Programming Languages: Design and Implementation",
+        page: "0/wintersemester-20172018-programming-languages-design-and-implementation.html",
         specific: {}
     },
     pt1: {
@@ -979,12 +1226,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Andreas Polze"],
         nameLV: "Einführung in die Programmiertechnik I",
+        page: "0/wintersemester-20172018-einfuehrung-in-die-programmiertechnik-i.html",
         specific: {
             WS15: {
                 dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
+                page: "2015/wintersemester-20152016-einfuehrung-in-die-programmiertechnik-i.html",
             },
             WS16: {
                 dozent: ["Prof. Dr. Patrick Baudisch"],
+                page: "2016/wintersemester-20162017-einfuehrung-in-die-programmiertechnik-i.html",
             },
         }
     },
@@ -999,12 +1249,15 @@ const data = {
         cp: 6,
         dozent: ["Johannes Wolf", "Prof. Dr. Jürgen Döllner"],
         nameLV: "Einführung in die Programmiertechnik II",
+        page: "0/sommersemester-2017-einfuehrung-in-die-programmiertechnik-ii.html",
         specific: {
             SS15: {
                 dozent: ["Prof. Dr. Jürgen Döllner"],
+                page: "2015/sommersemester-2015-einfuehrung-in-die-programmiertechnik-ii.html",
             },
             SS16: {
                 dozent: ["Prof. Dr. Felix Naumann"],
+                page: "2016/sommersemester-2016-einfuehrung-in-die-programmiertechnik-ii.html",
             },
         }
     },
@@ -1019,7 +1272,15 @@ const data = {
         cp: 3,
         dozent: ["Dr. Timm Krohn"],
         nameLV: "Recht für Ingenieure I",
-        specific: {}
+        page: "0/sommersemester-2017-recht-fuer-ingenieure-i.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-recht-fuer-ingenieure-i.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-recht-fuer-ingenieure-i.html",
+            },
+        }
     },
     recht2: {
         kurz: "Recht II",
@@ -1032,13 +1293,16 @@ const data = {
         cp: 3,
         dozent: ["Dr. Timm Krohn", "Prof. Dr. Jan Eickelberg"],
         nameLV: "Recht für Ingenieure II - Rechtsfragen der Digitalisierung im Geschäftsverkehr",
+        page: "0/wintersemester-20172018-recht-fuer-ingenieure-ii-rechtsfragen-der-digitalisierung-im-geschaeftsverk.html",
         specific: {
             WS15: {
                 dozent: ["Dr. Timm Krohn"],
+                page: "2015/wintersemester-20152016-recht-fuer-ingenieure-ii.html",
                 nameLV: "Recht für Ingenieure II",
             },
             WS16: {
                 dozent: ["Dr. Timm Krohn"],
+                page: "2016/wintersemester-20162017-recht-fuer-ingenieure-ii.html",
                 nameLV: "Recht für Ingenieure II",
             },
         }
@@ -1054,6 +1318,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Secure Coding",
+        page: "2015/sommersemester-2015-secure-coding.html",
         specific: {}
     },
     semanticmediamining: {
@@ -1067,6 +1332,7 @@ const data = {
         cp: 6,
         dozent: ["Dr. rer. nat. Harald Sack"],
         nameLV: "Semantic Media Mining",
+        page: "2015/wintersemester-20152016-semantic-media-mining.html",
         specific: {}
     },
     seminarraeumlichedatenundraumzeitlichedaten: {
@@ -1080,6 +1346,7 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "Seminar Räumliche Daten und raumzeitliche Daten",
+        page: "2015/wintersemester-20152016-seminar-raeumliche-daten-und-raumzeitliche-daten.html",
         specific: {}
     },
     softwaremodularitaet: {
@@ -1093,6 +1360,7 @@ const data = {
         cp: 6,
         dozent: ["Johannes Henning", "Marcel Taeumel", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Toni Mattis"],
         nameLV: "Softwaremodularität",
+        page: "2016/wintersemester-20162017-softwaremodularitaet.html",
         specific: {}
     },
     stubs: {
@@ -1106,7 +1374,15 @@ const data = {
         cp: 0,
         dozent: ["Dr.-Ing. Ralf Wollowski"],
         nameLV: "Studienbegleitendes Seminar",
-        specific: {}
+        page: "0/wintersemester-20172018-studienbegleitendes-seminar.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-studienbegleitendes-seminar.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-studienbegleitendes-seminar.html",
+            },
+        }
     },
     swa: {
         kurz: "SWA",
@@ -1119,12 +1395,15 @@ const data = {
         cp: 6,
         dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tobias Pape", "Toni Mattis"],
         nameLV: "Softwarearchitektur",
+        page: "0/wintersemester-20172018-softwarearchitektur.html",
         specific: {
             WS15: {
                 dozent: ["Dr. Michael Perscheid", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape"],
+                page: "2015/wintersemester-20152016-softwarearchitektur.html",
             },
             WS16: {
                 dozent: ["Dr. Michael Perscheid", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape"],
+                page: "2016/wintersemester-20162017-softwarearchitektur.html",
             },
         }
     },
@@ -1139,6 +1418,7 @@ const data = {
         cp: 6,
         dozent: ["Joachim Hänsel", "Prof. Dr. Holger Giese"],
         nameLV: "Softwarequalität",
+        page: "2015/wintersemester-20152016-softwarequalitaet.html",
         specific: {}
     },
     swt1: {
@@ -1152,12 +1432,15 @@ const data = {
         cp: 6,
         dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
         nameLV: "Softwaretechnik I",
+        page: "0/sommersemester-2017-softwaretechnik-i.html",
         specific: {
             SS15: {
                 dozent: ["Dr. Michael Perscheid", "Prof. Dr. Robert Hirschfeld"],
+                page: "2015/sommersemester-2015-softwaretechnik-i.html",
             },
             SS16: {
                 dozent: ["Dr. Michael Perscheid", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
+                page: "2016/sommersemester-2016-softwaretechnik-i.html",
             },
         }
     },
@@ -1172,11 +1455,16 @@ const data = {
         cp: 6,
         dozent: ["Dr. Matthias Uflacker"],
         nameLV: "Softwaretechnik II - Agile Software Development in Large Teams",
+        page: "0/wintersemester-20172018-softwaretechnik-ii-agile-software-development-in-large-teams.html",
         specific: {
             WS15: {
                 lehrform: ["Vorlesung"],
                 dozent: ["Arian Treffer", "Dr. Matthias Uflacker", "Keven Richly", "Ralf Teusner"],
+                page: "2015/wintersemester-20152016-softwaretechnik-ii.html",
                 nameLV: "Softwaretechnik II",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-softwaretechnik-ii-agile-software-development-in-large-teams.html",
             },
         }
     },
@@ -1191,6 +1479,7 @@ const data = {
         cp: 6,
         dozent: ["Christiane Hagedorn", "Prof. Dr. Christoph Meinel", "Ralf Teusner", "Thomas Staubitz"],
         nameLV: "Test-Driven Learning Assignments",
+        page: "0/wintersemester-20172018-test-driven-learning-assignments.html",
         specific: {}
     },
     textmining: {
@@ -1204,6 +1493,7 @@ const data = {
         cp: 3,
         dozent: ["Dr. Ralf Krestel"],
         nameLV: "Text Mining",
+        page: "0/sommersemester-2017-text-mining.html",
         specific: {}
     },
     ti1: {
@@ -1217,7 +1507,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Tobias Friedrich"],
         nameLV: "Theoretische Informatik I",
-        specific: {}
+        page: "0/wintersemester-20172018-theoretische-informatik-i.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-theoretische-informatik-i.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-theoretische-informatik-i.html",
+            },
+        }
     },
     ti2: {
         kurz: "TI II",
@@ -1230,9 +1528,14 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Tobias Friedrich"],
         nameLV: "Theoretische Informatik II",
+        page: "0/sommersemester-2017-theoretische-informatik-ii.html",
         specific: {
             SS15: {
                 dozent: ["Prof. Dr. Jürgen Dassow"],
+                page: "2015/sommersemester-2015-theoretische-informatik-ii.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-theoretische-informatik-ii.html",
             },
         }
     },
@@ -1247,7 +1550,24 @@ const data = {
         cp: 3,
         dozent: ["Dr. Werner Dieball"],
         nameLV: "Überzeugend Präsentieren - der erste Eindruck zählt",
-        specific: {}
+        page: "0/wintersemester-20172018-ueberzeugend-praesentieren-der-erste-eindruck-zaehlt.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-ueberzeugend-praesentieren-der-erste-eindruck-zaehlt.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-ueberzeugend-praesentieren-der-erste-eindruck-zaehlt.html",
+            },
+            SS15: {
+                page: "2015/sommersemester-2015-ueberzeugend-praesentieren-der-erste-eindruck-zaehlt.html",
+            },
+            SS17: {
+                page: "0/sommersemester-2017-ueberzeugend-praesentieren-der-erste-eindruck-zaehlt.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-ueberzeugend-praesentieren-der-erste-eindruck-zaehlt.html",
+            },
+        }
     },
     unternehmensanwendungen: {
         kurz: "Unternehmensanwendungen",
@@ -1260,7 +1580,15 @@ const data = {
         cp: 6,
         dozent: ["Dr. Matthias Uflacker"],
         nameLV: "Unternehmensanwendungen: Prozesse, Modelle und Implementierung",
-        specific: {}
+        page: "0/sommersemester-2017-unternehmensanwendungen-prozesse-modelle-und-implementierung.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-unternehmensanwendungen-prozesse-modelle-und-implementierung.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-unternehmensanwendungen-prozesse-modelle-und-implementierung.html",
+            },
+        }
     },
     vhdl: {
         kurz: "VHDL",
@@ -1273,6 +1601,7 @@ const data = {
         cp: 6,
         dozent: ["Dr.-Ing. Ralf Wollowski"],
         nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL",
+        page: "2016/sommersemester-2016-entwurf-und-implementierung-digitaler-schaltungen-mit-vhdl.html",
         specific: {}
     },
     wahrscheinlichkeitstheorie: {
@@ -1286,6 +1615,7 @@ const data = {
         cp: 3,
         dozent: ["Dr. Timo Kötzing"],
         nameLV: "Wahrscheinlichkeitstheorie",
+        page: "0/sommersemester-2017-wahrscheinlichkeitstheorie.html",
         specific: {}
     },
     webprogrammierungundwebframeworks: {
@@ -1299,7 +1629,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Web-Programmierung und Web-Frameworks",
-        specific: {}
+        page: "0/wintersemester-20172018-web-programmierung-und-web-frameworks.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-web-programmierung-und-web-frameworks.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-web-programmierung-und-web-frameworks.html",
+            },
+        }
     },
     weiterfuehrendethemenzuwww: {
         kurz: "Weiterführende<br />Themen zu WWW",
@@ -1312,7 +1650,15 @@ const data = {
         cp: 3,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien",
-        specific: {}
+        page: "0/sommersemester-2017-weiterfuehrende-themen-zu-internet-und-www-technologien.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-weiterfuehrende-themen-zu-internet-und-www-technologien.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-weiterfuehrende-themen-zu-internet-und-www-technologien.html",
+            },
+        }
     },
     wirtschaft: {
         kurz: "Wirtschaft",
@@ -1325,7 +1671,15 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Katharina Hölzle"],
         nameLV: "Wirtschaftliche Grundlagen",
-        specific: {}
+        page: "0/wintersemester-20172018-wirtschaftliche-grundlagen.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-wirtschaftliche-grundlagen.html",
+            },
+            WS16: {
+                page: "2016/wintersemester-20162017-wirtschaftliche-grundlagen.html",
+            },
+        }
     },
     www: {
         kurz: "WWW",
@@ -1338,6 +1692,14 @@ const data = {
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
         nameLV: "Internet- und WWW-Technologien",
-        specific: {}
+        page: "0/sommersemester-2017-internet-und-www-technologien.html",
+        specific: {
+            SS15: {
+                page: "2015/sommersemester-2015-internet-und-www-technologien.html",
+            },
+            SS16: {
+                page: "2016/sommersemester-2016-internet-und-www-technologien.html",
+            },
+        }
     },
 };

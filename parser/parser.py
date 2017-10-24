@@ -139,6 +139,11 @@ def parseLVPage(url):
     shortName = extractor.shortenName(nameofLV)
     lvID = extractor.shortNameToID(shortName)
 
+    URL_PREFIX = 'https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering/lehrveranstaltung/course/'
+    niceURL = url
+    if niceURL.startswith(URL_PREFIX):
+        niceURL = niceURL[len(URL_PREFIX):]
+
     lv = {
         'kurz': shortName,
         'lehrform': lehrform,
@@ -147,7 +152,8 @@ def parseLVPage(url):
         'cp': cp,
         'dozent': dozents,
         'nameLV': nameofLV,
-        'id': lvID
+        'id': lvID,
+        'page': niceURL
     }
     lv['empfohlen'] = extractor.getEmpfohlen(lv)
     lv['pflicht'] = extractor.isPflicht(lv)

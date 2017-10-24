@@ -211,6 +211,8 @@ const Course = class {
         this.gradeInput = $('#course-' + id + '-gradeinput');
         this.editGradeButton = $('#course-' + id + '>button');
         this.updateGradeButton();
+
+        this.container.dblclick(this.openPage.bind(this));
     }
     offeredInSemester(semesterNumber) {
         return semesterManager.courseOfferedInSemester(this.id, semesterNumber)
@@ -225,6 +227,16 @@ const Course = class {
             }
             $(element).html(newValue);
         }
+    }
+    openPage() {
+        const URL_PREFIX = "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering/lehrveranstaltung/course/";
+        let page = getCourseParameter(this.id, 'page');
+        if (!page) return;
+        if (!page.startsWith('http')) {
+            page = URL_PREFIX + page;
+        }
+        const tab = window.open(page, '_blank');
+        tab.focus();
     }
     getGradeString(format) {
         return gradeManager.getString(this.id, format);
@@ -325,6 +337,7 @@ const Bachelorproject = class extends Course {
         this.updateGradeButton();
     }
     updateDisplayInformation() {}
+    openPage() {}
 
     updateGradeButton() {
         if (!this.editGradeButton2) return;
@@ -356,6 +369,8 @@ const Bachelorproject2 = class extends Course {
         this.updateGradeButton();
     }
     updateDisplayInformation() {}
+    openPage() {}
+
     updateGradeButton() {
         if (!this.bp) return;
         this.bp.updateGradeButton();
@@ -387,6 +402,8 @@ const Bachelorarbeit = class extends Course {
         super("ba");
     }
     updateDisplayInformation() {}
+    openPage() {}
+
     onDragStart() {
         $('#course-bp').addClass(f.disabledClass);
         $('#course-bp2').addClass(f.disabledClass);
