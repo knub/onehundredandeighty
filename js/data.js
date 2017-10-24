@@ -39,9 +39,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Pascal Lenzner", "Dr. Timo Kötzing", "Prof. Dr. Tobias Friedrich"],
-        nameLV: "Algorithmic Problem Solving"
+        nameLV: "Algorithmic Problem Solving",
+        specific: {}
     },
     aspektorientierteprogrammierung: {
         kurz: "Aspektorientierte<br />Programmierung",
@@ -52,9 +52,9 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS, SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Prof. Dr. Robert Hirschfeld"],
-        nameLV: "Aspektorientierte Programmierung"
+        nameLV: "Aspektorientierte Programmierung",
+        specific: {}
     },
     bdanalytics: {
         kurz: "BD Analytics",
@@ -65,9 +65,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Emmanuel Müller"],
-        nameLV: "Big Data Analytics"
+        nameLV: "Big Data Analytics",
+        specific: {}
     },
     bdanalyticslab: {
         kurz: "BD Analytics Lab",
@@ -78,9 +78,13 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Erik Scharwächter", "Fabian Geier", "Prof. Dr. Emmanuel Müller"],
-        nameLV: "Big Data Analytics Lab"
+        nameLV: "Big Data Analytics Lab",
+        specific: {
+            SS16: {
+                dozent: ["Prof. Dr. Emmanuel Müller"],
+            },
+        }
     },
     bdsecurityanalytics: {
         kurz: "BD Security Analytics",
@@ -91,9 +95,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Feng Cheng", "Prof. Dr. Christoph Meinel"],
-        nameLV: "Big Data Security Analytics"
+        nameLV: "Big Data Security Analytics",
+        specific: {}
     },
     beautifuldata: {
         kurz: "Beautiful Data",
@@ -104,9 +108,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 3,
-        vorher: [],
         dozent: ["Prof. Dr. Felix Naumann"],
-        nameLV: "Beautiful Data"
+        nameLV: "Beautiful Data",
+        specific: {}
     },
     bildundvideoprozessierung: {
         kurz: "Bild- und<br />Videoprozessierung",
@@ -117,9 +121,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Matthias Trapp"],
-        nameLV: "Bild- und Videoprozessierung mit OpenGL ES für Mobile Geräte"
+        nameLV: "Bild- und Videoprozessierung mit OpenGL ES für Mobile Geräte",
+        specific: {}
     },
     blockkursibmpowersystems: {
         kurz: "Blockkurs \"IBM<br />Power Systems\"",
@@ -130,9 +134,9 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Andreas Polze"],
-        nameLV: "Blockkurs \\&quot;IBM Power Systems\\&quot;"
+        nameLV: "Blockkurs \\&quot;IBM Power Systems\\&quot;",
+        specific: {}
     },
     bpminthecloud: {
         kurz: "BPM in the Cloud",
@@ -143,9 +147,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Adriatik Nikaj", "Marcin Hewelt", "Prof. Dr. Mathias Weske"],
-        nameLV: "BPM in the Cloud: From t.BPM and App development"
+        nameLV: "BPM in the Cloud: From t.BPM and App development",
+        specific: {}
     },
     bs: {
         kurz: "BS",
@@ -156,9 +160,18 @@ const data = {
         empfohlen: 3,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Andreas Polze"],
-        nameLV: "Betriebssysteme 1"
+        nameLV: "Betriebssysteme 1",
+        specific: {
+            WS15: {
+                dozent: ["Dipl.-Inf. Bernhard Rabe", "Prof. Dr. Andreas Polze"],
+                nameLV: "Betriebssysteme",
+            },
+            WS16: {
+                dozent: ["Andreas Grapentin", "Daniel Richter", "Dipl.-Inf. Bernhard Rabe", "Prof. Dr. Andreas Polze"],
+                nameLV: "Betriebssysteme",
+            },
+        }
     },
     bs2: {
         kurz: "BS II",
@@ -169,9 +182,16 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Andreas Grapentin", "Frank Feinbube", "Prof. Dr. Andreas Polze"],
-        nameLV: "Betriebssysteme II"
+        nameLV: "Betriebssysteme II",
+        specific: {
+            SS15: {
+                dozent: ["Prof. Dr. Andreas Polze"],
+            },
+            SS16: {
+                dozent: ["Christian Neuhaus", "Frank Feinbube", "Prof. Dr. Andreas Polze"],
+            },
+        }
     },
     businesseventprocessing: {
         kurz: "Business Event Processing",
@@ -182,9 +202,13 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Kimon Batoulis", "Luise Pufahl", "Prof. Dr. Dimka Karastoyanova"],
-        nameLV: "Business Event Processing"
+        nameLV: "Business Event Processing",
+        specific: {
+            SS16: {
+                dozent: ["Kimon Batoulis", "Luise Pufahl", "Prof. Dr. Mathias Weske"],
+            },
+        }
     },
     businessprocesssimulation: {
         kurz: "Business Process<br />Simulation",
@@ -195,9 +219,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Luise Pufahl", "Prof. Dr. Mathias Weske"],
-        nameLV: "Business Process Simulation"
+        nameLV: "Business Process Simulation",
+        specific: {}
     },
     bva: {
         kurz: "BVA",
@@ -208,9 +232,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Matthias Trapp"],
-        nameLV: "Bildverarbeitungsalgorithmen"
+        nameLV: "Bildverarbeitungsalgorithmen",
+        specific: {}
     },
     cg1: {
         kurz: "CG I",
@@ -221,9 +245,19 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT],
         cp: 6,
-        vorher: [],
-        dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "3D-Computergrafik I"
+        dozent: ["Dr. Matthias Trapp"],
+        nameLV: "3D-Computergrafik I",
+        specific: {
+            WS15: {
+                dozent: ["Prof. Dr. Jürgen Döllner"],
+            },
+            WS16: {
+                dozent: ["Prof. Dr. Jürgen Döllner"],
+            },
+            SS15: {
+                dozent: ["Prof. Dr. Jürgen Döllner"],
+            },
+        }
     },
     cg2: {
         kurz: "CG II",
@@ -234,9 +268,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "3D-Computergrafik II"
+        nameLV: "3D-Computergrafik II",
+        specific: {}
     },
     clientseitigewebprogrammierung: {
         kurz: "Clientseitige<br />Webprogrammierung",
@@ -247,9 +281,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Clientseitige Webprogrammierung"
+        nameLV: "Clientseitige Webprogrammierung",
+        specific: {}
     },
     compprog: {
         kurz: "CompProg",
@@ -260,9 +294,13 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Pascal Lenzner", "Prof. Dr. Tobias Friedrich"],
-        nameLV: "Competitive Programming"
+        nameLV: "Competitive Programming",
+        specific: {
+            SS16: {
+                cp: 3,
+            },
+        }
     },
     copsandrobbers: {
         kurz: "Cops and Robbers",
@@ -273,9 +311,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Feng Cheng", "Prof. Dr. Christoph Meinel"],
-        nameLV: "Cops and Robbers"
+        nameLV: "Cops and Robbers",
+        specific: {}
     },
     dataengineeringinderpraxis: {
         kurz: "Data Engineering<br />in der Praxis",
@@ -286,9 +324,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Matthias Uflacker", "Dr. Ralf Krestel", "Prof. Dr. Emmanuel Müller", "Prof. Dr. Felix Naumann"],
-        nameLV: "Data Engineering in der Praxis - Ringvorlesung"
+        nameLV: "Data Engineering in der Praxis - Ringvorlesung",
+        specific: {}
     },
     dbs1: {
         kurz: "DBS I",
@@ -299,9 +337,16 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Felix Naumann", "Thorsten Papenbrock"],
-        nameLV: "Datenbanksysteme I"
+        nameLV: "Datenbanksysteme I",
+        specific: {
+            SS15: {
+                dozent: ["Prof. Dr. Felix Naumann"],
+            },
+            SS16: {
+                dozent: ["Dr. Ralf Krestel"],
+            },
+        }
     },
     dbs2: {
         kurz: "DBS II",
@@ -312,9 +357,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Felix Naumann"],
-        nameLV: "Datenbanksysteme II"
+        nameLV: "Datenbanksysteme II",
+        specific: {}
     },
     diskretestrukturen: {
         kurz: "Diskrete Strukturen",
@@ -325,9 +370,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Timo Kötzing", "Prof. Dr. Tobias Friedrich"],
-        nameLV: "Diskrete Strukturen"
+        nameLV: "Diskrete Strukturen",
+        specific: {}
     },
     dschooladvancedtrack: {
         kurz: "D-School Advanced Track",
@@ -338,9 +383,9 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 9,
-        vorher: [],
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "D-School Advanced Track"
+        nameLV: "D-School Advanced Track",
+        specific: {}
     },
     dschoolbasictrack: {
         kurz: "D-School Basic Track",
@@ -351,9 +396,9 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 9,
-        vorher: [],
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "D-School Basic Track"
+        nameLV: "D-School Basic Track",
+        specific: {}
     },
     dschoolfirsttrack: {
         kurz: "D-School First Track",
@@ -364,9 +409,26 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas"
+        nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas",
+        specific: {
+            WS15: {
+                nameLV: "D-School First Track: Introduction to Design Thinking",
+            },
+            WS16: {
+                nameLV: "D-School First Track: Introduction to Design Thinking",
+            },
+            SS15: {
+                nameLV: "D-School First Track: Introduction to Design Thinking",
+            },
+            SS17: {
+                dozent: ["Dr. Claudia Nicolai", "Jeremias Schmitt", "Prof. Ulrich Weinberg"],
+                nameLV: "D-School First Track: Introduction to Design Thinking. Bring Ideas to Life",
+            },
+            SS16: {
+                nameLV: "D-School First Track: Introduction to Design Thinking",
+            },
+        }
     },
     einfuehrungindiealgorithmik: {
         kurz: "Einführung in<br />die Algorithmik",
@@ -377,9 +439,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Pascal Lenzner", "Prof. Dr. Tobias Friedrich"],
-        nameLV: "Einführung in die Algorithmik"
+        nameLV: "Einführung in die Algorithmik",
+        specific: {}
     },
     einfuehrunginformationsvisualisierung: {
         kurz: "Einführung<br />Informationsvisualisierung",
@@ -390,9 +452,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "Einführung Informationsvisualisierung"
+        nameLV: "Einführung Informationsvisualisierung",
+        specific: {}
     },
     einfuehrunginvisualanalytics: {
         kurz: "Einführung in<br />Visual Analytics",
@@ -403,9 +465,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "Einführung in Visual Analytics"
+        nameLV: "Einführung in Visual Analytics",
+        specific: {}
     },
     englischlevel1: {
         kurz: "Englisch (Level 1)",
@@ -416,9 +478,9 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["David Meier"],
-        nameLV: "Fachspezifisches Englisch (Level 1)"
+        nameLV: "Fachspezifisches Englisch (Level 1)",
+        specific: {}
     },
     englischlevel2: {
         kurz: "Englisch (Level 2)",
@@ -429,9 +491,9 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["David Meier"],
-        nameLV: "Fachspezifisches Englisch (Level 2)"
+        nameLV: "Fachspezifisches Englisch (Level 2)",
+        specific: {}
     },
     eventdrivencasemanagement: {
         kurz: "Event-driven<br />Case Management",
@@ -442,9 +504,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Marcin Hewelt", "Prof. Dr. Matthias Weidlich"],
-        nameLV: "Event-driven Case Management"
+        nameLV: "Event-driven Case Management",
+        specific: {}
     },
     gds: {
         kurz: "GdS",
@@ -455,9 +517,9 @@ const data = {
         empfohlen: 1,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Dr.-Ing. Ralf Wollowski"],
-        nameLV: "Grundlagen digitaler Systeme"
+        nameLV: "Grundlagen digitaler Systeme",
+        specific: {}
     },
     grafikprogramming: {
         kurz: "Grafikprogramming",
@@ -468,9 +530,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, ISAE],
         cp: 6,
-        vorher: [],
         dozent: ["Daniel Limberger", "Prof. Dr. Jürgen Döllner", "Stefan Buschmann"],
-        nameLV: "Grafikprogramming mit OpenGL und C++"
+        nameLV: "Grafikprogramming mit OpenGL und C++",
+        specific: {}
     },
     graphentheorie: {
         kurz: "Graphentheorie",
@@ -481,9 +543,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Prof. Dr. Tobias Friedrich"],
-        nameLV: "Graphentheorie"
+        nameLV: "Graphentheorie",
+        specific: {}
     },
     handsoncodingexercisesinlargescalelearni: {
         kurz: "Hands-On Coding Exercises<br />in Large Scale Learni...",
@@ -494,9 +556,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Hands-On Coding Exercises in Large Scale Learning Environments"
+        nameLV: "Hands-On Coding Exercises in Large Scale Learning Environments",
+        specific: {}
     },
     hci1: {
         kurz: "HCI I",
@@ -507,9 +569,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "Designing Interactive Systems"
+        nameLV: "Designing Interactive Systems",
+        specific: {}
     },
     hci2: {
         kurz: "HCI II",
@@ -520,9 +582,13 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "Building Interactive Devices"
+        nameLV: "Building Interactive Devices",
+        specific: {
+            SS15: {
+                nameLV: "HCI: Building Interactive Devices and Computer Vision",
+            },
+        }
     },
     hcipsaugmentrealityvirtualrealityand: {
         kurz: "[HCI PS] Augment Reality,<br />Virtual Reality, and ...",
@@ -533,9 +599,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI Project Seminar Augment Reality, Virtual Reality, and Personal Fabrication"
+        nameLV: "HCI Project Seminar Augment Reality, Virtual Reality, and Personal Fabrication",
+        specific: {}
     },
     hcipsbuildinginteractivesystemsbasedon: {
         kurz: "[HCI PS] Building Interactive<br />Systems based on ...",
@@ -546,9 +612,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI Project Seminar: Building Interactive Systems based on Fabrication and Haptics"
+        nameLV: "HCI Project Seminar: Building Interactive Systems based on Fabrication and Haptics",
+        specific: {}
     },
     hcipsbuildinginteractivesystemsfrom3dp: {
         kurz: "[HCI PS] Building Interactive<br />Systems from 3D-P...",
@@ -559,9 +625,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI Project Seminar on Building Interactive Systems from 3D-Printers"
+        nameLV: "HCI Project Seminar on Building Interactive Systems from 3D-Printers",
+        specific: {}
     },
     hcipspersonalfabricationandhaptics: {
         kurz: "[HCI PS] Personal<br />Fabrication and Haptics",
@@ -572,9 +638,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI Project Seminar Personal Fabrication and Haptics"
+        nameLV: "HCI Project Seminar Personal Fabrication and Haptics",
+        specific: {}
     },
     hcipspersonalfabricationandinteraction: {
         kurz: "[HCI PS] Personal<br />Fabrication and Interaction",
@@ -585,9 +651,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI Project Seminar Personal Fabrication and Interaction"
+        nameLV: "HCI Project Seminar Personal Fabrication and Interaction",
+        specific: {}
     },
     hcipsroboticscodeand3dprinting: {
         kurz: "[HCI PS] Robotics,<br />Code, and 3D Printing",
@@ -598,9 +664,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "HCI Project Seminar on Robotics, Code, and 3D Printing"
+        nameLV: "HCI Project Seminar on Robotics, Code, and 3D Printing",
+        specific: {}
     },
     historyofprogramminglanguages: {
         kurz: "History of<br />Programming Languages",
@@ -611,9 +677,9 @@ const data = {
         empfohlen: "",
         vertiefung: [SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Johannes Henning", "Marcel Taeumel", "Prof. Dr. Robert Hirschfeld", "Toni Mattis"],
-        nameLV: "History of Programming Languages"
+        nameLV: "History of Programming Languages",
+        specific: {}
     },
     identitaetsmanagement: {
         kurz: "Identitätsmanagement",
@@ -624,9 +690,13 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Identitätsmanagement"
+        nameLV: "Identitätsmanagement",
+        specific: {
+            WS15: {
+                dozent: ["Konrad-Felix Krentz", "M.Sc. Christian Tietz", "Prof. Dr. Christoph Meinel"],
+            },
+        }
     },
     informationvisualisationtechniques: {
         kurz: "Information<br />Visualisation Techniques",
@@ -637,9 +707,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "Information Visualisation Techniques for Industrie 4.0"
+        nameLV: "Information Visualisation Techniques for Industrie 4.0",
+        specific: {}
     },
     isec: {
         kurz: "ISec",
@@ -650,9 +720,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Internet-Security - Weaknesses and Targets"
+        nameLV: "Internet-Security - Weaknesses and Targets",
+        specific: {}
     },
     klubsprecher: {
         kurz: "Klubsprecher",
@@ -665,7 +735,8 @@ const data = {
         cp: 3,
         vorher: "",
         dozent: [],
-        nameLV: "Klubsprächertätigkeit über 2 Semester"
+        nameLV: "Klubsprächertätigkeit über 2 Semester",
+        specific: {}
     },
     knowledgediscovery: {
         kurz: "Knowledge Discovery",
@@ -676,9 +747,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. rer. nat. Harald Sack"],
-        nameLV: "Knowledge Discovery with Linked Data"
+        nameLV: "Knowledge Discovery with Linked Data",
+        specific: {}
     },
     knowledgemining: {
         kurz: "Knowledge Mining",
@@ -689,9 +760,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. rer. nat. Harald Sack"],
-        nameLV: "Knowledge Mining"
+        nameLV: "Knowledge Mining",
+        specific: {}
     },
     lerntechnikenundstrategien: {
         kurz: "Lerntechniken<br />und Strategien",
@@ -702,9 +773,22 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Christiane Potzner"],
-        nameLV: "Lerntechniken und Strategien zur Prüfungsvorbereitung"
+        nameLV: "Lerntechniken und Strategien zur Prüfungsvorbereitung",
+        specific: {
+            WS15: {
+                dozent: ["Dr. Rolf Specht"],
+                nameLV: "Professionalisierte Lerntechniken",
+            },
+            SS15: {
+                dozent: ["Dr. Rolf Specht"],
+                nameLV: "Professionalisierte Lerntechniken",
+            },
+            SS16: {
+                dozent: ["Dr. Rolf Specht"],
+                nameLV: "Professionalisierte Lerntechniken",
+            },
+        }
     },
     linux: {
         kurz: "Linux",
@@ -715,9 +799,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Linux for the Masses"
+        nameLV: "Linux for the Masses",
+        specific: {}
     },
     mathematik1: {
         kurz: "Mathematik I",
@@ -728,9 +812,9 @@ const data = {
         empfohlen: 1,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Mathematik I - Diskrete Strukturen und Logik"
+        nameLV: "Mathematik I - Diskrete Strukturen und Logik",
+        specific: {}
     },
     mathematik2: {
         kurz: "Mathematik II",
@@ -741,9 +825,9 @@ const data = {
         empfohlen: 2,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. habil. Ferdinand Börner"],
-        nameLV: "Mathematik II"
+        nameLV: "Mathematik II",
+        specific: {}
     },
     mod1: {
         kurz: "Mod I",
@@ -754,9 +838,16 @@ const data = {
         empfohlen: 1,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Joachim Hänsel", "Maria Maximova", "Prof. Dr. Holger Giese"],
-        nameLV: "Modellierung I"
+        nameLV: "Modellierung I",
+        specific: {
+            WS15: {
+                dozent: ["Prof. Dr. Holger Giese", "Thomas Vogel"],
+            },
+            WS16: {
+                dozent: ["Prof. Dr. Mathias Weske"],
+            },
+        }
     },
     mod2: {
         kurz: "Mod II",
@@ -767,9 +858,13 @@ const data = {
         empfohlen: 2,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Holger Giese"],
-        nameLV: "Modellierung II"
+        nameLV: "Modellierung II",
+        specific: {
+            SS15: {
+                dozent: ["Joachim Hänsel", "Prof. Dr. Holger Giese"],
+            },
+        }
     },
     openhpi: {
         kurz: "openHPI",
@@ -780,9 +875,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Jan Renz", "Prof. Dr. Christoph Meinel", "Thomas Staubitz"],
-        nameLV: "openHPI: Web Accessibility - Opening up web applacations for everyone"
+        nameLV: "openHPI: Web Accessibility - Opening up web applacations for everyone",
+        specific: {}
     },
     pem: {
         kurz: "PEM",
@@ -793,9 +888,14 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Peter Göttel"],
-        nameLV: "Projektentwicklung und- Management: Teammanagement und Softskills in Projekten"
+        nameLV: "Projektentwicklung und- Management: Teammanagement und Softskills in Projekten",
+        specific: {
+            SS15: {
+                dozent: ["Dr. Michaela A.C. Schumacher"],
+                nameLV: "Projektentwicklung und- Management: Teamentwicklung",
+            },
+        }
     },
     pois: {
         kurz: "POIS",
@@ -806,9 +906,13 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
-        nameLV: "Prozessorientierte Informationssysteme"
+        nameLV: "Prozessorientierte Informationssysteme",
+        specific: {
+            WS15: {
+                dozent: ["Prof. Dr. Mathias Weske"],
+            },
+        }
     },
     pois2: {
         kurz: "POIS II",
@@ -819,9 +923,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Mathias Weske"],
-        nameLV: "Prozessorientierte Informationssysteme II"
+        nameLV: "Prozessorientierte Informationssysteme II",
+        specific: {}
     },
     privacyinpublicclouds: {
         kurz: "Privacy in Public Clouds",
@@ -832,9 +936,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Privacy in Public Clouds"
+        nameLV: "Privacy in Public Clouds",
+        specific: {}
     },
     processesanddecisionsinthecloud: {
         kurz: "Processes and<br />Decisions in the Cloud",
@@ -845,9 +949,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
-        nameLV: "Processes and Decisions in the Cloud"
+        nameLV: "Processes and Decisions in the Cloud",
+        specific: {}
     },
     programmierungcomputergrafischerverfahren: {
         kurz: "Programmierung<br />computergrafischer Verfahren",
@@ -858,9 +962,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "Programmierung computergrafischer Verfahren mit C++und OpenGL"
+        nameLV: "Programmierung computergrafischer Verfahren mit C++und OpenGL",
+        specific: {}
     },
     programminglanguages: {
         kurz: "Programming Languages",
@@ -871,9 +975,9 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Johannes Henning", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Toni Mattis"],
-        nameLV: "Programming Languages: Design and Implementation"
+        nameLV: "Programming Languages: Design and Implementation",
+        specific: {}
     },
     pt1: {
         kurz: "PT I",
@@ -884,9 +988,16 @@ const data = {
         empfohlen: 1,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Andreas Polze"],
-        nameLV: "Einführung in die Programmiertechnik I"
+        nameLV: "Einführung in die Programmiertechnik I",
+        specific: {
+            WS15: {
+                dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
+            },
+            WS16: {
+                dozent: ["Prof. Dr. Patrick Baudisch"],
+            },
+        }
     },
     pt2: {
         kurz: "PT II",
@@ -897,9 +1008,16 @@ const data = {
         empfohlen: 2,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Johannes Wolf", "Prof. Dr. Jürgen Döllner"],
-        nameLV: "Einführung in die Programmiertechnik II"
+        nameLV: "Einführung in die Programmiertechnik II",
+        specific: {
+            SS15: {
+                dozent: ["Prof. Dr. Jürgen Döllner"],
+            },
+            SS16: {
+                dozent: ["Prof. Dr. Felix Naumann"],
+            },
+        }
     },
     recht1: {
         kurz: "Recht I",
@@ -910,9 +1028,9 @@ const data = {
         empfohlen: 2,
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Timm Krohn"],
-        nameLV: "Recht für Ingenieure I"
+        nameLV: "Recht für Ingenieure I",
+        specific: {}
     },
     recht2: {
         kurz: "Recht II",
@@ -923,9 +1041,18 @@ const data = {
         empfohlen: 3,
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Timm Krohn", "Prof. Dr. Jan Eickelberg"],
-        nameLV: "Recht für Ingenieure II - Rechtsfragen der Digitalisierung im Geschäftsverkehr"
+        nameLV: "Recht für Ingenieure II - Rechtsfragen der Digitalisierung im Geschäftsverkehr",
+        specific: {
+            WS15: {
+                dozent: ["Dr. Timm Krohn"],
+                nameLV: "Recht für Ingenieure II",
+            },
+            WS16: {
+                dozent: ["Dr. Timm Krohn"],
+                nameLV: "Recht für Ingenieure II",
+            },
+        }
     },
     securecoding: {
         kurz: "Secure Coding",
@@ -936,9 +1063,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Secure Coding"
+        nameLV: "Secure Coding",
+        specific: {}
     },
     semanticmediamining: {
         kurz: "Semantic Media Mining",
@@ -949,9 +1076,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. rer. nat. Harald Sack"],
-        nameLV: "Semantic Media Mining"
+        nameLV: "Semantic Media Mining",
+        specific: {}
     },
     seminarraeumlichedatenundraumzeitlichedaten: {
         kurz: "Seminar Räumliche Daten<br />und raumzeitliche Daten",
@@ -962,9 +1089,9 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Jürgen Döllner"],
-        nameLV: "Seminar Räumliche Daten und raumzeitliche Daten"
+        nameLV: "Seminar Räumliche Daten und raumzeitliche Daten",
+        specific: {}
     },
     softwaremodularitaet: {
         kurz: "Softwaremodularität",
@@ -975,9 +1102,9 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Johannes Henning", "Marcel Taeumel", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Toni Mattis"],
-        nameLV: "Softwaremodularität"
+        nameLV: "Softwaremodularität",
+        specific: {}
     },
     stubs: {
         kurz: "StubS",
@@ -988,9 +1115,9 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 0,
-        vorher: [],
         dozent: ["Dr.-Ing. Ralf Wollowski"],
-        nameLV: "Studienbegleitendes Seminar"
+        nameLV: "Studienbegleitendes Seminar",
+        specific: {}
     },
     swa: {
         kurz: "SWA",
@@ -1001,9 +1128,16 @@ const data = {
         empfohlen: 3,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tobias Pape", "Toni Mattis"],
-        nameLV: "Softwarearchitektur"
+        nameLV: "Softwarearchitektur",
+        specific: {
+            WS15: {
+                dozent: ["Dr. Michael Perscheid", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape"],
+            },
+            WS16: {
+                dozent: ["Dr. Michael Perscheid", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape"],
+            },
+        }
     },
     swqualitaet: {
         kurz: "SWQualität",
@@ -1014,9 +1148,9 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Joachim Hänsel", "Prof. Dr. Holger Giese"],
-        nameLV: "Softwarequalität"
+        nameLV: "Softwarequalität",
+        specific: {}
     },
     swt1: {
         kurz: "SWT I",
@@ -1027,9 +1161,16 @@ const data = {
         empfohlen: 4,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
-        nameLV: "Softwaretechnik I"
+        nameLV: "Softwaretechnik I",
+        specific: {
+            SS15: {
+                dozent: ["Dr. Michael Perscheid", "Prof. Dr. Robert Hirschfeld"],
+            },
+            SS16: {
+                dozent: ["Dr. Michael Perscheid", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
+            },
+        }
     },
     swt2: {
         kurz: "SWT II",
@@ -1040,9 +1181,15 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Matthias Uflacker"],
-        nameLV: "Softwaretechnik II - Agile Software Development in Large Teams"
+        nameLV: "Softwaretechnik II - Agile Software Development in Large Teams",
+        specific: {
+            WS15: {
+                lehrform: ["Vorlesung"],
+                dozent: ["Arian Treffer", "Dr. Matthias Uflacker", "Keven Richly", "Ralf Teusner"],
+                nameLV: "Softwaretechnik II",
+            },
+        }
     },
     testdrivenlearningassignments: {
         kurz: "Test-Driven Learning<br />Assignments",
@@ -1053,9 +1200,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Christiane Hagedorn", "Prof. Dr. Christoph Meinel", "Ralf Teusner", "Thomas Staubitz"],
-        nameLV: "Test-Driven Learning Assignments"
+        nameLV: "Test-Driven Learning Assignments",
+        specific: {}
     },
     textmining: {
         kurz: "Text Mining",
@@ -1066,9 +1213,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Ralf Krestel"],
-        nameLV: "Text Mining"
+        nameLV: "Text Mining",
+        specific: {}
     },
     ti1: {
         kurz: "TI I",
@@ -1079,9 +1226,9 @@ const data = {
         empfohlen: 3,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Tobias Friedrich"],
-        nameLV: "Theoretische Informatik I"
+        nameLV: "Theoretische Informatik I",
+        specific: {}
     },
     ti2: {
         kurz: "TI II",
@@ -1092,9 +1239,13 @@ const data = {
         empfohlen: 4,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Tobias Friedrich"],
-        nameLV: "Theoretische Informatik II"
+        nameLV: "Theoretische Informatik II",
+        specific: {
+            SS15: {
+                dozent: ["Prof. Dr. Jürgen Dassow"],
+            },
+        }
     },
     ueberzeugendpraesentieren: {
         kurz: "Überzeugend<br />Präsentieren",
@@ -1105,9 +1256,9 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Werner Dieball"],
-        nameLV: "Überzeugend Präsentieren - der erste Eindruck zählt"
+        nameLV: "Überzeugend Präsentieren - der erste Eindruck zählt",
+        specific: {}
     },
     unternehmensanwendungen: {
         kurz: "Unternehmensanwendungen",
@@ -1118,9 +1269,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        vorher: [],
         dozent: ["Dr. Matthias Uflacker"],
-        nameLV: "Unternehmensanwendungen: Prozesse, Modelle und Implementierung"
+        nameLV: "Unternehmensanwendungen: Prozesse, Modelle und Implementierung",
+        specific: {}
     },
     vhdl: {
         kurz: "VHDL",
@@ -1131,9 +1282,9 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Dr.-Ing. Ralf Wollowski"],
-        nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL"
+        nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL",
+        specific: {}
     },
     wahrscheinlichkeitstheorie: {
         kurz: "Wahrscheinlichkeitstheorie",
@@ -1144,9 +1295,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Dr. Timo Kötzing"],
-        nameLV: "Wahrscheinlichkeitstheorie"
+        nameLV: "Wahrscheinlichkeitstheorie",
+        specific: {}
     },
     webprogrammierungundwebframeworks: {
         kurz: "Web-Programmierung<br />und Web-Frameworks",
@@ -1157,9 +1308,9 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, ISAE, OSIS, SAMT],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Web-Programmierung und Web-Frameworks"
+        nameLV: "Web-Programmierung und Web-Frameworks",
+        specific: {}
     },
     weiterfuehrendethemenzuwww: {
         kurz: "Weiterführende<br />Themen zu WWW",
@@ -1170,9 +1321,9 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 3,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien"
+        nameLV: "Weiterführende Themen zu Internet- und WWW-Technologien",
+        specific: {}
     },
     wirtschaft: {
         kurz: "Wirtschaft",
@@ -1183,9 +1334,9 @@ const data = {
         empfohlen: 1,
         vertiefung: [],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Katharina Hölzle"],
-        nameLV: "Wirtschaftliche Grundlagen"
+        nameLV: "Wirtschaftliche Grundlagen",
+        specific: {}
     },
     www: {
         kurz: "WWW",
@@ -1196,8 +1347,8 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, ISAE],
         cp: 6,
-        vorher: [],
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Internet- und WWW-Technologien"
+        nameLV: "Internet- und WWW-Technologien",
+        specific: {}
     },
 };

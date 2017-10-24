@@ -30,7 +30,7 @@ print 'String script...'
 data = {}
 
 
-def merge(newLV, oldLV, parameter, isList):
+def merge(newLV, oldLV, parameter):
     """print a merge problem warning, and merge"""
 
     newValue = newLV.get(parameter)
@@ -50,20 +50,26 @@ def mergeLV(newLV):
        "Klubsprecher" in newLV['lehrform']:
         return
     lvID = newLV['id']
-    oldLV = data.get(lvID)
-    if oldLV is None:
-        data[lvID] = newLV
-        return
-    for parameter in ['cp', 'nameLV', 'kurz', 'pflicht']:
-        if oldLV[parameter] != newLV[parameter]:
-            merge(newLV, oldLV, parameter, False)
-    for listParameter in ['dozent', 'lehrform', 'vertiefung', 'modul']:
-        oldSet = set(oldLV[listParameter])
-        newSet = set(newLV[listParameter])
-        if newSet != oldSet:
-            merge(newLV, oldLV, listParameter, True)
-    newSemesters = oldLV['semester'] + newLV['semester']
-    oldLV['semester'] = sorted(list(set(newSemesters)))
+    lv = data.get(lvID)
+    if lv is None:
+        lv = newLV
+        lv['specific'] = {}
+        data[lvID] = lv
+
+    for parameter in ['kurz', 'pflicht', 'modul', 'vertiefung', 'empfohlen']:
+        if lv[parameter] != newLV[parameter]:
+            print "[WARN!] Information mismatch in " + newLV['id'] + " (parameter " + parameter + "): \n" \
+                  "  old value: " + str(lv[parameter]) + "\n" \
+                  "  new value: " + str(newLV[parameter])
+        lv[parameter] = newLV[parameter]
+
+    lv['specific'][newLV['semester'][0]] = {}
+    for parameter in ['nameLV', 'dozent', 'lehrform', 'cp']:
+        lv['specific'][newLV['semester'][0]][parameter] = newLV[parameter]
+        lv[parameter] = newLV[parameter]
+
+    newSemesters = lv['semester'] + newLV['semester']
+    lv['semester'] = sorted(list(set(newSemesters)))
 
 
 
@@ -96,13 +102,40 @@ data['klubsprecher'] = {
     'modul': ['Softskills'],
     'nameLV': 'Klubsprächertätigkeit über 2 Semester',
     'semester': data['englischlevel1']['semester'],
-    'vertiefung': []
+    'vertiefung': [],
+    specific: {}
 }
 
 
 
+
+# now clean up the data
+# delete all specific info that is not needed
+for lvKey in data:
+    lv = data[lvKey]
+    specific = lv['specific']
+
+    semestersToDelete = []
+    for semesterKey in specific:
+        semester = specific[semesterKey]
+        trimmed = {}
+        for param in semester:
+            generalValue = lv[param]
+            specificValue = semester[param]
+            if specificValue != generalValue:
+                trimmed[param] = specificValue
+        if len(trimmed) > 0:
+            specific[semesterKey] = trimmed
+        else:
+            semestersToDelete.append(semesterKey)
+    for semester in semestersToDelete:
+        del specific[semester]
+
+
+
+
 vertiefungen = ['OSIS', 'SAMT', 'ISAE', 'HCGT', 'BPET']
-wantedLVproperties = ['kurz', 'lehrform', 'modul', 'semester', 'pflicht', 'empfohlen', 'vertiefung', 'cp', 'vorher', 'dozent', 'nameLV']
+wantedLVproperties = ['kurz', 'lehrform', 'modul', 'semester', 'pflicht', 'empfohlen', 'vertiefung', 'cp', 'dozent', 'nameLV']
 serilaizingReplacements = {}
 for vertiefung in vertiefungen:
     serilaizingReplacements['"' + vertiefung.strip() + '"'] = vertiefung.strip()
@@ -111,6 +144,21 @@ for year in xrange(START_SEMESTER, END_SEMESTER + 1):
         'ws' + str(year) + '_' + str(year + 1)
     serilaizingReplacements['"SS' + str(year) + '"'] = \
         'ss' + str(year)
+
+def serializeProperty(indent, name, object):
+    line = ''
+    for i in range(indent):
+        line += '    '
+    line += name + ': '
+    serializedValue = json.dumps(object, ensure_ascii=False, sort_keys=True)
+    for toReplace in serilaizingReplacements:
+        replacement = serilaizingReplacements[toReplace]
+        serializedValue = serializedValue.replace(toReplace, replacement)
+
+    line += serializedValue
+    return line
+
+
 
 
 
@@ -169,18 +217,22 @@ for lvID in sorted(data.iterkeys()):
     f.write('    ' + lvID + ': {\n')
 
     for lvProperty in wantedLVproperties:
-        f.write('        ' + lvProperty + ': ')
-        propertyValue = lv.get(lvProperty, '')
-        serializedValue = json.dumps(propertyValue, ensure_ascii=False, sort_keys=True)
-        for toReplace in serilaizingReplacements:
-            replacement = serilaizingReplacements[toReplace]
-            serializedValue = serializedValue.replace(toReplace, replacement)
+        f.write(serializeProperty(2, lvProperty, lv.get(lvProperty, '')))
+        f.write(',\n')
 
-        f.write(serializedValue)
-        if lvProperty != wantedLVproperties[len(wantedLVproperties) - 1]:
-            f.write(',')
-        f.write('\n')
-
+    if len(lv['specific']) > 0:
+        f.write('        specific: {\n')
+        for semester in lv['specific']:
+            f.write('            ' + semester + ': {\n')
+            for versionParameter in lv['specific'][semester]:
+                f.write(serializeProperty(4, versionParameter, lv['specific'][semester][versionParameter]))
+                if versionParameter != semester[len(semester) - 1]:
+                    f.write(',')
+                f.write('\n')
+            f.write('            },\n')
+        f.write('        }\n')
+    else:
+        f.write('        specific: {}\n')
     f.write('    },\n')
 f.write('};\n')
 f.close()
