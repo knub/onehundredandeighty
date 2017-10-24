@@ -735,7 +735,8 @@ const data = {
         cp: 3,
         vorher: "",
         dozent: [],
-        nameLV: "Klubsprächertätigkeit über 2 Semester"
+        nameLV: "Klubsprächertätigkeit über 2 Semester",
+        specific: {}
     },
     knowledgediscovery: {
         kurz: "Knowledge Discovery",

@@ -5,7 +5,29 @@
 // https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/studien_pruefungsordnung_2010_01.pdf
 // https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/StudOrd_Bachelor_2016.pdf
 
-
+/**
+ * get the value of data[course][parameter], for a given Semester
+ * @param course the course id
+ * @param parameter the parameter name
+ * @param semesterNumber the number of the semester to get information for
+ */
+function getCourseParameter(course, parameter, semesterNumber) {
+    if (semesterNumber === undefined) {
+        semesterNumber = f.getSemester(course);
+    }
+    let semesterName = 'general';
+    if (semesterNumber >= 0) {
+        semesterName = semesterManager.shownSemesters[semesterNumber - 1].substr(0, 4);
+    }
+    const specific = data[course].specific[semesterName];
+    if (specific !== undefined) {
+        const specificParameter = specific[parameter];
+        if (specificParameter !== undefined) {
+            return specificParameter;
+        }
+    }
+    return data[course][parameter];
+}
 
 
 /**

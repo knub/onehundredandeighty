@@ -121,6 +121,7 @@ const Semester = class {
             const obj = $('#course-' + course);
             obj.detach();
             this.container.append(obj);
+            Course.get(course).updateDisplayInformation();
         }
     }
     sortContent() {
@@ -139,7 +140,7 @@ const Semester = class {
             } else if (course === 'ba') {
                 return 2;
             } else {
-                if (data[course].modul.includes('Softskills')) {
+                if (getCourseParameter(course, 'modul').includes('Softskills')) {
                     return 4;
                 } else {
                     return 3;
@@ -202,7 +203,10 @@ const Course = class {
     constructor(id) {
         this.id = id;
         this.container =  $('#course-' + id);
-        this.nameText = $('#course-' + id + '-name');
+        this.courseInfo = ['kurz', 'modul', 'dozent', 'lehrform', 'vertiefung', 'semester', 'cp']
+            .map((parameter) => [parameter, $('#courseInfo-' + this.id + '-' + parameter)])
+            .reduce((dict, [parameter, element]) => {dict[parameter]=element; return dict}, {});
+        this.nameText = this.courseInfo['kurz'];
         this.gradeInput = $('#course-' + id + '-gradeinput');
         this.editGradeButton = $('#course-' + id + '>button');
         this.updateGradeButton();
@@ -210,8 +214,15 @@ const Course = class {
     offeredInSemester(semesterNumber) {
         return semesterManager.courseOfferedInSemester(this.id, semesterNumber)
     }
-    data() {
-        return data[this.id];
+    updateDisplayInformation() {
+        for (const parameter in this.courseInfo) {
+            const element = this.courseInfo[parameter];
+            let newValue = getCourseParameter(this.id, parameter);
+            if (Array.isArray(newValue)) {
+                newValue = newValue.join(", ");
+            }
+            $(element).text(newValue);
+        }
     }
     getGradeString(format) {
         return gradeManager.getString(this.id, format);
@@ -266,7 +277,9 @@ const Course = class {
         }
     }
     onDragStart() {}
-    onDragEnd() {}
+    onDragEnd() {
+        this.updateDisplayInformation();
+    }
     static initEvents() {
         /* the following functions define the grade-editing behaviour */
         f.coursesUl.find("li").delegate("button", "click", function() {
@@ -303,6 +316,7 @@ const Bachelorproject = class extends Course {
         this.editGradeButton2 = $("#course-bp2>button");
         this.updateGradeButton();
     }
+    updateDisplayInformation() {}
 
     updateGradeButton() {
         if (!this.editGradeButton2) return;
@@ -319,6 +333,7 @@ const Bachelorproject = class extends Course {
         $('#course-ba').addClass(f.disabledClass);
     }
     onDragEnd() {
+        super.onDragEnd();
         $('#course-bp2').removeClass(f.disabledClass);
         $('#course-ba').removeClass(f.disabledClass);
         const mySemester = f.getSemester(this.id);
@@ -332,6 +347,7 @@ const Bachelorproject2 = class extends Course {
         this.bp = bp;
         this.updateGradeButton();
     }
+    updateDisplayInformation() {}
     updateGradeButton() {
         if (!this.bp) return;
         this.bp.updateGradeButton();
@@ -350,6 +366,7 @@ const Bachelorproject2 = class extends Course {
         $('#course-ba').addClass(f.disabledClass);
     }
     onDragEnd() {
+        super.onDragEnd();
         $('#course-bp').removeClass(f.disabledClass);
         $('#course-ba').removeClass(f.disabledClass);
         const mySemester = f.getSemester(this.id);
@@ -361,11 +378,13 @@ const Bachelorarbeit = class extends Course {
     constructor() {
         super("ba");
     }
+    updateDisplayInformation() {}
     onDragStart() {
         $('#course-bp').addClass(f.disabledClass);
         $('#course-bp2').addClass(f.disabledClass);
     }
     onDragEnd() {
+        super.onDragEnd();
         $('#course-bp').removeClass(f.disabledClass);
         $('#course-bp2').removeClass(f.disabledClass);
         const mySemester = f.getSemester(this.id);
@@ -401,21 +420,21 @@ const frontend = {
         },
         /* see checkSemester for documentation, same procedure */
         checkModule(key) {
-            return this.selectedModule.haveIntersection(data[key].modul.map(toModulDisplayName));
+            return this.selectedModule.haveIntersection(getCourseParameter(key, 'modul').map(toModulDisplayName));
         },
         /* see checkSemester for documentation, same procedure */
         checkVertiefungsgebiete(key) {
-            if (data[key].vertiefung.length === 0) return true;
-            return this.selectedVertiefungsgebiete.haveIntersection(data[key].vertiefung);
+            if (getCourseParameter(key, 'vertiefung').length === 0) return true;
+            return this.selectedVertiefungsgebiete.haveIntersection(getCourseParameter(key, 'vertiefung'));
         },
         /* see checkSemester for documentation, same procedure */
         checkWahlpflicht(key) {
             // if both 'Wahl' and 'Pflicht' are in the array, its always true
             if (this.selectedWahlpflicht.indexOf("Wahl") !== - 1 && this.selectedWahlpflicht.indexOf("Pflicht") !== - 1) return true;
             // if its only 'Pflicht' return true, when the course is 'Pflicht'
-            else if (this.selectedWahlpflicht[0] === "Pflicht") return data[key].pflicht;
+            else if (this.selectedWahlpflicht[0] === "Pflicht") return getCourseParameter(key, 'pflicht');
             // if its only 'Wahl' return true, when the course is not 'Pflicht'
-            else if (this.selectedWahlpflicht[0] === "Wahl") return ! data[key].pflicht;
+            else if (this.selectedWahlpflicht[0] === "Wahl") return ! getCourseParameter(key, 'pflicht');
             // if nothing is selected, return false
             return false;
         },
@@ -520,12 +539,12 @@ const frontend = {
                 const course = possibility[j];
 
                 if (vertiefungCombo0.includes(course.vertiefung)) {
-                    first.push(f.adjustShortCourseName(data[course.key].kurz));
-                    firstCP += data[course.key].cp;
+                    first.push(f.adjustShortCourseName(getCourseParameter(course.key, 'kurz')));
+                    firstCP += getCourseParameter(course.key, 'cp');
                 }
                 else if (vertiefungCombo1.includes(course.vertiefung)) {
-                    second.push(f.adjustShortCourseName(data[course.key].kurz));
-                    secondCP += data[course.key].cp;
+                    second.push(f.adjustShortCourseName(getCourseParameter(course.key, 'kurz')));
+                    secondCP += getCourseParameter(course.key, 'cp');
                 }
             }
             const firstLectures = [];
@@ -541,7 +560,7 @@ const frontend = {
                 finalGrade = "<span class='finalGrade'>" + number.slice(0, 3) + "<span class='grade-unimportant-part'>" + number.substr(3) + "</span></span>";
             }
             const sbsString = 'BS, &nbsp; ' + possibility.sbs.map(function({key}) {
-                return data[key].kurz;
+                return getCourseParameter(key, 'kurz');
             }).join(', &nbsp; ');
 
 
@@ -605,7 +624,7 @@ const frontend = {
             return isNaN(gradeManager.get(course));
         }
         function needsGrade(course) {
-            return NEUE_STUDIENORDNUNG || !data[course].modul.includes('Softskills')
+            return NEUE_STUDIENORDNUNG || getCourseParameter(course, 'modul').includes('Softskills')
         }
         function courseToSelector(course) {
             if (course === 'bp')
@@ -662,7 +681,7 @@ const frontend = {
             if (exceptionCourses.length > 0) {
                 resultColor = '#c27100';
                 let exceptionMessage = "Die Verfügbarkeit von folgenden Veranstaltungen ist nicht gesichert: ";
-                exceptionMessage += exceptionCourses.map(function(course) {return data[course].kurz}).join(', ');
+                exceptionMessage += exceptionCourses.map(function(course) {return getCourseParameter(course, 'kurz')}).join(', ');
                 messageUl.append("<li>" + exceptionMessage + "</li>");
             }
 
@@ -842,8 +861,7 @@ const frontend = {
         const parent = $("#course-" + course).parent();
         const id = parent.attr("id");
         if (id === undefined) {
-            console.log(course);
-            console.log(parent);
+            return -1;
         }
         if (id.substr(0, 5) === "extra") {
             return -1;
@@ -858,27 +876,26 @@ const frontend = {
      * key: The course's key to information in data.
      */
     buildCourseData(id) {
-        const course = data[id];
         const courseInfo = "<div class='info'>" +
-            "<h3>" + course['nameLV'] + "</h3>" +
+            "<h3>" + getCourseParameter(id, 'nameLV') + "</h3>" +
             "<div>" +
                 "<table>" +
-                    f.displayArray(course['modul'], "Modul") +
-                    f.displayArray(course['dozent'], "Dozent") +
+                    f.displayArray(getCourseParameter(id, 'modul'), "Modul", "courseInfo-" + id + "-modul") +
+                    f.displayArray(getCourseParameter(id, 'dozent'), "Dozent", "courseInfo-" + id + "-dozent") +
                     "<tr>" +
                         "<td>Leistungspunkte</td>" +
-                        "<td>" + course['cp'] + " Leistungspunkte</td>" +
+                        "<td id='courseInfo-" + id + "-cp'>" + getCourseParameter(id, 'cp') + " Leistungspunkte</td>" +
                     "</tr>" +
-                    f.displayArray(course['lehrform'], "Lehrform") +
-                    f.displayArray(course['vertiefung'].map(toOldVertiefungsgebietNames), "Vertiefungsgebiet") +
-                    f.displayArray(course['semester'], "Angeboten im") +
+                    f.displayArray(getCourseParameter(id, 'lehrform'), "Lehrform", "courseInfo-" + id + "-lehrform") +
+                    f.displayArray(getCourseParameter(id, 'vertiefung').map(toOldVertiefungsgebietNames), "Vertiefungsgebiet", "courseInfo-" + id + "-vertiefung") +
+                    f.displayArray(getCourseParameter(id, 'semester'), "Angeboten im", "courseInfo-" + id + "-semester") +
                 "</table>" +
             "</div>" +
         "</div>";
 
         // if item contains no newline break, apply specific css class (which sets line-height higher, so text is vertically aligned)
         const classes = [];
-        if (course['kurz'].indexOf("<br />") === - 1) {
+        if (getCourseParameter(id, 'kurz').indexOf("<br />") === - 1) {
             classes.push("oneliner");
         }
         let cssclass = "";
@@ -886,7 +903,7 @@ const frontend = {
             cssclass = " class='" + classes.join(" ") + "'";
 
         return "<li" + cssclass + " id='course-" + id + "'>" +
-                    "<span id='course-" + id + "-name'>" + course['kurz'] + "</span>" +
+                    "<span id='courseInfo-" + id + "-kurz'>" + getCourseParameter(id, 'kurz') + "</span>" +
                     "<input type='text' id='course-" +  id + "-gradeinput' class='courseGradeInput'/>" +
                     "<button class='bold'>" +
                         "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>" +
@@ -1010,12 +1027,12 @@ const frontend = {
         f.coursesPoolHeight = Math.ceil(shownCourses / 6);
     },
     /* used to display informationen from an array in a nice way, used for tooltips */
-    displayArray(value, headline) {
+    displayArray(value, headline, id) {
         if (value === undefined || !Array.isArray(value) || value.length === 0 || value[0] === "")
             return "";
         return "<tr>" +
                    "<td>" + headline + "</td>" +
-                   "<td>" + value.join(", ") + "</td>" +
+                   '<td id="' + id + '">' + value.join(", ") + "</td>" +
                "</tr>";
     },
     /* used to initialize course pool filter with correct selectors */
@@ -1180,7 +1197,7 @@ $(function() {
 
     //add BP/BA objects
     const bp = "<li class=\"oneliner double-time bp_ba\" id='course-bp'>\n" +
-        "<span id='course-bp-name'>Bachelorprojekt</span>\n" +
+        "<span id='courseInfo-bp-kurz'>Bachelorprojekt</span>\n" +
         "<input type='text' id='course-bp-gradeinput' class='courseGradeInput'/>\n" +
         "<button>\n" +
         "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>\n" +
@@ -1189,7 +1206,7 @@ $(function() {
         "</li>";
     $("#semester5").append(bp);
     const bp2 = "<li class=\"oneliner triple-time bp_ba\" id='course-bp2'>\n" +
-        "<span id='course-bp2-name'>Bachelorprojekt</span>\n" +
+        "<span id='courseInfo-bp2-kurz'>Bachelorprojekt</span>\n" +
         "<input type='text' id='course-bp2-gradeinput' class='courseGradeInput'/>\n" +
         "<button>\n" +
         "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>\n" +
@@ -1198,7 +1215,7 @@ $(function() {
         "</li>";
     $("#semester6").append(bp2);
     const ba = "<li class=\"oneliner double-time bp_ba\" id='course-ba'>\n" +
-        "<span id='course-ba-name'>Bachelorarbeit</span>\n" +
+        "<span id='courseInfo-ba-kurz'>Bachelorarbeit</span>\n" +
         "<input type='text' id='course-ba-gradeinput' class='courseGradeInput'/>\n" +
         "<button>\n" +
         "<div class='info grade-info'>Hier klicken, um deine Note für diese Veranstaltung einzutragen.</div>\n" +
@@ -1217,7 +1234,6 @@ $(function() {
     // for each course in data
     for (const key in data) {
         if (!data.hasOwnProperty(key)) continue;
-        const course = data[key];
 
         // build list item and associated .info for tooltip
         const html = f.buildCourseData(key);
@@ -1228,13 +1244,17 @@ $(function() {
         // if this is the case, use this information
         if (localStorage.onehundredandeighty_courseToSemester !== undefined && localStorage.onehundredandeighty_courseToSemester !== null) {
             const semester = JSON.parse(localStorage.onehundredandeighty_courseToSemester)[key];
-            if (semester === undefined || semester === -1) coursesPoolItems += html;
-            else if (semester >= 0) $("#semester" + JSON.parse(localStorage.onehundredandeighty_courseToSemester)[key]).append(html);
+            if (semester === undefined || semester === -1)
+                coursesPoolItems += html;
+            else if (semester >= 0) {
+                $("#semester" + JSON.parse(localStorage.onehundredandeighty_courseToSemester)[key]).append(html);
+                Course.get(key).updateDisplayInformation();
+            }
         }
         // else use standard behaviour
         else {
             // if it is not recommended for a specific semester ..
-            if (course['empfohlen'] === "") {
+            if (getCourseParameter(key, 'empfohlen') === "") {
                 // .. put it in the courses pool
                 // for now, putting in the first ul is ok, because whole courses-pool will be rearranged afterwards
                 coursesPoolItems += html;
@@ -1242,7 +1262,8 @@ $(function() {
             // if it is recommended for a specific semester ..
             else {
                 // .. just put it there.
-                $("#semester" + course['empfohlen']).append(html);
+                $("#semester" + getCourseParameter(key, 'empfohlen')).append(html);
+                Course.get(key).updateDisplayInformation();
             }
         }
     }
