@@ -216,12 +216,13 @@ const Course = class {
     }
     updateDisplayInformation() {
         for (const parameter in this.courseInfo) {
+            if (!this.courseInfo.hasOwnProperty(parameter)) continue;
             const element = this.courseInfo[parameter];
             let newValue = getCourseParameter(this.id, parameter);
             if (Array.isArray(newValue)) {
                 newValue = newValue.join(", ");
             }
-            $(element).text(newValue);
+            $(element).html(newValue);
         }
     }
     getGradeString(format) {

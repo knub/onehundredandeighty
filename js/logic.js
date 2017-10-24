@@ -130,7 +130,7 @@ const semesterManager = {
             && semesters.includes(this.referenceSemester2For(semesterName))) {
             return true
         }
-        if (data[course].kurz === 'VHDL') {
+        if (getCourseParameter(course, 'kurz') === 'VHDL') {
             const ws_ss = semesterName.substr(0, 2);
             const num = parseInt(semesterName.substr(2, 2));
             return (ws_ss === 'SS') && (num % 2 === 0)
@@ -285,7 +285,7 @@ function allBelegteCoursesInSemester(getSemester, semesterID) {
 }
 function isModul(type) {
     return function(id) {
-        return data[id].modul.includes(type);
+        return getCourseParameter(id, 'modul').includes(type);
     }
 }
 function not(f) {
@@ -294,7 +294,7 @@ function not(f) {
     }
 }
 function courseToCP(id) {
-    return data[id].cp;
+    return getCourseParameter(id, 'cp');
 }
 
 
@@ -312,7 +312,7 @@ ruleManager.rules.push(function timeRule(getSemester) {
         return {
             course: id,
             type: "timeRule",
-            message: "Die Veranstaltung '" + data[id].nameLV + "' wird im gewählten " + getSemester(id) + ". Semester nicht angeboten."
+            message: "Die Veranstaltung '" + getCourseParameter(id, 'nameLV') + "' wird im gewählten " + getSemester(id) + ". Semester nicht angeboten."
         };
     }
 
@@ -323,7 +323,7 @@ ruleManager.rules.push(function timeRule(getSemester) {
 
 ruleManager.rules.push(function mustDoRule(getSemester) {
     function mustDoCourse(id) {
-        return data[id].pflicht;
+        return getCourseParameter(id, 'pflicht');
     }
     function courseNotBelegt(id) {
         return getSemester(id) === -1
@@ -331,7 +331,7 @@ ruleManager.rules.push(function mustDoRule(getSemester) {
     function createErrorMessage(id) {
         return {
             type: "mustDoRule",
-            message: "Die Veranstaltung '" + data[id].nameLV + "' muss belegt werden."
+            message: "Die Veranstaltung '" + getCourseParameter(id, 'nameLV') + "' muss belegt werden."
         };
     }
 
@@ -404,8 +404,8 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
      * eventually, only those options with exactly 3 SBS are used further
      */
     const vertiefungenWithOptions = currentlyBelegteVertiefungen.map(function(course) {
-        const vertiefungen = data[course].vertiefung.slice(0);
-        for (const sb of data[course].modul) {
+        const vertiefungen = getCourseParameter(course, 'vertiefung').slice(0);
+        for (const sb of getCourseParameter(course, 'modul')) {
             if (sb.startsWith('SB')) {
                 vertiefungen.push(sb);
             }
@@ -517,7 +517,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         return vertiefungen;
     }
     function isSSK(course) {
-        return data[course].modul.includes('Softskills');
+        return getCourseParameter(course, 'modul').includes('Softskills');
     }
 
 
@@ -551,7 +551,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         const firstVertiefungLectures = [];
         const secondVertiefungLectures = [];
         combination.forEach(function(interpretation) {
-            if (data[interpretation.key].lehrform.includes("Vorlesung")) {
+            if (getCourseParameter(interpretation.key, 'lehrform').includes("Vorlesung")) {
                 // check where this Vorlesung belongs to
                 if (interpretation.vertiefung === combination.vertiefungCombo[0]) {
                     firstVertiefungLectures.push(data[interpretation.key]);
@@ -582,7 +582,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 return function(course) {
                     return {
                         grade: gradeManager.get(course),
-                        weight: weight * data[course].cp
+                        weight: weight * getCourseParameter(course, 'cp')
                     };
                 };
             };
@@ -612,9 +612,9 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             let best6cp;
             let best31, best32;
             for (let i = 0; i < ssks.length; i++) {
-                if (best6cp === undefined && data[ssks[i]].cp === 6)
+                if (best6cp === undefined && getCourseParameter(ssks[i], 'cp') === 6)
                     best6cp = ssks[i];
-                else if (data[ssks[i]].cp === 3) {
+                else if (getCourseParameter(ssks[i], 'cp') === 3) {
                     if (best31 === undefined)
                         best31 = ssks[i];
                     else if (best32 === undefined)
@@ -658,7 +658,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 return courses.map(function (course) {
                     return {
                         grade: gradeManager.get(course),
-                        weight: weights[i++] * data[course].cp
+                        weight: weights[i++] * getCourseParameter(course, 'cp')
                     }
                 })
             };
@@ -698,7 +698,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 .map(function ({key}) {
                     return {
                         grade: gradeManager.get(key),
-                        weight: 3 * data[key].cp
+                        weight: 3 * getCourseParameter(key, 'cp')
                     }
                 }));
             courseWeights.push({
