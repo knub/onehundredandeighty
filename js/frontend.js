@@ -625,7 +625,7 @@ const frontend = {
             return isNaN(gradeManager.get(course));
         }
         function needsGrade(course) {
-            return NEUE_STUDIENORDNUNG || getCourseParameter(course, 'modul').includes('Softskills')
+            return NEUE_STUDIENORDNUNG || !getCourseParameter(course, 'modul').includes('Softskills')
         }
         function courseToSelector(course) {
             if (course === 'bp')
