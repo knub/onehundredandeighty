@@ -92,6 +92,19 @@ parseMultiple(START_SEMESTER, END_SEMESTER)
 include(parseSemester('now'), CURRENT_SEMESTER)
 
 
+data['klubsprecher'] = {
+    'cp': 3,
+    'dozent': [],
+    'empfohlen': '',
+    'id': 'klubsprecher',
+    'kurz': 'Klubsprecher',
+    'lehrform': [],
+    'modul': ['Softskills'],
+    'nameLV': 'Klubsprächertätigkeit über 2 Semester',
+    'semester': data['englischlevel1']['semester'],
+    'vertiefung': []
+}
+
 
 
 

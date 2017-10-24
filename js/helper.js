@@ -127,10 +127,16 @@ Array.prototype.equals = function(other) {
     if (this.length !== other.length) {
         return false;
     }
-    for(var i = 0; i < this.length; i++) {
+    for(let i = 0; i < this.length; i++) {
         if (this[i] !== other[i]) {
             return false;
         }
     }
+    return true;
+};
+
+Set.prototype.equals = function (other) {
+    if (this.size !== other.size) return false;
+    for (const a of this) if (!other.has(a)) return false;
     return true;
 };
