@@ -52,8 +52,7 @@ const semesterManager = {
         this.removeTimeExceptionIfAble(course, semesterNumber);
     },
     removeTimeExceptionIfAble(course, semesterNumber) {
-        if (semesterNumber < 0) return;
-        if (this.courseOfferedInSemester(course, semesterNumber, false)) {
+        if (semesterNumber < 0 || this.courseOfferedInSemester(course, semesterNumber, false)) {
             this.exceptions[course] = undefined;
         }
     },
