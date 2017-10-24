@@ -99,19 +99,6 @@ const data = {
         nameLV: "Big Data Security Analytics",
         specific: {}
     },
-    beautifuldata: {
-        kurz: "Beautiful Data",
-        lehrform: ["Seminar"],
-        modul: ["Vertiefungsgebiete"],
-        semester: [ws17_18],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [BPET, OSIS],
-        cp: 3,
-        dozent: ["Prof. Dr. Felix Naumann"],
-        nameLV: "Beautiful Data",
-        specific: {}
-    },
     bildundvideoprozessierung: {
         kurz: "Bild- und<br />Videoprozessierung",
         lehrform: ["Projekt", "Seminar"],
@@ -733,7 +720,6 @@ const data = {
         empfohlen: "",
         vertiefung: [],
         cp: 3,
-        vorher: "",
         dozent: [],
         nameLV: "Klubsprächertätigkeit über 2 Semester",
         specific: {}
@@ -777,14 +763,17 @@ const data = {
         nameLV: "Lerntechniken und Strategien zur Prüfungsvorbereitung",
         specific: {
             WS15: {
+                kurz: "Professionalisierte<br />Lerntechniken",
                 dozent: ["Dr. Rolf Specht"],
                 nameLV: "Professionalisierte Lerntechniken",
             },
             SS15: {
+                kurz: "Professionalisierte<br />Lerntechniken",
                 dozent: ["Dr. Rolf Specht"],
                 nameLV: "Professionalisierte Lerntechniken",
             },
             SS16: {
+                kurz: "Professionalisierte<br />Lerntechniken",
                 dozent: ["Dr. Rolf Specht"],
                 nameLV: "Professionalisierte Lerntechniken",
             },
