@@ -15,6 +15,21 @@ function getCourseParameter(course, parameter, semesterNumber) {
     if (semesterNumber === undefined) {
         semesterNumber = f.getSemester(course);
     }
+    if (semesterNumber < 0) {
+        //find the last semester that is not locked and where this course is offered,
+        //and use it as display reference
+        for (let testSemester = semesterManager.shownSemesters.length - 1; testSemester >= 0; testSemester--) {
+            const testSemesterNumber = testSemester+1;
+            if (semesterManager.getSemesterLock(testSemesterNumber)) {
+                continue;
+            }
+            if (!semesterManager.courseOfferedInSemester(course, testSemesterNumber)) {
+                continue;
+            }
+            semesterNumber = testSemesterNumber;
+            break;
+        }
+    }
     let semesterName = 'general';
     if (semesterNumber >= 0) {
         semesterName = semesterManager.shownSemesters[semesterNumber - 1].substr(0, 4);
@@ -130,7 +145,7 @@ const semesterManager = {
             && semesters.includes(this.referenceSemester2For(semesterName))) {
             return true
         }
-        if (getCourseParameter(course, 'kurz') === 'VHDL') {
+        if (data[course].kurz === 'VHDL') {
             const ws_ss = semesterName.substr(0, 2);
             const num = parseInt(semesterName.substr(2, 2));
             return (ws_ss === 'SS') && (num % 2 === 0)

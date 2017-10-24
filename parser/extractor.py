@@ -180,11 +180,6 @@ def extractModule(moduleName):
 
 
 ShortenLV = [
-    # renaming of old LV names
-    ("Einführung in Design Thinking", "D-School First Track"),
-    ("Professionalisierte Lerntechniken", "Lerntechniken und Strategien zur Prüfungsvorbereitung"),
-
-
     # Grundlagen IT-Systems Engineering
     ("Einführung in die Programmiertechnik", "PT"),
     ("Grundlagen digitaler Systeme", "GdS"),
@@ -242,6 +237,9 @@ RemovableWords = {
     "für ",
     "development of ",
     "Industrieseminar"
+}
+IDReplace = {
+    "professionalisiertelerntechniken": "lerntechnikenundstrategien"
 }
 MaxLVIDLength = 50
 
@@ -320,7 +318,9 @@ def shortNameToID(shortName):
 
     while lvID[0].isdigit():
         lvID = lvID[1:]
-    return lvID.lower()
+    lvID = lvID.lower()
+
+    return IDReplace.get(lvID, lvID)
 
 
 def isPflicht(lv):

@@ -79,6 +79,7 @@ const Semester = class {
         this.updateLockState(nowLocked);
         f.saveManager.save();
         f.filterManager.filter();
+        Course.updateDisplayInformation();
     }
     updateLPState(newState) {
         const lp = (newState !== undefined) ? newState : this.getLP();
@@ -305,6 +306,12 @@ const Course = class {
         for (const key in data) {
             if (!data.hasOwnProperty(key)) continue;
             Course.get(key);
+        }
+    }
+    static updateDisplayInformation() {
+        for (const course in courseCache) {
+            if (!courseCache.hasOwnProperty(course)) continue;
+            Course.get(course).updateDisplayInformation();
         }
     }
 };

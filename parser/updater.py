@@ -56,7 +56,7 @@ def mergeLV(newLV):
         lv['specific'] = {}
         data[lvID] = lv
 
-    for parameter in ['kurz', 'pflicht', 'modul', 'vertiefung', 'empfohlen']:
+    for parameter in ['pflicht', 'modul', 'vertiefung', 'empfohlen']:
         if lv[parameter] != newLV[parameter]:
             print "[WARN!] Information mismatch in " + newLV['id'] + " (parameter " + parameter + "): \n" \
                   "  old value: " + str(lv[parameter]) + "\n" \
@@ -64,7 +64,7 @@ def mergeLV(newLV):
         lv[parameter] = newLV[parameter]
 
     lv['specific'][newLV['semester'][0]] = {}
-    for parameter in ['nameLV', 'dozent', 'lehrform', 'cp']:
+    for parameter in ['kurz', 'nameLV', 'dozent', 'lehrform', 'cp']:
         lv['specific'][newLV['semester'][0]][parameter] = newLV[parameter]
         lv[parameter] = newLV[parameter]
 
@@ -103,7 +103,7 @@ data['klubsprecher'] = {
     'nameLV': 'Klubsprächertätigkeit über 2 Semester',
     'semester': data['englischlevel1']['semester'],
     'vertiefung': [],
-    specific: {}
+    'specific': {}
 }
 
 
