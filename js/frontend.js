@@ -26,7 +26,7 @@ function toModulDisplayName(modulName) {
     if (modulName === 'PEM') {
         return 'Softskills';
     }
-    if (modulName.startsWith("SB")){
+    if (modulName.startsWith("SB") || modulName === 'BS'){
         return 'Softwarebasissysteme';
     }
     return modulName;
