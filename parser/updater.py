@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import json
 import sys
 from parser import parseSemester
@@ -10,9 +11,9 @@ from parser import parseSemester
 
 # USE at least a two digit number for both start and end
 START_SEMESTER = 15
-END_SEMESTER = 17
+END_SEMESTER = 18
 # defines, which semester gets represented by the Lehrveranstaltungen Index-page
-CURRENT_SEMESTER = 'WS17'
+CURRENT_SEMESTER = 'SS18'
 
 
 confirm = raw_input("\n\nWARNING: This script completely replaces the content of ../js/data.js\n"
@@ -25,7 +26,7 @@ confirm = raw_input("\n\nWARNING: This script completely replaces the content of
 
 if confirm != 'yes':
     sys.exit('Script aborted!')
-print 'String script...'
+print('String script...')
 
 data = {}
 
@@ -37,10 +38,10 @@ def merge(newLV, oldLV, parameter):
     if newValue is None:
         newValue = oldLV.get(parameter)
 
-    print "[WARN] merging " + newLV['id'] + " (parameter " + parameter + "): \n" \
+    print("[WARN] merging " + newLV['id'] + " (parameter " + parameter + "): \n" \
           "  old value: " + str(oldLV[parameter]) + "\n" \
           "  new value: " + str(newLV[parameter]) + "\n" \
-          "    > merge resolve: " + str(newValue)
+          "    > merge resolve: " + str(newValue))
 
     oldLV[parameter] = newValue
 
@@ -58,9 +59,9 @@ def mergeLV(newLV):
 
     for parameter in ['pflicht', 'modul', 'vertiefung', 'empfohlen']:
         if lv[parameter] != newLV[parameter]:
-            print "[WARN!] Information mismatch in " + newLV['id'] + " (parameter " + parameter + "): \n" \
+            print("[WARN!] Information mismatch in " + newLV['id'] + " (parameter " + parameter + "): \n" \
                   "  old value: " + str(lv[parameter]) + "\n" \
-                  "  new value: " + str(newLV[parameter])
+                  "  new value: " + str(newLV[parameter]))
         lv[parameter] = newLV[parameter]
 
     lv['specific'][newLV['semester'][0]] = {}
@@ -238,4 +239,4 @@ for lvID in sorted(data.iterkeys()):
 f.write('};\n')
 f.close()
 
-print "done."
+print("done.")

@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import re
 
 
@@ -22,7 +23,7 @@ def prettyPrintSemester(verboseName):
     semesterMatch = re.search(semesterRegex, name)
 
     if semesterMatch is None:
-        print "Cannot prettify semester: " + verboseName
+        print("Cannot prettify semester: " + verboseName)
         return verboseName
 
     ws_ss = semesterMatch.group(1).upper()
@@ -44,16 +45,19 @@ def getLehrform(text):
     lehrformMatch = re.search(lehrformRegex, text)
     lehrform = []
     if lehrformMatch is not None:
-        lehrformString = lehrformMatch.group(1).strip()
+        lehrformString = lehrformMatch.group(1).strip().decode('utf-8')
+        if lehrformString.endswith(' (Block)'):
+            lehrformString = lehrformString[:-len(' (Block)')]
         if lehrformString == "BS":
             lehrform.append("Blockseminar")
         elif lehrformString == "BP":
             lehrform.append("Bachelorprojekt")
         else:
-            for char in lehrformString:
+            for charIndex in range(len(lehrformString)):
+                char = lehrformString[charIndex]
                 if char == 'V':
                     lehrform.append("Vorlesung")
-                elif char == 'U':
+                elif char == u'Ü' or char == 'U':
                     lehrform.append("Übung")
                 elif char == 'P':
                     lehrform.append("Projekt")
@@ -65,7 +69,7 @@ def getLehrform(text):
                     pass  # ignore the separator
                 else:
                     lehrform.append(char)
-                    print "Unknown LV type: " + char
+                    print("Unknown LV type: " + char)
     lehrform.sort()
     return lehrform
 
@@ -225,6 +229,7 @@ ShortenWords = {
     ("Qualitätssicherung", "Qualität"),
     ("Applikationen", "Apps"),
     ("&quot;", "\""),
+    ("&amp;", "and")
 }
 RemovableWords = {
     "\\",
