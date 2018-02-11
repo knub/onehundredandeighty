@@ -13,8 +13,10 @@ $(document).on('dragover', function(e) {
             $("#dropHint").addClass('dropHintActive');
         }, 50);
     }
+    return false;
 });
-$(document).on('dragleave', function(e) {
+
+function hideDropOverlay() {
     window.clearTimeout(dragTimer);
     window.clearTimeout(abortTimer);
     abortTimer = window.setTimeout(function() {
@@ -23,4 +25,13 @@ $(document).on('dragleave', function(e) {
             $("#dropHint").css('display', 'none');
         }, 500)
     }, 25);
+    return false;
+}
+
+$(document).on('dragleave', hideDropOverlay);
+
+$(document).on('drop', function(e) {
+    alert("Dropped!");
+    hideDropOverlay();
+    return false;
 });
