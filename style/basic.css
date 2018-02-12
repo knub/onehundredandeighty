@@ -779,3 +779,7 @@ h3 {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.controls h1 {
+    line-height: 100%;
+}
