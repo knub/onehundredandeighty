@@ -148,10 +148,8 @@ $(document).on('drop', function(e) {
         return false;
     }
     let file = files[0];
-    console.log(file);
     loadPDF(file, function(textContent) {
-        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|P|S|PS|K|U|Ü|BS|BP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
-
+        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
         for (let match; (match = transcriptOfRecordsRegex.exec(textContent)) !== null;) {
             const name = match[1];
             const grade = match[2].replace(',', '.');
@@ -164,6 +162,22 @@ $(document).on('drop', function(e) {
                 applyCourseInfo(name, semester, parseFloat(grade));
             }
         }
+
+        const studiendokumentationRegex = /\d{6} (.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP) \d\d? (belegt|\d,\d) .{3,100} (SS|WS) (\d{4}|\d\d\/\d\d) \d/g;
+        for (let match; (match = studiendokumentationRegex.exec(textContent)) !== null;) {
+            const name = match[1];
+            const grade = match[2].replace(',', '.');
+            const SSWS = match[3];
+            const semesterYear = match[4].length === 5 ? match[4] : match[4].substr(2);
+            const semester = SSWS + semesterYear;
+            if (grade === 'BL') {
+                applyCourseInfo(name, semester);
+            } else {
+                applyCourseInfo(name, semester, parseFloat(grade));
+            }
+        }
+        console.log(textContent);
+
         //reload the page to apply all changes
         f.saveManager.save();
         window.location.href = window.location.href;
