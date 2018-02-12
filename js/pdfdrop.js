@@ -125,20 +125,6 @@ function hideDropOverlay() {
 }
 
 $(document).on('dragleave', hideDropOverlay);
-$(document).on('dragend', function(ev) {
-    // Remove all of the drag data
-    const dt = ev.dataTransfer;
-    console.log(dt);
-    if (dt.items) {
-        // Use DataTransferItemList interface to remove the drag data
-        for (let i = 0; i < dt.items.length; i++) {
-            dt.items.remove(i);
-        }
-    } else {
-        // Use DataTransfer interface to remove the drag data
-        ev.dataTransfer.clearData();
-    }
-});
 
 $(document).on('drop', function(e) {
     e.preventDefault();
