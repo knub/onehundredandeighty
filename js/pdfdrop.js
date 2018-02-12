@@ -55,6 +55,7 @@ $(document).on('drop', function(e) {
     let file = files[0];
     console.log(file);
     loadPDF(file, console.log);
+    // (.+) (?:V|V\/Ü|V\/U|P|S|PS|K|U|Ü|BS|BP) .{5,100} (?:BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)
     return false;
 });
 
@@ -73,16 +74,40 @@ function loadPDF(file, resolve) {
 
                     page.getTextContent().then(function (textContent) {
                         let textItems = textContent.items;
+                        console.log(textItems);
 
-                        // Concatenate the string of the item to the final string
-                        for (let i = 0; i < textItems.length; i++) {
-                            let item = textItems[i];
-                            resultString += item.str + ' ';
+                        let lineContents = new MultiMap();
+
+                        // aggregate items into lines
+                        for (let i = 0, item; item = textItems[i]; i++) {
+                            //check for fitting line
+                            let foundLine = false;
+                            for (let line of lineContents.keys()) {
+                                if (itemIsInLine(item, line)) {
+                                    lineContents.push(line, item);
+                                    foundLine = true;
+                                    break;
+                                }
+                            }
+                            if (!foundLine) {
+                                lineContents.push(coordsOf(item).y, item);
+                            }
+                        }
+
+                        //concat lines in sorted way
+                        for (const lineInfo of lineContents.entries()) {
+                            const lineContent = lineInfo[1];
+                            lineContent.sort((a, b) => coordsOf(a).x >= coordsOf(b).x);
+                            for (const item of lineContent) {
+                                resultString += item.str + ' ';
+                            }
+                            resultString += "\n";
                         }
 
                         if (pageNumber < pageAmount) {
                             loadPage(pageNumber + 1);
                         } else {
+                            resultString = resultString.replace(/ +/g, ' ');
                             resolve(resultString);
                         }
                     });
@@ -93,4 +118,19 @@ function loadPDF(file, resolve) {
         });
     };
     reader.readAsDataURL(file); // start reading the file data.
+}
+
+
+const LINE_HEIGHT_TOLERANCE = 1; //pdf-space pixels
+
+function itemIsInLine(item, line) {
+    const itemHeight = coordsOf(item).y;
+    return Math.abs(itemHeight - line) <= LINE_HEIGHT_TOLERANCE;
+}
+
+function coordsOf(item) {
+    return ({
+        x: item.transform[4],
+        y: item.transform[5]
+    });
 }
