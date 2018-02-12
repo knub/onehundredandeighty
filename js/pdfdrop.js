@@ -1,4 +1,49 @@
 
+function applyCourseInfo(name, semester, grade) {
+    const courseKey = findBestMatchingCourse(name);
+    if (courseKey === undefined) return;
+
+    Semester.fromName(semester).take(courseKey);
+    if (grade !== undefined) {
+        gradeManager.set(courseKey, grade);
+        Course.get(courseKey).updateGradeButton();
+    }
+}
+
+function findBestMatchingCourse(name) {
+    let matchCandidates = generateMatchCandidates();
+
+    console.log(matchCandidates);
+    for (const [nameString, courseKey] of matchCandidates) {
+        if (nameString.startsWith(name)) {
+            return courseKey;
+        }
+    }
+    console.error("No match for '" + name + "'!");
+}
+
+function generateMatchCandidates() {
+    //list of [nameString, courseKey]
+    let candidates = [];
+    for (const courseKey in data) {
+        if (!data.hasOwnProperty(courseKey)) continue;
+        const coursedata = data[courseKey];
+        candidates.push([coursedata.kurz, courseKey]);
+        candidates.push([coursedata.nameLV, courseKey]);
+
+        for (let semester in coursedata.specific) {
+            if (!coursedata.specific.hasOwnProperty(semester)) continue;
+            const specificName = coursedata.specific[semester].nameLV;
+            if (specificName !== undefined) {
+                candidates.push([specificName, courseKey]);
+            }
+        }
+    }
+    return candidates;
+}
+
+
+
 
 let abortTimer;
 let dragTimer;
@@ -54,8 +99,25 @@ $(document).on('drop', function(e) {
     }
     let file = files[0];
     console.log(file);
-    loadPDF(file, console.log);
-    // (.+) (?:V|V\/Ü|V\/U|P|S|PS|K|U|Ü|BS|BP) .{5,100} (?:BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)
+    loadPDF(file, function(textContent) {
+        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|P|S|PS|K|U|Ü|BS|BP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
+
+        for (let match; (match = transcriptOfRecordsRegex.exec(textContent)) !== null;) {
+            const name = match[1];
+            const grade = match[2].replace(',', '.');
+            const SSWS = match[3] === 'SoSe' ? 'SS' : 'WS';
+            const semesterYear = match[4].length === 5 ? match[4] : match[4].substr(2);
+            const semester = SSWS + semesterYear;
+            if (grade === 'BL') {
+                applyCourseInfo(name, semester);
+            } else {
+                applyCourseInfo(name, semester, parseFloat(grade));
+            }
+        }
+        //reload the page to apply all changes
+        f.saveManager.save();
+        window.location.href = window.location.href;
+    });
     return false;
 });
 

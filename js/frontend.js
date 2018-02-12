@@ -34,6 +34,12 @@ function toModulDisplayName(modulName) {
 
 // A Semester is one column in the Stundenplan
 const Semester = class {
+    static fromName(name) {
+        //name === 'SS17' or 'WS17/18'
+        const index = semesterManager.shownSemesters.indexOf(name)
+        if (index < 0) return;
+        return Semester.get(index);
+    }
     static get(num) {
         const cached = semesterCache[num];
         if (cached !== undefined) return cached;
