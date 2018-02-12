@@ -3,7 +3,10 @@ function applyCourseInfo(name, semester, grade) {
     const courseKey = findBestMatchingCourse(name);
     if (courseKey === undefined) return;
 
-    Semester.fromName(semester).take(courseKey);
+    semester = Semester.fromName(semester);
+    if (semester !== undefined) {
+        semester.take(courseKey);
+    }
     if (grade !== undefined) {
         gradeManager.set(courseKey, grade);
         Course.get(courseKey).updateGradeButton();
@@ -13,7 +16,6 @@ function applyCourseInfo(name, semester, grade) {
 function findBestMatchingCourse(name) {
     let matchCandidates = generateMatchCandidates();
 
-    console.log(matchCandidates);
     for (const [nameString, courseKey] of matchCandidates) {
         if (nameString.startsWith(name)) {
             return courseKey;
@@ -136,7 +138,6 @@ function loadPDF(file, resolve) {
 
                     page.getTextContent().then(function (textContent) {
                         let textItems = textContent.items;
-                        console.log(textItems);
 
                         let lineContents = new MultiMap();
 

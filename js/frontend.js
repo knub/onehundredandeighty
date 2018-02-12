@@ -36,9 +36,9 @@ function toModulDisplayName(modulName) {
 const Semester = class {
     static fromName(name) {
         //name === 'SS17' or 'WS17/18'
-        const index = semesterManager.shownSemesters.indexOf(name)
+        const index = semesterManager.shownSemesters.indexOf(name);
         if (index < 0) return;
-        return Semester.get(index);
+        return Semester.get(index + 1);
     }
     static get(num) {
         const cached = semesterCache[num];
