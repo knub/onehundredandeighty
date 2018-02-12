@@ -170,7 +170,7 @@ function loadTranscriptFile(file) {
             const SSWS = match[3];
             const semesterYear = match[4].length === 5 ? match[4] : match[4].substr(2);
             const semester = SSWS + semesterYear;
-            if (grade === 'BL') {
+            if (grade === 'belegt') {
                 applyCourseInfo(name, semester);
             } else {
                 applyCourseInfo(name, semester, parseFloat(grade));
