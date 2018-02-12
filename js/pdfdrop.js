@@ -1,7 +1,44 @@
+function getBigrams(string) {
+    const s = string.toLowerCase();
+    let bigrams = new Array(s.length - 1);
+    for (let i = 0; i < bigrams.length; i++) {
+        bigrams[i] = s.slice(i, i + 2);
+    }
+    return bigrams;
+}
+
+function stringSimilarity(str1, str2) {
+    if (str1.length === 0 || str2.length === 0) return 0;
+    const pairs1 = getBigrams(str1);
+    const pairs2 = getBigrams(str2);
+    let hitCount = 0;
+    for (let x = 0; x < pairs1.length; x++) {
+        for (let y = 0; y < pairs2.length; y++) {
+            if (pairs1[x] === pairs2[y]) {
+                hitCount++;
+            }
+        }
+    }
+    if (hitCount > 0) {
+        const combinedLength = pairs1.length + pairs2.length;
+        return hitCount / combinedLength;
+    }
+    return 0;
+}
+
+const MIN_SIMILARITY_NEEDED_TO_BE_CONFIDENT = 0.5;
 
 function applyCourseInfo(name, semester, grade) {
-    const courseKey = findBestMatchingCourse(name);
-    if (courseKey === undefined) return;
+    let courseKey = findBestMatchingCourse(name);
+    if (courseKey.isFuzzyResult) {
+        const similarity = courseKey[2];
+        console.warn(`Fuzzy matching '${name}' with '${courseKey[0]}' (similarity of ${similarity})`);
+        if (similarity < MIN_SIMILARITY_NEEDED_TO_BE_CONFIDENT) {
+            console.warn('Match not confident enough. Ignoring it...');
+            return;
+        }
+        courseKey = courseKey[1];
+    }
 
     semester = Semester.fromName(semester);
     if (semester !== undefined) {
@@ -21,7 +58,18 @@ function findBestMatchingCourse(name) {
             return courseKey;
         }
     }
-    console.error("No match for '" + name + "'!");
+
+    const bestFuzzyCandidate = matchCandidates.map(function (candidate) {
+        candidate.push(stringSimilarity(name, candidate[0]));
+        return candidate;
+    }).reduce((function (currentBest, candidate) {
+        if (candidate[2] > currentBest[2]) {
+            return candidate;
+        }
+        return currentBest;
+    }), [undefined, undefined, 0]);
+    bestFuzzyCandidate.isFuzzyResult = true;
+    return bestFuzzyCandidate;
 }
 
 function generateMatchCandidates() {
