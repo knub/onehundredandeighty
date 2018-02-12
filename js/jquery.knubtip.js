@@ -4,10 +4,12 @@
 	// counter, counts tooltips so an unique id (for the div) can be built with this number
 	var i = 0;
 
+	var openToolTips = new Set();
+
 	$.fn.knubtip = function (method) {
 		var settings = {
 			'duration'	: 200,
-			'wait-time'	: 1000
+			'wait-time'	: 500
 		};
 
 		// timer will save what setTimeout returns
@@ -35,15 +37,28 @@
 					$(this).data("knubtip-enabled", true);
 					i += 1;
 
-					$(this).mousemove(function (event) {
+					$(this).click(fadeInTooltip).mousemove(fadeInTooltip).mouseout(fadeOutTooltip);
+					$("." + tooltipDivSelector).click(fadeOutTooltip);
+
+					function fadeInTooltip(event) {
 						// save references, because setTimeout forces context change (this refering to DOMWINDOW then)
 						// $this now refers to the jquerified-element (e. g. li element) for which the tooltip shall be displayed
 						var $this = $(this);
 						var that = this;
+
+						if (openToolTips.has($this)) {
+							return;
+						}
+
+						//hide all other tooltips
+						for (const tooltip of openToolTips) {
+							$(tooltip.data('knubtip')['info']).fadeOut(settings['duration']);
+						}
+						openToolTips.clear();
+						openToolTips.add($this);
+
 						clearTimeout(timer);
 						timer = setTimeout(function () {
-							if (that !== event.target)
-								return;
 							// only display tooltip, if whole plugin is enabled
 							if($this.data('knubtip-enabled') !== true)
 								return;
@@ -109,11 +124,11 @@
 								$(tooltipDivSelector).css({ top: offset.top + $this.outerHeight() + 5, left: left }).fadeIn(settings['duration']);
 							}
 						}, settings['wait-time']);
-					}).mouseout(function () {
+					}
+					function fadeOutTooltip() {
 						clearTimeout(timer);
-						var tooltipDivSelector = $(this).data('knubtip')['info'];
-						$(tooltipDivSelector).fadeOut(settings['duration']);
-					});
+						$("." + tooltipDivSelector).fadeOut(settings['duration']);
+					}
 				});
 			},
 			enable: function () {

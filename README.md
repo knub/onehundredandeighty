@@ -3,9 +3,9 @@
 Organize your courses in HPI with onehundredandeighty.
 
 ### Your course is missing?
-1. Fork me.
-2. Edit js/data.js file. Please carefully enter all values and maintain alphabetically sorting.
+1. Run `parser/updater.py` (make sure to enable the right semester range first)
+2. Edit `parser/extractor.py` if necessary to keep the course data clean.
 3. Pull-request me.
 
-### Issues?
-Just drop me a line.
+### Issues? / Change requests?
+Write me (erik.brendel\[at\]student.hpi.de) or create an Issue here on GitHub.

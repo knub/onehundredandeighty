@@ -1,721 +1,853 @@
 /* use strict-mode provided by ecma-script5, see http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/ for details */
 "use strict";
 
-/*
- * Holds all relevant information from the study regulations
- * 'Fachspezifische Ordnung für das Bachelor- und Masterstudium im Fach IT-Systems Engineering an der Universität Potsdam'
- * (variable names in german, because 'Vertiefungsgebiete' is hard to translate and not really nice)
+// Both Studienordnungen
+// https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/studien_pruefungsordnung_2010_01.pdf
+// https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/StudOrd_Bachelor_2016.pdf
+
+/**
+ * get the value of data[course][parameter], for a given Semester
+ * @param course the course id
+ * @param parameter the parameter name
+ * @param semesterNumber the number of the semester to get information for
  */
-var studyRegulations = {
-	module: ["Grundlagen IT-Systems Engineering", "Mathematische und theoretische Grundlagen", "Softwaretechnik und Modellierung", "Rechtliche und wirtschaftliche Grundlagen", "Softwarebasissysteme", "Vertiefungsgebiete", "Softskills"],
-	vertiefungsgebiete: ["BPET", "HCT", "IST", "OSIS", "SAMT"],
-	softwarebasissysteme: ['dbs1', 'hci1', 'grafik1', 'pois1', 'www']
-};
-var semesterManager = {
-	semesters: ["WS10/11", "SS11", "WS11/12", "SS12", "WS12/13", "SS13", "WS13/14", "SS14", "WS14/15", "SS15", "WS15/16", "SS16", "WS16/17", "SS17", "WS17/18", "SS18"],
-	shownSemesters: [
-		"WS14/15",
-		"SS15",
-		"WS15/16",
-		"SS16",
-		"WS16/17",
-		"SS17"
-	],
-	numberDisplayed: 6,
-	// current must be either lastSummerSemester or lastWinterSemester!
-	current: "SS16",
-	lastSummerSemester: "SS16",
-	lastWinterSemester: "WS15/16",
-	/* the semester that is the first semester when you first start the application */
-	startswith: "WS15/16",
-	updateSemester: function(semester_number, semester_string) {
-		var index = semester_number - 1;
-		if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {
-			console.error("Mismatched semester string. Check data!");
-			return;
-		}
-
-		var old_chosen = this.semesters.indexOf(this.shownSemesters[index]);
-		var new_chosen = this.semesters.indexOf(semester_string);
-		var difference = new_chosen - old_chosen;
-
-		this.shownSemesters[index] = semester_string;
-
-		for (var i = index + 1; i < this.shownSemesters.length; i += 1) {
-			var old_index = this.semesters.indexOf(this.shownSemesters[i]);
-			if (old_index + difference < this.semesters.length) this.shownSemesters[i] = this.semesters[old_index + difference];
-			else this.shownSemesters[i] = this.semesters.last();
-		}
-	}
-};
-
-var ruleManager = {
-	getSemester: null,
-	rules: [],
-	init: function(getSemester_Function) {
-		this.getSemester = getSemester_Function;
-	},
-	checkAll: function() {
-		var numberFailedRules = 0;
-		var rules = [];
-		for (var rule = 0; rule < this.rules.length; rule += 1) {
-			this.rules[rule].success = true;
-			if (!this.rules[rule].check(this.getSemester)) {
-				numberFailedRules += 1;
-				this.rules[rule].success = false;
-			}
-			rules.push(this.rules[rule]);
-		}
-		rules.numberFailedRules = numberFailedRules;
-		return rules;
-	}
-};
-
-/*
- * Rule-objectes, each representing one special type of rule
- * These objects basically act as classes (will be 'cloned' by Object.create later
- * It's a kind of 'inheritance by convention', meaning:
- *	- each rule has a type, by which it can be identified
- * 	- each rule must have a check method, which - given a special course to check - passes or fails
- *	- each rule must have a message property, which will be displayed, if the rule/test fails
- *	- there is one init-method, serving as constructor, which takes neccessary parameters and saves them, finally returning 'this'
- *	- some rules assign special information to variables, which can be used in the frontend to e. g. display already chosen Vertiefungen
- *
- * Furthermore, most objects have some special properties needed for that special kind of rule
- */
-
-/* 1. Semester-Rule: Check that the chosen semesters are valid. */
-var semesterRule = {
-	/* type */
-	type: 'semesterRule',
-	/* constructor */
-	init: function(course) {
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		for (var i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
-			var earlier_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i]);
-			var later_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i + 1]);
-			if (earlier_index >= later_index) {
-				this.message = "Das " + (i + 2).toString() + "te Semester kommt zeitlich nicht nach dem " + (i + 1).toString() + "ten.";
-				return false;
-			}
-		}
-		return true;
-	},
-	/* message */
-	message: "Eine späteres Semester kommt vor einem früheren."
-};
-/* 2. Must-Do-Rule: a certain course must be done. */
-var mustDoRule = {
-	/* type */
-	type: 'mustDoRule',
-	/* constructor */
-	init: function(course) {
-		this.course = course;
-		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' muss belegt werden.";
-
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		// if course is currently not selected for a certain semester, but put in courses-pool (indicated by -1), return false
-		if (getSemester(this.course) === - 1) return false;
-		return true;
-	},
-	/* message */
-	message: "Eine Veranstaltung muss belegt werden.",
-	/* needed to save for what course the current rule applies */
-	course: ""
-};
-/*
- * 3. Dependency-Rule: a certain course must be done before another
- * As of 25.04.2012, this rule is no longer active,  because there are no real limitations.
- * Nonetheless, the data is kept in data.js (maybe this can be used for some kind of note/hint in the future.
- */
-var dependencyRule = {
-	/* type */
-	type: 'dependencyRule',
-	/* constructor */
-	init: function(course, dependency) {
-		this.course = course;
-		this.dependency = dependency;
-		this.message = "Die Veranstaltung '" + data[this.dependency].nameLV + "' muss vor der Veranstaltung '" + data[this.course].nameLV + "' belegt werden.";
-
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		// always return true, because rule is no longer active
-		return true;
-	},
-	/* message */
-	message: "Eine Veranstaltung muss vor einer anderen belegt werden.",
-	/* save which course must be done before which */
-	dependency: "",
-	course: ""
-};
-
-/* 4. SBS-Rule: atleast three courses from 'Softwarebasisssysteme' must be done */
-var sbsRule = {
-	/* type */
-	type: "sbsRule",
-	/* constructor */
-	init: function() {
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		var sbs = studyRegulations.softwarebasissysteme;
-		var sbsNumber = 0;
-		for (var i = 0; i < sbs.length; i += 1) {
-			if (getSemester(sbs[i]) !== - 1) sbsNumber += 1;
-		}
-		return sbsNumber >= 3;
-	},
-	/* message */
-	message: 'Es müssen mindestens drei Softwarebasissysteme belegt werden.'
-};
-
-/* 5. Softskills-Rule: atleast six credit points in  Softskills module must be done */
-var softskillsRule = {
-	/* type */
-	type: "softskillsRule",
-	/* constructor */
-	init: function() {
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		var creditpoints = 0;
-		for (var course in data) {
-			if (!data.hasOwnProperty(course)) continue;
-			if (data[course].modul.indexOf("Softskills") !== - 1 && course !== 'pem' && getSemester(course) !== - 1) {
-				creditpoints += data[course].cp;
-			}
-		}
-		return creditpoints >= 6;
-	},
-	/* message */
-	message: 'Es müssen mindestens sechs Leistungspunkte im Softskills-Bereich erworben werden.'
-};
-
-/* 6. Time-Rule: course is not schedulable in the chosen semester */
-var timeRule = {
-	/* type */
-	type: "timeRule",
-	/* constructor */
-	init: function(course) {
-		this.course = course;
-		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
-
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		// get the semester number (first, second, third ...) for the given course
-		var semesterNumber = getSemester(this.course);
-		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
-
-		if (semesterNumber === - 1) return true;
-		// now get the semester time (WS10/11, SS10, ...) for the given course
-		// important: subtract 1, because semester number starts at 1, while array starts at 0
-		var semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
-
-		// now we have to distinguish two cases:
-		// -	the semester is in the past/present
-		// -	the semester is in the future
-		if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.current)) {
-			// past or present
-			return data[this.course].semester.indexOf(semesterTime) !== - 1;
-		}
-		else {
-			// if the course is currently chosen for a summer semester
-			if (semesterTime.indexOf("SS") >= 0) {
-				// check if it was explicitly allowed or offered in the last summer semester
-				return data[this.course].semester.indexOf(semesterTime) !== -1 ||
-				       data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
-			}
-			// if the course is currently chosen for a winter semester
-			else if (semesterTime.indexOf("WS") >= 0) {
-				// check if it was explicitly allowed or offered in the last winter semester
-				return data[this.course].semester.indexOf(semesterTime) !== -1 ||
-				       data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
-			}
-			// else something went completly wrong
-			else {
-				console.error("Something is wrong with the semester-time. Check data!");
-			}
-			return true;
-		}
-	},
-	/* message */
-	message: 'Der Kurs wird im gewählten Semester nicht angeboten.',
-	course: ""
-};
-
-/* 7. Vertiefungsgebiete-Rule: take care of complex Vertiefungsgebiete rules */
-var vertiefungsgebieteRule = {
-	/* type */
-	type: "vertiefungsgebieteRule",
-	/* constructor */
-	init: function() {
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		this.vertiefungen = null;
-		this.combinations = null;
-		/*
-		 * At first, define some helper functions, which will help writing the actual algorithm:
-		 * -	getSBSNumber: Returns the number of Softwarebasissysteme currently chosen.
-		 * -	getCurrentlyChosenVertiefungen: Returns an array of Vertiefungen, which are currently chosen.
-		 */
-		// At first, check how many Softwarebasissysteme there are. If there are more than three, one of them will be counted to Vertiefungsgebiete.
-		var getSBSCourses = function() {
-			var sbs = studyRegulations.softwarebasissysteme;
-			var sbsCourses = [];
-			for (var i = 0; i < sbs.length; i += 1) {
-				if (getSemester(sbs[i]) !== - 1) sbsCourses.push(sbs[i]);
-			}
-			return sbsCourses;
-		}
-		var getCurrentlyChosenVertiefungen = function() {
-			var chosenVertiefungen = [];
-			for (var course in data) {
-				if (!data.hasOwnProperty(course)) continue;
-				if (data[course].modul.indexOf("Vertiefungsgebiete") !== - 1 && data[course].modul.indexOf("Softwarebasissysteme") === - 1 && getSemester(course) >= 1) {
-					chosenVertiefungen.push(course);
-				}
-			}
-			return chosenVertiefungen;
-		}
-		/*
-		 * This function returns an array with all possible Vertiefungsgebiete interpretations one Vertiefung can have.
-		 * for example, if
-		 * chosenVertiefungen = [
-		 *	'hci2',		// which can be HCT or SAMT
-		 *	'pois2'		// which can be BPET or SAMT
-		 * ]
-		 * this function returns:
-		 * [
-		 * 	[
-		 *		{ key: 'hci2', vertiefung: 'HCT' },
-		 *		{ key: 'hci2', vertiefung: 'SAMT' }
-		 *	],
-		 * 	[
-		 *		{ key: 'pois2', vertiefung: 'BPET' },
-		 *		{ key: 'pois2', vertiefung: 'SAMT' }
-		 *	]
-		 * ]
-		 */
-		var getChosenVertiefungsgebiete = function(chosenVertiefungen) {
-			var chosenVertiefungsgebiete = [];
-			for (var i = 0; i < chosenVertiefungen.length; i += 1) {
-				var key = chosenVertiefungen[i];
-				var course = data[key];
-				var currentCourse = [];
-				for (var j = 0; j < course.vertiefung.length; j += 1) {
-					currentCourse.push({
-						'key': key,
-						'vertiefung': course.vertiefung[j]
-					});
-				}
-				chosenVertiefungsgebiete.push(currentCourse);
-			}
-			return chosenVertiefungsgebiete;
-		}
-		var sbsCourses = getSBSCourses();
-		var sbsNumber = sbsCourses.length;
-		if (sbsNumber === 5) {
-			//alert("Du hast fünf Softwarebasissysteme gewählt. 180 kann dies aktuell nicht behandeln.");
-		}
-
-		// At first, find all Vertiefung courses, which are currently chosen for a semester.
-		var chosenVertiefungen = getCurrentlyChosenVertiefungen();
-		// Then make it an array with all possible Vertiefungsgebiete (see getChosenVertiefungsgebiete definition for details)
-		var chosenVertiefungsgebiete = getChosenVertiefungsgebiete(chosenVertiefungen);
-		// if there are four Softwarebasissysteme, one of them must be treated like a Vertiefungsgebiet
-		if (sbsNumber === 4) {
-			// so we add all of them to chosenVertiefungsgebiete
-			// NOTE: we assume that every Softwarebasissystem has only one Vertiefungsgebiet (which is right for current study regulations).
-			// TODO: As of SS12, this is not correct anymore, as WWW now has 'IST' and 'HCT'
-			var addSBS = [];
-			for (var i = 0; i < sbsCourses.length; i += 1) {
-				addSBS.push({
-					'key': sbsCourses[i],
-					'vertiefung': data[sbsCourses[i]].vertiefung[0]
-				});
-			}
-			// add at the beginning
-			chosenVertiefungsgebiete.unshift(addSBS);
-		}
-
-		// Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
-		// Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
-		// As we have an array, which contains all parameters, we have to use cartesianProduct.apply
-		// So now we calculate all possibilites how the current plan could be interpreted.
-		// This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCT' and 'pois2' as 'BPET'.
-		// Another is to interpret 'hci2' as 'HCT' and 'pois2' as 'SAMT'
-		// Another is to interpret 'hci2' as 'SAMT' ... and so on.
-		// Of course this normally happens with more courses than two.
-		var possibleCombinations = Array.cartesianProduct.apply(undefined, chosenVertiefungsgebiete);
-
-		if (sbsNumber === 5) {
-			// at first, calculate all 2-sized subsets of studyRegulations.softwarebasissysteme (simple nested for-loop)
-			var twoSBSCombinations = [];
-			for (var i = 0; i < studyRegulations.softwarebasissysteme.length; i += 1)
-				for (var j = 0; j < studyRegulations.softwarebasissysteme.length; j += 1)
-					if (i < j)
-						twoSBSCombinations.push([ {
-										key: studyRegulations.softwarebasissysteme[i],
-										vertiefung: data[studyRegulations.softwarebasissysteme[i]].vertiefung[0]
-									},
-									{
-										key: studyRegulations.softwarebasissysteme[j],
-										vertiefung: data[studyRegulations.softwarebasissysteme[j]].vertiefung[0]
-									}]);
-			var newPossibleCombinations = [];
-
-			for (var i = 0; i < twoSBSCombinations.length; i += 1)
-				for (var j = 0; j < possibleCombinations.length; j += 1)
-					newPossibleCombinations.push(twoSBSCombinations[i].concat(possibleCombinations[j]));
-
-			possibleCombinations = newPossibleCombinations;
-
-		}
-
-		// Now we have all possible interpretations of the current plan.
-		// Now make a first, vague check for all interpretations:
-		// Check if all Vertiefungsgebiete summed up make more than 24 creditpoints.
-		// Filter those, which do not make 24 creditpoints.
-		var have24CreditPoints = possibleCombinations.filter(function(element) {
-			var creditpoints = 0;
-			element.forEach(function(element) {
-				creditpoints += data[element.key].cp;
-			});
-			return creditpoints >= 24;
-		});
-
-		var combToStringArray = function (element, index) {
-			return element.key + element.vertiefung;
-		};
-
-		// If no courses are left, the plan is obviously not valid.
-		if (have24CreditPoints.length === 0) {
-			// Adjust message and let rule fail.
-			this.message = "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden.";
-			this.vertiefungen = chosenVertiefungen;
-			this.vertiefungen.sbsCourses = sbsCourses;
-			return false;
-		}
-
-		// Another check, this time its quite precise:
-		// Filter out those, which do not met the following criteria:
-		// Quoting from paper:
-		// "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen. In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule). Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden, die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
-		var haveTwoVertiefungsgebiete = have24CreditPoints.filter(function(combination) {
-			// Count creditpoints for each Vertiefung
-			// This will be done in creditPointsPerVertiefung.
-			// The indices are determined by studyRegulations.vertiefungsgebiete, so 'BPET' is counted at index 0, 'HCT' at index 1 and so on
-			var creditPointsPerVertiefung = [0, 0, 0, 0, 0];
-			combination.forEach(function(element) {
-				// calculate index as described above
-				var index = studyRegulations.vertiefungsgebiete.indexOf(element.vertiefung);
-				creditPointsPerVertiefung[index] += data[element.key].cp;
-			});
-			// Now we have counted all creditpoints.
-			// Now test all possible pairs if they met the given criteria.
-			// Found pairs are pushed to combination.possibleVertiefungen:
-			combination.possibleVertiefungen = [];
-			for (var i = 0; i < creditPointsPerVertiefung.length; i += 1) {
-				for (var j = 0; j < creditPointsPerVertiefung.length; j += 1) {
-					// i < j because we want each pair only once
-					if (i < j && creditPointsPerVertiefung[i] >= 9 && creditPointsPerVertiefung[j] >= 9 && creditPointsPerVertiefung[i] + creditPointsPerVertiefung[j] >= 24) {
-
-						var newPossibleVertiefung = [studyRegulations.vertiefungsgebiete[i], studyRegulations.vertiefungsgebiete[j]];
-						combination.possibleVertiefungen.push(newPossibleVertiefung);
-					}
-				}
-			}
-			// Filter this out, if no possible pairs were found.
-			return combination.possibleVertiefungen.length > 0;
-		});
-
-		// Same procedure as above.
-		if (haveTwoVertiefungsgebiete.length === 0) {
-			this.message = "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben.";
-			this.vertiefungen = chosenVertiefungen;
-			this.vertiefungen.sbsCourses = sbsCourses;
-			return false;
-		}
-
-		// So now we have to do a lot of cleanup.
-		// At first we isolate the possibleVertiefungen which are currently saved as properties to different arrays to one clean array.
-		// And we remove those courses which are not neccessary for the chosen Vertiefungen
-		// So when we have ['BPET', 'HCT'] as Vertiefungen, courses which belong to the other three Vertiefungen are removed.
-		var cleanedCombinations = [];
-		// For all combinations ..
-		haveTwoVertiefungsgebiete.forEach(function(combination, index) {
-			var possible = combination.possibleVertiefungen;
-			// For each combination, there are possibleVertiefungen
-			// Walk through all these
-			possible.forEach(function(possibleVertiefung) {
-				var cleaned = [];
-				// Walk through all courses ..
-				combination.forEach(function(course) {
-					// add only those, which are important for the current Vertiefungsgebiet
-					if (possibleVertiefung.indexOf(course.vertiefung) >= 0) cleaned.push(course);
-				});
-				// save Vertiefung Pair
-				cleaned.vertiefungPair = possibleVertiefung;
-				cleanedCombinations.push(cleaned);
-			});
-		});
-		// write changes back to haveTwoVertiefungsgebiete
-		haveTwoVertiefungsgebiete = cleanedCombinations;
-
-		// now that we cleaned up, there are still a lot of doubled Vertiefung pairs
-		// lets clean that up a little bit, start with a clean empty array
-		var mergedCombinations = [];
-		haveTwoVertiefungsgebiete.forEach(function(combination, index) {
-			// Make a string of Vertiefung pair. Will be used to identifiy same Vertiefung pairs
-			var vertiefungsstring = combination.vertiefungPair.join("");
-
-			// will save, whether a special combination of Vertiefungen (a Vertiefung pair) is already pushed to the array.
-			var alreadyIn = false;
-
-			var unique = true;
-
-			var combStrArray = combination.map(combToStringArray);
-			combStrArray.sort();
-
-			// cache data to improve performance
-			combination.vertiefungsstring = vertiefungsstring;
-			combination.strArray = combStrArray;
-
-			// Walk through all combinations and then decide, whether to save it in the array.
-			mergedCombinations.forEach(function(combinationOld, helpindex) {
-				// if the Vertiefung pair is already in the array ..
-				if (combinationOld.vertiefungsstring === vertiefungsstring) {
-					// decide whether it is worthy to override the old value
-					alreadyIn = true;
-					// it IS worthy, when it is longer than the old value and is a superset of it
-					if (combinationOld.length < combination.length && combinationOld.strArray.subsetOfSorted(combStrArray)) {
-						mergedCombinations[helpindex] = combination;
-						unique = false;
-					}
-					else {
-						if (combStrArray.subsetOfSorted(combinationOld.strArray) === true)
-							unique = false;
-					}
-				}
-			});
-			// if this combination has not already been pushed to the array, push it now.
-			if (!alreadyIn) mergedCombinations.push(combination);
-			else if (unique) mergedCombinations.push(combination);
-
-		});
-
-		// write changes back to haveTwoVertiefungsgebiete
-		haveTwoVertiefungsgebiete = mergedCombinations;
-
-		//
-		// DEBUG: Alert remaining combinations with all relevant information.
-		//
-		/*
-		for (var combination in haveTwoVertiefungsgebiete) {
-			if (!haveTwoVertiefungsgebiete.hasOwnProperty(combination)) continue;
-			var comb = haveTwoVertiefungsgebiete[combination];
-			var string = "";
-			for (var i = 0; i < comb.length; i += 1) {
-				if (comb[i] === undefined) continue;
-				var course = data[comb[i].key];
-				string += course.nameLV + "___" + course.cp + "___" + comb[i].vertiefung + "\n";
-			}
-			alert(string);
-		}
-		*/
-
-		// And finally, check the last rule: whether a Lecture is enroled for the given Vertiefung
-		var haveLecture = haveTwoVertiefungsgebiete.filter(function(combination) {
-			// Following variables will save, whether there is a lecture for the first/second Vertiefung
-			var firstVertiefungLectures = [];
-			var secondVertiefungLectures = [];
-			combination.forEach(function(course) {
-				// check if there is a lecture for the first Vertiefung
-				if (course.vertiefung === combination.vertiefungPair[0] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-					firstVertiefungLectures.push(data[course.key]);
-				}
-				// accordingly ..
-				if (course.vertiefung === combination.vertiefungPair[1] && data[course.key].lehrform.indexOf("Vorlesung") >= 0) {
-					secondVertiefungLectures.push(data[course.key]);
-				}
-			});
-			combination.firstVertiefungLectures = firstVertiefungLectures;
-			combination.secondVertiefungLectures = secondVertiefungLectures;
-			// Both Vertiefungen must have a lecture to succeed.
-			return firstVertiefungLectures.length > 0 && secondVertiefungLectures.length > 0;
-		});
-
-		// remove duplicates at last
-		var noDuplicates = [];
-		for (var i = 0; i < haveLecture.length; i += 1) {
-			var dup = false;
-			for (var j = 0; j < noDuplicates.length; j += 1) {
-				if (haveLecture[i].map(combToStringArray).join("") === noDuplicates[j].map(combToStringArray).join("")) {
-					dup = true;
-					break;
-				}
-			}
-			if (dup === false)
-				noDuplicates.push(haveLecture[i]);
-		}
-		haveLecture = noDuplicates;
-
-		// Same procedure as above.
-		if (haveLecture.length === 0) {
-			this.message = "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden.";
-			this.combinations = haveTwoVertiefungsgebiete;
-			return false;
-		}
-
-		// save information about all correct combinations in combinations, so frontend has access to this information
-		this.combinations = haveLecture;
-
-		// If you came so far, you are worthy to return with true :)
-		return true;
-	},
-	/* message */
-	message: 'Die Vertiefungsgebiete wurden nicht im notwendigen Gesamtumfang absolviert.',
-	/* extra information */
-	vertiefungen: null,
-	/* extra information */
-	combinations: null
-};
-/* 8. Clone-Rule: take care of clones (repetitions) of a specific course */
-var cloneRule = {
-	/* type */
-	type: "cloneRule",
-	/* constructor */
-	init: function(cloneId) {
-		this.cloneId = cloneId;
-		var index = cloneId.indexOf("-");
-		this.course = cloneId.substr(0, index);
-
-		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten Semester nicht angeboten.";
-
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		// get the semester number (first, second, third ...) for the given course
-		var semesterNumber = getSemester(this.cloneId);
-		if (semesterNumber === -1)
-			return true;
-		if (semesterNumber <= getSemester(this.course) || getSemester(this.course) === -1) {
-			this.message = "Die Wiederholung von '" + data[this.course].nameLV + "' muss nach dem ersten Belegen der Veranstaltung geschehen.";
-			return false;
-		}
-		this.message = "Die Veranstaltung '" + data[this.course].nameLV + "' wird im gewählten " + semesterNumber + ". Semester nicht angeboten.";
-
-		if (semesterNumber === - 1) return true;
-		// now get the semester time (WS10/11, SS10, ...) for the given course
-		// important: subtract 1, because semester number starts at 1, while array starts at 0
-		var semesterTime = semesterManager.shownSemesters[semesterNumber - 1];
-
-		// now we have to distinguish two cases:
-		// -	the semester is in the past/present
-		// -	the semester is in the future
-		if (semesterManager.semesters.indexOf(semesterTime) <= semesterManager.semesters.indexOf(semesterManager.current)) {
-			// past or present
-			return data[this.course].semester.indexOf(semesterTime) !== - 1;
-		}
-		else {
-			// if the course is currently chosen for a summer semester
-			if (semesterTime.indexOf("SS") >= 0) {
-				// check if it was offered in the last summer semester
-				return data[this.course].semester.indexOf(semesterManager.lastSummerSemester) !== - 1;
-			}
-			// if the course is currently chosen for a winter semester
-			else if (semesterTime.indexOf("WS") >= 0) {
-				// check if it was offered in the last summer semester
-				return data[this.course].semester.indexOf(semesterManager.lastWinterSemester) !== - 1;
-			}
-			// else something went completly wrong
-			else {
-				console.error("Something is wrong with the semester-time. Check data!");
-			}
-			return true;
-		}
-	},
-	/* message */
-	message: 'Der Kurs wird im gewählten Semester nicht angeboten.',
-	course: "",
-	cloneId: ""
-};
-/*
- * 9. Wirtschaft-Rule: You must either select Wirtschaft I and Wirtschaft II or Wirtschaft I/II
- */
-var wirtschaftRule = {
-	/* type */
-	type: 'wirtschaftRule',
-	/* constructor */
-	init: function() {
-		return this;
-	},
-	/* check method */
-	check: function(getSemester) {
-		var selectedWirtschaftI = getSemester('wirtschaft1') >= 1;
-		var selectedWirtschaftII = getSemester('wirtschaft2') >= 1;
-		var selectedWirtschaftI_II = getSemester('wirtschaftneu') >= 1;
-
-		return (selectedWirtschaftI && selectedWirtschaftII) || selectedWirtschaftI_II;
-	},
-	/* message */
-	message: "Die Vorlesung 'Wirtschaftliche Grundlagen' muss besucht werden.",
-};
-
-// ---
-// Rules created, now started adding them to rule manager
-// ---
-/* 1: create semester rule, just push it to rules array */
-ruleManager.rules.push(semesterRule);
-
-/* now walk through the array and add data-dependent rules */
-for (var course in data) {
-	if (!data.hasOwnProperty(course)) continue;
-	/* 2: create must-do-rules according to the information saved in data */
-	// if course must be done ..
-	if (data[course].pflicht) {
-		// .. add rule to rule manager
-		ruleManager.rules.push(Object.create(mustDoRule).init(course));
-	}
-
-	/* 3: create dependency-rules according to the information saved in data */
-	// if there are dependencies ..
-	if (data[course].vorher.length !== 0) {
-		// .. loop through all dependencies and ..
-		for (var i = 0; i < data[course].vorher.length; i++) {
-			// .. add rule to rule manager
-			ruleManager.rules.push(Object.create(dependencyRule).init(course, data[course].vorher[i]));
-		}
-	}
-
-	/* 6: create time-rules for all courses saved in data */
-	ruleManager.rules.push(Object.create(timeRule).init(course));
+function getCourseParameter(course, parameter, semesterNumber) {
+    if (semesterNumber === undefined) {
+        semesterNumber = f.getSemester(course);
+    }
+    if (semesterNumber < 0) {
+        //find the last semester that is not locked and where this course is offered,
+        //and use it as display reference
+        for (let testSemester = semesterManager.shownSemesters.length - 1; testSemester >= 0; testSemester--) {
+            const testSemesterNumber = testSemester+1;
+            if (semesterManager.getSemesterLock(testSemesterNumber)) {
+                continue;
+            }
+            if (!semesterManager.courseOfferedInSemester(course, testSemesterNumber)) {
+                continue;
+            }
+            semesterNumber = testSemesterNumber;
+            break;
+        }
+    }
+    let semesterName = 'general';
+    if (semesterNumber >= 0) {
+        semesterName = semesterManager.shownSemesters[semesterNumber - 1].substr(0, 4);
+    }
+    const coursedata = data[course];
+    const specific = coursedata.specific[semesterName];
+    if (specific !== undefined) {
+        const specificParameter = specific[parameter];
+        if (specificParameter !== undefined) {
+            return specificParameter;
+        }
+    }
+    return coursedata[parameter];
 }
-/* 4: create sbs-rule, just push it to rules-array */
-ruleManager.rules.push(sbsRule);
 
-/* 5: create softskills-rule, just push it to rules-array */
-ruleManager.rules.push(softskillsRule);
 
-/* 7: create vertiefungsgebiete-rule, just push it to rules-array */
-ruleManager.rules.push(vertiefungsgebieteRule);
+/**
+ * keeps track, which table column (called semester number)
+ * represents which actual semester (WSdd/dd or SSdd)
+ */
+const semesterManager = {
+    /**
+     * all semesters to choose from
+     */
+    semesters: [
+        "WS13/14", "SS14",
+        "WS14/15", "SS15",
+        "WS15/16", "SS16",
+        "WS16/17", "SS17",
+        "WS17/18", "SS18",
+        "WS18/19", "SS19",
+        "WS19/20", "SS20"
+    ],
 
-/* 9: create wirtschaft-rule, just push it to rules-array */
-ruleManager.rules.push(wirtschaftRule);
+    /**
+     * which semesters are currently displayed
+     */
+    shownSemesters: [
+        "WS15/16", "SS16",
+        "WS16/17", "SS17",
+        "WS17/18", "SS18"
+    ],
+    numberDisplayed: 0,
+    semesterLock: [],
+    // current must be either lastSummerSemester or lastWinterSemester!
+    currentSemester: "WS17/18",
+    lastSummerSemester: "SS17",
+    lastWinterSemester: "WS17/18",
+    preLastSummerSemester: "SS16",
+    preLastWinterSemester: "WS16/17",
+    /* the semester that is the first semester when you first start the application */
+    startswith: "WS15/16",
 
-/* 8: clone rules are added at runtime when items are cloned */
+    /* saves for each course an extra semester where it is offered */
+    exceptions: {},
+    addTimeException(course, semesterNumber) {
+        this.exceptions[course] = this.shownSemesters[semesterNumber - 1];
+        this.removeTimeExceptionIfAble(course, semesterNumber);
+    },
+    removeTimeExceptionIfAble(course, semesterNumber) {
+        if (semesterNumber < 0 || this.courseOfferedInSemester(course, semesterNumber, false)) {
+            this.exceptions[course] = undefined;
+        }
+    },
+
+    /** true, if the semester with given name lies in the future */
+    isFutureSemester(semesterName) {
+        return this.semesters.indexOf(semesterName) > this.semesters.indexOf(this.currentSemester)
+    },
+    /** returns a semester name not from the future, with same type (WS/SS) */
+    referenceSemesterFor(semesterName) {
+        if (semesterName.startsWith("SS")) {
+            return this.lastSummerSemester
+        } else if (semesterName.startsWith("WS")) {
+            return this.lastWinterSemester
+        }
+    },
+    /** returns a semester name not from the future, with same type (WS/SS) */
+    referenceSemester2For(semesterName) {
+        if (semesterName.startsWith("SS")) {
+            return this.preLastSummerSemester
+        } else if (semesterName.startsWith("WS")) {
+            return this.preLastWinterSemester
+        }
+    },
+    /**
+     * @param course which course(id) to test
+     * @param semesterNumber which semester to test
+     * @param allowExceptions true to also
+     * @return boolean - true if it was or will be offered in the given semester
+     */
+    courseOfferedInSemester(course, semesterNumber, allowExceptions = true) {
+        if (allowExceptions && this.shownSemesters[semesterNumber - 1] === this.exceptions[course]) {
+            return true;
+        }
+
+        if (course.startsWith('bp')) {
+            if (course === 'bp') {
+                return this.shownSemesters[semesterNumber - 1].startsWith("WS");
+            } else { //'bp2'
+                return this.shownSemesters[semesterNumber - 1].startsWith("SS");
+            }
+        } else if (course === 'ba') {
+            return this.shownSemesters[semesterNumber - 1].startsWith("SS");
+        }
+
+        const semesterName = this.shownSemesters[semesterNumber - 1];
+        const semesters = data[course].semester;
+        if (semesters.includes(semesterName)) {
+            return true
+        }
+        if (this.isFutureSemester(semesterName)
+            && semesters.includes(this.referenceSemesterFor(semesterName))
+            && semesters.includes(this.referenceSemester2For(semesterName))) {
+            return true
+        }
+        if (data[course].kurz === 'VHDL') {
+            const ws_ss = semesterName.substr(0, 2);
+            const num = parseInt(semesterName.substr(2, 2));
+            return (ws_ss === 'SS') && (num % 2 === 0)
+        }
+        return false
+    },
+
+    /**
+     * get the current lock state for a semester
+     */
+    getSemesterLock(semesterNumber) {
+        while (this.semesterLock.length < semesterNumber) {
+            this.semesterLock.push(false);
+        }
+        return this.semesterLock[semesterNumber - 1];
+    },
+    /**
+     * invert the lock state for a semester
+     * @param semesterNumber the semester to alter
+     * @returns {boolean} - the new lock status
+     */
+    flipSemesterLock(semesterNumber) {
+        const newValue = !this.getSemesterLock(semesterNumber);
+        this.semesterLock[semesterNumber - 1] = newValue;
+        return newValue;
+    },
+
+    /**
+     * called whenever the user changes a semester in a dropDown
+     * @param semester_number which semester got changed
+     * @param semester_string to what it got changed
+     */
+    updateSemester(semester_number, semester_string) {
+        const index = semester_number - 1;
+        if (semester_string.search(/[WS]S((\d{2}\/\d{2})|(\d{2}))/) < 0) {
+            console.error("Mismatched semester string. Check data!");
+            return;
+        }
+
+        const old_chosen = this.semesters.indexOf(this.shownSemesters[index]);
+        const new_chosen = this.semesters.indexOf(semester_string);
+        const difference = new_chosen - old_chosen;
+
+        this.shownSemesters[index] = semester_string;
+
+        for (let i = index + 1; i < this.shownSemesters.length; i++) {
+            const old_index = this.semesters.indexOf(this.shownSemesters[i]);
+            if (old_index + difference < this.semesters.length)
+                this.shownSemesters[i] = this.semesters[old_index + difference];
+            else
+                this.shownSemesters[i] = this.semesters.last();
+        }
+    }
+};
+
+/**
+ * keeps track of all the rules that need to be fulfilled
+ * for a "Belegung" to be valid
+ */
+const ruleManager = {
+    getSemester: null,
+    rules: [],
+    init(getSemester_Function) {
+        this.getSemester = getSemester_Function;
+    },
+
+    /**
+     * test all rules, and update their success property
+     * @returns all the rules as Array, including a numberFailedRules - property
+     */
+    checkAll() {
+        let failingRules = [];
+        for (let r = 0; r < this.rules.length; r++) {
+            const rule = this.rules[r];
+            const errors = rule(this.getSemester);
+            if (errors.length !== 0) {
+                failingRules = failingRules.concat(errors);
+            }
+        }
+        return failingRules;
+    }
+};
+
+/**
+ * this Manager keeps track on which decisions regarding the Belegung were decided how.
+ * Which Vertiefungsgebiete have I selected? How is everything weighted? ...
+ */
+const wahlpflichtManager = {
+    // vertiefungsgebiete combinations that are currently valid
+    possibleCombinations: []
+};
+
+const gradeManager = {
+    grades: {},
+    set(course, grade) {
+        this.grades[course] = grade;
+    },
+    get(course) {
+        const val = this.grades[course];
+        if (val) {
+            return val;
+        }
+        return NaN;
+    },
+    setString(course, gradeString) {
+        const float = parseFloat(gradeString);
+        if (float < 1 || float > 5) {
+            return;
+        }
+        if (gradeString.length > 2 && !['0', '3', '7'].includes(gradeString[2])) {
+            return;
+        }
+        this.set(course, float);
+    },
+    getString(course, niceFormatOpt) {
+        const val = this.get(course);
+        if (!val) {
+            return "";
+        } else {
+            const niceFormat = (niceFormatOpt !== undefined) ? niceFormatOpt : false;
+            if (niceFormat) {
+                return val.toFixed(1);
+            }
+            return "" + val;
+        }
+    }
+};
+
+
+/**
+ * RULE SECTION
+ */
+
+//helper methods
+function courseList() {
+    const list = [];
+    for (const course in data) {
+        if (!data.hasOwnProperty(course)) continue;
+        list.push(course)
+    }
+    return list;
+}
+function allBelegteCourses(getSemester) {
+    return courseList().filter(function(id) {
+        return getSemester(id) !== -1
+    });
+}
+function allBelegteCoursesInSemester(getSemester, semesterID) {
+    return courseList().filter(function(id) {
+        return getSemester(id) === semesterID
+    });
+}
+function isModul(type) {
+    return function(id) {
+        return getCourseParameter(id, 'modul').includes(type);
+    }
+}
+function not(f) {
+    return function() {
+        return !f.apply(null, arguments);
+    }
+}
+function courseToCP(id) {
+    return getCourseParameter(id, 'cp');
+}
+
+
+
+// new rules
+// each rule returns a list of error objects
+//   message: str, type: str
+// "empty returned list" <==> "rule fulfilled"
+
+ruleManager.rules.push(function timeRule(getSemester) {
+    function hasTimeProblem(id) {
+        return !semesterManager.courseOfferedInSemester(id, getSemester(id));
+    }
+    function createErrorMessage(id) {
+        return {
+            course: id,
+            type: "timeRule",
+            message: "Die Veranstaltung '" + getCourseParameter(id, 'nameLV') + "' wird im gewählten " + getSemester(id) + ". Semester nicht angeboten."
+        };
+    }
+
+    return allBelegteCourses(getSemester)
+        .filter(hasTimeProblem)
+        .map(createErrorMessage)
+});
+
+ruleManager.rules.push(function mustDoRule(getSemester) {
+    function mustDoCourse(id) {
+        return getCourseParameter(id, 'pflicht');
+    }
+    function courseNotBelegt(id) {
+        return getSemester(id) === -1
+    }
+    function createErrorMessage(id) {
+        return {
+            type: "mustDoRule",
+            message: "Die Veranstaltung '" + getCourseParameter(id, 'nameLV') + "' muss belegt werden."
+        };
+    }
+
+
+   return courseList()
+       .filter(mustDoCourse)
+       .filter(courseNotBelegt)
+       .map(createErrorMessage)
+});
+
+ruleManager.rules.push(function semesterOrderRule(_) {
+    const errors = [];
+    for (let i = 0; i < semesterManager.shownSemesters.length - 1; i += 1) {
+        const earlier_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i]);
+        const   later_index = semesterManager.semesters.indexOf(semesterManager.shownSemesters[i + 1]);
+        if (earlier_index >= later_index) {
+            errors.push({
+                type: "semesterRule",
+                message: "Das " + (i + 2).toString() + "te Semester kommt zeitlich nicht nach dem " + (i + 1).toString() + "ten."
+            });
+        }
+    }
+    return errors;
+});
+
+ruleManager.rules.push(function softskillsRule(getSemester) {
+
+    const totalCP = allBelegteCourses(getSemester)
+        .filter(isModul("Softskills"))
+        .map(courseToCP)
+        .sumElements();
+
+    if (totalCP < 6) {
+        return [{
+            type: "softskillsRule",
+            message: "Es müssen mindestens sechs Leistungspunkte im Softskills-Bereich erworben werden."
+        }]
+    }
+
+    return [];
+});
+
+ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
+    function returnValue(data, errorMessage, type = "vertiefungsgebieteRule") {
+        wahlpflichtManager.possibleCombinations = data;
+        if (errorMessage === undefined) {
+            return [];
+        }
+        return [{
+            type: type,
+            message: errorMessage
+        }]
+    }
+
+    const currentlyBelegteVertiefungen = allBelegteCourses(getSemester)
+        .filter(isModul("Vertiefungsgebiete"));
+
+    /*
+     * Here, each Vertiefungsgebiet gets mapped to all their interpretation options.
+     * So, 'pois' (which can be BPET or SAMT, and is an SBS) gets converted to:
+     * [
+     *    { key: 'hci2', vertiefung: 'BPET' },
+     *    { key: 'hci2', vertiefung: 'SAMT' },
+     *    { key: 'hci2', vertiefung: 'SBS' }
+     * ]
+     *
+     * NOTE:
+     * SB* is treated equally to HCGT, OSIS, ...
+     * NONE means that this LV is not used at all
+     * eventually, only those options with exactly 3 SBS are used further
+     */
+    const vertiefungenWithOptions = currentlyBelegteVertiefungen.map(function(course) {
+        const vertiefungen = getCourseParameter(course, 'vertiefung').slice(0);
+        for (const sb of getCourseParameter(course, 'modul')) {
+            if (sb.startsWith('SB')) {
+                vertiefungen.push(sb);
+            }
+        }
+        vertiefungen.push("NONE");
+        return vertiefungen.map(function(vertiefung) {
+           return { key: course, vertiefung: vertiefung }
+        });
+    });
+
+
+    // Normally, cartesianProduct expects a list of Arrays to be given, so it is usually called like:
+    // Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
+    // As we have an array, which contains all parameters, we have to use cartesianProduct.apply
+
+    // So now we calculate all possibilites how the current plan could be interpreted (called combination)
+    // This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCGT' and 'pois2' as 'BPET'.
+    // Another is to interpret 'hci2' as 'HCGT' and 'pois2' as 'SAMT'
+    // Another is to interpret 'hci2' as 'SAMT' ... and so on.
+    // Of course this normally happens with more courses than two.
+    // a combination is a list of key+vertiefung - objects (ech key only once), called interpretation
+    // TODO performance here (filter on combination creation)
+    let possibleCombinations = Array.cartesianProduct.apply(undefined, vertiefungenWithOptions);
+
+    // save the error message instead of instantly returning the error,
+    // so that data transformation steps can still be performed
+    let currentError = undefined;
+    let currentType = undefined;
+
+    // multiple steps are necessary to filter out valid combinations
+    // and to convert them to a meaningful format
+    const processingSteps = [
+        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden.", type: "sbsRule"},
+        {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
+        {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
+        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden.", type: "other"},
+        {converter: addVertiefungCombos},
+        {filter: twoTimesNine, errorMessage: "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben."},
+        {cleaner: expandAndTruncateVertiefungen},
+        {converter: removeNotEingebrachteLVs},
+        {converter: addSBS},
+        {cleaner: removeSubsets},
+        {cleaner: removeDoubles},
+        {converter: classifyVertiefungen},
+        {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
+        {converter: createVertiefungComboList},
+        {cleaner: mergeOnlyDifferentVertiefungsgebiete},
+        {converter: calculateGrades}
+    ];
+    for (let s = 0; s < processingSteps.length; s++) {
+        const step = processingSteps[s];
+        if (step.filter !== undefined) {
+            if (currentError === undefined) {
+                const oldCombinations = possibleCombinations;
+                possibleCombinations = oldCombinations.filter(step.filter);
+                if (possibleCombinations.length === 0) {
+                    possibleCombinations = oldCombinations;
+                    currentError = step.errorMessage;
+                    currentType = step.type;
+                }
+            }
+        } else if (step.cleaner !== undefined) {
+            const cleaned = [];
+            const emit = function (combination) {
+                cleaned.push(combination);
+            };
+            for (let c = 0; c < possibleCombinations.length; c++) {
+                step.cleaner(possibleCombinations[c], emit, c, possibleCombinations);
+            }
+            possibleCombinations = cleaned;
+        } else if (step.converter !== undefined) {
+            for (let c = 0; c < possibleCombinations.length; c++) {
+                step.converter(possibleCombinations[c]);
+            }
+        } else {
+            throw new Error('Unknown step format!');
+        }
+    }
+
+    if (currentError === undefined) {
+        return returnValue(possibleCombinations); // valid!
+    } else {
+        return returnValue(possibleCombinations, currentError, currentType); // error occurred in progress
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //helpers
+    function isSBS(interpretation) {
+        return interpretation.vertiefung.startsWith('SB');
+    }
+    function isEingebracht(interpretation) {
+        return interpretation.vertiefung !== 'NONE';
+    }
+    function toCourse(interpretation) {
+        return interpretation.key;
+    }
+    function toUsage(interpretation) {
+        return interpretation.vertiefung;
+    }
+    function getVertiefungenSet(combination) {
+        const vertiefungen = new Set();
+        for (let i = 0; i < combination.length; i++) {
+            const interpretation = combination[i];
+            if (!isSBS(interpretation) && isEingebracht(interpretation)) {
+                vertiefungen.add(interpretation.vertiefung);
+            }
+        }
+        return vertiefungen;
+    }
+    function isSSK(course) {
+        return getCourseParameter(course, 'modul').includes('Softskills');
+    }
+
+
+    //converter methods
+    function addVertiefungCombos(combination) {
+        // "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen. In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule). Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden, die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
+        const vertiefungsgebiete = Array.from(getVertiefungenSet(combination));
+        const cpPerVertiefung = Array.from(new Array(vertiefungsgebiete.length), function(){ return 0 }); //array with same length, filled with zeros
+        combination.forEach(function(interpretation) {
+            // calculate index as described above
+            if (!isSBS(interpretation)) {
+                const index = vertiefungsgebiete.indexOf(interpretation.vertiefung);
+                cpPerVertiefung[index] += courseToCP(toCourse(interpretation));
+            }
+        });
+        // Now we have counted all creditpoints.
+        // Now test all possible pairs if they met the given criteria.
+        // Found pairs are pushed to combination.possibleVertiefungen:
+        combination.possibleVertiefungen = [];
+        for (let i = 0; i < cpPerVertiefung.length; i += 1) {
+            for (let j = i + 1; j < cpPerVertiefung.length; j += 1) {
+                if (cpPerVertiefung[i] >= 9 && cpPerVertiefung[j] >= 9 && cpPerVertiefung[i] + cpPerVertiefung[j] >= 24) {
+                    const newPossibleVertiefung = [vertiefungsgebiete[i], vertiefungsgebiete[j]];
+                    combination.possibleVertiefungen.push(newPossibleVertiefung);
+                }
+            }
+        }
+    }
+    function classifyVertiefungen(combination) {
+        // Following variables will save, whether there is a lecture for the first/second Vertiefung
+        const firstVertiefungLectures = [];
+        const secondVertiefungLectures = [];
+        combination.forEach(function(interpretation) {
+            if (getCourseParameter(interpretation.key, 'lehrform').includes("Vorlesung")) {
+                // check where this Vorlesung belongs to
+                if (interpretation.vertiefung === combination.vertiefungCombo[0]) {
+                    firstVertiefungLectures.push(data[interpretation.key]);
+                }
+                if (interpretation.vertiefung === combination.vertiefungCombo[1]) {
+                    secondVertiefungLectures.push(data[interpretation.key]);
+                }
+            }
+        });
+        combination.firstVertiefungLectures = firstVertiefungLectures;
+        combination.secondVertiefungLectures = secondVertiefungLectures;
+    }
+    function createVertiefungComboList(combination) {
+        const combo1 = combination.vertiefungCombo;
+        combination.vertiefungCombo = [combo1];
+    }
+    function calculateGrades(combination) {
+        //calculate the final grade for these combinations
+
+        let total = 0;
+        function accumulate(acc, {grade, weight}) {
+            total += weight;
+            return acc + grade * weight;
+        }
+
+        if (NEUE_STUDIENORDNUNG) {
+            const toGradeAndWeight = function (weight) {
+                return function(course) {
+                    return {
+                        grade: gradeManager.get(course),
+                        weight: weight * getCourseParameter(course, 'cp')
+                    };
+                };
+            };
+
+            const einsgewichtet = [
+                'pt1', 'pt2', 'gds', 'swa',
+                'mod1', 'mod2', 'swt1',
+                'mathematik1', 'mathematik2', 'ti1', 'ti2',
+                'wirtschaft', 'recht1', 'recht2',
+                'pem',
+                'bs'].concat(combination.filter(isSBS).map(toCourse));
+
+            let courseGradeWeights = einsgewichtet.map(toGradeAndWeight(1));
+            courseGradeWeights.push({
+                grade: gradeManager.get('bp'),
+                weight: 30
+            },{
+                grade: gradeManager.get('ba'),
+                weight: 12
+            });
+
+            //find the best 6cp of softskills
+            let ssks = allBelegteCourses(getSemester).filter(isSSK);
+            ssks.sort(function (a, b) {
+                return gradeManager.get(a) >= gradeManager.get(b);
+            });
+            let best6cp;
+            let best31, best32;
+            for (let i = 0; i < ssks.length; i++) {
+                if (best6cp === undefined && getCourseParameter(ssks[i], 'cp') === 6)
+                    best6cp = ssks[i];
+                else if (getCourseParameter(ssks[i], 'cp') === 3) {
+                    if (best31 === undefined)
+                        best31 = ssks[i];
+                    else if (best32 === undefined)
+                        best32 = ssks[i];
+                }
+            }
+            if (best6cp === undefined) {
+                courseGradeWeights.push({
+                    grade: (gradeManager.get(best31) + gradeManager.get(best32))/2,
+                    weight: 6
+                });
+            } else if (best32 === undefined || best31 === undefined){
+                courseGradeWeights.push({
+                    grade: gradeManager.get(best6cp),
+                    weight: 6
+                });
+            } else {
+                courseGradeWeights.push({
+                    grade: Math.min(gradeManager.get(best6cp), (gradeManager.get(best31) + gradeManager.get(best32))/2),
+                    weight: 6
+                });
+            }
+
+
+            //now the Vertiefungsgebiete
+            for (let i = 0; i < combination.length; i++) {
+                const interpretation = combination[i];
+                if (!isSBS(interpretation))
+                    courseGradeWeights.push(toGradeAndWeight(1.5)(toCourse(interpretation)));
+            }
+
+
+            combination.grade = courseGradeWeights.reduce(accumulate, 0) / total;
+        } else {
+            const distributeWeights = function ({courses, weights}) {
+                weights.sort();
+                courses.sort(function (a, b) {
+                    return gradeManager.get(a) <= gradeManager.get(b);
+                });
+                let i = 0;
+                return courses.map(function (course) {
+                    return {
+                        grade: gradeManager.get(course),
+                        weight: weights[i++] * getCourseParameter(course, 'cp')
+                    }
+                })
+            };
+
+            const gitse = {
+                courses: ['pt1', 'pt2', 'gds', 'swa'],
+                weights: [3, 3, 3, 0]
+            };
+            const sum = {
+                courses: ['mod1', 'mod2', 'swt1'],
+                weights: [3, 3, 1]
+            };
+            const mutg = {
+                courses: ['mathematik1', 'mathematik2', 'ti1', 'ti2'],
+                weights: [1, 1, 1, 0]
+            };
+            const sbs = {
+                courses: combination.filter(isSBS).map(toCourse).concat(['bs']),
+                weights: [3, 3, 3, 1]
+            };
+            let courseWeights = [gitse, sum, mutg, sbs].map(distributeWeights).reduce(function (accu, current) {
+                return accu.concat(current);
+            }, []);
+
+            // Wirtschaft or Recht?
+            const wirtschaftGrade = gradeManager.get('wirtschaft');
+            const rechtGrade = (gradeManager.get('recht1') + gradeManager.get('recht2')) / 2;
+            courseWeights.push({
+                grade: Math.min(wirtschaftGrade, rechtGrade),
+                weight: 1 * 6
+            });
+
+            // Vertiefungsgebiete
+            courseWeights = courseWeights.concat(combination
+                .filter(isEingebracht)
+                .filter(not(isSBS))
+                .map(function ({key}) {
+                    return {
+                        grade: gradeManager.get(key),
+                        weight: 3 * getCourseParameter(key, 'cp')
+                    }
+                }));
+            courseWeights.push({
+                grade: gradeManager.get('bp'),
+                weight: 1 * 30
+            },{
+                grade: gradeManager.get('ba'),
+                weight: 3 * 12
+            });
+            combination.grade = courseWeights
+                    .reduce(accumulate, 0)
+                / total;
+        }
+    }
+    function addSBS(combination) {
+        combination.sbs = combination.filter(isSBS);
+    }
+    function removeNotEingebrachteLVs(combination) {
+        for (let c = 0; c < combination.length; c++) {
+            const interpretation = combination[c];
+            if (!isEingebracht(interpretation)) {
+                combination.splice(c, 1);
+                c--;
+            }
+        }
+    }
+
+
+    //filter methods
+    function threeSBS(combination) {
+        return combination.filter(isSBS).length === 3;
+    }
+    function onlyDifferentSBS(combination) {
+        return (new Set(combination.filter(isSBS).map(toUsage))).size === 3;
+    }
+    function twoVertiefungen(combination) {
+        return getVertiefungenSet(combination).size >= 2;
+    }
+    function totalOf24(combination) {
+        return combination
+            .filter(not(isSBS))
+            .filter(isEingebracht)
+            .map(toCourse)
+            .map(courseToCP)
+            .sumElements() === 24;
+    }
+    function twoTimesNine(combination) {
+        // Filter this out, if no possible pairs were found.
+        return combination.possibleVertiefungen.length > 0;
+    }
+    function oneLecturePerVertiefung(combination) {
+        // And finally, check the last rule: whether a Lecture is enrolled for the given Vertiefung
+        // Both Vertiefungen must have a lecture to succeed.
+        return combination.firstVertiefungLectures.length > 0 && combination.secondVertiefungLectures.length > 0;
+    }
+
+    // clean up methods:
+    function expandAndTruncateVertiefungen(combination, emit, _i, _allCombinations) {
+        // expand combinations with multiple Vertiefungen-combos to single ones,
+        // omitting all LVs which do not contribute to this combo
+        const possible = combination.possibleVertiefungen;
+        // For each combination, there are possible Vertiefungen-combos
+        possible.forEach(function(possibleVertiefung) {
+            const cleanedCombination = [];
+            // Walk through all courses ..
+            combination.forEach(function(course) {
+                // add only those, which are important for the current Vertiefungen-combo
+                if (possibleVertiefung.includes(course.vertiefung) || isSBS(course)) {
+                    cleanedCombination.push(course);
+                }
+            });
+            // save Vertiefung combo
+            cleanedCombination.vertiefungCombo = possibleVertiefung;
+            emit(cleanedCombination);
+        });
+    }
+    function removeSubsets(combination, emit, _i, allCombinations) {
+        // remove all combinations, which are a subset of another one
+        const hasSuperCombination = allCombinations.some(function(superCombination) {
+            return combination.vertiefungCombo.equals(superCombination.vertiefungCombo)
+                && combination.length < superCombination.length
+                && combination.every(function(interpretation) {
+                    return superCombination.some(function (superInterpretation) {
+                        return superInterpretation.key === interpretation.key
+                            && superInterpretation.vertiefung === interpretation.vertiefung;
+                    });
+            });
+        });
+        if (!hasSuperCombination) {
+            emit(combination);
+        }
+    }
+    function removeDoubles(combination, emit, i, allCombinations) {
+        // remove all doubles
+        const hasDuplicate = allCombinations.some(function(otherCombination, o) {
+            return o > i
+                && combination.vertiefungCombo.equals(otherCombination.vertiefungCombo)
+                && combination.length === otherCombination.length
+                && combination.every(function (interpretation) {
+                    return otherCombination.some(function(otherInterpretation) {
+                        return otherInterpretation.key === interpretation.key
+                            && otherInterpretation.vertiefung === interpretation.vertiefung;
+                    })
+                });
+        });
+        if (!hasDuplicate) {
+            emit(combination);
+        }
+    }
+    function mergeOnlyDifferentVertiefungsgebiete(combination, emit, i, allCombinations) {
+        //merge together these combinations, that only differ in the Vertiefungsgebiete selected
+        const merged = allCombinations.some(function(otherCombination, o) {
+            if (o > i
+                    && combination.length === otherCombination.length
+                    && combination.every(function (interpretation) {
+                        return otherCombination.some(function(otherInterpretation) {
+                            return otherInterpretation.key === interpretation.key
+                        })
+                    })
+                    //&& false
+                    && new Set(combination.firstVertiefungLectures).equals(new Set(otherCombination.firstVertiefungLectures))
+                    && new Set(combination.secondVertiefungLectures).equals(new Set(otherCombination.secondVertiefungLectures))) {
+                const newCombos = combination.vertiefungCombo;
+                for (let c = 0; c < newCombos.length; c++) {
+                    otherCombination.vertiefungCombo.push(newCombos[c]);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        });
+        if (!merged) {
+            emit(combination);
+        }
+    }
+});

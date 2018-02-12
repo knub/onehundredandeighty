@@ -6,30 +6,21 @@
 	<link rel="stylesheet" type="text/css" href="style/basic.css">
 	<link rel="stylesheet" type="text/css" href="style/print.css" media="print" />
 	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<script src="jquery/js/jquery-3.3.1.min.js"></script>
+	<script src="jquery/js/jquery-ui.min.js"></script>
+	<script src="js/jquery.knubtip.js"></script>
+	<script src="js/jquery.knubselect.js"></script>
+	<script src="js/pdf.js"></script>
+	<script src="js/MultiMap.js"></script>
 </head>
 <body>
-	<div id="successor-search">
-		Da ich meinen Bachelor am HPI nun beendet habe, und das nächste halbe Jahr nicht am HPI bin, werde ich die Daten nicht mehr aktualisieren. Ihr müsstest das also bei Interesse in Zukunft selbst übernehmen. Das Ganze ist relativ einfach: diese <a href="https://github.com/knub/onehundredandeighty/blob/master/js/data.js">JSON-Datei</a> forken und nach dem bisherigen Schema aktualisieren. Wenn ihr mir Pull-Requests stellt, schau ich nochmal drüber, ob alles passt. <br />
-		<strong>Für die Master-Studenten:</strong> Ein onehundredandtwenty für den Master wird kommen, aber erst in einem halben Jahr ;).<br />
-		Bei Fragen schreibt mir 'ne Mail.
-	</div>
-	<a id="github-link" href="https://github.com/knub/onehundredandeighty">
+	<a id="github-link" href="https://github.com/ErikBrendel/onehundredandeighty" target="_blank">
 		<img style="position: absolute; top: 0; right: 0; border: 0;z-index:1" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
 	</a>
 	<header>
-		<h1>onehundredandeighty — course planning for hpi students<!-- <img src="images/hpi_logo2.png" alt="HPI-Logo" /><span>Beta</span>--></h1>
+		<h1>onehundredandeighty — course planning for hpi students — Studienordnung <a id="changeStudienordnungLink" style="text-decoration: underline; cursor: pointer">201x</a></h1>
 		<div id="last-update">
 			Daten: WS10/11 bis einschließlich XXxx
-		</div>
-		<div>
-		<div id="button-div">
-			<button class="btn go" id="recheck">Überprüfen</button>
-		</div>
-		<div id="checkbox-div">
-			<ul id="permacheck">
-				<li>Permanent überprüfen</li>
-			</ul>
-		</div>
 		</div>
 	</header>
 	<div id="message">
@@ -37,105 +28,32 @@
 			<button id="slide-messages">▽<!--▼--></button>
 		</div>
 		<ul>
-			<li class="teaser">Einfach Lehrveranstaltungen von unten in das gewünschte Semester ziehen. <button class="btn go" id="check">Überprüfen</button></li>
+			<li class="teaser">Einfach Lehrveranstaltungen von unten in das gewünschte Semester ziehen.</li>
 		</ul>
 		<!-- im Fehlerfall muss hier auch ein link auf eine genauere Erläuterung, a la "was bedeutet das?" stehen -->
 	</div>
 	<section class="semester-time" id="semester-time1">
-		<h2>
+		<!--<h2>
 			1. Semester<br>
 			<select id="selectSemester1" name="selectSemester1" size="1">
-				<!--
 				<option selected>WS 10/11</option>
 				<option>SS 11</option>
-				<option>WS 11/12</option>
-				<option>SS 12</option>
-				<option>WS 12/13</option>
-				<option>SS 13</option>
-				-->
 			</select>
-		</h2>
-		<h2>
-			2. Semester<br>
-			<select id="selectSemester2" name="selectSemester2" size="1">
-			</select>
-		</h2>
-		<h2>
-			3. Semester<br>
-			<select id="selectSemester3" name="selectSemester3" size="1">
-			</select>
-		</h2>
-		<h2>
-			4. Semester<br>
-			<select id="selectSemester4" name="selectSemester4" size="1">
-			</select>
-		</h2>
-		<h2>
-			5. Semester<br>
-			<select id="selectSemester5" name="selectSemester5" size="1">
-			</select>
-		</h2>
-		<h2>
-			6. Semester<br>
-			<select id="selectSemester6" name="selectSemester6" size="1">
-			</select>
-		</h2>
+		</h2>-->
 		<br style="clear: both;" />
 	</section>
 	<section class="semester-view" id="semester-view1">
-		<ul id="semester1" class="chosen courses">
-			<!--
+		<!--<ul id="semester1" class="chosen courses">
 			<li>
-				PT I<button><div class="info clone-info">Click here to clone</div>ⴲ</button>
-				<div class="info">
-					<h3>Programmiertechnik 1</h3>
-					<div>
-						Dr. Martin von Löwis <br />
-						6 Leistungspunkte <br />
-						2 Semesterwochenstunden + Übung <br />
-						Betriebssysteme und Middleware <br />
-					</div>
-				</div>
+				PT I
 			</li>
-			-->
-		</ul>
-		<ul id="semester2" class="chosen courses">
-		</ul>
-		<ul id="semester3" class="chosen courses">
-		</ul>
-		<ul id="semester4" class="chosen courses">
-		</ul>
-		<ul id="semester5" class="chosen courses">
-			<li class="disabled oneliner double-time">Bachelorprojekt</li>
-		</ul>
-		<ul id="semester6" class="chosen courses">
-			<li class="disabled oneliner double-time">Bachelorarbeit</li>
-			<li class="disabled oneliner triple-time">Bachelorprojekt</li>
-		</ul>
+		</ul>-->
 		<br style="clear: both;" />
 	</section>
 	<section class="semester-time" id="semester-time2">
-		<!--
-		<h2>
-			7. Semester<br>
-			<select id="selectSemester7" name="selectSemester7" size="1">
-			</select>
-		</h2>
-		<h2>
-			8. Semester<br>
-			<select id="selectSemester8" name="selectSemester8" size="1">
-			</select>
-		</h2>
-		-->
 		<br style="clear: both; height: 0px;" />
 	</section>
 	<section class="semester-view" id="semester-view2">
-	<!--
-		<ul id="semester7" class="chosen courses">
-		</ul>
-		<ul id="semester8" class="chosen courses">
-		</ul>
-	-->
 		<br style="clear: both; height: 0px;" />
 	</section>
 	<section id="extrafunctions">
@@ -172,39 +90,34 @@
 		<div id="filter">
 			<div id="filter-options">
 			<div id="semester_wahlpflicht">
-					<!--
-					<ul>
-						<li>WS10/11</li>
-						<li>SS11</li>
-						<li>WS11/12</li>
-						<li>SS12</li>
-						<li>WS12/13</li>
-						<li>SS13</li>
-					</ul>
-					-->
 				</div>
 				<div id="module_vertiefungsgebiete">
 				</div>
 			</div>
 		</div>
-		<div id="filter-button">
-			<h2>Filter</h2>
+		<div id="filter-control">
+			<div id="filter-button" class="filter-control-button">
+				<h2>Filter</h2>
+			</div>
+			<div id="filter-reset-button" class="filter-control-button">
+				<h2>Reset</h2>
+			</div>
 		</div>
 	</section>
 	<footer>
-		Entwickelt von Stefan Bunk. Benutzung auf eigene Gefahr!<br />
+		Entwickelt von Stefan Bunk <a href="danke.html"> und anderen</a>. Benutzung auf eigene Gefahr!<br />
 		<!--
 		using html5 elements, multiple backgrounds css, css gradients, font-face, jquery, css media queries, css transformations … <br>
 		-->
 	</footer>
-	<script src="jquery/js/jquery-1.6.2.min.js"></script>
-	<script src="jquery/js/jquery-ui-1.8.15.custom.min.js"></script>
-	<script src="js/jquery.animate-colors-min.js"></script>
-	<script src="js/jquery.knubtip.js"></script>
-	<script src="js/jquery.knubselect.js"></script>
+	<div id="dropHint" class="dropHint">
+		~ Gib mir dein Transcript of records oder deine Studiendokumentation und ich sage dir, was du belegt hast ~
+	</div>
+	<script src="js/newOrOld.js"></script>
 	<script src="js/data.js"></script>
 	<script src="js/helper.js"></script>
 	<script src="js/logic.js"></script>
 	<script src="js/frontend.js"></script>
+	<script src="js/pdfdrop.js"></script>
 </body>
 </html>
