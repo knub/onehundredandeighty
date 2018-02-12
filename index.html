@@ -18,7 +18,7 @@
 		<img style="position: absolute; top: 0; right: 0; border: 0;z-index:1" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
 	</a>
 	<header>
-		<h1>onehundredandeighty — course planning for hpi students — Studienordnung <a id="changeStudienordnungLink" style="text-decoration: underline; cursor: pointer">201x</a></h1>
+		<h1>onehundredandeighty — course planning for hpi students — Studienordnung <a id="changeStudienordnungLink" style="text-decoration: underline; cursor: pointer">201x</a> <button id="show-help" class="btn action1" onclick="f.showHelp()">Hilfe</button></h1>
 		<div id="last-update">
 			Daten: WS10/11 bis einschließlich XXxx
 		</div>
@@ -104,6 +104,27 @@
 			</div>
 		</div>
 	</section>
+	<div id="controls" class="controls hidden">
+		<center>
+			<h1>Willkommen zu onehundredandeighty!</h1>
+			<h4><i>Bachelor-Planung am HPI leicht gemacht</i></h4>
+		</center>
+		<br>
+		<ul>
+			<li>Kurse können mittels Drag &amp; Drop verschoben werden</li>
+			<li>Ein Doppelklick auf einen Kurs öffnet die dazugehörige Lehrveranstaltungs-Seite</li>
+			<li>Kurse passen ihre Daten dem Semester an, in dem sie sich befinden</li>
+			<li>Ein Klick auf das kleine Häkchen bei einem Kurs lässt dich deine Note für ihn eintragen</li>
+			<li>Der Filter im unteren Bereich hilft dir, die Veranstaltung zu finden, die du suchst</li>
+			<li>Fehlermeldungen können dir den Filter automatisch anpassen, um fehlende Veranstaltungen zu finden</li>
+			<li>Bei gültiger Belegung werden alle Belegungsmöglichkeiten (mit Note) aufgelistet</li>
+			<li>Per Drag &amp; Drop kannst du ein Transcript of records oder eine Studienbescheinigung her geben, um den Stundenplan und die Noten automatisch auszufüllen</li>
+		</ul>
+		<br>
+		<br>
+		<br>
+		<button class="btn go" style="position: relative; bottom: 50px; width: 200px; left: calc(50% - 100px);" onclick="f.hideHelp()">Verstanden!</button>
+	</div>
 	<footer>
 		Entwickelt von Stefan Bunk <a href="danke.html"> und anderen</a>. Benutzung auf eigene Gefahr!<br />
 		<!--
