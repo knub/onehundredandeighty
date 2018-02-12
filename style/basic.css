@@ -755,3 +755,27 @@ h3 {
 .highlight {
     background: #ffea00 !important;
 }
+
+.controls {
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+    z-index: 3;
+    padding: 20px;
+
+    background-color: #eee;
+    border: 1px solid #666;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.75);
+
+    font-size: 150%;
+    line-height: 140%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
