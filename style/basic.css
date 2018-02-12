@@ -595,7 +595,7 @@ h3 {
 #courses-pool > ul li {
     margin: 4px;
 }
-#courses-pool .hidden {
+.hidden {
     display: none;
 }
 

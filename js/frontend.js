@@ -1100,6 +1100,12 @@ const frontend = {
         $("#semester_wahlpflicht").html(wahlpflichtList);
         $("#module_vertiefungsgebiete").html(moduleList + vertiefungsgebieteList);
     },
+    showHelp() {
+        $('#controls').removeClass('hidden');
+    },
+    hideHelp() {
+        $('#controls').addClass('hidden');
+    },
     /* selector for droppables */
     coursesList: ".courses",
     /* when a li has this class it cannot be dragged */
@@ -1199,6 +1205,10 @@ $(function() {
         }
 
         f.filterManager = $.extend(f.filterManager, JSON.parse(localStorage.onehundredandeighty_filterManager));
+    }
+    if (localStorage.onehundredandeighty_splash_shown !== "true") {
+        localStorage.onehundredandeighty_splash_shown = "true";
+        f.showHelp();
     }
 
     /* initialize <select>'s with correct semesters from logic (see logic.js) */
