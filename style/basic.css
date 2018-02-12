@@ -611,7 +611,7 @@ h3 {
     border-bottom: 4px solid #333;
 }
 #extrafunctions div {
-    width: 29%;
+    width: 17.4%;
     line-height: 45px;
     float: left;
     text-align: center;
@@ -621,7 +621,8 @@ h3 {
     margin-right: 15px;
 }
 #extrafunctions button {
-    width: 180px;
+    width: 98%;
+    max-width: 180px;
 }
 #extrafunctions div:first-child {
     background: black url(../images/arrow.png) no-repeat right;

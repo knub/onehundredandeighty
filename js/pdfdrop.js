@@ -129,11 +129,25 @@ $(document).on('dragleave', hideDropOverlay);
 $(document).on('drop', function(e) {
     e.preventDefault();
     hideDropOverlay();
-    const files = e.originalEvent.dataTransfer.files; // Array of all files
+    const files = e.originalEvent.dataTransfer.files;
     if (files.length !== 1) {
         return false;
     }
     let file = files[0];
+    loadTranscriptFile(file);
+    return false;
+});
+
+$('#pdf_file_input').on('change', function(e) {
+    if (this.files.length !== 1) {
+        return false;
+    }
+    let file = this.files[0];
+    loadTranscriptFile(file);
+    return false;
+});
+
+function loadTranscriptFile(file) {
     loadPDF(file, function(textContent) {
         const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
         for (let match; (match = transcriptOfRecordsRegex.exec(textContent)) !== null;) {
@@ -168,8 +182,7 @@ $(document).on('drop', function(e) {
         f.saveManager.save();
         window.location.href = window.location.href;
     });
-    return false;
-});
+}
 
 function loadPDF(file, resolve) {
     let reader = new FileReader();

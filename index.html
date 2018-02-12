@@ -18,7 +18,7 @@
 		<img style="position: absolute; top: 0; right: 0; border: 0;z-index:1" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
 	</a>
 	<header>
-		<h1>onehundredandeighty — course planning for hpi students — Studienordnung <a id="changeStudienordnungLink" style="text-decoration: underline; cursor: pointer">201x</a> <button id="show-help" class="btn action1" onclick="f.showHelp()">Hilfe</button></h1>
+		<h1>onehundredandeighty — course planning for hpi students — Studienordnung <a id="changeStudienordnungLink" style="text-decoration: underline; cursor: pointer">201x</a></h1>
 		<div id="last-update">
 			Daten: WS10/11 bis einschließlich XXxx
 		</div>
@@ -61,13 +61,19 @@
 			<span>Extrafunktionen</span>
 		</div>
 		<div>
-			<span>Lehrveranstaltungen zurücksetzen:</span><button class="btn danger" id="reset">RESET</button><br />
+			<button class="btn danger" id="reset">RESET</button><br />
 		</div>
 		<div>
-			<span>Zwei Semester mehr verwenden:</span><button class="btn action2" id="moresemester">mehr Semester</button><br />
+			<button class="btn action2" id="moresemester">mehr Semester</button><br />
 		</div>
 		<div>
-			<span>Zwei Semester weniger verwenden:</span><button class="btn action2" id="lesssemester">weniger Semester</button><br />
+			<button class="btn action2" id="lesssemester">weniger Semester</button><br />
+		</div>
+		<div>
+			<button class="btn action2" onclick="$('#pdf_file_input').trigger('click');">PDF upload</button><input type="file" id="pdf_file_input" style="opacity: 0; display: none;">
+		</div>
+		<div>
+			<button class="btn action2" onclick="f.showHelp()">Hilfe</button><br />
 		</div>
 		<br style="clear: both; height: 0px;" />
 	</section>
@@ -118,7 +124,7 @@
 			<li>Der Filter im unteren Bereich hilft dir, die Veranstaltung zu finden, die du suchst</li>
 			<li>Fehlermeldungen können dir den Filter automatisch anpassen, um fehlende Veranstaltungen zu finden</li>
 			<li>Bei gültiger Belegung werden alle Belegungsmöglichkeiten (mit Note) aufgelistet</li>
-			<li>Per Drag &amp; Drop kannst du ein Transcript of records oder eine Studienbescheinigung her geben, um den Stundenplan und die Noten automatisch auszufüllen</li>
+			<li>Per Drag &amp; Drop kannst du ein Transcript of records oder eine Studiendokumentation her geben, um den Stundenplan und die Noten automatisch auszufüllen</li>
 		</ul>
 		<br>
 		<br>
