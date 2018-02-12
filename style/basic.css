@@ -756,6 +756,32 @@ h3 {
     background: #ffea00 !important;
 }
 
+.dropHint {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    border: 5px dashed transparent;
+    background-color: rgba(0, 0, 0, 0.0);
+    color: transparent;
+    transition: border 0.5s, background-color 0.5s;
+
+    text-align: center;
+    font-size: 200%;
+    padding-top: 100px;
+    font-weight: bold;
+    z-index: 9001;
+    display: none;
+}
+
+.dropHintActive {
+    border-color: black;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+}
+
 .controls {
     position: fixed;
     top: 10%;

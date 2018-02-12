@@ -34,14 +34,15 @@ function getCourseParameter(course, parameter, semesterNumber) {
     if (semesterNumber >= 0) {
         semesterName = semesterManager.shownSemesters[semesterNumber - 1].substr(0, 4);
     }
-    const specific = data[course].specific[semesterName];
+    const coursedata = data[course];
+    const specific = coursedata.specific[semesterName];
     if (specific !== undefined) {
         const specificParameter = specific[parameter];
         if (specificParameter !== undefined) {
             return specificParameter;
         }
     }
-    return data[course][parameter];
+    return coursedata[parameter];
 }
 
 
