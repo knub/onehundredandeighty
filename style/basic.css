@@ -810,3 +810,16 @@ h3 {
 .controls h1 {
     line-height: 100%;
 }
+
+.controls ul {
+    position: relative;
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1.2em;
+}
+.controls ul li:before {
+    content: "-";
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
