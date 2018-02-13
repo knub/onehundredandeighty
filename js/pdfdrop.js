@@ -149,7 +149,7 @@ $('#pdf_file_input').on('change', function(e) {
 
 function loadTranscriptFile(file) {
     loadPDF(file, function(textContent) {
-        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
+        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP|SP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
         for (let match; (match = transcriptOfRecordsRegex.exec(textContent)) !== null;) {
             const name = match[1];
             const grade = match[2].replace(',', '.');
@@ -163,7 +163,7 @@ function loadTranscriptFile(file) {
             }
         }
 
-        const studiendokumentationRegex = /\d{6} (.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP) \d\d? (belegt|\d,\d) .{3,100} (SS|WS) (\d{4}|\d\d\/\d\d) \d/g;
+        const studiendokumentationRegex = /\d{6} (.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP|SP) \d\d? (belegt|\d,\d) .{3,100} (SS|WS) (\d{4}|\d\d\/\d\d) \d/g;
         for (let match; (match = studiendokumentationRegex.exec(textContent)) !== null;) {
             const name = match[1];
             const grade = match[2].replace(',', '.');
