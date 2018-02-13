@@ -279,7 +279,7 @@ const Course = class {
         //this.gradeInput.val("");
         gradeManager.setString(this.id, grade);
         f.saveManager.save();
-        f.checkRules();
+        f.checkRulesIfWanted();
         this.container.removeClass('inGradeEditMode');
         this.nameText.css('display', 'block');
         this.gradeInput.css('display', 'none');
@@ -535,7 +535,7 @@ const frontend = {
 
     addTimeException(course) {
         semesterManager.addTimeException(course, f.getSemester(course));
-        f.checkRules();
+        f.checkRulesIfWanted();
         f.saveManager.save();
     },
     /* adjusts short lv-string to be displayed in table */
@@ -679,6 +679,19 @@ const frontend = {
         setTimeout(function() {
             noGradeCourses.removeClass('highlight');
         }, 2000)
+    },
+    checkRulesIfWanted() {
+        if (localStorage.onehundredandeighty_checkPermanently === undefined) {
+            localStorage.onehundredandeighty_checkPermanently = "true";
+        }
+        if (localStorage.onehundredandeighty_checkPermanently === "true") {
+            f.checkRules();
+        }
+    },
+    checkRulesAsync(showAllDetails) {
+        setTimeout(function() {
+            f.checkRules(showAllDetails);
+        }, 70)
     },
     /* used to check all rules and display them in div#messages */
     checkRules(showAllDetails) {
@@ -883,7 +896,7 @@ const frontend = {
             }
 
 
-            f.checkRules();
+            f.checkRulesIfWanted();
             f.filterManager.filter();
             f.saveManager.save();
         });
@@ -974,7 +987,7 @@ const frontend = {
         f.adjustSemesterViewHeight();
         semesterManager.removeTimeExceptionIfAble(courseName, f.getSemester(courseName));
         setTimeout(function() {
-            f.checkRules();
+            f.checkRulesIfWanted();
             Semester.hideDragDropHints();
             Semester.updateLPStates();
             f.coursesUl.find("li").knubtip("enable");
@@ -1113,7 +1126,7 @@ const frontend = {
     /* true, when all error messages are visible in drop down list */
     allMessagesVisible: false,
     /* when true, rules are checked permanently */
-    checkPermanently: null,
+    checkPermanently: true,
     /* number of list items in one list in unchosen lists */
     coursesPoolHeight: 8,
     gradeCharacter: "✓",
@@ -1142,16 +1155,22 @@ $(function() {
 
     $("#last-update").html("Daten: WS10/11 bis einschließlich " + semesterManager.currentSemester);
     /* initialize check permanently checkbox */
+
+    if (localStorage.onehundredandeighty_checkPermanently === "false") {
+        $("#checkbox-div").find("ul").find("li").removeClass('selected');
+        $("#button-div").fadeIn(10);
+    }
     $("#checkbox-div").find("ul").knubselect({
         // change is raised when the selection changed
         change(selected, id) {
+            console.log(selected, id);
             if (selected.length === 1) {
-                f.checkPermanently = true;
-                $("#button-div").fadeOut(100);
-                f.checkRules();
+                localStorage.onehundredandeighty_checkPermanently = true;
+                $("#button-div").fadeOut(50);
+                f.checkRulesAsync();
             }
             else {
-                f.checkPermanently = false;
+                localStorage.onehundredandeighty_checkPermanently = false;
                 $("#button-div").fadeIn(100);
             }
             f.saveManager.save();
@@ -1354,11 +1373,11 @@ $(function() {
     $("#lesssemester").click(function() {
         f.removeSemester();
         f.coursesUl = $(f.coursesList);
-        f.checkRules();
+        f.checkRulesIfWanted();
         f.saveManager.save();
     });
     $('#changeStudienordnungLink')
         .text(NEUE_STUDIENORDNUNG ? '2016' : '2010')
         .click(switchStudienordnung);
-    f.checkRules();
+    f.checkRulesIfWanted();
 });

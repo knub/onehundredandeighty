@@ -34,7 +34,6 @@ div#button-div {
     bottom: 0;
     right: 36em;
     display: none;
-    visibility: hidden;
 }
 div#checkbox-div {
     border-radius: 10px 10px 0 0;
@@ -49,7 +48,6 @@ div#checkbox-div {
     width: 15em;
     background: #333;
     color: white;
-    visibility: hidden;
 }
 div#checkbox-div ul {
     list-style: none;
