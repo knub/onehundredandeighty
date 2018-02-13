@@ -390,6 +390,53 @@ ruleManager.rules.push(function softskillsRule(getSemester) {
     return [];
 });
 
+class CartesianProduct {
+    constructor(arrayOfDimensions) {
+        this.arrayOfDimensions = arrayOfDimensions;
+        this.reset();
+    }
+    totalAmount() {
+        return this.arrayOfDimensions.map((a) => a.length).reduce(((a, b) => a * b), 1);
+    }
+    next() {
+        if (this.done) return;
+        const result = this.current();
+        this.increaseCounter();
+        return result;
+    }
+    reset() {
+        this.currentPosition = new Array(this.dimensions());
+        for (let d = 0; d < this.currentPosition.length; d++) {
+            this.currentPosition[d] = 0;
+        }
+        this.done = false;
+    }
+    dimensions() {
+        return this.arrayOfDimensions.length;
+    }
+    current() {
+        let result = [];
+        for (let d = 0; d < this.dimensions(); d++) {
+            result.push(this.arrayOfDimensions[d][this.currentPosition[d]]);
+        }
+        return result;
+    }
+    increaseCounter() {
+        const increaseAtDigit = (function(digit) {
+            this.currentPosition[digit]++;
+            if (this.currentPosition[digit] >= this.arrayOfDimensions[digit].length) {
+                this.currentPosition[digit] = 0;
+                if (digit > 0) {
+                    increaseAtDigit(digit - 1);
+                } else {
+                    this.done = true;
+                }
+            }
+        }).bind(this);
+        increaseAtDigit(this.dimensions() - 1);
+    }
+}
+
 ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     function returnValue(data, errorMessage, type = "vertiefungsgebieteRule") {
         wahlpflichtManager.possibleCombinations = data;
@@ -444,20 +491,49 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // Of course this normally happens with more courses than two.
     // a combination is a list of key+vertiefung - objects (ech key only once), called interpretation
     // TODO performance here (filter on combination creation)
-    let possibleCombinations = Array.cartesianProduct.apply(undefined, vertiefungenWithOptions);
+    const allCombinations = new CartesianProduct(vertiefungenWithOptions);
+    console.info(`Testing a total of ${allCombinations.totalAmount()} possible combinations.`);
+
+    // multiple steps are necessary to filter out valid combinations
+    const streamProcessingSteps = [
+        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden.", type: "sbsRule"},
+        {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
+        {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
+        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden.", type: "other"}
+    ];
+    
+    let possibleCombinations = [];
+
+    let combination;
+    let maxStep = 0;
+    while ((combination = allCombinations.next()) !== undefined) {
+        let valid = true;
+        for (let s = 0; s < streamProcessingSteps.length; s++) {
+            maxStep = Math.max(maxStep, s);
+            const step = streamProcessingSteps[s];
+            if (!step.filter(combination)) {
+                valid = false;
+                break;
+            }
+        }
+        if (valid) {
+            possibleCombinations.push(combination);
+        }
+    }
+    console.info(`After initial filtering, ${possibleCombinations.length} combinations survived.`);
 
     // save the error message instead of instantly returning the error,
     // so that data transformation steps can still be performed
     let currentError = undefined;
-    let currentType = undefined;
+    let currentErrorType = undefined;
+    if (possibleCombinations.length === 0) {
+        currentError = streamProcessingSteps[maxStep].errorMessage;
+        currentErrorType = streamProcessingSteps[maxStep].type;
+    }
 
-    // multiple steps are necessary to filter out valid combinations
-    // and to convert them to a meaningful format
+
+    // multiple steps are necessary to convert them to a meaningful format
     const processingSteps = [
-        {filter: threeSBS, errorMessage: "Es müssen mindestens drei Softwarebasissysteme neben BS belegt werden.", type: "sbsRule"},
-        {filter: totalOf24, errorMessage: "Es müssen mindestens Vertiefungen im Umfang von 24 Leistungspunkten belegt werden."},
-        {filter: twoVertiefungen, errorMessage: "Es müssen mindestens 2 verschiedene Vertiefungsgebiete gewählt werden."},
-        {filter: onlyDifferentSBS, errorMessage: "Es können nicht 2 Softwarebasissysteme aus der gleichen Modulgruppe belegt werden.", type: "other"},
         {converter: addVertiefungCombos},
         {filter: twoTimesNine, errorMessage: "Es müssen mindestens zwei unterschiedliche Vertiefungsgebiete mit jeweils mindestens 9 Leistungspunkten belegt werden, die zusammen 24 Leistungspunkte ergeben."},
         {cleaner: expandAndTruncateVertiefungen},
@@ -480,7 +556,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                 if (possibleCombinations.length === 0) {
                     possibleCombinations = oldCombinations;
                     currentError = step.errorMessage;
-                    currentType = step.type;
+                    currentErrorType = step.type;
                 }
             }
         } else if (step.cleaner !== undefined) {
@@ -504,7 +580,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     if (currentError === undefined) {
         return returnValue(possibleCombinations); // valid!
     } else {
-        return returnValue(possibleCombinations, currentError, currentType); // error occurred in progress
+        return returnValue(possibleCombinations, currentError, currentErrorType); // error occurred in progress
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
