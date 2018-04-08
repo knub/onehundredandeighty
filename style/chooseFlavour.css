@@ -1,0 +1,97 @@
+body {
+    font: normal 24px/1 "Times New Roman", Times, serif;
+}
+
+h1 {
+    margin: 0;
+    padding: 50px 50px;
+    font-size: 2.5em;
+    font-weight: normal;
+    color: #111;
+}
+
+.studienordnungSelectionBlock {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 6px;
+    border: 1px solid;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: black;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    background: -webkit-linear-gradient(-45deg, #cecece 0, #fcfcfc 100%);
+    background: -moz-linear-gradient(135deg, #cecece 0, #fcfcfc 100%);
+    background: linear-gradient(135deg, #cecece 0, #fcfcfc 100%);
+    background-position: 50% 50%;
+    -webkit-background-origin: padding-box;
+    background-origin: padding-box;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    -webkit-background-size: auto auto;
+    background-size: auto auto;
+    -webkit-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.4);
+
+    display: inline-block;
+    margin: 50px 3% 0 3%;
+    width: 40%;
+    min-width: 250px;
+    height: 100%;
+}
+
+.studienordnungSelection {
+    display: block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 10px;
+    border: 2px solid;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    color: black;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0, rgba(221, 221, 221, 1) 100%);
+    background: -moz-linear-gradient(180deg, rgba(255, 255, 255, 1) 0, rgba(221, 221, 221, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0, rgba(221, 221, 221, 1) 100%);
+    background-position: 50% 50%;
+    -webkit-background-origin: padding-box;
+    background-origin: padding-box;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    -webkit-background-size: auto auto;
+    background-size: auto auto;
+    -webkit-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.4);
+    -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+
+    margin: 20px 8px;
+}
+
+.studienordnungSelection:hover {
+    background-position: 50% 50%;
+    -webkit-background-origin: padding-box;
+    background-origin: padding-box;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    -webkit-background-size: auto auto;
+    background-size: auto auto;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+.sameHeightContainer {
+}
+
+@media screen and (max-width: 750px) {
+    .studienordnungSelectionBlock {
+        width: 80%;
+        min-width: 100px;
+    }
+}
