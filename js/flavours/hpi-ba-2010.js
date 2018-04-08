@@ -462,4 +462,7 @@ const ba2010creator = function () {
         }
     });
 };
-flavourRegistry.register('hpi-ba-2010', 'ITSE Bachelor 2010', ba2010creator);
+flavourRegistry.register('hpi-ba-2010', 'ITSE Bachelor 2010', ba2010creator, [
+    ['Studienordnung 2010', 'https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/studien_pruefungsordnung_2010_01.pdf'],
+    ['hpi.de - Bachelorstudium', 'https://hpi.de/studium/studienangebot/bachelor.html']
+]);

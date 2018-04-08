@@ -4,7 +4,7 @@ const FlavourRegistry = class {
         this.mNames = {};
         this.mUrls = {};
     }
-    register(id, displayNme, creator, urls = []) {
+    register(id, displayNme, creator, urls) {
         this.mRegistrations[id] = creator;
         this.mNames[id] = displayNme;
         this.mUrls[id] = urls;

@@ -73,12 +73,15 @@ function grades() {
     combination.grade = courseGradeWeights.reduce(accumulate, 0) / total;
 }
 
-
-flavourRegistry.register('hpi-ba-2016', 'ITSE Bachelor 2016', function () {
+let ba2016Creator = function () {
     ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         return [{
             type: "lolaRule",
             message: "2016 not implemented yet"
         }]
     });
-});
+};
+flavourRegistry.register('hpi-ba-2016', 'ITSE Bachelor 2016', ba2016Creator, [
+    ['Studienordnung 2016', 'https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/StudOrd_Bachelor_2016.pdf'],
+    ['hpi.de - Bachelorstudium', 'https://hpi.de/studium/studienangebot/bachelor.html']
+]);
