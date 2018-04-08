@@ -32,6 +32,17 @@ function toModulDisplayName(modulName) {
     return modulName;
 }
 
+function selectedFlavour() {
+    const getParameters = window.location.search.substr(1).split('&');
+    for (const parameter of getParameters) {
+        [key, value] = parameter.split('=', 1);
+        if (key === 'flavour') {
+            return value;
+        }
+    }
+    console.error('No flavour found!');
+}
+
 // A Semester is one column in the Stundenplan
 const Semester = class {
     static fromName(name) {
@@ -1376,8 +1387,10 @@ $(function() {
         f.checkRulesIfWanted();
         f.saveManager.save();
     });
-    $('#changeStudienordnungLink')
-        .text(NEUE_STUDIENORDNUNG ? '2016' : '2010')
-        .click(switchStudienordnung);
+    $('#selectedFlavour')
+        .text(flavourRegistry.displayName(selectedFlavour()))
+        .click(function() {
+            window.location.href = 'chooseFlavour.html';
+        });
     f.checkRulesIfWanted();
 });
