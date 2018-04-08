@@ -87,6 +87,15 @@ h1 {
 }
 
 .sameHeightContainer {
+    /* TODO make the elements have the same height (if not below each other) */
+}
+
+.selectionPreview {
+    width: 80%;
+}
+
+.hidden {
+    display: none;
 }
 
 @media screen and (max-width: 750px) {

@@ -19,14 +19,21 @@
 <center>
     <div class="sameHeightContainer">
         <div class="studienordnungSelectionBlock">
-            <div class="studienordnungSelection">ITSE Bachelor <em>2010</em></div>
-            <div class="studienordnungSelection">ITSE Bachelor <em>2016</em></div>
+            <div class="studienordnungSelection" onclick="selectStudienordnung('hpi-ba-2010')">ITSE Bachelor <em>2010</em></div>
+            <div class="studienordnungSelection" onclick="selectStudienordnung('hpi-ba-2016')">ITSE Bachelor <em>2016</em></div>
         </div>
         <div class="studienordnungSelectionBlock">
-            <div class="studienordnungSelection">ITSE Master</div>
-            <div class="studienordnungSelection">Data Engineering Master</div>
-            <div class="studienordnungSelection">Digital Health Master</div>
+            <div class="studienordnungSelection" onclick="selectStudienordnung('hpi-ma-itse')">ITSE Master</div>
+            <div class="studienordnungSelection" onclick="selectStudienordnung('hpi-ma-de')">Data Engineering Master</div>
+            <div class="studienordnungSelection" onclick="selectStudienordnung('hpi-ma-dh')">Digital Health Master</div>
         </div>
+    </div>
+    <div class="studienordnungSelectionBlock selectionPreview hidden" id="selectionPreview">
+        <h3 id="selectionHeader">Keine Auswahl</h3>
+        Informationen:<br>
+        <span id="selectionInformation">
+
+        </span>
     </div>
 </center>
 
@@ -34,6 +41,7 @@
 <script src="js/flavours/hpi-ba-common.js"></script>
 <script src="js/flavours/hpi-ba-2010.js"></script>
 <script src="js/flavours/hpi-ba-2016.js"></script>
+<script src="js/flavours/chooseFlavour.js"></script>
 
 </body>
 </html>

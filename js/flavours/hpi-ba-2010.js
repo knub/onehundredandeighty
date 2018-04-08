@@ -462,4 +462,4 @@ const ba2010creator = function () {
         }
     });
 };
-flavourRegistry.register('hpi-ba-10', 'HPI Bachelor v2010', ba2010creator);
+flavourRegistry.register('hpi-ba-2010', 'ITSE Bachelor 2010', ba2010creator);

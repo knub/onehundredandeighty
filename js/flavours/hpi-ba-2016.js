@@ -74,7 +74,7 @@ function grades() {
 }
 
 
-flavourRegistry.register('hpi-ba-16', 'HPI Bachelor v2016', function () {
+flavourRegistry.register('hpi-ba-2016', 'ITSE Bachelor 2016', function () {
     ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         return [{
             type: "lolaRule",
