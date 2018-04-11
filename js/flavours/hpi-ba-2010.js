@@ -264,70 +264,69 @@ const ba2010creator = function () {
                 return acc + grade * weight;
             }
 
-            if (!NEUE_STUDIENORDNUNG)  {
-                const distributeWeights = function ({courses, weights}) {
-                    weights.sort();
-                    courses.sort(function (a, b) {
-                        return gradeManager.get(a) <= gradeManager.get(b);
-                    });
-                    let i = 0;
-                    return courses.map(function (course) {
-                        return {
-                            grade: gradeManager.get(course),
-                            weight: weights[i++] * getCourseParameter(course, 'cp')
-                        }
-                    })
-                };
-
-                const gitse = {
-                    courses: ['pt1', 'pt2', 'gds', 'swa'],
-                    weights: [3, 3, 3, 0]
-                };
-                const sum = {
-                    courses: ['mod1', 'mod2', 'swt1'],
-                    weights: [3, 3, 1]
-                };
-                const mutg = {
-                    courses: ['mathematik1', 'mathematik2', 'ti1', 'ti2'],
-                    weights: [1, 1, 1, 0]
-                };
-                const sbs = {
-                    courses: combination.filter(isSBS).map(toCourse).concat(['bs']),
-                    weights: [3, 3, 3, 1]
-                };
-                let courseWeights = [gitse, sum, mutg, sbs].map(distributeWeights).reduce(function (accu, current) {
-                    return accu.concat(current);
-                }, []);
-
-                // Wirtschaft or Recht?
-                const wirtschaftGrade = gradeManager.get('wirtschaft');
-                const rechtGrade = (gradeManager.get('recht1') + gradeManager.get('recht2')) / 2;
-                courseWeights.push({
-                    grade: Math.min(wirtschaftGrade, rechtGrade),
-                    weight: 1 * 6
+            const distributeWeights = function ({courses, weights}) {
+                weights.sort();
+                courses.sort(function (a, b) {
+                    return gradeManager.get(a) <= gradeManager.get(b);
                 });
+                let i = 0;
+                return courses.map(function (course) {
+                    return {
+                        grade: gradeManager.get(course),
+                        weight: weights[i++] * getCourseParameter(course, 'cp')
+                    }
+                })
+            };
 
-                // Vertiefungsgebiete
-                courseWeights = courseWeights.concat(combination
-                    .filter(isEingebracht)
-                    .filter(not(isSBS))
-                    .map(function ({key}) {
-                        return {
-                            grade: gradeManager.get(key),
-                            weight: 3 * getCourseParameter(key, 'cp')
-                        }
-                    }));
-                courseWeights.push({
-                    grade: gradeManager.get('bp'),
-                    weight: 1 * 30
-                }, {
-                    grade: gradeManager.get('ba'),
-                    weight: 3 * 12
-                });
-                combination.grade = courseWeights
-                        .reduce(accumulate, 0)
-                    / total;
-            }
+            const gitse = {
+                courses: ['pt1', 'pt2', 'gds', 'swa'],
+                weights: [3, 3, 3, 0]
+            };
+            const sum = {
+                courses: ['mod1', 'mod2', 'swt1'],
+                weights: [3, 3, 1]
+            };
+            const mutg = {
+                courses: ['mathematik1', 'mathematik2', 'ti1', 'ti2'],
+                weights: [1, 1, 1, 0]
+            };
+            const sbs = {
+                courses: combination.filter(isSBS).map(toCourse).concat(['bs']),
+                weights: [3, 3, 3, 1]
+            };
+            let courseWeights = [gitse, sum, mutg, sbs].map(distributeWeights).reduce(function (accu, current) {
+                return accu.concat(current);
+            }, []);
+
+            // Wirtschaft or Recht?
+            const wirtschaftGrade = gradeManager.get('wirtschaft');
+            const rechtGrade = (gradeManager.get('recht1') + gradeManager.get('recht2')) / 2;
+            courseWeights.push({
+                grade: Math.min(wirtschaftGrade, rechtGrade),
+                weight: 1 * 6
+            });
+
+            // Vertiefungsgebiete
+            courseWeights = courseWeights.concat(combination
+                .filter(isEingebracht)
+                .filter(not(isSBS))
+                .map(function ({key}) {
+                    return {
+                        grade: gradeManager.get(key),
+                        weight: 3 * getCourseParameter(key, 'cp')
+                    }
+                }));
+            courseWeights.push({
+                grade: gradeManager.get('bp'),
+                weight: 1 * 30
+            }, {
+                grade: gradeManager.get('ba'),
+                weight: 3 * 12
+            });
+            combination.grade = courseWeights
+                    .reduce(accumulate, 0)
+                / total;
+
         }
 
         function addSBS(combination) {
@@ -461,6 +460,15 @@ const ba2010creator = function () {
             }
         }
     });
+
+    mapVertiefungsgebietNameToDisplayName = function(vertiefung) {
+        if (vertiefung === 'ISAE') {
+            return 'IST';
+        } else if (vertiefung === 'HCGT') {
+            return 'HCT';
+        }
+        return vertiefung;
+    }
 };
 flavourRegistry.register('hpi-ba-2010', 'ITSE Bachelor 2010', ba2010creator, [
     ['Studienordnung 2010', 'https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/studien_pruefungsordnung_2010_01.pdf'],

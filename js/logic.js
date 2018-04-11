@@ -420,5 +420,3 @@ class CartesianProduct {
         increaseAtDigit(this.dimensions() - 1);
     }
 }
-
-
