@@ -1,6 +1,7 @@
 // https://hpi.de/fileadmin/user_upload/hpi/navigation/80_intern/05_studium/studien_pruefungsordnung_2010_01.pdf
 
 const ba2010creator = function () {
+    loadItseBaCommon();
     ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         function returnValue(data, errorMessage, type = "vertiefungsgebieteRule") {
             wahlpflichtManager.possibleCombinations = data;
