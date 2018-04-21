@@ -485,12 +485,12 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     // Array.cartesianProduct([1, 2, 3], ['a', 'b', 'c'], [true, false]).
     // As we have an array, which contains all parameters, we have to use cartesianProduct.apply
 
-    // So now we calculate all possibilites how the current plan could be interpreted (called combination)
+    // So now we calculate all possibilities how the current plan could be interpreted (called combination)
     // This gives us an array, which says: One possibility is to interpret 'hci2' as 'HCGT' and 'pois2' as 'BPET'.
     // Another is to interpret 'hci2' as 'HCGT' and 'pois2' as 'SAMT'
     // Another is to interpret 'hci2' as 'SAMT' ... and so on.
     // Of course this normally happens with more courses than two.
-    // a combination is a list of key+vertiefung - objects (ech key only once), called interpretation
+    // a combination is a list of key+vertiefung - objects (each key only once), called interpretation
     // TODO performance here (filter on combination creation)
     const allCombinations = new CartesianProduct(vertiefungenWithOptions);
     console.info(`Testing a total of ${allCombinations.totalAmount()} possible combinations.`);
@@ -543,7 +543,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         {cleaner: removeSubsets},
         {cleaner: removeDoubles},
         {converter: classifyVertiefungen},
-        {filter: oneLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet muss mindestens eine Vorlesung belegt werden."},
+        {filter: atLeast6LPLecturePerVertiefung, errorMessage: "In jedem Vertiefungsgebiet müssen mindestens 6 Leistungspunkte durch Vorlesungen belegt werden."},
         {converter: createVertiefungComboList},
         {cleaner: mergeOnlyDifferentVertiefungsgebiete},
         {converter: calculateGrades}
@@ -616,7 +616,10 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
     //converter methods
     function addVertiefungCombos(combination) {
-        // "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen. In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule). Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden, die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
+        // "In VT1 und VT2 sind jeweils mindestens 9 LP zu erbringen.
+        // In VT1 und VT2 müssen mindestens je eine Vorlesung im Umfang von 6 LP erbracht werden (not checked in this rule).
+        // Weiter müssen ergänzende Lehrveranstaltungen im Umfang von 12 LP absolviert werden,
+        // die sich auf beide Vertiefungsgebiete in den möglichen Kombinationen 3+9 LP, 6+6 LP oder 9+3 LP verteilen.
         const vertiefungsgebiete = Array.from(getVertiefungenSet(combination));
         const cpPerVertiefung = Array.from(new Array(vertiefungsgebiete.length), function(){ return 0 }); //array with same length, filled with zeros
         combination.forEach(function(interpretation) {
@@ -845,10 +848,28 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
         // Filter this out, if no possible pairs were found.
         return combination.possibleVertiefungen.length > 0;
     }
-    function oneLecturePerVertiefung(combination) {
-        // And finally, check the last rule: whether a Lecture is enrolled for the given Vertiefung
-        // Both Vertiefungen must have a lecture to succeed.
-        return combination.firstVertiefungLectures.length > 0 && combination.secondVertiefungLectures.length > 0;
+
+    //TODO check whether you can use 2*3 LP Vorlesung for this condition
+    function atLeast6LPLecturePerVertiefung(combination) {
+        // And finally, check the last rule: whether enough Lecture LPs are available for the given Vertiefung
+        // Both Vertiefungen must have a lecture and at least 6 LP in lectures to succeed.
+        if(combination.firstVertiefungLectures.length > 0 && combination.secondVertiefungLectures.length > 0) {
+            const firstVertiefungLPSum = combination.firstVertiefungLectures.map(mapToLPs).reduce(addUpLPs);
+            if(firstVertiefungLPSum < 6) {
+                return false;
+            }
+            const secondVertiefungLPSum = combination.secondVertiefungLectures.map(mapToLPs).reduce(addUpLPs);
+            return secondVertiefungLPSum >= 6;
+        }
+        return false;
+
+        //utility functions
+        function mapToLPs(element){
+            return element.cp;
+        }
+        function addUpLPs(previousSum, currentValue){
+            return previousSum + currentValue;
+        }
     }
 
     // clean up methods:
