@@ -81,7 +81,7 @@ const semesterManager = {
     preLastSummerSemester: "SS16",
     preLastWinterSemester: "WS16/17",
     /* the semester that is the first semester when you first start the application */
-    startswith: "WS15/16",
+    firstSemester: "WS15/16",
 
     /* saves for each course an extra semester where it is offered */
     exceptions: {},
@@ -139,19 +139,19 @@ const semesterManager = {
         const semesterName = this.shownSemesters[semesterNumber - 1];
         const semesters = data[course].semester;
         if (semesters.includes(semesterName)) {
-            return true
+            return true;
         }
         if (this.isFutureSemester(semesterName)
             && semesters.includes(this.referenceSemesterFor(semesterName))
             && semesters.includes(this.referenceSemester2For(semesterName))) {
-            return true
+            return true;
         }
         if (data[course].kurz === 'VHDL') {
             const ws_ss = semesterName.substr(0, 2);
             const num = parseInt(semesterName.substr(2, 2));
-            return (ws_ss === 'SS') && (num % 2 === 0)
+            return (ws_ss === 'SS') && (num % 2 === 0);
         }
-        return false
+        return false;
     },
 
     /**
@@ -194,10 +194,11 @@ const semesterManager = {
 
         for (let i = index + 1; i < this.shownSemesters.length; i++) {
             const old_index = this.semesters.indexOf(this.shownSemesters[i]);
-            if (old_index + difference < this.semesters.length)
+            if (old_index + difference < this.semesters.length) {
                 this.shownSemesters[i] = this.semesters[old_index + difference];
-            else
+            } else {
                 this.shownSemesters[i] = this.semesters.last();
+            }
         }
     }
 };
@@ -740,7 +741,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
 
 
             combination.grade = courseGradeWeights.reduce(accumulate, 0) / total;
-        } else {
+        } else {//use OLD_STUDIENORDNUNG
             const distributeWeights = function ({courses, weights}) {
                 weights.sort();
                 courses.sort(function (a, b) {
@@ -754,19 +755,22 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
                     }
                 })
             };
-
+            //"Grundlagen IT-Systems Engineering"
             const gitse = {
                 courses: ['pt1', 'pt2', 'gds', 'swa'],
                 weights: [3, 3, 3, 0]
             };
+            //"Softwaretechnik und Modellierung"
             const sum = {
                 courses: ['mod1', 'mod2', 'swt1'],
                 weights: [3, 3, 1]
             };
+            //"Mathematische und theoretische Grundlagen"
             const mutg = {
                 courses: ['mathematik1', 'mathematik2', 'ti1', 'ti2'],
                 weights: [1, 1, 1, 0]
             };
+            //Softwarebasissysteme
             const sbs = {
                 courses: combination.filter(isSBS).map(toCourse).concat(['bs']),
                 weights: [3, 3, 3, 1]

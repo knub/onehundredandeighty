@@ -841,8 +841,8 @@ const frontend = {
     organizeSemesters() {
         // if shownSemesters has not been initialized so far ..
         if (semesterManager.shownSemesters.length === 0) {
-            // .. initialize starting at semesterManager.startswith-Semester
-            let index = semesterManager.semesters.indexOf(semesterManager.startswith);
+            // .. initialize starting at semesterManager.firstSemester-Semester
+            let index = semesterManager.semesters.indexOf(semesterManager.firstSemester);
             for (let i = 0; i < semesterManager.numberDisplayed; i += 1) {
                 semesterManager.shownSemesters[i] = semesterManager.semesters[index];
                 index++;
