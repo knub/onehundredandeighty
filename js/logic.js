@@ -82,7 +82,7 @@ const semesterManager = {
      */
     shownSemesters: function () {
         var shownSemesters = [];
-        var currentYear = getCurrentDate().year;
+        var currentYear = parseInt(getCurrentDate().year);
         for(var i = currentYear - 2; i <= currentYear; i++) {
             shownSemesters.push("WS" + (i-1) + "/" + i);
             shownSemesters.push("SS" + i);
