@@ -4,5 +4,7 @@ parser/data.js
 .swp
 post
 
+testing/node_modules/
+
 .idea/
 **/*.pyc
