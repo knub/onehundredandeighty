@@ -845,16 +845,8 @@ const frontend = {
     /* used when app is initialized to fill <select>s with semester-<option>s according to settings in logic.js */
     organizeSemesters() {
         // if shownSemesters has not been initialized so far ..
-        if (semesterManager.shownSemesters.length === 0) {
-            // .. initialize starting at semesterManager.firstSemester-Semester
-            let index = semesterManager.semesters.indexOf(semesterManager.semesters[0]);
-            for (let i = 0; i < semesterManager.numberDisplayed; i += 1) {
-                semesterManager.shownSemesters[i] = semesterManager.semesters[index];
-                index++;
-            }
-        }
-        else if (semesterManager.shownSemesters.length < semesterManager.numberDisplayed) {
-            // number displayed has been increased by two, so the last two shownSemesters must be intialized
+        if (semesterManager.shownSemesters.length < semesterManager.numberDisplayed) {
+            // number displayed has been increased by two, so the last two shownSemesters must be initialized
             const lastSemester = semesterManager.shownSemesters.last();
             let index = semesterManager.semesters.indexOf(lastSemester);
             while (semesterManager.shownSemesters.length !== semesterManager.numberDisplayed) {
