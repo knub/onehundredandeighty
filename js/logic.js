@@ -379,6 +379,9 @@ class CartesianProduct {
     constructor(arrayOfDimensions) {
         this.arrayOfDimensions = arrayOfDimensions;
         this.reset();
+        if (this.arrayOfDimensions.length === 0) {
+            this.done = true;
+        }
     }
     totalAmount() {
         return this.arrayOfDimensions.map((a) => a.length).reduce(((a, b) => a * b), 1);
