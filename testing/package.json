@@ -2,9 +2,7 @@
   "name": "onehundredandeighty_tests",
   "version": "1.0.0",
   "description": "testing the 180 functionality",
-  "main": "index.js",
   "directories": {
-    "doc": "doc",
     "test": "test"
   },
   "scripts": {
@@ -14,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/ErikBrendel/onehundredandeighty.git"
   },
-  "author": "",
+  "author": "Erik Brendel",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ErikBrendel/onehundredandeighty/issues"
