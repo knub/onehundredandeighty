@@ -3,4 +3,4 @@ sudo: false
 node_js:
   - "7"
 script:
-- cd testing && npm install && npm test
+- cd testing && echo -en 'travis_fold:start:npm-install\r' && npm install && echo -en 'travis_fold:end:npm-install\r' && npm test
