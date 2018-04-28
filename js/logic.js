@@ -45,6 +45,19 @@ function getCourseParameter(course, parameter, semesterNumber) {
     return coursedata[parameter];
 }
 
+/**
+ * Method to get current date
+ * @returns {{year: string, month: number}}
+ */
+function getCurrentYear(){
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear().toString().substr(2);
+    var currentMonth = parseInt(currentDate.getMonth())+1;
+    return {
+        year: currentYear,
+        month: currentMonth
+    };
+}
 
 /**
  * keeps track, which table column (called semester number)
@@ -76,12 +89,62 @@ const semesterManager = {
     semesterLock: [],
     // current must be either lastSummerSemester or lastWinterSemester!
     currentSemester: "WS17/18",
-    lastSummerSemester: "SS17",
-    lastWinterSemester: "WS17/18",
-    preLastSummerSemester: "SS16",
-    preLastWinterSemester: "WS16/17",
+
+    lastSummerSemester: function () {
+        var lastSummerSemester;
+        var currentDate = getCurrentYear();
+        if(currentDate.month < 4){
+            lastSummerSemester = "SS" + (parseInt(currentDate.year) -1);
+        }
+        else {
+            lastSummerSemester = "SS" + currentDate.year;
+        }
+
+        return lastSummerSemester;
+
+    }(),
+
+    lastWinterSemester: function () {
+        var lastWinterSemester;
+        var currentDate = getCurrentYear();
+        if(currentDate.month < 10) {
+            lastWinterSemester = "WS" + (parseInt(currentDate.year) -1) + "/" + currentDate.year;
+        }
+        else {
+            lastWinterSemester = "WS" + (currentDate.year) + "/" + (parseInt(currentDate.year) + 1);
+        }
+
+        return lastWinterSemester;
+    }(),
+    preLastSummerSemester: function () {
+        var preLastSummerSemester;
+        var currentDate = getCurrentYear();
+        if(currentDate.month < 4) {
+            preLastSummerSemester = "SS" + (parseInt(currentDate.year) -2);
+        }
+        else {
+            preLastSummerSemester = "SS" + (parseInt(currentDate.year) -1);
+        }
+
+        return preLastSummerSemester;
+    }(),
+    preLastWinterSemester: function () {
+        var preLastWinterSemester;
+        var currentDate = getCurrentYear();
+        if(currentDate.month < 10) {
+            preLastWinterSemester = "WS" + (parseInt(currentDate.year) -2) + "/" + (parseInt(currentDate.year) -1);
+        }
+        else {
+            preLastWinterSemester = "WS" + (parseInt(currentDate.year) -1) + "/" + currentDate.year;
+        }
+
+        return preLastWinterSemester;
+    }(),
     /* the semester that is the first semester when you first start the application */
     firstSemester: "WS15/16",
+
+
+
 
     /* saves for each course an extra semester where it is offered */
     exceptions: {},
