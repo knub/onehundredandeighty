@@ -9,16 +9,8 @@ const studyRegulations = {
     vertiefungsgebiete: ["BPET", "HCGT", "ISAE", "OSIS", "SAMT"]
 };
 
-function toOldVertiefungsgebietNames(vertiefung) {
+function mapVertiefungsgebietNameToDisplayName(vertiefung) {
     // take a module name, and convert it to its display name if needed
-    if (NEUE_STUDIENORDNUNG) {
-        return vertiefung;
-    }
-    if (vertiefung === 'ISAE') {
-        return 'IST';
-    } else if (vertiefung === 'HCGT') {
-        return 'HCT';
-    }
     return vertiefung;
 }
 
@@ -30,6 +22,18 @@ function toModulDisplayName(modulName) {
         return 'Softwarebasissysteme';
     }
     return modulName;
+}
+
+function selectedFlavour() {
+    const getParameters = window.location.search.substr(1).split('&');
+    for (const parameter of getParameters) {
+        let key, value;
+        [key, value] = parameter.split('=', 2);
+        if (key === 'flavour') {
+            return value;
+        }
+    }
+    console.error('No flavour found!');
 }
 
 // A Semester is one column in the Stundenplan
@@ -655,8 +659,9 @@ const frontend = {
             return isNaN(gradeManager.get(course));
         }
         function needsGrade(course) {
-            return NEUE_STUDIENORDNUNG ||
-                course === 'bp' || course === 'ba' || !getCourseParameter(course, 'modul').includes('Softskills')
+            return true;
+            //return NEUE_STUDIENORDNUNG ||
+            //    course === 'bp' || course === 'ba' || !getCourseParameter(course, 'modul').includes('Softskills')
         }
         function courseToSelector(course) {
             if (course === 'bp')
@@ -932,7 +937,7 @@ const frontend = {
                         "<td id='courseInfo-" + id + "-cp'>" + getCourseParameter(id, 'cp') + " Leistungspunkte</td>" +
                     "</tr>" +
                     f.displayArray(getCourseParameter(id, 'lehrform'), "Lehrform", "courseInfo-" + id + "-lehrform") +
-                    f.displayArray(getCourseParameter(id, 'vertiefung').map(toOldVertiefungsgebietNames), "Vertiefungsgebiet", "courseInfo-" + id + "-vertiefung") +
+                    f.displayArray(getCourseParameter(id, 'vertiefung').map(mapVertiefungsgebietNameToDisplayName), "Vertiefungsgebiet", "courseInfo-" + id + "-vertiefung") +
                     f.displayArray(getCourseParameter(id, 'semester'), "Angeboten im", "courseInfo-" + id + "-semester") +
                 "</table>" +
             "</div>" +
@@ -1096,7 +1101,7 @@ const frontend = {
         for (const vertiefungsgebiet in f.filterManager.possibleVertiefungsgebiete) {
             if (!f.filterManager.possibleVertiefungsgebiete.hasOwnProperty(vertiefungsgebiet)) continue;
             const selected = f.filterManager.selectedVertiefungsgebiete.indexOf(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) === - 1 ? "": " class='selected'";
-            vertiefungsgebieteList += "<li" + selected + ">" + toOldVertiefungsgebietNames(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) + "</li>";
+            vertiefungsgebieteList += "<li" + selected + ">" + mapVertiefungsgebietNameToDisplayName(f.filterManager.possibleVertiefungsgebiete[vertiefungsgebiet]) + "</li>";
         }
         vertiefungsgebieteList += ' <a href="fragen.html#vertiefungsgebiete">Wofür stehen die Abkürzungen?</a></ul>';
 
@@ -1376,8 +1381,10 @@ $(function() {
         f.checkRulesIfWanted();
         f.saveManager.save();
     });
-    $('#changeStudienordnungLink')
-        .text(NEUE_STUDIENORDNUNG ? '2016' : '2010')
-        .click(switchStudienordnung);
+    $('#selectedFlavour')
+        .text(flavourRegistry.displayName(selectedFlavour()))
+        .click(function() {
+            window.location.href = 'chooseFlavour.html';
+        });
     f.checkRulesIfWanted();
 });

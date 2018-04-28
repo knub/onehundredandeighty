@@ -18,7 +18,7 @@
 		<img style="position: absolute; top: 0; right: 0; border: 0;z-index:1" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
 	</a>
 	<header>
-		<h1>onehundredandeighty — course planning for hpi students — Studienordnung <a id="changeStudienordnungLink" style="text-decoration: underline; cursor: pointer">201x</a></h1>
+		<h1>onehundredandeighty — course planning for hpi students — <b id="selectedFlavour" style="cursor: pointer">Keine Studienordnung ausgewählt!</b></h1>
 		<div id="last-update">
 			Daten: WS10/11 bis einschließlich XXxx
 		</div>
@@ -152,11 +152,15 @@
 	<div id="dropHint" class="dropHint">
 		~ Gib mir dein Transcript of records oder deine Studiendokumentation und ich sage dir, was du belegt hast ~
 	</div>
-	<script src="js/newOrOld.js"></script>
 	<script src="js/data.js"></script>
 	<script src="js/helper.js"></script>
 	<script src="js/logic.js"></script>
 	<script src="js/frontend.js"></script>
 	<script src="js/pdfdrop.js"></script>
+	<script src="js/flavours/registry.js"></script>
+	<script src="js/flavours/hpi-ba-common.js"></script>
+	<script src="js/flavours/hpi-ba-2010.js"></script>
+	<script src="js/flavours/hpi-ba-2016.js"></script>
+	<script src="js/flavours/parseFlavour.js"></script>
 </body>
 </html>
