@@ -45,6 +45,19 @@ function getCourseParameter(course, parameter, semesterNumber) {
     return coursedata[parameter];
 }
 
+/**
+ * Method to get current date
+ * @returns {{year: string, month: number}}
+ */
+function getCurrentDate(){
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear().toString().substr(2);
+    var currentMonth = parseInt(currentDate.getMonth())+1;
+    return {
+        year: currentYear,
+        month: currentMonth
+    };
+}
 
 /**
  * keeps track, which table column (called semester number)
@@ -54,34 +67,95 @@ const semesterManager = {
     /**
      * all semesters to choose from
      */
-    semesters: [
-        "WS13/14", "SS14",
-        "WS14/15", "SS15",
-        "WS15/16", "SS16",
-        "WS16/17", "SS17",
-        "WS17/18", "SS18",
-        "WS18/19", "SS19",
-        "WS19/20", "SS20"
-    ],
+    semesters: function () {
+        var arrSemesters = [];
+        var currentYear = parseInt(getCurrentDate().year);
+        for(var i = (currentYear - 6); i <= currentYear + 6; i++) {
+            arrSemesters.push("WS" + (parseInt(i)-1) + "/" + i);
+            arrSemesters.push("SS" + i);
+        }
+        return arrSemesters;
+    }(),
 
     /**
      * which semesters are currently displayed
      */
-    shownSemesters: [
-        "WS15/16", "SS16",
-        "WS16/17", "SS17",
-        "WS17/18", "SS18"
-    ],
+    shownSemesters: function () {
+        var shownSemesters = [];
+        var currentYear = parseInt(getCurrentDate().year);
+        for(var i = currentYear - 2; i <= currentYear; i++) {
+            shownSemesters.push("WS" + (i-1) + "/" + i);
+            shownSemesters.push("SS" + i);
+        }
+        return shownSemesters;
+    }(),
     numberDisplayed: 0,
     semesterLock: [],
     // current must be either lastSummerSemester or lastWinterSemester!
-    currentSemester: "WS17/18",
-    lastSummerSemester: "SS17",
-    lastWinterSemester: "WS17/18",
-    preLastSummerSemester: "SS16",
-    preLastWinterSemester: "WS16/17",
-    /* the semester that is the first semester when you first start the application */
-    firstSemester: "WS15/16",
+    currentSemester: function () {
+        var currentDate = getCurrentDate();
+
+        if(currentDate.month < 4) {
+            return "WS" + (parseInt(currentDate.year) -1) + "/" + currentDate.year;
+        }
+        else if(currentDate.month < 10) {
+            return "SS" + currentDate.year;
+        }
+        return "WS" + currentDate.year + "/" + (parseInt(currentDate.year) + 1);
+
+    }(),
+
+    lastSummerSemester: function () {
+        var lastSummerSemester;
+        var currentDate = getCurrentDate();
+        if(currentDate.month < 4){
+            lastSummerSemester = "SS" + (parseInt(currentDate.year) -1);
+        }
+        else {
+            lastSummerSemester = "SS" + currentDate.year;
+        }
+
+        return lastSummerSemester;
+
+    }(),
+
+    lastWinterSemester: function () {
+        var lastWinterSemester;
+        var currentDate = getCurrentDate();
+        if(currentDate.month < 10) {
+            lastWinterSemester = "WS" + (parseInt(currentDate.year) -1) + "/" + currentDate.year;
+        }
+        else {
+            lastWinterSemester = "WS" + (currentDate.year) + "/" + (parseInt(currentDate.year) + 1);
+        }
+
+        return lastWinterSemester;
+    }(),
+    preLastSummerSemester: function () {
+        var preLastSummerSemester;
+        var currentDate = getCurrentDate();
+        if(currentDate.month < 4) {
+            preLastSummerSemester = "SS" + (parseInt(currentDate.year) -2);
+        }
+        else {
+            preLastSummerSemester = "SS" + (parseInt(currentDate.year) -1);
+        }
+
+        return preLastSummerSemester;
+    }(),
+    preLastWinterSemester: function () {
+        var preLastWinterSemester;
+        var currentDate = getCurrentDate();
+        if(currentDate.month < 10) {
+            preLastWinterSemester = "WS" + (parseInt(currentDate.year) -2) + "/" + (parseInt(currentDate.year) -1);
+        }
+        else {
+            preLastWinterSemester = "WS" + (parseInt(currentDate.year) -1) + "/" + currentDate.year;
+        }
+
+        return preLastWinterSemester;
+    }(),
+
 
     /* saves for each course an extra semester where it is offered */
     exceptions: {},
