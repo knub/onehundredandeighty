@@ -3,5 +3,4 @@ sudo: false
 node_js:
   - "7"
 script:
-- cd testing
-- npm test
+- cd testing && npm install && npm test
