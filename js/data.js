@@ -94,7 +94,7 @@ const data = {
         empfohlen: "",
         vertiefung: [BPET, OSIS],
         cp: 6,
-        dozent: ["Erik Scharwächter", "Prof. Dr. Emmanuel Müller"],
+        dozent: ["Fabian Geier", "Prof. Dr. Emmanuel Müller", "Thomas Goerttler"],
         nameLV: "Big Data Analytics Lab",
         page: "0/sommersemester-2018-big-data-analytics-lab.html",
         specific: {
@@ -212,11 +212,12 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS],
         cp: 6,
-        dozent: ["Prof. Dr. Andreas Polze"],
+        dozent: ["Andreas Grapentin", "Prof. Dr. Andreas Polze", "Sven Köhler"],
         nameLV: "Betriebssysteme II",
         page: "0/sommersemester-2018-betriebssysteme-ii.html",
         specific: {
             SS15: {
+                dozent: ["Prof. Dr. Andreas Polze"],
                 page: "2015/sommersemester-2015-betriebssysteme-ii.html",
             },
             SS17: {
@@ -312,7 +313,7 @@ const data = {
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
-        dozent: ["Jan Ole Vollmer", "Prof. Dr. Jürgen Döllner", "Vladeta Stojanovic"],
+        dozent: ["Andreas Fricke", "Jan Ole Vollmer", "Prof. Dr. Jürgen Döllner", "Vladeta Stojanovic"],
         nameLV: "3D-Computergrafik II",
         page: "0/sommersemester-2018-3d-computergrafik-ii.html",
         specific: {
@@ -385,7 +386,7 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 6,
-        dozent: ["Dr. Feng Cheng", "Marian Gawron", "Pejman Najafi"],
+        dozent: ["Dr. Feng Cheng"],
         nameLV: "Cops &amp; Robbers",
         page: "0/sommersemester-2018-cops-robbers.html",
         specific: {
@@ -429,7 +430,7 @@ const data = {
         empfohlen: "",
         vertiefung: [OSIS],
         cp: 6,
-        dozent: ["Dr. Ralf Krestel"],
+        dozent: ["Dr. Ralf Krestel", "Leon Bornemann"],
         nameLV: "Datenbanksysteme I",
         page: "0/sommersemester-2018-datenbanksysteme-i.html",
         specific: {
@@ -442,6 +443,7 @@ const data = {
                 page: "0/sommersemester-2017-datenbanksysteme-i.html",
             },
             SS16: {
+                dozent: ["Dr. Ralf Krestel"],
                 page: "2016/sommersemester-2016-datenbanksysteme-i.html",
             },
         }
@@ -463,20 +465,6 @@ const data = {
                 page: "2015/wintersemester-20152016-datenbanksysteme-ii.html",
             },
         }
-    },
-    designinginteractivedevices: {
-        kurz: "Designing<br />Interactive Devices",
-        lehrform: ["Vorlesung"],
-        modul: ["SB4", "Vertiefungsgebiete"],
-        semester: [ss18],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [HCGT, OSIS, SAMT],
-        cp: 6,
-        dozent: ["Prof. Dr. Patrick Baudisch"],
-        nameLV: "Designing Interactive Devices",
-        page: "0/sommersemester-2018-designing-interactive-devices.html",
-        specific: {}
     },
     diskretestrukturen: {
         kurz: "Diskrete Strukturen",
@@ -565,8 +553,8 @@ const data = {
         vertiefung: [],
         cp: 3,
         dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
-        nameLV: "D-School First Track: Introduction to Design Thinking: Bring Ideas to Live",
-        page: "0/sommersemester-2018-d-school-first-track-introduction-to-design-thinking-bring-ideas-to-live.html",
+        nameLV: "D-School First Track: Introduction to Design Thinking: Bring Ideas to Life",
+        page: "0/sommersemester-2018-d-school-first-track-introduction-to-design-thinking-bring-ideas-to-life.html",
         specific: {
             WS15: {
                 page: "2015/wintersemester-20152016-d-school-first-track-introduction-to-design-thinking.html",
@@ -613,19 +601,15 @@ const data = {
         kurz: "Einführung<br />Informationsvisualisierung",
         lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
-        semester: [ss17, ss18],
+        semester: [ss17],
         pflicht: false,
         empfohlen: "",
         vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
         dozent: ["Prof. Dr. Jürgen Döllner"],
         nameLV: "Einführung Informationsvisualisierung",
-        page: "0/sommersemester-2018-einfuehrung-informationsvisualisierung.html",
-        specific: {
-            SS17: {
-                page: "0/sommersemester-2017-einfuehrung-informationsvisualisierung.html",
-            },
-        }
+        page: "0/sommersemester-2017-einfuehrung-informationsvisualisierung.html",
+        specific: {}
     },
     einfuehrunginvisualanalytics: {
         kurz: "Einführung in<br />Visual Analytics",
@@ -721,6 +705,20 @@ const data = {
         page: "0/sommersemester-2017-event-driven-case-management.html",
         specific: {}
     },
+    gamesoflife: {
+        kurz: "Games of Life",
+        lehrform: ["Projekt", "Seminar"],
+        modul: ["Vertiefungsgebiete"],
+        semester: [ss18],
+        pflicht: false,
+        empfohlen: "",
+        vertiefung: [HCGT, OSIS, SAMT],
+        cp: 6,
+        dozent: ["Daniel Limberger", "Prof. Dr. Jürgen Döllner", "Stefan Buschmann", "Willy Scheibel"],
+        nameLV: "Games of Life",
+        page: "0/sommersemester-2018-games-of-life.html",
+        specific: {}
+    },
     gds: {
         kurz: "GdS",
         lehrform: ["Vorlesung", "Übung"],
@@ -802,15 +800,19 @@ const data = {
         kurz: "HCI I",
         lehrform: ["Vorlesung"],
         modul: ["SB4", "Vertiefungsgebiete"],
-        semester: [ws15_16],
+        semester: [ss18, ws15_16],
         pflicht: false,
         empfohlen: "",
-        vertiefung: [HCGT, SAMT],
+        vertiefung: [HCGT, OSIS, SAMT],
         cp: 6,
         dozent: ["Prof. Dr. Patrick Baudisch"],
         nameLV: "Designing Interactive Systems",
-        page: "2015/wintersemester-20152016-designing-interactive-systems.html",
-        specific: {}
+        page: "0/sommersemester-2018-designing-interactive-systems.html",
+        specific: {
+            WS15: {
+                page: "2015/wintersemester-20152016-designing-interactive-systems.html",
+            },
+        }
     },
     hci2: {
         kurz: "HCI II",
@@ -1182,11 +1184,12 @@ const data = {
         empfohlen: 2,
         vertiefung: [],
         cp: 6,
-        dozent: ["Joachim Hänsel", "Prof. Dr. Holger Giese"],
+        dozent: ["Christian Zöllner", "Prof. Dr. Holger Giese"],
         nameLV: "Modellierung II",
         page: "0/sommersemester-2018-modellierung-ii.html",
         specific: {
             SS15: {
+                dozent: ["Joachim Hänsel", "Prof. Dr. Holger Giese"],
                 page: "2015/sommersemester-2015-modellierung-ii.html",
             },
             SS17: {
@@ -1405,7 +1408,7 @@ const data = {
         empfohlen: 2,
         vertiefung: [],
         cp: 6,
-        dozent: ["Prof. Dr. Andreas Polze"],
+        dozent: ["Prof. Dr. Andreas Polze", "Sven Köhler"],
         nameLV: "Einführung in die Programmiertechnik II",
         page: "0/sommersemester-2018-einfuehrung-in-die-programmiertechnik-ii.html",
         specific: {
@@ -1595,7 +1598,7 @@ const data = {
         empfohlen: 4,
         vertiefung: [],
         cp: 6,
-        dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
+        dozent: ["Fabio Niephaus", "Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tobias Pape", "Toni Mattis"],
         nameLV: "Softwaretechnik I",
         page: "0/sommersemester-2018-softwaretechnik-i.html",
         specific: {
@@ -1604,6 +1607,7 @@ const data = {
                 page: "2015/sommersemester-2015-softwaretechnik-i.html",
             },
             SS17: {
+                dozent: ["Jens Lincke", "Johannes Henning", "Marcel Taeumel", "Patrick Rein", "Prof. Dr. Robert Hirschfeld", "Stefan Ramson", "Tim Felgentreff", "Tobias Pape", "Toni Mattis"],
                 page: "0/sommersemester-2017-softwaretechnik-i.html",
             },
             SS16: {
@@ -1789,15 +1793,19 @@ const data = {
         kurz: "VHDL",
         lehrform: ["Vorlesung"],
         modul: ["Vertiefungsgebiete"],
-        semester: [ss16],
+        semester: [ss16, ss18],
         pflicht: false,
         empfohlen: "",
         vertiefung: [OSIS, SAMT],
         cp: 6,
         dozent: ["Dr.-Ing. Ralf Wollowski"],
         nameLV: "Entwurf und Implementierung digitaler Schaltungen mit VHDL",
-        page: "2016/sommersemester-2016-entwurf-und-implementierung-digitaler-schaltungen-mit-vhdl.html",
-        specific: {}
+        page: "0/sommersemester-2018-entwurf-und-implementierung-digitaler-schaltungen-mit-vhdl.html",
+        specific: {
+            SS16: {
+                page: "2016/sommersemester-2016-entwurf-und-implementierung-digitaler-schaltungen-mit-vhdl.html",
+            },
+        }
     },
     wahrscheinlichkeitstheorie: {
         kurz: "Wahrscheinlichkeitstheorie",
@@ -1808,7 +1816,7 @@ const data = {
         empfohlen: "",
         vertiefung: [ISAE, OSIS, SAMT],
         cp: 3,
-        dozent: ["Dr. Timo Kötzing"],
+        dozent: ["Dr. Timo Kötzing", "Martin Schirneck"],
         nameLV: "Wahrscheinlichkeitstheorie",
         page: "0/sommersemester-2018-wahrscheinlichkeitstheorie.html",
         specific: {

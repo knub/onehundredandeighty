@@ -26,7 +26,7 @@ function stringSimilarity(str1, str2) {
     return 0;
 }
 
-const MIN_SIMILARITY_NEEDED_TO_BE_CONFIDENT = 0.5;
+const MIN_SIMILARITY_NEEDED_TO_BE_CONFIDENT = 0.45;
 
 function applyCourseInfo(name, semester, grade) {
     let courseKey = findBestMatchingCourse(name);
@@ -149,31 +149,31 @@ $('#pdf_file_input').on('change', function(e) {
 
 function loadTranscriptFile(file) {
     loadPDF(file, function(textContent) {
-        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP|SP) .{5,100} (BL|\d,\d) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
+        const transcriptOfRecordsRegex = /(.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP|SP) .{5,100} (BL|\d,\d|m.E.) \d\d? \d (SoSe|WiSe) (\d{4}|\d\d\/\d\d)/g;
         for (let match; (match = transcriptOfRecordsRegex.exec(textContent)) !== null;) {
             const name = match[1];
-            const grade = match[2].replace(',', '.');
+            const grade = parseFloat(match[2].replace(',', '.'));
             const SSWS = match[3] === 'SoSe' ? 'SS' : 'WS';
             const semesterYear = match[4].length === 5 ? match[4] : match[4].substr(2);
             const semester = SSWS + semesterYear;
-            if (grade === 'BL') {
+            if (isNaN(grade)) {
                 applyCourseInfo(name, semester);
             } else {
-                applyCourseInfo(name, semester, parseFloat(grade));
+                applyCourseInfo(name, semester, grade);
             }
         }
 
-        const studiendokumentationRegex = /\d{6} (.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP|SP) \d\d? (belegt|\d,\d) .{3,100} (SS|WS) (\d{4}|\d\d\/\d\d) \d/g;
+        const studiendokumentationRegex = /\d{6} (.+) (?:V|V\/Ü|V\/U|VU|P|S|PS|K|U|Ü|BS|BP|SP) \d\d? (belegt|\d,\d|m.E.) .{3,100} (SS|WS) (\d{4}|\d\d\/\d\d) \d/g;
         for (let match; (match = studiendokumentationRegex.exec(textContent)) !== null;) {
             const name = match[1];
-            const grade = match[2].replace(',', '.');
+            const grade = parseFloat(match[2].replace(',', '.'));
             const SSWS = match[3];
             const semesterYear = match[4].length === 5 ? match[4] : match[4].substr(2);
             const semester = SSWS + semesterYear;
-            if (grade === 'belegt') {
+            if (isNaN(grade)) {
                 applyCourseInfo(name, semester);
             } else {
-                applyCourseInfo(name, semester, parseFloat(grade));
+                applyCourseInfo(name, semester, grade);
             }
         }
         console.log(textContent);
