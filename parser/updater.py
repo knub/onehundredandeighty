@@ -236,7 +236,7 @@ for lvID in sorted(data.iterkeys()):
     else:
         f.write('        specific: {}\n')
     f.write('    },\n')
-f.write('};\n')
+f.write('};\n\nmodule.exports = data;\n')
 f.close()
 
 print("done.")
