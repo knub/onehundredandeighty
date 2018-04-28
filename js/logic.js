@@ -850,6 +850,7 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
     }
 
     //TODO check whether you can use 2*3 LP Vorlesung for this condition
+    //until confirmed by Studienreferat just 6LP Vorlesungen wiil count
     function atLeast6LPLecturePerVertiefung(combination) {
         // And finally, check the last rule: whether enough Lecture LPs are available for the given Vertiefung
         // Both Vertiefungen must have a lecture and at least 6 LP in lectures to succeed.
@@ -868,7 +869,14 @@ ruleManager.rules.push(function vertiefungsgebieteRule(getSemester) {
             return element.cp;
         }
         function addUpLPs(previousSum, currentValue){
-            return previousSum + currentValue;
+            //code if confirmed
+            //return previousSum + currentValue;
+            //
+            //code until then
+            if(previousSum >= 6){
+                return previousSum;
+            }
+            return currentValue;
         }
     }
 
