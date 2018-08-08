@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ErikBrendel/onehundredandeighty.svg?branch=master)](https://travis-ci.org/ErikBrendel/onehundredandeighty)
+
 # onehundredandeighty
 
 Organize your courses in HPI with onehundredandeighty.

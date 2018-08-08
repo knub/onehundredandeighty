@@ -1,0 +1,25 @@
+{
+  "name": "onehundredandeighty_tests",
+  "version": "1.0.0",
+  "description": "testing the 180 functionality",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErikBrendel/onehundredandeighty.git"
+  },
+  "author": "Erik Brendel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ErikBrendel/onehundredandeighty/issues"
+  },
+  "homepage": "https://github.com/ErikBrendel/onehundredandeighty#readme",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1"
+  }
+}
