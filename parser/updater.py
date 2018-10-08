@@ -101,7 +101,7 @@ data['klubsprecher'] = {
     'kurz': 'Klubsprecher',
     'lehrform': [],
     'modul': ['Softskills'],
-    'nameLV': 'Klubsprächertätigkeit über 2 Semester',
+    'nameLV': 'Klubsprechertätigkeit über 2 Semester',
     'semester': data['englischlevel1']['semester'],
     'vertiefung': [],
     'page': '',
