@@ -101,7 +101,7 @@ def getLehrform(text):
 
 
 def getDozenten(text):
-    dataBlockRegex = re.compile(r"(?s)(?:Dozent|Lecturer): (.*?)<br")
+    dataBlockRegex = re.compile(r"(?s)(?:Dozent|Lecturer): (.*?)(<br|<p)")
     dataBlockMatch = re.search(dataBlockRegex, text)
     dataBlock = dataBlockMatch.group(1)
     subBlocks = dataBlock.split(", ")
