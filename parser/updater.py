@@ -13,7 +13,7 @@ from parser import parseSemester
 START_SEMESTER = 15
 END_SEMESTER = 18
 # defines, which semester gets represented by the Lehrveranstaltungen Index-page
-CURRENT_SEMESTER = 'SS18'
+CURRENT_SEMESTER = 'WS18'
 
 
 confirm = raw_input("\n\nWARNING: This script completely replaces the content of ../js/data.js\n"

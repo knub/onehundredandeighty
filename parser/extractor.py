@@ -4,6 +4,10 @@
 from __future__ import print_function
 import re
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 
 def getNameAndSemester(text):
     headerpattern = re.compile(r"(?<=\<h1\>)(.*)\((.*?\d{4})\)(?=\</h1\>)")
@@ -40,6 +44,16 @@ def getCP(text):
     return int(ectsMatch.group(1))
 
 
+lehrformAliases = {
+    "Blockseminar": ["BS"],
+    "Bachelorprojekt": ["BP"],
+    "Klubsprecher": ['K'],
+    "Projekt:": ['P'],
+    "Seminar": ['S'],
+    "Übung": ['U', u'Ü'],
+    "Vorlesung": ['V']
+}
+
 def getLehrform(text):
     lehrformRegex = r"(?is)<li>(?:Teaching Form|Lehrform) ?: ?(.*?)</li>"
     lehrformMatch = re.search(lehrformRegex, text)
@@ -48,28 +62,40 @@ def getLehrform(text):
         lehrformString = lehrformMatch.group(1).strip().decode('utf-8')
         if lehrformString.endswith(' (Block)'):
             lehrformString = lehrformString[:-len(' (Block)')]
-        if lehrformString == "BS":
-            lehrform.append("Blockseminar")
-        elif lehrformString == "BP":
-            lehrform.append("Bachelorprojekt")
-        else:
-            for charIndex in range(len(lehrformString)):
-                char = lehrformString[charIndex]
-                if char == 'V':
-                    lehrform.append("Vorlesung")
-                elif char == u'Ü' or char == 'U':
-                    lehrform.append("Übung")
-                elif char == 'P':
-                    lehrform.append("Projekt")
-                elif char == 'S':
-                    lehrform.append("Seminar")
-                elif char == 'K':
-                    lehrform.append("Klubsprecher")
-                elif char == '/':
-                    pass  # ignore the separator
-                else:
-                    lehrform.append(char)
-                    print("Unknown LV type: " + char)
+        for teilLehrformString in map(unicode.strip, lehrformString.split("/")):
+            if teilLehrformString in lehrformAliases:
+                lehrform.append(teilLehrformString)
+            else:
+                matched = False
+                for lehrformName, aliases in lehrformAliases.iteritems():
+                    for alias in aliases:
+                        if teilLehrformString == alias:
+                            lehrform.append(lehrformName)
+                            matched = True
+                        if matched:
+                            break
+                    if matched:
+                        break
+                if not matched:
+                    for charIndex in range(len(teilLehrformString)):
+                        currentCharMatched = True
+                        char = teilLehrformString[charIndex]
+                        if char == 'K':
+                            lehrform.append("Klubsprecher")
+                        elif char == 'P':
+                            lehrform.append("Projekt")
+                        elif char == 'S':
+                            lehrform.append("Seminar")
+                        elif char == 'V':
+                            lehrform.append("Vorlesung")
+                        elif char == u'Ü' or char == 'U':
+                            lehrform.append("Übung")
+                        else:
+                            currentCharMatched = False
+                        matched = matched or currentCharMatched
+                if not matched:
+                    print("Unknown LV type, continue parsing: " + char)
+                    lehrform.append(teilLehrFormString)
     lehrform.sort()
     return lehrform
 
@@ -369,3 +395,4 @@ def cleanUp(lv):
     if lv['id'] == 'pem':
         lv['modul'] = ['PEM']
         lv['cp'] = 6
+        
