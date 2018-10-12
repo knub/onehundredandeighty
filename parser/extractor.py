@@ -122,13 +122,13 @@ def getDozenten(text):
 
 def getVertiefungAndModules(text):
     # Module extrahieren - ergibt zB die Vertiefungsgebiete
-    moduleBlockRegex = r"(?is)<h2>Modules?</h2>(.+?)</ul>"
+    moduleBlockRegex = r"<h2>(Studiengänge \& Module|Programs \& Modules)</h2>([\s\S]+?)</ul>"
     moduleBlockMatch = re.search(moduleBlockRegex, text)
     vertiefung = set()
     modules = set()
     if moduleBlockMatch is not None:
-        moduleBlock = moduleBlockMatch.group(1)
-        moduleRegex = r"<li>(.+?)</li>"
+        moduleBlock = moduleBlockMatch.group(2)
+        moduleRegex = r"<li>([\s\S]+?)</li>"
         moduleMatches = re.finditer(moduleRegex, moduleBlock)
         for match in moduleMatches:
             moduleName = match.group(1)
@@ -285,6 +285,8 @@ def shortenName(longName):
         name = name.replace(toReplace, replacement)
     for toRemove in RemovableWords:
         name = name.replace(toRemove, "")
+    if name == "BS":
+        name = "BS I"
 
     name = name.split(":")[0]
     name = name.split(" - ")[0]

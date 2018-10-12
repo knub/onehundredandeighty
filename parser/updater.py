@@ -22,7 +22,7 @@ confirm = raw_input("\n\nWARNING: This script completely replaces the content of
                     "(this defines, which semester gets represented by the Lehrveranstaltungen index-page)\n"
                     "\n"
                     "If you really want to run the script with these settings, type 'yes'\n"
-                    ">>>")
+                    ">>> ")
 
 if confirm != 'yes':
     sys.exit('Script aborted!')
