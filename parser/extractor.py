@@ -285,8 +285,8 @@ def shortenName(longName):
         name = name.replace(toReplace, replacement)
     for toRemove in RemovableWords:
         name = name.replace(toRemove, "")
-    if name == "BS":
-        name = "BS I"
+    if name == "BS I":
+        name = "BS"
 
     name = name.split(":")[0]
     name = name.split(" - ")[0]
