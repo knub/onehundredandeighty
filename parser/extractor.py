@@ -48,13 +48,14 @@ lehrformAliases = {
     "Blockseminar": ["BS"],
     "Bachelorprojekt": ["BP"],
     "Klubsprecher": ['K'],
-    "Projekt:": ['P'],
+    "Projekt": ['P'],
     "Seminar": ['S'],
     "Übung": ['U', u'Ü'],
     "Vorlesung": ['V']
 }
 
 def getLehrform(text):
+    text = text.replace("Projektseminar", "Projekt/Seminar")
     lehrformRegex = r"(?is)<li>(?:Teaching Form|Lehrform) ?: ?(.*?)</li>"
     lehrformMatch = re.search(lehrformRegex, text)
     lehrform = []
@@ -78,20 +79,14 @@ def getLehrform(text):
                         break
                 if not matched:
                     for charIndex in range(len(teilLehrformString)):
-                        currentCharMatched = True
+                        currentCharMatched = False
                         char = teilLehrformString[charIndex]
-                        if char == 'K':
-                            lehrform.append("Klubsprecher")
-                        elif char == 'P':
-                            lehrform.append("Projekt")
-                        elif char == 'S':
-                            lehrform.append("Seminar")
-                        elif char == 'V':
-                            lehrform.append("Vorlesung")
-                        elif char == u'Ü' or char == 'U':
-                            lehrform.append("Übung")
-                        else:
-                            currentCharMatched = False
+                        for lehrformName, aliases in lehrformAliases.iteritems():
+                            for alias in aliases:
+                                if alias == char:
+                                    lehrform.append(lehrformName)
+                                    currentCharMatched = True
+                                    break
                         matched = matched or currentCharMatched
                 if not matched:
                     print("Unknown LV type, continue parsing: " + char)
@@ -224,6 +219,7 @@ ShortenLV = [
     ("Betriebssysteme", "BS"),
     ("3D-Computergrafik", "CG"),
     ("Datenbanksysteme", "DBS"),
+    ("POIS (Prozessorientierte Informationssysteme)", "POIS"),
     ("Prozessorientierte Informationssysteme", "POIS"),
     ("Designing Interactive Systems", "HCI I"),
     ("HCI: Building Interactive Devices and Computer Vision", "HCI II"),
@@ -397,4 +393,3 @@ def cleanUp(lv):
     if lv['id'] == 'pem':
         lv['modul'] = ['PEM']
         lv['cp'] = 6
-        
