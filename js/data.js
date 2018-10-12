@@ -90,7 +90,7 @@ const data = {
     },
     bdanalyticslab: {
         kurz: "BD Analytics Lab",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss16, ss17, ss18],
         pflicht: false,
@@ -146,7 +146,7 @@ const data = {
     },
     bildundvideoprozessierung: {
         kurz: "Bild- und<br />Videoprozessierung",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16],
         pflicht: false,
@@ -280,7 +280,7 @@ const data = {
     },
     bva: {
         kurz: "BVA",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws16_17],
         pflicht: false,
@@ -373,7 +373,7 @@ const data = {
     },
     compprog: {
         kurz: "CompProg",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss16, ss17, ss18],
         pflicht: false,
@@ -395,7 +395,7 @@ const data = {
     },
     copsandrobbers: {
         kurz: "Cops and Robbers",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss15, ss16, ss17],
         pflicht: false,
@@ -577,7 +577,7 @@ const data = {
     },
     dschoolfirsttrack: {
         kurz: "D-School First Track",
-        lehrform: ["Projekt:", "Seminar"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Softskills"],
         semester: [ss15, ss16, ss17, ss18, ws15_16, ws16_17, ws17_18],
         pflicht: false,
@@ -589,37 +589,31 @@ const data = {
         page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/0/sommersemester-2018-d-school-first-track-introduction-to-design-thinking-bring-ideas-to-life.html",
         specific: {
             WS15: {
-                lehrform: ["Projekt", "Seminar"],
                 dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2015/wintersemester-20152016-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
             WS17: {
-                lehrform: ["Projekt", "Seminar"],
                 dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/0/wintersemester-20172018-d-school-first-track-introduction-to-design-thinking-from-inspiration-to.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking. From Inspiration to Ideas",
             },
             WS16: {
-                lehrform: ["Projekt", "Seminar"],
                 dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2016/wintersemester-20162017-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
             SS15: {
-                lehrform: ["Projekt", "Seminar"],
                 dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2015/sommersemester-2015-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
             },
             SS17: {
-                lehrform: ["Projekt", "Seminar"],
                 dozent: ["Dr. Claudia Nicolai", "Jeremias Schmitt", "Prof. Ulrich Weinberg"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/0/sommersemester-2017-d-school-first-track-introduction-to-design-thinking-bring-ideas-to-life.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking. Bring Ideas to Life",
             },
             SS16: {
-                lehrform: ["Projekt", "Seminar"],
                 dozent: ["Dr. Claudia Nicolai", "Prof. Ulrich Weinberg"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2016/sommersemester-2016-d-school-first-track-introduction-to-design-thinking.html",
                 nameLV: "D-School First Track: Introduction to Design Thinking",
@@ -907,7 +901,7 @@ const data = {
     },
     hcipsaugmentrealityvirtualrealityand: {
         kurz: "[HCI PS] Augment Reality,<br />Virtual Reality, and ...",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss17],
         pflicht: false,
@@ -921,7 +915,7 @@ const data = {
     },
     hcipsbuildinginteractivesystemsbasedon: {
         kurz: "[HCI PS] Building Interactive<br />Systems based on ...",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16],
         pflicht: false,
@@ -935,7 +929,7 @@ const data = {
     },
     hcipsbuildinginteractivesystemsfrom3dp: {
         kurz: "[HCI PS] Building Interactive<br />Systems from 3D-P...",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss15],
         pflicht: false,
@@ -949,7 +943,7 @@ const data = {
     },
     hcipspersonalfabricationandhaptics: {
         kurz: "[HCI PS] Personal<br />Fabrication and Haptics",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws16_17],
         pflicht: false,
@@ -991,7 +985,7 @@ const data = {
     },
     hcipsroboticscodeand3dprinting: {
         kurz: "[HCI PS] Robotics,<br />Code, and 3D Printing",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
         pflicht: false,
@@ -1005,7 +999,7 @@ const data = {
     },
     hcipsvirtualreality3dprintingand3d1: {
         kurz: "[HCI PS] Virtual Reality,<br />3D Printing, and 3D I...",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ss18],
         pflicht: false,
@@ -1055,7 +1049,7 @@ const data = {
     },
     informationvisualisationtechniques: {
         kurz: "Information<br />Visualisation Techniques",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws17_18],
         pflicht: false,
@@ -1385,21 +1379,29 @@ const data = {
         kurz: "POIS",
         lehrform: ["Vorlesung", "Übung"],
         modul: ["SB3", "Vertiefungsgebiete"],
-        semester: [ws15_16, ws16_17, ws17_18],
+        semester: [ws15_16, ws16_17, ws17_18, ws18_19],
         pflicht: false,
         empfohlen: "",
         vertiefung: [BPET, SAMT],
         cp: 6,
-        dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
-        nameLV: "Prozessorientierte Informationssysteme",
-        page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/0/wintersemester-20172018-prozessorientierte-informationssysteme-1.html",
+        dozent: ["Dr. Luise Pufahl", "Kimon Batoulis"],
+        nameLV: "POIS (Prozessorientierte Informationssysteme)",
+        page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ba/lehrveranstaltung/course/0/wintersemester-20182019-pois-prozessorientierte-informationssysteme.html",
         specific: {
             WS15: {
                 dozent: ["Prof. Dr. Mathias Weske"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2015/wintersemester-20152016-prozessorientierte-informationssysteme.html",
+                nameLV: "Prozessorientierte Informationssysteme",
+            },
+            WS17: {
+                dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
+                page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/0/wintersemester-20172018-prozessorientierte-informationssysteme-1.html",
+                nameLV: "Prozessorientierte Informationssysteme",
             },
             WS16: {
+                dozent: ["Kimon Batoulis", "Prof. Dr. Mathias Weske"],
                 page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2016/wintersemester-20162017-prozessorientierte-informationssysteme.html",
+                nameLV: "Prozessorientierte Informationssysteme",
             },
         }
     },
@@ -1415,20 +1417,6 @@ const data = {
         dozent: ["Prof. Dr. Mathias Weske"],
         nameLV: "Prozessorientierte Informationssysteme II",
         page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2015/sommersemester-2015-prozessorientierte-informationssysteme-ii.html",
-        specific: {}
-    },
-    poispois: {
-        kurz: "POIS (POIS)",
-        lehrform: ["Vorlesung", "Übung"],
-        modul: ["SB3", "Vertiefungsgebiete"],
-        semester: [ws18_19],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [BPET, SAMT],
-        cp: 6,
-        dozent: ["Dr. Luise Pufahl", "Kimon Batoulis"],
-        nameLV: "POIS (Prozessorientierte Informationssysteme)",
-        page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ba/lehrveranstaltung/course/0/wintersemester-20182019-pois-prozessorientierte-informationssysteme.html",
         specific: {}
     },
     privacyinpublicclouds: {
@@ -2038,7 +2026,7 @@ const data = {
     },
     webprogrammierungundwebframeworks: {
         kurz: "Web-Programmierung<br />und Web-Frameworks",
-        lehrform: ["Projekt"],
+        lehrform: ["Projekt", "Seminar"],
         modul: ["Vertiefungsgebiete"],
         semester: [ws15_16, ws16_17, ws17_18],
         pflicht: false,
