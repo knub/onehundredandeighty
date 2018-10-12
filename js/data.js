@@ -186,13 +186,13 @@ const data = {
         page: "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ma/lehrveranstaltung/course/2015/sommersemester-2015-bpm-in-the-cloud-from-tbpm-and-app-development.html",
         specific: {}
     },
-    bs1: {
-        kurz: "BS I",
+    bs: {
+        kurz: "BS",
         lehrform: ["Vorlesung", "Übung"],
         modul: ["BS"],
         semester: [ws15_16, ws16_17, ws17_18, ws18_19],
-        pflicht: false,
-        empfohlen: "",
+        pflicht: true,
+        empfohlen: 3,
         vertiefung: [],
         cp: 6,
         dozent: ["Prof. Dr. Andreas Polze"],
