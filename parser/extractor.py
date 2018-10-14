@@ -4,6 +4,10 @@
 from __future__ import print_function
 import re
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 
 def getNameAndSemester(text):
     headerpattern = re.compile(r"(?<=\<h1\>)(.*)\((.*?\d{4})\)(?=\</h1\>)")
@@ -40,7 +44,18 @@ def getCP(text):
     return int(ectsMatch.group(1))
 
 
+lehrformAliases = {
+    "Blockseminar": ["BS"],
+    "Bachelorprojekt": ["BP"],
+    "Klubsprecher": ['K'],
+    "Projekt": ['P'],
+    "Seminar": ['S'],
+    "Übung": ['U', u'Ü'],
+    "Vorlesung": ['V']
+}
+
 def getLehrform(text):
+    text = text.replace("Projektseminar", "Projekt/Seminar")
     lehrformRegex = r"(?is)<li>(?:Teaching Form|Lehrform) ?: ?(.*?)</li>"
     lehrformMatch = re.search(lehrformRegex, text)
     lehrform = []
@@ -48,34 +63,40 @@ def getLehrform(text):
         lehrformString = lehrformMatch.group(1).strip().decode('utf-8')
         if lehrformString.endswith(' (Block)'):
             lehrformString = lehrformString[:-len(' (Block)')]
-        if lehrformString == "BS":
-            lehrform.append("Blockseminar")
-        elif lehrformString == "BP":
-            lehrform.append("Bachelorprojekt")
-        else:
-            for charIndex in range(len(lehrformString)):
-                char = lehrformString[charIndex]
-                if char == 'V':
-                    lehrform.append("Vorlesung")
-                elif char == u'Ü' or char == 'U':
-                    lehrform.append("Übung")
-                elif char == 'P':
-                    lehrform.append("Projekt")
-                elif char == 'S':
-                    lehrform.append("Seminar")
-                elif char == 'K':
-                    lehrform.append("Klubsprecher")
-                elif char == '/':
-                    pass  # ignore the separator
-                else:
-                    lehrform.append(char)
-                    print("Unknown LV type: " + char)
+        for teilLehrformString in map(unicode.strip, lehrformString.split("/")):
+            if teilLehrformString in lehrformAliases:
+                lehrform.append(teilLehrformString)
+            else:
+                matched = False
+                for lehrformName, aliases in lehrformAliases.iteritems():
+                    for alias in aliases:
+                        if teilLehrformString == alias:
+                            lehrform.append(lehrformName)
+                            matched = True
+                        if matched:
+                            break
+                    if matched:
+                        break
+                if not matched:
+                    for charIndex in range(len(teilLehrformString)):
+                        currentCharMatched = False
+                        char = teilLehrformString[charIndex]
+                        for lehrformName, aliases in lehrformAliases.iteritems():
+                            for alias in aliases:
+                                if alias == char:
+                                    lehrform.append(lehrformName)
+                                    currentCharMatched = True
+                                    break
+                        matched = matched or currentCharMatched
+                if not matched:
+                    print("Unknown LV type, continue parsing: " + char)
+                    lehrform.append(teilLehrFormString)
     lehrform.sort()
     return lehrform
 
 
 def getDozenten(text):
-    dataBlockRegex = re.compile(r"(?s)(?:Dozent|Lecturer): (.*?)<br")
+    dataBlockRegex = re.compile(r"(?s)(?:Dozent|Lecturer): (.*?)(<br|<p)")
     dataBlockMatch = re.search(dataBlockRegex, text)
     dataBlock = dataBlockMatch.group(1)
     subBlocks = dataBlock.split(", ")
@@ -96,13 +117,13 @@ def getDozenten(text):
 
 def getVertiefungAndModules(text):
     # Module extrahieren - ergibt zB die Vertiefungsgebiete
-    moduleBlockRegex = r"(?is)<h2>Modules?</h2>(.+?)</ul>"
+    moduleBlockRegex = r"<h2>(Studiengänge \& Module|Programs \& Modules)</h2>([\s\S]+?)</ul>"
     moduleBlockMatch = re.search(moduleBlockRegex, text)
     vertiefung = set()
     modules = set()
     if moduleBlockMatch is not None:
-        moduleBlock = moduleBlockMatch.group(1)
-        moduleRegex = r"<li>(.+?)</li>"
+        moduleBlock = moduleBlockMatch.group(2)
+        moduleRegex = r"<li>([\s\S]+?)</li>"
         moduleMatches = re.finditer(moduleRegex, moduleBlock)
         for match in moduleMatches:
             moduleName = match.group(1)
@@ -198,6 +219,7 @@ ShortenLV = [
     ("Betriebssysteme", "BS"),
     ("3D-Computergrafik", "CG"),
     ("Datenbanksysteme", "DBS"),
+    ("POIS (Prozessorientierte Informationssysteme)", "POIS"),
     ("Prozessorientierte Informationssysteme", "POIS"),
     ("Designing Interactive Systems", "HCI I"),
     ("HCI: Building Interactive Devices and Computer Vision", "HCI II"),
@@ -259,6 +281,8 @@ def shortenName(longName):
         name = name.replace(toReplace, replacement)
     for toRemove in RemovableWords:
         name = name.replace(toRemove, "")
+    if name == "BS I":
+        name = "BS"
 
     name = name.split(":")[0]
     name = name.split(" - ")[0]

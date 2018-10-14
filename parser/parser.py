@@ -10,7 +10,7 @@ import Queue
 
 import extractor
 
-LehrveranstaltungenIndexURL = "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering.html"
+LehrveranstaltungenIndexURL = "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering-ba.html"
 WSBaseUrl = "https://hpi.de/studium/lehrveranstaltungen/archiv/wintersemester-20"
 SSBaseUrl = "https://hpi.de/studium/lehrveranstaltungen/archiv/sommersemester-20"
 
@@ -79,7 +79,7 @@ def URLsPerSemester(url):
 
     wholeFile = ""
     for line in site:
-        if line.strip().startswith("<h1>IT-Systems Engineering MA</h1>"):
+        if line.strip().startswith("</table>"):
             break
         wholeFile += line
 
@@ -104,7 +104,13 @@ def listOfLVs(urls):
     sys.stdout.flush()
 
     def handleUrl(url):
-        lvDict = parseLVPage(url)
+        try:
+            lvDict = parseLVPage(url)
+        except urllib2.HTTPError:
+            #print("warning: No data found at " + url + " - skipping it")
+            print('!', end='')
+            sys.stdout.flush()
+            return
         lvs[lvDict['id']] = lvDict
         print('.', end='')
         sys.stdout.flush()
