@@ -5,6 +5,7 @@ from __future__ import print_function
 import re
 
 import sys
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -18,10 +19,10 @@ def getNameAndSemester(text):
 
 
 def prettyPrintSemester(verboseName):
-    name = verboseName.lower()\
-        .replace("wintersemester", "WS")\
-        .replace("sommersemester", "SS")\
-        .replace("summersemester", "SS")\
+    name = verboseName.lower() \
+        .replace("wintersemester", "WS") \
+        .replace("sommersemester", "SS") \
+        .replace("summersemester", "SS")
 
     semesterRegex = r"(?i)(WS|SS) ?((?:20)?\d{2}(?:/(?:20)?\d{2})?)(?!.*\d)"
     semesterMatch = re.search(semesterRegex, name)
@@ -53,6 +54,7 @@ lehrformAliases = {
     "Übung": ['U', u'Ü'],
     "Vorlesung": ['V']
 }
+
 
 def getLehrform(text):
     text = text.replace("Projektseminar", "Projekt/Seminar")
@@ -161,16 +163,16 @@ def extractModule(moduleName):
     if extractVertiefung(moduleName) != "":
         return "Vertiefungsgebiete"
 
-    if moduleName == "Rechtliche Grundlagen" or\
-       moduleName == "Wirtschaftliche Grundlagen" or\
+    if moduleName == "Rechtliche Grundlagen" or \
+       moduleName == "Wirtschaftliche Grundlagen" or \
        moduleName == "Rechtliche und wirtschaftliche Grundlagen":
         return "Rechtliche und wirtschaftliche Grundlagen"
 
-    if moduleName == "Softskills" or\
-       moduleName == "Design Thinking" or\
-       moduleName == "Klubsprecher" or\
-       moduleName == "Schlüsselkompetenzen" or\
-       moduleName.startswith("Design Thinking") or\
+    if moduleName == "Softskills" or \
+       moduleName == "Design Thinking" or \
+       moduleName == "Klubsprecher" or \
+       moduleName == "Schlüsselkompetenzen" or \
+       moduleName.startswith("Design Thinking") or \
        moduleName == "Projektentwicklung und -management":
         return "Softskills"
 
@@ -186,18 +188,18 @@ def extractModule(moduleName):
         return "SB2"
     if moduleName == "Prozessorientierte Informationssysteme":
         return "SB3"
-    if moduleName == "Interactive Systeme" or\
+    if moduleName == "Interactive Systeme" or \
        moduleName == "User-Interface-Systeme":
         return "SB4"
     if moduleName == "Web- und Internet-Technologien":
         return "SB5"
 
-    if moduleName.startswith("Programmiertechnik") or\
-       moduleName == "Software-Architektur" or\
+    if moduleName.startswith("Programmiertechnik") or \
+       moduleName == "Software-Architektur" or \
        moduleName == "Digitale Systeme":
         return "Grundlagen IT-Systems Engineering"
 
-    if moduleName == "Softwaretechnik" or\
+    if moduleName == "Softwaretechnik" or \
        moduleName.startswith("Modellierung"):
         return "Softwaretechnik und Modellierung"
 
@@ -228,6 +230,7 @@ ShortenLV = [
     # Rechtliche und wirtschaftliche Grundlagen
     ("Recht für Ingenieure", "Recht"),
     ("Wirtschaftliche Grundlagen", "Wirtschaft"),
+    ("Wirtschaft I", "Wirtschaft"),
     # Vertiefungsgebiete
     ("Algorithmic Problem Solving", "AlgoRiddles"),
     ("Competitive Programming", "CompProg"),
@@ -314,35 +317,35 @@ def shortenName(longName):
 
 def shortNameToID(shortName):
     """take a short name and return an id string to use in json"""
-    lvID = shortName\
-        .replace('<br />', ' ')\
-        .replace("III", "3")\
-        .replace("II", "2")\
-        .replace("\"", "")\
-        .replace("&quot;", "")\
-        .replace("(", "")\
-        .replace(")", "")\
-        .replace("[", "")\
-        .replace("]", "")\
-        .replace("{", "")\
-        .replace("}", "")\
-        .replace(".", "")\
-        .replace(",", "")\
-        .replace("\\", "")\
-        .replace("-", "")\
-        .replace("&", "")\
+    lvID = shortName \
+        .replace('<br />', ' ') \
+        .replace("III", "3") \
+        .replace("II", "2") \
+        .replace("\"", "") \
+        .replace("&quot;", "") \
+        .replace("(", "") \
+        .replace(")", "") \
+        .replace("[", "") \
+        .replace("]", "") \
+        .replace("{", "") \
+        .replace("}", "") \
+        .replace(".", "") \
+        .replace(",", "") \
+        .replace("\\", "") \
+        .replace("-", "") \
+        .replace("&", "") \
         .replace(";", "")
 
     if lvID.endswith(' I'):
         lvID = lvID[:-1] + "1"
 
-    lvID = lvID\
-        .replace("ü", "ue")\
-        .replace("ä", "ae")\
-        .replace("ö", "oe")\
-        .replace("Ü", "Ue")\
-        .replace("Ä", "Ae")\
-        .replace("Ö", "Oe")\
+    lvID = lvID \
+        .replace("ü", "ue") \
+        .replace("ä", "ae") \
+        .replace("ö", "oe") \
+        .replace("Ü", "Ue") \
+        .replace("Ä", "Ae") \
+        .replace("Ö", "Oe") \
         .replace(" ", "")
 
     while lvID[0].isdigit():
@@ -353,14 +356,14 @@ def shortNameToID(shortName):
 
 
 def isPflicht(lv):
-    return lv['id'] == 'bs' or\
-           lv['id'] == 'gds' or\
-           lv['id'] == 'pem' or\
-           lv['id'] == 'wirtschaft' or\
-           lv['kurz'].startswith("Mathe") or\
-           lv['kurz'].startswith("TI ") or\
-           lv['kurz'].startswith("PT ") or\
-           lv['kurz'].startswith("Mod") or\
+    return lv['id'] == 'bs' or \
+           lv['id'] == 'gds' or \
+           lv['id'] == 'pem' or \
+           lv['id'] == 'wirtschaft' or \
+           lv['kurz'].startswith("Mathe") or \
+           lv['kurz'].startswith("TI ") or \
+           lv['kurz'].startswith("PT ") or \
+           lv['kurz'].startswith("Mod") or \
            lv['kurz'].startswith("Recht")
 
 

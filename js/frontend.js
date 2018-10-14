@@ -239,7 +239,7 @@ const Course = class {
         }
     }
     openPage() {
-        const URL_PREFIX = "https://hpi.de/studium/lehrveranstaltungen/it-systems-engineering/lehrveranstaltung/course/";
+        const URL_PREFIX = "https://hpi.de/studium/lehrveranstaltungen/";
         let page = getCourseParameter(this.id, 'page');
         if (!page) return;
         if (!page.startsWith('http')) {
