@@ -1061,20 +1061,6 @@ const data = {
         page: "it-systems-engineering-ma/lehrveranstaltung/course/0/wintersemester-20172018-information-visualisation-techniques-for-industrie-40.html",
         specific: {}
     },
-    internetsecurity: {
-        kurz: "Internet Security",
-        lehrform: ["Vorlesung", "Übung"],
-        modul: ["Vertiefungsgebiete"],
-        semester: [ws18_19],
-        pflicht: false,
-        empfohlen: "",
-        vertiefung: [ISAE, OSIS],
-        cp: 6,
-        dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Internet Security - Weaknesses and Targets",
-        page: "it-systems-engineering-ba/lehrveranstaltung/course/0/wintersemester-20182019-internet-security-weaknesses-and-targets.html",
-        specific: {}
-    },
     introductiontodesignthinking: {
         kurz: "Introduction to<br />Design Thinking",
         lehrform: ["Projekt", "Seminar"],
@@ -1093,20 +1079,26 @@ const data = {
         kurz: "ISec",
         lehrform: ["Vorlesung", "Übung"],
         modul: ["Vertiefungsgebiete"],
-        semester: [ws15_16, ws16_17, ws17_18],
+        semester: [ws15_16, ws16_17, ws17_18, ws18_19],
         pflicht: false,
         empfohlen: "",
         vertiefung: [ISAE, OSIS],
         cp: 6,
         dozent: ["Prof. Dr. Christoph Meinel"],
-        nameLV: "Internet-Security - Weaknesses and Targets",
-        page: "it-systems-engineering-ma/lehrveranstaltung/course/0/wintersemester-20172018-internet-security-weaknesses-and-targets.html",
+        nameLV: "Internet Security - Weaknesses and Targets",
+        page: "it-systems-engineering-ba/lehrveranstaltung/course/0/wintersemester-20182019-internet-security-weaknesses-and-targets.html",
         specific: {
             WS15: {
                 page: "it-systems-engineering-ma/lehrveranstaltung/course/2015/wintersemester-20152016-internet-security-weaknesses-and-targets.html",
+                nameLV: "Internet-Security - Weaknesses and Targets",
+            },
+            WS17: {
+                page: "it-systems-engineering-ma/lehrveranstaltung/course/0/wintersemester-20172018-internet-security-weaknesses-and-targets.html",
+                nameLV: "Internet-Security - Weaknesses and Targets",
             },
             WS16: {
                 page: "it-systems-engineering-ma/lehrveranstaltung/course/2016/wintersemester-20162017-internet-security-weaknesses-and-targets.html",
+                nameLV: "Internet-Security - Weaknesses and Targets",
             },
         }
     },

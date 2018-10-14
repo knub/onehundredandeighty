@@ -164,20 +164,20 @@ def extractModule(moduleName):
         return "Vertiefungsgebiete"
 
     if moduleName == "Rechtliche Grundlagen" or \
-       moduleName == "Wirtschaftliche Grundlagen" or \
-       moduleName == "Rechtliche und wirtschaftliche Grundlagen":
+            moduleName == "Wirtschaftliche Grundlagen" or \
+            moduleName == "Rechtliche und wirtschaftliche Grundlagen":
         return "Rechtliche und wirtschaftliche Grundlagen"
 
     if moduleName == "Softskills" or \
-       moduleName == "Design Thinking" or \
-       moduleName == "Klubsprecher" or \
-       moduleName == "Schlüsselkompetenzen" or \
-       moduleName.startswith("Design Thinking") or \
-       moduleName == "Projektentwicklung und -management":
+            moduleName == "Design Thinking" or \
+            moduleName == "Klubsprecher" or \
+            moduleName == "Schlüsselkompetenzen" or \
+            moduleName.startswith("Design Thinking") or \
+            moduleName == "Projektentwicklung und -management":
         return "Softskills"
 
     if moduleName.startswith("Mathematik") or \
-       moduleName.startswith("Theoretische Informatik"):
+            moduleName.startswith("Theoretische Informatik"):
         return "Mathematische und theoretische Grundlagen"
 
     if moduleName == "Betriebssysteme":
@@ -189,18 +189,18 @@ def extractModule(moduleName):
     if moduleName == "Prozessorientierte Informationssysteme":
         return "SB3"
     if moduleName == "Interactive Systeme" or \
-       moduleName == "User-Interface-Systeme":
+            moduleName == "User-Interface-Systeme":
         return "SB4"
     if moduleName == "Web- und Internet-Technologien":
         return "SB5"
 
     if moduleName.startswith("Programmiertechnik") or \
-       moduleName == "Software-Architektur" or \
-       moduleName == "Digitale Systeme":
+            moduleName == "Software-Architektur" or \
+            moduleName == "Digitale Systeme":
         return "Grundlagen IT-Systems Engineering"
 
     if moduleName == "Softwaretechnik" or \
-       moduleName.startswith("Modellierung"):
+            moduleName.startswith("Modellierung"):
         return "Softwaretechnik und Modellierung"
 
     return ""
@@ -237,6 +237,7 @@ ShortenLV = [
     ("Big Data", "BD"),
     ("Bildverarbeitungsalgorithmen", "BVA"),
     ("Internet-Security", "ISec"),
+    ("Internet Security", "ISec"),
     ("Entwurf und Implementierung digitaler Schaltungen mit VHDL", "VHDL"),
     ("Softwarequalität", "SWQualität"),
 
