@@ -1,3 +1,7 @@
+# Outdated
+
+This repo is officially outdated / deprecated. The development of this tool will be continued at the HPI-internal GitLab [here](https://gitlab.hpi.de/website-klub/one%20hundred%20and%20eighty). 
+
 [![Build Status](https://travis-ci.org/ErikBrendel/onehundredandeighty.svg?branch=master)](https://travis-ci.org/ErikBrendel/onehundredandeighty)
 
 # onehundredandeighty
